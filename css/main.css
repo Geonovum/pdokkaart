@@ -1,0 +1,236 @@
+body
+{
+    background-color: #FFFFFF;
+	font-family: 'Cantarell', Arial, sans-serif;
+	font-size: 1.0em;
+	text-align: left; /* */ /* workaround to center a div in IE: http://www.maxdesign.com.au/presentation/center/ */
+    margin: 0;
+    padding: 0;
+    color:  #202020; /* #002161 */
+}
+
+#topbar {
+    height: 100px;
+    background: url(../img/pdokpartners.jpg) no-repeat right;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+}
+
+#content {
+    text-align: left;
+    width:100%;
+    height: 100%;
+    left: 5px;
+    position: relative;
+    background-color:#FFFFFF;
+ 	margin: 0px;
+	padding: 0px;
+    box-shadow: 0 0 5px grey;
+    border: 1px solid #a0a0a0;
+}
+
+#title {
+    color: #154373;
+    font-size: 2em;
+    height: 40px;
+    margin: 0px;
+    padding: 5px;
+    text-align: left;
+}
+
+#search{
+	margin-left:5px;
+	padding:0px 0px 0px 0px;
+	position:relative;
+	width:90%;
+	font-size:1.1em;
+	font-weight:bold;
+}
+
+#map
+{
+	height:100%;
+	margin:0;
+	padding:0;
+}
+
+#map.functional {
+	position:absolute;
+	width: 500px;
+	left: 0px;
+    border: 1px solid #a0a0a0;
+}
+
+#map.embedded {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0px;
+}
+
+#leftcolumn{
+	margin:0px;
+	padding:0px;
+    width: 450px;
+    height: 100%;
+	right: 0px;
+    position: absolute;
+    /*left: 1200px;*/
+   /* z-index: 2000;*/
+}
+
+#searchResults{
+	height: 350px;
+    overflow-y: auto;
+}
+
+#leftcolumn ul {
+	padding-left: 3px;
+	list-style-type: none;
+}
+
+#leftcolumn li {
+    font-size: 0.9em;
+    padding: 1px 1px 5px 32px;
+    /* border-bottom: solid 1px grey; */
+}
+
+.openurl{
+    border: 1px solid #0085C6;
+    background-color: #A0E5FF;
+}
+
+.openurl a{
+    color: #004596;
+}
+.filterbutton{
+}
+
+.ui-button-text-only .ui-button-text {
+    padding: 0.1em 1em;
+}
+
+.ui-button .ui-button-text {
+    display: block;
+    line-height: 1.1;
+}
+.soortinput {
+    position: relative;
+    width: 180px;
+    top: 0px;
+    left: 0px;
+    margin: 1px;
+}
+
+.catselector label{
+    font-style: italic;
+}
+
+a
+{
+	color:#154373;
+}
+
+a:hover 
+{
+	text-decoration:underline;
+}
+
+li 
+{
+	margin: 0;
+}
+
+.olPopup
+{
+	font-size:8pt;
+	border: 1px solid black;
+	box-shadow: 5px 5px 8px grey;
+	border-radius: 0 10px 10px 10px;
+}
+
+.olPopup h4 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.popInWindow {
+	background-color: #303030;
+	color: white;
+	border: 1px solid #909090;	
+	padding: 5px;
+	overflow-y: auto;
+}
+
+.popInWindow h4 {
+	margin: 0px;
+	margin-top: 8px;
+}
+
+.olControlLayerSwitcher .layersDiv {
+	background-color: #303030;
+	color: white;
+}
+
+#drawlocationhelp {
+	display: none;
+	width: 350px;
+	position: absolute;
+	left: 350px;
+	top: 0px;
+}
+
+#cancelDrawingPoint {
+	display: none;
+}
+
+#createlink {
+	display: none;
+	position: absolute;
+	left: 350px;
+	top: 0px;
+	width: 420px;
+	height: 580px;
+}
+
+#createlink input {
+	font-size: 0.9em;
+}
+
+#addlayer {
+	display: none;
+	position: absolute;
+	left: 350px;
+	top: 0px;
+	width: 420px;
+	height: 500px;
+}
+
+.geozetSuggestions li a span{
+	display: none;
+}
+
+.geozetSuggestions li.selected{
+	background: url(../markertypes/information_blue.png) no-repeat 0px;
+}
+
+#mapfunctions h3 {
+	position: relative;
+	margin: 3px;
+	text-align: right;
+	padding-top:10px;
+}
+
+.closeWindow {
+	float: right;
+	margin: 2px;
+	font-weight: bold;
+	color: black;
+}
+
+.defaultmarker {
+	height: 24px;
+}

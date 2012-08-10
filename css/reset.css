@@ -1,0 +1,50 @@
+/*
+Author: Toni Ruckwood
+Version: 1.0
+Date created: 05 February 2008
+Date modified:
+
+Description: Removes all of the whitespace and borders from around HTML elements, with the exception of some form elements which behave inconsistently across browsers. This provides a more uniform base for applying styles across various browsers and platforms.
+
+A replacement for the "whitespace reset" using the universal selector. Based on tests carried out in IE, Firefox, Opera and Safari and the excellent work carried out by Eric Meyer at http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/ and Yahoo at http://developer.yahoo.com/yui/reset/
+*/
+
+/*Remove the whitespace and borders from around elements.*/
+HTML,BODY,DIV,
+P,H1,H2,H3,H4,H5,H6,ADDRESS,BLOCKQUOTE,CODE,
+UL,OL,LI,DT,DL,DD,
+FORM,FIELDSET,
+HR,
+TABLE,CAPTION,TR,TBODY,TD,TFOOT,TH,THEAD,
+IMG,OBJECT,
+SUB,SUP,BIG,SMALL {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+/*Fix IE's EM scaling bug*/
+HTML {
+	font-size: 100%;
+}
+/*Add font consistency to form elements.*/
+BUTTON,INPUT,TEXTAREA,SELECT {
+	font-size: 100%;
+	font-family: inherit;
+}
+/*A personal preference, and therefore optional. I use fewer unordered lists with bullets than without.*/
+UL {
+	list-style: none;
+}
+/*Remove the cell spacing from tables.*/
+TABLE {
+	font-size: 100%;
+	border-spacing: 0;
+}
+/*Remove the cell spacing from tables in IE.*/
+*TABLE {
+	border-collapse: collapse;
+}
+/*Remove the quotes used by non-IE browsers around in-line quotes.*/
+Q:before,Q:after {
+	content: "";
+}

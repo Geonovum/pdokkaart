@@ -1,0 +1,12 @@
+.olPopupCloseBox {
+    background: url("../images/default/panel/tool-sprites.gif") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: right;
+    height: 15px !important;
+    margin-left: 2px;
+    overflow: hidden;
+    width: 15px !important;
+}
+.olPopup {
+    border: 1px solid grey;
+}

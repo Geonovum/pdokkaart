@@ -1,0 +1,105 @@
+/*
+Author: Toni Ruckwood
+Copyright: 2007 Ordnance Survey
+Version: 1.0
+Updated: 
+*/
+
+/*Registration form*/
+#registration {
+	width: 42em;
+	color: #777f83;
+}
+
+#registration FIELDSET {
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+	padding: 1em;
+	background-image: url(../images/bg-form.jpg);
+	background-repeat: repeat-x;
+	background-position: top left;
+}
+
+LEGEND {
+	font-size: 1.3em;
+	color: #2e3192;
+}
+
+/*Row container*/
+#registration DIV.row {
+	margin: .8em 0;
+	padding-left: 19em;
+	clear: left;
+}
+#fsTandC DIV.row {
+	padding-left: 0;
+}
+
+/*Align row elements to the top of the container*/
+#registration DIV.row INPUT,#registration DIV.row TEXTAREA,#registration DIV.row SELECT {
+	vertical-align: top;
+}
+
+/*Set left column*/
+#registration DIV.row .col {
+	width: 19em;
+	float: left;
+	margin-left: -19em;
+	margin-bottom: .8em;
+	line-height: 1.2;
+}
+
+/*Set form elements width*/
+#registration .med {
+	width: 20em;
+	border: 1px solid #999;
+}
+
+/*Buttons*/
+#registration .but {
+	background-color: #75baba;
+	color: #fff;
+	border-top: 4px solid #bdd;
+	border-right: 4px solid #619a9a;
+	border-bottom: 4px solid #619a9a;
+	border-left: 4px solid #bdd;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+#registration .but:hover {
+	background-color: #268b8b;
+	border-top: 4px solid #8dc6c6;
+	border-right: 4px solid #1f5555;
+	border-bottom: 4px solid #1f5555;
+	border-left: 4px solid #8dc6c6;
+}
+
+/*Error messages*/
+DIV.error {
+	color: #f00;
+}
+#errorMsg {
+	font-weight: bold;
+}
+
+#registrationterms {
+	height: 300px;
+	overflow: auto;
+	border: 1px solid #999;
+	margin-bottom: 1em;
+	padding: 5px;
+	background-color: #fff;
+}
+
+LABEL EM {
+	color: #c00;
+	font-size: .8em;
+}
+SPAN.help {
+	font-size: .8em;
+	font-style: italic;
+}
+
+#registrationterms:focus,INPUT[type^="text"]:focus,INPUT[type^="password"]:focus,INPUT[type^="radio"]:focus,INPUT[type^="checkbox"]:focus,TEXTAREA:focus,SELECT:focus {
+	background-color: #ffc;
+}
