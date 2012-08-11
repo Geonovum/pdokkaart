@@ -26,9 +26,9 @@
 		<link rel="stylesheet" href="css/print.css" type="text/css" />
 		<link rel="stylesheet" href="css/register.css" type="text/css" />
 		<link rel="stylesheet" href="css/reset.css" type="text/css" />
-        <script type="text/javascript" src="http://openlayers.org/dev/OpenLayers.js"></script>
-		<!-- <script type="text/javascript" src="js/OpenLayers.js"></script> -->
-        <script src="http://luuks.github.com/API/lusc-api.js"></script>
+        <!-- <script type="text/javascript" src="http://openlayers.org/dev/OpenLayers.js"></script> -->
+		<script type="text/javascript" src="js/OpenLayers.js"></script>
+        <script type="text/javascript" src="js/pdok-api.js"></script>
         <script src="js/proj4js-compressed.js"></script>  
         <script src="js/jquery.js"></script>
         <script src="js/map.js"></script>
@@ -62,7 +62,8 @@
 		    <div id="leftcolumn">
 				<!-- Step 1 - Your map -->
 				<div id="step1" class="container active">
-					<h2><a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a><a href="mapbuilderhelp.html#1" class="help"><span>Help</span></a></h2>
+					<!-- <h2><a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a><a href="mapbuilderhelp.html#1" class="help"><span>Help</span></a></h2> -->
+					<h2><a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
 					<form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);">
 						<div class="row">
 							<p>Do you want your map to be...</p>
@@ -145,7 +146,9 @@
 
 				<!-- Step 2 - Add markers -->
 				<div id="step2" class="container">
-					<h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a><a href="mapbuilderhelp.html#2" class="help"><span>Help</span></a></h2>
+					<!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a><a href="mapbuilderhelp.html#2" class="help"><span>Help</span></a></h2> -->
+					<!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2> -->
+					<h2><a  onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2>
 					<form action="#" name="addmarkers" id="addmarkers" onsubmit="return goTo(3);">
 						<div class="section">
 						
@@ -211,7 +214,8 @@
 						</div>
 
 						<div class="row">				
-							<p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p>
+							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
+							<p><a  onclick="manageMarkers(3)">Delete all markers</a></p>
 						</div>
 					</form>
 				
@@ -221,8 +225,8 @@
 				
 				<div id="step3" class="container">
 					
-					<h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2>
-				
+					<!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
+					<h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a></h2>
 					<form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
 					<strong>	
 					<div class="row">
@@ -270,7 +274,8 @@
 				
 				<div id="step4" class="container">
 					
-					<h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2>
+					<!-- <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2> -->
+					<h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a></h2>
 					<form action="#" name="savecode" id="savecode" onsubmit="return false;">
 						<div class="row">
 							<p>If you&#39;re happy with the map on the left then <strong>collect your code</strong>.</p>
@@ -322,7 +327,7 @@
 	    </div>
     </div>
 	<script>
-		init();
+		init_pdok();
 	</script>
     </body>
 </html>

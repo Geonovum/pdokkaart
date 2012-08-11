@@ -158,7 +158,7 @@ function ZetMarkersOpKaart(strInvoerfile) {
 
 // init is called after loading the settings page and initilizes the map and some GUI components, like the PDOK map layer selector and the "popin" windows
 
-function init()
+function init_pdok()
 {
 	setMapSize();
 	addFormEnhancements();
@@ -171,7 +171,8 @@ function init()
 
 	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
 	mapPDOKKaart = lusc.getMapObject();
-
+	//mapPDOKKaart = new OpenLayers.Map('map');
+	
 	// Thijs: a vector layer is used to show Geocoderesults
 	markers = new OpenLayers.Layer.Vector("Markers",{
             styleMap: getStyleMap(),
