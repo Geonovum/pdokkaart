@@ -19,7 +19,7 @@
         <!-- link rel="stylesheet" href="js/theme/default/style.css" type="text/css" / -->
         <link rel="stylesheet" href="api/style.css" type="text/css" />
 		<!-- add Cantarell fonts, for CSS3 -->
-		<link href='http://fonts.googleapis.com/css?family=Cantarell:700italic,700,400italic,400' rel='stylesheet' type='text/css'>
+		<!-- <link href='http://fonts.googleapis.com/css?family=Cantarell:700italic,700,400italic,400' rel='stylesheet' type='text/css'> -->
         <link rel="stylesheet" href="css/main.css" type="text/css" />
 		<link rel="stylesheet" href="css/accounts.css" type="text/css" />
 		<link rel="stylesheet" href="css/common.css" type="text/css" />
@@ -148,12 +148,12 @@
 				<div id="step2" class="container">
 					<!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a><a href="mapbuilderhelp.html#2" class="help"><span>Help</span></a></h2> -->
 					<!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2> -->
-					<h2><a  onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2>
-					<form action="#" name="addmarkers" id="addmarkers" onsubmit="return goTo(3);">
+					<h2><a  onclick="startDrawingPoint(); return goTo(2); " onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2>
+					<form action="#" name="addmarkers" id="addmarkers" onsubmit="return goTo(3); ">
 						<div class="section">
 						
 							<div id="edit3" class="row">
-								<input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){return manageMarkers(1);}" />
+								<input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){return startDrawingPoint();}" />
 								<label><strong>Voeg een marker toe aan de kaart</strong> - (selecteer een symbool uit de lijst en klik op de kaart)</label> 
 							</div>		
 							
@@ -169,7 +169,7 @@
 						
 							</div>
 							
-							<div id="mapmarkers" class="row red">
+							<!-- <div id="mapmarkers" class="row red">
 							
 								<span id="mapmarker1">
 									<input type="radio" name="marker" id="marker1" value="marker1" onchange="if (this.checked){return setMarkerImage(1);}"/>
@@ -186,36 +186,37 @@
 									<label for="marker3" id="markerlabel3">spot</label>
 								</span>
 							
-							</div>
+							</div> -->
 					
 							<div id="edit2" class="row">
-								<input type="radio" name="editmarker" id="editmarker3" value="delete" onclick= "manageMarkers(4)" />
-								<label for="editmarker3" id="editlabel3"><strong>Delete individual markers - </strong> click on the marker you want to delete</label>
+								<input type="radio" name="editmarker" id="editmarker3" value="delete" onclick= "if (this.checked){return startEditingPoint();}" />
+								<label for="editmarker3" id="editlabel3"><strong>Wijzig een marker op de kaart - </strong>  (selecteer een marker op de kaart en wijzig, verplaats of verwijder de marker)</label>
 							</div>
 						
 						</div>
 						
-						<div id="edit1" class="row section">
-							<input type="radio" name="editmarker" id="editmarker2" value="drag" onclick="return manageMarkers(5)" />
-							<label for="editmarker2" id="editlabel2"><strong>Add content/drag markers -</strong>select a marker to open the editor to add text or images</label>
+						 <div id="edit1" class="row section">
+							<input type="hidden" name="editmarker" id="editmarker2" value="drag" onclick="return manageMarkers(5)" />
+							<!-- <label for="editmarker2" id="editlabel2"><strong>Add content/drag markers -</strong>select a marker to open the editor to add text or images</label> -->
 							
 							<div id="texteditor">
 								<textarea name="editor1" id="editor1" cols="45" rows="10"></textarea>
 								<div id="savebutton" class="row">
-									<input type="button" value="Save marker info" id="savemarkerinfo" onclick="manageMarkers(2);manageMarkers(5)" />
+									<input type="hidden" value="Save marker info" id="savemarkerinfo" onclick="manageMarkers(2);manageMarkers(5)" />
 								</div>	
 							</div>
 
 						</div>
 
 						<div id="edit4" class="row section">
-							<input type="radio" name="editmarker" id="editmarker5" value="delete" onclick="manageMarkers(0)" />
-							<label for="editmarker5" id="editlabel5"><strong>View markers as they will appear on your map </strong></label>
-						</div>
+							<input type="hidden" name="editmarker" id="editmarker5" value="delete" onclick="manageMarkers(0)" />
+							<!-- <label for="editmarker5" id="editlabel5"><strong>View markers as they will appear on your map </strong></label> -->
+						</div> -->
 
 						<div class="row">				
 							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<p><a  onclick="manageMarkers(3)">Delete all markers</a></p>
+							<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
+							<button type="submit" class="filterbutton" onclick=" verwijderAlleMarkers(); return false;">Verwijder alle markers</button>
 						</div>
 					</form>
 				

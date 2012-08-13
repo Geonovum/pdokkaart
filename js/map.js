@@ -244,8 +244,18 @@ function init_pdok()
 	drawControl.featureAdded = function(feature){
 		   feature.attributes.title="Voer een titel in:";
 		   feature.attributes.description="Voer een omschrijving in:";
-		   startFeatureEdit(feature.id);
-		   stopDrawingPoint();
+		   //startFeatureEdit(feature.id);
+		   //stopDrawingPoint();
+		   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
+		   feature.popupFix = true;
+		   return false;
+	}
+	
+	dragControl.clickFeature = function(feature){
+		   //feature.attributes.title="Voer een titel in:";
+		   //feature.attributes.description="Voer een omschrijving in:";
+		   //startFeatureEdit(feature.id);
+		   //stopDrawingPoint();
 		   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
 		   feature.popupFix = true;
 		   return false;
@@ -306,7 +316,7 @@ function init_pdok()
 	
 	mapPDOKKaart.addControls(controls);
 
-	dragControl.activate();
+	//dragControl.activate();
 	
 	// only set the map center if not already done by lusc api
 	if (!mapPDOKKaart.getCenter()) {
@@ -320,24 +330,51 @@ function init_pdok()
 }
 
 function startDrawingPoint() {
+	
+	document.getElementById('editmarker4').checked = true;
+	
 	// before adding, remove all existing markers
     removePopups(markers);
-    markers.destroyFeatures();
+    //markers.destroyFeatures();
     $('#searchResults').html('')
 	$("#drawlocationhelp").fadeIn();
 	$("#cancelDrawingPoint").fadeIn();
-	dragControl.activate();
+	//dragControl.activate();
 	drawControl.activate();
 	var blockPanning = false; // to block panning while drawing
     drawControl.handler.stopDown = blockPanning;
     drawControl.handler.stopUp = blockPanning;    
 }
 
+function startEditingPoint() {
+	// before adding, remove all existing markers
+    removePopups(markers);
+    //markers.destroyFeatures();
+    $('#searchResults').html('')
+	$("#drawlocationhelp").fadeIn();
+	$("#cancelDrawingPoint").fadeIn();
+	//dragControl.activate();
+	drawControl.deactivate();
+	dragControl.activate();
+	var blockPanning = false; // to block panning while drawing
+    dragControl.handler.stopDown = blockPanning;
+    dragControl.handler.stopUp = blockPanning;    
+}
+
+
 function stopDrawingPoint() {
 	drawControl.deactivate();
 	$("#cancelDrawingPoint").fadeOut();	
 	$("#drawlocationhelp").fadeOut();	
 }
+
+function verwijderAlleMarkers(){
+
+	removePopups(markers);
+	markers.destroyFeatures();	
+
+}
+
 
 /****
     * For Proof of Concept only use some simple functions to perform searches. For advanced / full functionality: see Geozet and include / build on (Geo)Ext
@@ -795,8 +832,8 @@ function startFeatureEdit(ft_id) {
 }
 
 function stopFeatureEdit(ft_id) {
-	linkToMapOpened();
-
+	//linkToMapOpened();
+	 removePopups(markers);
 	// dragControl.deactivate();
 	// change style
 	// $("#markertitle").attr("readonly", "readonly");
