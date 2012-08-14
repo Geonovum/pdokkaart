@@ -44,7 +44,8 @@ function setmapbuilderoptions(){
 //not atlogin introduced to solve defect CQ8852
 function changeSize(size,notatlogin){
    //refer to map element	
-   var e = document.getElementById("map");
+    var e = document.getElementById("map");
+    debugger;
    //remove zoom controls
    var control;
    for(i=0; i < osMap.controls.length; i++){

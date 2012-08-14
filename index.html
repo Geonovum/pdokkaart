@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- <head>
     <script src="js/OpenLayers.js" type="text/javascript"></script>
@@ -12,102 +11,81 @@
     <div id="wizzard"></div>
 </body >
 </html> -->
-
-   <head>
-        <title>PDOK Kaart - Proof of Concept</title>       
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" > 
-        <!-- link rel="stylesheet" href="js/theme/default/style.css" type="text/css" / -->
-        <link rel="stylesheet" href="api/style.css" type="text/css" />
-		<!-- add Cantarell fonts, for CSS3 -->
-		<!-- <link href='http://fonts.googleapis.com/css?family=Cantarell:700italic,700,400italic,400' rel='stylesheet' type='text/css'> -->
-        <link rel="stylesheet" href="css/main.css" type="text/css" />
-		<link rel="stylesheet" href="css/accounts.css" type="text/css" />
-		<link rel="stylesheet" href="css/common.css" type="text/css" />
-		<link rel="stylesheet" href="css/print.css" type="text/css" />
-		<link rel="stylesheet" href="css/register.css" type="text/css" />
-		<link rel="stylesheet" href="css/reset.css" type="text/css" />
-        <!-- <script type="text/javascript" src="http://openlayers.org/dev/OpenLayers.js"></script> -->
-		<script type="text/javascript" src="js/OpenLayers.js"></script>
-        <script type="text/javascript" src="js/pdok-api.js"></script>
-        <script src="js/proj4js-compressed.js"></script>  
-        <script src="js/jquery.js"></script>
-        <script src="js/map.js"></script>
-		<!--<script type="text/javascript" src="js/openspace.js?key=6694613F8B469C97E0405F0AF160360A"></script>-->
-		<!--<script type="text/javascript" src="js/openspace.js"></script>-->
-		<script type="text/javascript" src="js/basicmap.js"></script>
-		<script type="text/javascript" src="js/searchbox.js"></script>
-		<script type="text/javascript" src="js/addmarkers.js"></script>
-		<script type="text/javascript" src="js/markersupport.js"></script>
-		<script type="text/javascript" src="js/menuhelper.js"></script>
-		<script type="text/javascript" src="js/common.js"></script>
-		<script type="text/javascript" src="js/addroutes.js"></script>
-		<script type="text/javascript" src="js/routesupport.js"></script>
-		<script type="text/javascript" src="js/ckeditor.js"></script>
-		<script type="text/javascript" src="js/interface.js"></script>
-		<script type="text/javascript" src="js/jspfunctions.js"></script>		
-    </head>
-    <body>
+<head>
+    <title>PDOK Kaart - Proof of Concept</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <!-- link rel="stylesheet" href="js/theme/default/style.css" type="text/css" / -->
+    <link rel="stylesheet" href="api/style.css" type="text/css" />
+    <!-- add Cantarell fonts, for CSS3 -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Cantarell:700italic,700,400italic,400' rel='stylesheet' type='text/css'> -->
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link rel="stylesheet" href="css/accounts.css" type="text/css" />
+    <link rel="stylesheet" href="css/common.css" type="text/css" />
+    <link rel="stylesheet" href="css/print.css" type="text/css" />
+    <link rel="stylesheet" href="css/register.css" type="text/css" />
+    <link rel="stylesheet" href="css/reset.css" type="text/css" />
+    <!-- <script type="text/javascript" src="http://openlayers.org/dev/OpenLayers.js"></script> -->
+    <script type="text/javascript" src="js/OpenLayers.js"></script>
+    <script type="text/javascript" src="js/pdok-api.js"></script>
+    <script src="js/proj4js-compressed.js"></script>
+    <script  type="text/javascript" src="js/jquery.js"></script>
+    <script src="js/map.js"></script>
+    <!--<script type="text/javascript" src="js/openspace.js?key=6694613F8B469C97E0405F0AF160360A"></script>-->
+    <!--<script type="text/javascript" src="js/openspace.js"></script>-->
+    <script type="text/javascript" src="js/basicmap.js"></script>
+    <script type="text/javascript" src="js/searchbox.js"></script>
+    <script type="text/javascript" src="js/addmarkers.js"></script>
+    <script type="text/javascript" src="js/markersupport.js"></script>
+    <script type="text/javascript" src="js/menuhelper.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/addroutes.js"></script>
+    <script type="text/javascript" src="js/routesupport.js"></script>
+    <script type="text/javascript" src="js/ckeditor.js"></script>
+    <script type="text/javascript" src="js/interface.js"></script>
+    <script type="text/javascript" src="js/jspfunctions.js"></script>
+    <script type="text/javascript" src="js/pdok_api.js"></script>
+</head>
+<body>
     <div id="container">
-		<div id="topbar">
-		    <h1 id="title">PDOK Kaart - Proof of Concept</h1>
-			<div id="search">
-				<form id="searchForm" name="searchForm">				
-					Zoek een locatie: <input id="searchLocation" type="text" value="" name="searchLocation" title="Postcode of plaatsnaam" size="30">
-					<button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">Zoek</button>
-				</form>
-			</div>
-	    </div>
-	    <div id="content">
-			<div id="map" class="functional"></div>
-		    <div id="leftcolumn">
-				<!-- Step 1 - Your map -->
-				<div id="step1" class="container active">
-					<!-- <h2><a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a><a href="mapbuilderhelp.html#1" class="help"><span>Help</span></a></h2> -->
-					<h2><a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
-					<form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);">
-						<div class="row">
-							<p>Do you want your map to be...</p>
-							<input type="radio" name="mapsize" id="mapsize1" value="small" onClick="changeSize(1,true)" 
-							
-							/>
-							<label for="mapsize1">small</label>
-							
-							<input type="radio" name="mapsize" id="mapsize2" value="medium" onClick="changeSize(2,true)" 
-							
-							/>
-							<label for="mapsize2">medium</label>
-							
-							<input type="radio" name="mapsize" id="mapsize3" value="large" onClick="changeSize(3,true)" 
-							
-								
-								
-									checked="checked"
-								
-							
-							/>
-							<label for="mapsize3">large</label>
-							
-						</div>
-						
-						<div class="row" id = "overviewdiv">
-							<p>Place an overview map in the corner?</p>
-							<input type="radio" name="overviewmap" id="overviewmap1" value="yes" onClick="addOverViewMap(1)"
-							
-							/>
-							<label for="overviewmap1">yes</label>
-							
-							<input type="radio" name="overviewmap" id="overviewmap2" value="no" onClick="addOverViewMap(2)"
-							
-								
-								
-									checked="checked"
-								
-							
-							/>
-							<label for="overviewmap2">no</label>
-						</div>
-						
-						<div class="row" id="gridcoordsdiv">
+        <div id="topbar">
+            <h1 id="title">
+                PDOK Kaart Wizzard</h1>
+            <div id="search">
+                <form id="searchForm" name="searchForm">
+                Zoek een locatie:
+                <input id="searchLocation" type="text" value="" name="searchLocation" title="Postcode of plaatsnaam"
+                    size="30">
+                <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
+                    Zoek</button>
+                </form>
+            </div>
+        </div>
+        <div id="content">
+            <div id="map" class="functional">
+            </div>
+            <div id="leftcolumn">
+                <!-- Step 1 - Your map -->
+                <div id="step1" class="container active">
+                    <!-- <h2><a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a><a href="mapbuilderhelp.html#1" class="help"><span>Help</span></a></h2> -->
+                    <h2>
+                        <a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
+                    <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);">
+                    <div class="row">
+                        <p>
+                            Hoe groot moet de kaart worden (in pixels):</p>
+                        <input type="radio" name="mapsize" id="mapsize1" value="small" onclick="pdok_api_map_resize(425,350)" />
+                        <label for="mapsize1">
+                            Klein (425x350)</label>
+                        <input type="radio" name="mapsize" id="mapsize2" value="medium" 
+                            onclick="pdok_api_map_resize(650,450)" checked="checked" />
+                        <label for="mapsize2">
+                            Middel (650x450)</label>
+                        <input type="radio" name="mapsize" id="mapsize3" value="large" onclick="pdok_api_map_resize(900,550)"
+                            checked="checked" />
+                        <label for="mapsize3">
+                            Groot (900x550)</label>
+                    </div>
+                    <!--<div class="row" id="gridcoordsdiv">
 							<p>Include co-ordinates (position cursor on map)?</p>
 							<input type="radio" name="gridcoordinates" id="gridcoordinates1" value="yes" onclick="addCoordinates()" 
 							
@@ -122,9 +100,8 @@
 							
 							/>
 							<label for="gridcoordinates2">no</label>
-						</div>
-						
-						<div class="row" id="searchboxdiv">
+						</div>-->
+                    <!--<div class="row" id="searchboxdiv">
 							<p>Add a search box to the map?</p>
 							<input type="radio" name="searchbox" id="searchbox1" value="yes" onclick="addSearchBox(1)"
 							
@@ -140,36 +117,34 @@
 							
 							/>
 							<label for="searchbox2">no</label>
-						</div>
-					</form>
-				</div>
-
-				<!-- Step 2 - Add markers -->
-				<div id="step2" class="container">
-					<!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a><a href="mapbuilderhelp.html#2" class="help"><span>Help</span></a></h2> -->
-					<!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2> -->
-					<h2><a  onclick="startDrawingPoint(); return goTo(2); " onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2>
-					<form action="#" name="addmarkers" id="addmarkers" onsubmit="return goTo(3); ">
-						<div class="section">
-						
-							<div id="edit3" class="row">
-								<input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){return startDrawingPoint();}" />
-								<label><strong>Voeg een marker toe aan de kaart</strong> - (selecteer een symbool uit de lijst en klik op de kaart)</label> 
-							</div>		
-							
-							<div class="row">
-						
-								<label for="selectset">Select...</label>
-							
-								<select name="selectset" id="selectset" onchange="return selectSet(this.options[this.selectedIndex].value);">
-									<option value="red" selected="selected">Red ones - Default</option>
-									<option value="green">Green ones</option>
-									<option value="blue">Blue ones</option>
-								</select>
-						
-							</div>
-							
-							<!-- <div id="mapmarkers" class="row red">
+						</div>-->
+                    </form>
+                </div>
+                <!-- Step 2 - Add markers -->
+                <div id="step2" class="container">
+                    <!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a><a href="mapbuilderhelp.html#2" class="help"><span>Help</span></a></h2> -->
+                    <!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2> -->
+                    <h2>
+                        <a onclick="startDrawingPoint(); return goTo(2); " onkeypress="return goTo(2);">Stap
+                            2: Voeg markers toe</a></h2>
+                    <form action="#" name="addmarkers" id="addmarkers" onsubmit="return goTo(3); ">
+                    <div class="section">
+                        <div id="edit3" class="row">
+                            <input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){return startDrawingPoint();}" />
+                            <label>
+                                <strong>Voeg een marker toe aan de kaart</strong> - (selecteer een symbool uit de
+                                lijst en klik op de kaart)</label>
+                        </div>
+                        <div class="row">
+                            <label for="selectset">
+                                Select...</label>
+                            <select name="selectset" id="selectset" onchange="return selectSet(this.options[this.selectedIndex].value);">
+                                <option value="red" selected="selected">Red ones - Default</option>
+                                <option value="green">Green ones</option>
+                                <option value="blue">Blue ones</option>
+                            </select>
+                        </div>
+                        <!-- <div id="mapmarkers" class="row red">
 							
 								<span id="mapmarker1">
 									<input type="radio" name="marker" id="marker1" value="marker1" onchange="if (this.checked){return setMarkerImage(1);}"/>
@@ -187,106 +162,102 @@
 								</span>
 							
 							</div> -->
-					
-							<div id="edit2" class="row">
-								<input type="radio" name="editmarker" id="editmarker3" value="delete" onclick= "if (this.checked){return startEditingPoint();}" />
-								<label for="editmarker3" id="editlabel3"><strong>Wijzig een marker op de kaart - </strong>  (selecteer een marker op de kaart en wijzig, verplaats of verwijder de marker)</label>
-							</div>
-						
-						</div>
-						
-						 <div id="edit1" class="row section">
-							<input type="hidden" name="editmarker" id="editmarker2" value="drag" onclick="return manageMarkers(5)" />
-							<!-- <label for="editmarker2" id="editlabel2"><strong>Add content/drag markers -</strong>select a marker to open the editor to add text or images</label> -->
-							
-							<div id="texteditor">
-								<textarea name="editor1" id="editor1" cols="45" rows="10"></textarea>
-								<div id="savebutton" class="row">
-									<input type="hidden" value="Save marker info" id="savemarkerinfo" onclick="manageMarkers(2);manageMarkers(5)" />
-								</div>	
-							</div>
-
-						</div>
-
-						<div id="edit4" class="row section">
-							<input type="hidden" name="editmarker" id="editmarker5" value="delete" onclick="manageMarkers(0)" />
-							<!-- <label for="editmarker5" id="editlabel5"><strong>View markers as they will appear on your map </strong></label> -->
-						</div> -->
-
-						<div class="row">				
-							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<button type="submit" class="filterbutton" onclick=" verwijderAlleMarkers(); return false;">Verwijder alle markers</button>
-						</div>
-					</form>
-				
-				</div>		
-
-				<!-- Step 3 - Add routes -->
-				
-				<div id="step3" class="container">
-					
-					<!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
-					<h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a></h2>
-					<form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
-					<strong>	
-					<div class="row">
-					  <label>             	
-						<input type="radio" name="radiogroup_routes" id="radio_routes_1" value="radio_makeRoutes" onclick="manageRoutes(1)">
-						  make routes (single click to start, double to finish)
-					  </label>
-					</div>
-					  
-					<div class="row">			  
-					  <label>
-						<input type="radio" name="radiogroup_routes" id= "radio_routes_2" value="radio_editRoutes" onclick="manageRoutes(2)">
-						  select and edit routes
-					  </label>
-					</div>	  
-					
-					<div class="row">				
-					  <label>
-					   <input type="radio" name="radiogroup_routes" id= "radio_routes_3" value="radio_deleteRoutes" onclick="manageRoutes(3)">
-						 select and delete individual routes</label>
-					</div>	
-					
-					<div class="row">	
-					  <label>
-					  <input type="radio" name="radiogroup_routes" id= "radio_routes_4" value="radio_reverseRoutes" onclick="manageRoutes(4)">
-					   select and reverse routes</label>
-					</div>
-					
-					<div class="row">				
-					 <label>
-					 <input type="radio" name="radiogroup_routes"  id="radio_routes_5" value="radio_fixRoutes" onclick="manageRoutes(5)">
-					   delete all</label>
-					 </div>
-					 <div class="row">				
-					 <label>
-					 <input type="radio" name="radiogroup_routes"  id="radio_routes_6" value="radio_fixRoutes" onclick="manageRoutes(6)">
-					   Finish - view routes as they will appear on your map</label>
-					 </div>	 			 
-					 </strong>
-					</form>
-				
-				</div>
-
-				<!-- Step 4 - Save and download code -->
-				
-				<div id="step4" class="container">
-					
-					<!-- <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2> -->
-					<h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a></h2>
-					<form action="#" name="savecode" id="savecode" onsubmit="return false;">
-						<div class="row">
-							<p>If you&#39;re happy with the map on the left then <strong>collect your code</strong>.</p>
-						</div>
-						<div class="row right">
-							<button onclick="return generatecode();" onkeypress="return generatecode();">Collect code</button>
-						</div>		
-					</form>
-				</div>
-        <!--                 <h3 id="importfile"><input type="file" id="files" name="files[]" /><output id="list"></output></h3>
+                        <div id="edit2" class="row">
+                            <input type="radio" name="editmarker" id="editmarker3" value="delete" onclick="if (this.checked){return startEditingPoint();}" />
+                            <label for="editmarker3" id="editlabel3">
+                                <strong>Wijzig een marker op de kaart - </strong>(selecteer een marker op de kaart
+                                en wijzig, verplaats of verwijder de marker)</label>
+                        </div>
+                    </div>
+                    <div id="edit1" class="row section">
+                        <input type="hidden" name="editmarker" id="editmarker2" value="drag" onclick="return manageMarkers(5)" />
+                        <!-- <label for="editmarker2" id="editlabel2"><strong>Add content/drag markers -</strong>select a marker to open the editor to add text or images</label> -->
+                        <div id="texteditor">
+                            <textarea name="editor1" id="editor1" cols="45" rows="10"></textarea>
+                            <div id="savebutton" class="row">
+                                <input type="hidden" value="Save marker info" id="savemarkerinfo" onclick="manageMarkers(2);manageMarkers(5)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="edit4" class="row section">
+                        <input type="hidden" name="editmarker" id="editmarker5" value="delete" onclick="manageMarkers(0)" />
+                        <!-- <label for="editmarker5" id="editlabel5"><strong>View markers as they will appear on your map </strong></label> -->
+                    </div>
+                    -->
+                    <div class="row">
+                        <!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
+                        <!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
+                        <button type="submit" class="filterbutton" onclick=" verwijderAlleMarkers(); return false;">
+                            Verwijder alle markers</button>
+                    </div>
+                    </form>
+                </div>
+                <!-- Step 3 - Add routes -->
+                <div id="step3" class="container">
+                    <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
+                    <h2>
+                        <a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a></h2>
+                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
+                    <strong>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_1" value="radio_makeRoutes"
+                                    onclick="manageRoutes(1)">
+                                make routes (single click to start, double to finish)
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_2" value="radio_editRoutes"
+                                    onclick="manageRoutes(2)">
+                                select and edit routes
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_3" value="radio_deleteRoutes"
+                                    onclick="manageRoutes(3)">
+                                select and delete individual routes</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_4" value="radio_reverseRoutes"
+                                    onclick="manageRoutes(4)">
+                                select and reverse routes</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_5" value="radio_fixRoutes"
+                                    onclick="manageRoutes(5)">
+                                delete all</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_6" value="radio_fixRoutes"
+                                    onclick="manageRoutes(6)">
+                                Finish - view routes as they will appear on your map</label>
+                        </div>
+                    </strong>
+                    </form>
+                </div>
+                <!-- Step 4 - Save and download code -->
+                <div id="step4" class="container">
+                    <!-- <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2> -->
+                    <h2>
+                        <a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer
+                            code</a></h2>
+                    <form action="#" name="savecode" id="savecode" onsubmit="return false;">
+                    <div class="row">
+                        <p>
+                            If you&#39;re happy with the map on the left then <strong>collect your code</strong>.</p>
+                    </div>
+                    <div class="row right">
+                        <button onclick="return generatecode();" onkeypress="return generatecode();">
+                            Collect code</button>
+                    </div>
+                    </form>
+                </div>
+                <!--                 <h3 id="importfile"><input type="file" id="files" name="files[]" /><output id="list"></output></h3>
                            <script>
                             function handleFileSelect(evt) {
                               var files = evt.target.files; // FileList object
@@ -321,15 +292,13 @@
                           
                             document.getElementById('files').addEventListener('change', handleFileSelect, false);
                           </script>  -->
-			</div>
-				<!--<p id="searchResults">
+            </div>
+            <!--<p id="searchResults">
 				</p> -->
-		    
-	    </div>
+        </div>
     </div>
-	<script>
-		init_pdok();
-	</script>
-    </body>
+    <script>
+        init_pdok();
+    </script>
+</body>
 </html>
-
