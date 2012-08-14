@@ -323,10 +323,10 @@ function init_pdok()
 	 	mapPDOKKaart.setCenter(new OpenLayers.LonLat(155000,463000), 3);
 	}	
 	
-	var pdokLayers = lusc.getLayers();
+	/* var pdokLayers = lusc.getLayers();
 	for (var l in pdokLayers) {
 		$("#pdokLayerSelector").append("<option value='"+pdokLayers[l]+"'>"+pdokLayers[l]+"</option>");
-	}
+	} */
 }
 
 function startDrawingPoint() {

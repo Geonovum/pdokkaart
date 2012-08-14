@@ -145,7 +145,7 @@ Lusc.Api = function (config) {
     * @private
     * Look up array, having the supported layers from XML file.
     */
-    this.supportedLayers = defaultLayers();
+    //this.supportedLayers = defaultLayers();
     
     //==================================================================
     //function to read the default layers from a serverside stored XML file
@@ -204,7 +204,7 @@ Lusc.Api = function (config) {
     //==================================================================
     // function to load the XML file from a location.
     //==================================================================
-    function loadDoc(url) {
+    /* function loadDoc(url) {
         var xmlhttp = null;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -216,8 +216,23 @@ Lusc.Api = function (config) {
         xmlhttp.open("GET", url, false);
         xmlhttp.send();
         return xmlhttp.responseXML;
+    } */
+	
+	function loadDoc(url) {
+	$.ajax({
+    //url: url,
+	url: "http://www.w3schools.com/xml/cd_catalog.xml",
+	//url: "file:///D:/repository/xml/default-layers.xml",
+    type: 'GET',
+    success: function(res) {
+        //var headline = $(res.responseText).find('a.tsh').text();
+        //alert(headline);
+		alert (res.responseText);
+		//return res.responseXML;
     }
-
+	})}; 
+	
+	
     //==================================================================
     // functie om de noodzakelijke waarden uit de de XML te halen voor de layers
     //==================================================================
@@ -413,12 +428,12 @@ Lusc.Api.prototype.createOlMap = function () {
             olMap.setBaseLayer(layers[layerIndex]);
         }
     }
-    function showTOP10() {
+    /* function showTOP10() {
         var layers = olMap.getLayersByName("TOP10NL");
         for (var layerIndex = 0; layerIndex < layers.length; layerIndex++) {
             olMap.setBaseLayer(layers[layerIndex]);
         }
-    }
+    } */
     if (this.ls == true) {
         function showLufo() {
             alert("Helaas, er zijn nog geen\nluchtfoto's beschikbaar binnen PDOK'");
@@ -469,6 +484,7 @@ Lusc.Api.prototype.createOlMap = function () {
         }
 	);
     olMap.addLayers([lyrBRTAchtergrondkaart, lyrTOP10NL]);
+	 olMap.addLayers([lyrBRTAchtergrondkaart]);
 
     //====================================================================================
     // select layers from default_layers.xml which are added in the url of the mapcomposer
