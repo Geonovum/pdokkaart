@@ -12,7 +12,7 @@ function goTo(step) {
 	
 	//make sure correct radio states for each step
 	if (step == 2){		
-		document.getElementById("radio_routes_6").checked = "false";
+		//document.getElementById("radio_routes_6").checked = "false";
 		document.getElementById("editmarker5").checked = "true";
 	}
 	
