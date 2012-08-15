@@ -5,7 +5,7 @@ var mapPDOKKaart, markers, activeFeature, dragControl, drawControl, layerSwitche
 var pdokachtergrondkaart;
 
 // The proxyhost is needed for the geocoder
-OpenLayers.ProxyHost = "../xmldata.php?url=";
+//OpenLayers.ProxyHost = "../xmldata.php?url=";
 
 // Include the RD definition
 Proj4js.defs["EPSG:28992"] = "+title=Amersfoort / RD New +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +no_defs";
@@ -167,8 +167,9 @@ function init_pdok()
 
 	// initiate the Lusc API object
 	var o = OpenLayers.Util.getParameters();
-    var lusc = new Lusc.Api(o);
-
+    //var lusc = new Lusc.Api(o);
+	lusc = new Lusc.Api(o);
+	
 	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
 	mapPDOKKaart = lusc.getMapObject();
 	//mapPDOKKaart = new OpenLayers.Map('map');
@@ -394,7 +395,7 @@ gazetteerConfig.gazetteer = {url:"http://geodata.nationaalgeoregister.nl/geocode
 // Thijs: code based on Geozet.widgets.Search
 function searchLocationChanged() {
 	var searchString = jQuery("#searchLocation").val();
-    var params = {request: 'geocode'};
+    /* var params = {request: 'geocode'};
     params[gazetteerConfig.gazetteer.param] = searchString;
     if (searchString && searchString.length>0){            
         OpenLayers.Request.GET({
@@ -404,9 +405,54 @@ function searchLocationChanged() {
             success: handleGeocodeResponse
             // failure: this.handleError
         });
-    }
+    } */
+	if (searchString && searchString.length>0){ 
+		//var xml = lusc.loadDoc("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
+		$.ajax({
+				url: "http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString,
+				//url: "http://www.w3schools.com/xml/cd_catalog.xml",
+				//url: "file:///D:/repository/xml/default-layers.xml",
+				dataType: "xml",
+				type: 'GET',
+				success: function(res) {
+					//var headline = $(res.responseText).find('a.tsh').text();
+					//alert(headline);
+					//alert (res);
+					if (window.DOMParser)
+						  {
+						  parser=new DOMParser();
+						  var xmlDoc=parser.parseFromString(res.responseText,"text/xml");
+						  }
+					else // Internet Explorer
+						  {
+						  var xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+						  xmlDoc.async=false;
+						  xmlDoc.loadXML(res.responseText);
+						  };
+					//$(xmlDoc).find('pos').each(function(){
+						/* var id = $(this).attr('id');
+						var title = $(this).find('title').text();
+						var url = $(this).find('url').text();
+						$('<div class="items" id="link_'+id+'"></div>').html('<a href="'+url+'">'+title+'</a>').appendTo('#page-wrap');
+						$(this).find('desc').each(function(){
+							var brief = $(this).find('brief').text();
+							var long = $(this).find('long').text();
+							$('<div class="brief"></div>').html(brief).appendTo('#link_'+id);
+							$('<div class="long"></div>').html(long).appendTo('#link_'+id);
+						}); */
+						
+					//var x = xmlDoc.getElementsByTagNameNS("gml","pos");
+					var x = xmlDoc.getElementsByTagName('gml:pos');			
+					//for (i=0;i<x.length;i++) {	
+					//	alert (x[i].childNodes[0].nodeValue);
+					//};
+					var str = x[0].childNodes[0].nodeValue;
+					var n=str.split(" ");
+					mapPDOKKaart.setCenter(new OpenLayers.LonLat(n[0],n[1]), 7);	
+				}
+			})};
     return false;
-}
+};
 
 /** Thijs: code based on Geozet.widgets.Search
 	 * params: 
