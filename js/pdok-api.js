@@ -218,21 +218,6 @@ Lusc.Api = function (config) {
         return xmlhttp.responseXML;
     } */
 	
-	function loadDoc(url) {
-	$.ajax({
-    //url: url,
-	url: "http://www.w3schools.com/xml/cd_catalog.xml",
-	//url: "file:///D:/repository/xml/default-layers.xml",
-    type: 'GET',
-    success: function(res) {
-        //var headline = $(res.responseText).find('a.tsh').text();
-        //alert(headline);
-		alert (res.responseText);
-		//return res.responseXML;
-    }
-	})}; 
-	
-	
     //==================================================================
     // functie om de noodzakelijke waarden uit de de XML te halen voor de layers
     //==================================================================
@@ -483,7 +468,7 @@ Lusc.Api.prototype.createOlMap = function () {
             isBaseLayer: true
         }
 	);
-    olMap.addLayers([lyrBRTAchtergrondkaart, lyrTOP10NL]);
+    //olMap.addLayers([lyrBRTAchtergrondkaart, lyrTOP10NL]);
 	 olMap.addLayers([lyrBRTAchtergrondkaart]);
 
     //====================================================================================
@@ -835,6 +820,33 @@ Lusc.Api.prototype.reprojectWGS84toRD = function (lat, lon) {
         );
     return (pointRD);
 }
+
+Lusc.Api.prototype.loadDoc = function (url) {
+	$.ajax({
+    url: url,
+	//url: "http://www.w3schools.com/xml/cd_catalog.xml",
+	//url: "file:///D:/repository/xml/default-layers.xml",
+	dataType: "xml",
+    type: 'GET',
+    success: function(res) {
+        //var headline = $(res.responseText).find('a.tsh').text();
+        //alert(headline);
+		//alert (res);
+		if (window.DOMParser)
+			  {
+			  parser=new DOMParser();
+			  var xmlDoc=parser.parseFromString(res.responseText,"text/xml");
+			  }
+		else // Internet Explorer
+			  {
+			  var xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+			  xmlDoc.async=false;
+			  xmlDoc.loadXML(res.responseText);
+			  };
+		return xmlDoc;
+    }
+	})
+	}; 
 
 Lusc.Api.prototype.addMarker = function (mloc, mt, titel, tekst, externalGraphic, pointRadius) {
     if (mloc != null) {
