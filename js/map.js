@@ -266,7 +266,7 @@ function init_pdok()
 	layerSwitcher = new OpenLayers.Control.LayerSwitcher()
 	
 	controls = [
-		new OpenLayers.Control.MousePosition()
+		//new OpenLayers.Control.MousePosition()
 		, dragControl
 		, drawControl
 		, layerSwitcher
@@ -406,7 +406,9 @@ function searchLocationChanged() {
             // failure: this.handleError
         });
     } */
-	if (searchString && searchString.length>0){ 
+	if (searchString && searchString.length > 0) {
+	    alert("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
+	    debugger;
 		//var xml = lusc.loadDoc("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
 		$.ajax({
 				url: "http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString,
