@@ -649,7 +649,7 @@ function addOverlay(layer) {
 	mapPDOKKaart.addLayer(layer);
 }
 
-function linkToMapOpened(permalink){
+function linkToMapOpened(permalink) {
 	if (!permalink) permalink = document.location.href;
 	// $('#drawlocation').hide();	
 	$('#createlink').fadeIn();

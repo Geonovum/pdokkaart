@@ -189,7 +189,8 @@ li
 
 #createlink {
 	display: none;
-	position: absolute;
+    /* position: absolute; was de oorspronkelijke */
+    position: fixed;
 	left: 350px;
 	top: 0px;
 	width: 420px;
