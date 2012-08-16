@@ -266,8 +266,8 @@ function init_pdok()
 	layerSwitcher = new OpenLayers.Control.LayerSwitcher()
 	
 	controls = [
-		//new OpenLayers.Control.MousePosition()
-		, dragControl
+		new OpenLayers.Control.MousePosition()
+	    , dragControl
 		, drawControl
 		, layerSwitcher
 		// , new OpenLayers.Control.KeyboardDefaults() // don't use KeyboardDefaults, since this may interfere with other functionality on a page
@@ -337,11 +337,11 @@ function startDrawingPoint() {
 	// before adding, remove all existing markers
     removePopups(markers);
     //markers.destroyFeatures();
-    $('#searchResults').html('')
+    $('#searchResults').html('');
 	$("#drawlocationhelp").fadeIn();
 	$("#cancelDrawingPoint").fadeIn();
 	//dragControl.activate();
-	drawControl.activate();
+    drawControl.activate();
 	var blockPanning = false; // to block panning while drawing
     drawControl.handler.stopDown = blockPanning;
     drawControl.handler.stopUp = blockPanning;    
