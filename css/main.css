@@ -183,6 +183,16 @@ li
 	top: 0px;
 }
 
+#geocodeerresult {
+	display: none;
+	width: 350px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	height: 500px;
+	z-index: 2000;
+}
+
 #cancelDrawingPoint {
 	display: none;
 }

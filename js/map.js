@@ -407,8 +407,8 @@ function searchLocationChanged() {
         });
     } */
 	if (searchString && searchString.length > 0) {
-	    alert("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
-	    debugger;
+	    //alert("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
+	    //debugger;
 		//var xml = lusc.loadDoc("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
 		$.ajax({
 				url: "http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString,
@@ -450,7 +450,9 @@ function searchLocationChanged() {
 					//};
 					var str = x[0].childNodes[0].nodeValue;
 					var n=str.split(" ");
-					mapPDOKKaart.setCenter(new OpenLayers.LonLat(n[0],n[1]), 7);	
+					mapPDOKKaart.setCenter(new OpenLayers.LonLat(n[0],n[1]), 7);
+					
+					$('#geocodeerresult').fadeIn();		
 				}
 			})};
     return false;

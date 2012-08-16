@@ -44,7 +44,8 @@
                 Zoek een locatie:
                 <input id="searchLocation" type="text" value="" name="searchLocation" title="Postcode of plaatsnaam"
                     size="30" />
-                <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
+                <!-- <button type="submit" class="filterbutton" onclick="jQuery('.popInWindow').fadeOut('fast');searchLocationChanged();return false;"> -->
+				<button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
                     Zoek</button>
                 </form>
             </div>
@@ -52,6 +53,10 @@
         <div id="content">
             <div id="map" class="functional">
             </div>
+			<div id="geocodeerresult" onclick="$(this).fadeOut('fast')" class="popInWindow">
+				<span id="closedrawlocation" onclick="$('#geocodeerresult').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>
+				Hier komen de resultaten van de geocodeerservice
+			</div>
             <div id="leftcolumn">
                 <!-- Step 1 - Your map -->
                 <div id="step1" class="container active">
@@ -208,7 +213,8 @@
                             Druk op de knop genereer om de code te genereren.</p>
                     </div>
                     <div class="row right">
-                        <button onclick="jQuery('.popInWindow').fadeOut('fast');linkToMapOpened(document.location.href);return false;"
+                        <!-- <button onclick="jQuery('.popInWindow').fadeOut('fast');linkToMapOpened(document.location.href);return false;" -->
+						<button onclick="linkToMapOpened(document.location.href);return false;"
                             onkeypress="return generatecode();">
                             Genereer</button>
                     </div>
