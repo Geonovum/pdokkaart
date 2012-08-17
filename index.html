@@ -16,6 +16,7 @@
     <script type="text/javascript" src="js/OpenLayers.js"></script>
     <script type="text/javascript" src="js/pdok-api.js"></script>
     <script type="text/javascript" src="js/pdok_api.js"></script>
+
     <script type="text/javascript" src="js/proj4js-compressed.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
@@ -51,8 +52,7 @@
                 Zoek een locatie:
                 <input id="searchLocation" type="text" value="" name="searchLocation" title="Postcode of plaatsnaam"
                     size="30" />
-                <!-- <button type="submit" class="filterbutton" onclick="jQuery('.popInWindow').fadeOut('fast');searchLocationChanged();return false;"> -->
-				<button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
+                <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
                     Zoek</button>
                 </form>
             </div>
@@ -60,10 +60,6 @@
         <div id="content">
             <div id="map" class="functional">
             </div>
-			<div id="geocodeerresult" onclick="$(this).fadeOut('fast')" class="popInWindow">
-				<span id="closedrawlocation" onclick="$('#geocodeerresult').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>
-				Hier komen de resultaten van de geocodeerservice
-			</div>
             <div id="leftcolumn">
                 <!-- Step 1 - Your map -->
                 <div id="step1" class="container active">
@@ -220,75 +216,92 @@
                             Druk op de knop genereer om de code te genereren.</p>
                     </div>
                     <div class="row right">
-                        <!-- <button onclick="jQuery('.popInWindow').fadeOut('fast');linkToMapOpened(document.location.href);return false;" -->
-						<button onclick="linkToMapOpened(document.location.href);return false;"
+                        <button onclick="linkToMapOpened(document.location.href);return false;"
                             onkeypress="return generatecode();">
-                            Genereer</button>
+                            Genereer</button><br />
+                        <h4>Als URL</h4><br />
+                        Link losse kaart:<br />
+                        <input type="text" value="" id="embedlink" name="embedlink" size="80" onclick="linkToMapOpened(document.location.href)" />
+                        <a href="#" id="A1" onclick="linkToMapOpened(document.location.href)">
+                            <img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
+                        Embed HTML iframe:<br />
+                        <input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="80"
+                            onclick="linkToMapOpened(document.location.href)" /><br />
+                        Embed HTML Object tag:<br />
+                        <input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="80"
+                            onclick="linkToMapOpened(document.location.href)" /><br />
+                        <br />
+                        <h4>Als broncode</h4>
+                        <br />
+                        In de HTML Head-sectie plaatsen:<br />
+                        <textarea id="scriptcodeHead" cols="80" rows="12" onclick="linkToMapOpened(document.location.href)"></textarea></br>
+                        In de HTML Body-sectie plaatsen:<br />
+                        <textarea id="scriptcodeBody" cols="80" rows="4" onclick="linkToMapOpened(document.location.href)"></textarea><br />
+                        <!-- DIV voor de codegenerator resultaat -->
+                        <div id="createlink" class="popInWindow">
+                            <span id="closecreatelink" onclick="$('#createlink').hide()" class="closeWindow"><a
+                                href="#" onclick="return false;">
+                                <img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten" /></a></span>
+                            Link losse kaart:<br />
+                            <!--input type="text" value="" id="embedlink" name="embedlink" size="30" onclick="linkToMapOpened(document.location.href)" /-->
+                            <a href="#" id="sendemaillink" onclick="linkToMapOpened(document.location.href)">
+                                <img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
+                            Embed HTML iframe:<br />
+                            <!--input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="30"
+                                    onclick="linkToMapOpened(document.location.href)" /><br /-->
+                            Embed HTML Object tag:<br />
+                            <!--input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="30"
+                                    onclick="linkToMapOpened(document.location.href)" /><br /-->
+                            <!-- Directe link deze kaart:<br/><input type="text" value="" id="emaillink" name="emaillink" size="30" onclick="linkToMapOpened(document.location.href)"/><br/> -->
+                            Afmetingen kaart:<br />
+                            <input type="radio" value="small" name="mapsizechoice" onchange="linkToMapOpened(document.location.href)" />
+                            klein
+                            <input type="radio" value="medium" name="mapsizechoice" checked="checked" onchange="linkToMapOpened(document.location.href)" />
+                            middel
+                            <input type="radio" value="large" name="mapsizechoice" onchange="linkToMapOpened(document.location.href)" />
+                            groot
+                            <br />
+                            <img class="defaultmarker" src="js/img/marker.png">Locatie tonen op kaart:
+                            <input type="checkbox" checked="checked" id="showmarker" name="showmarker" /><br />
+                            <div id="createscriptcode">
+                                <h4>
+                                    Als broncode include in webpagina:</h4>
+                                In de HTML Head-sectie plaatsen:<br />
+                                <!--textarea id="scriptcodeHead" cols="50" rows="12" onclick="linkToMapOpened(document.location.href)"></textarea></br-->
+                                In de HTML Body-sectie plaatsen:<br />
+                                <!--textarea id="scriptcodeBody" cols="50" rows="4" onclick="linkToMapOpened(document.location.href)"></textarea><br /-->
+                                <h5>
+                                    Editor</h5>
+                                Editor inschakelen:
+                                <input type="checkbox" checked="unchecked" id="enableEditor" name="enableEditor" /><br />
+                                Geometrie voor editor:
+                                <select id="editorGeomType">
+                                    <option value="point" selected="selected">Punt</option>
+                                    <option value="line">Lijn</option>
+                                    <option value="polygon">Vlak</option>
+                                    <option value="bbox">Rechthoek / box</option>
+                                </select><br />
+                                Formulier Element ID's:<br />
+                                Voor X:
+                                <input type="text" value="x_coordinaat" id="x_coord_element_id" name="x_coord_element_id"
+                                    size="12" />
+                                en Y:<input type="text" value="y_coordinaat" id="y_coord_element_id" name="y_coord_element_id"
+                                    size="12" />
+                                OF:<br />
+                                Voor geometrie:
+                                <input type="text" value="" id="geometrie_element_id" name="geometrie_element_id"
+                                    size="12" /><br />
+                                <br />
+                                Editor mogelijk tussen zoomniveaus:
+                                <input type="text" value="0" id="minZoomEditor" name="minZoomEditor" size="2" />
+                                en
+                                <input type="text" value="13" id="maxZoomEditor" name="maxZoomEditor" size="2" />
+                            </div>
+                        </div>
+                        <!-- Einde codegenerator resultaat -->
                     </div>
                     </form>
                 </div>
-                <!-- DIV voor de codegenerator resultaat -->
-                <div id="createlink" class="popInWindow">
-                    <span id="closecreatelink" onclick="$('#createlink').hide()" class="closeWindow"><a
-                        href="#" onclick="return false;">
-                        <img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten" /></a></span>
-                    Link losse kaart:<br />
-                    <input type="text" value="" id="embedlink" name="embedlink" size="30" onclick="linkToMapOpened(document.location.href)" />
-                    <a href="#" id="sendemaillink" onclick="linkToMapOpened(document.location.href)">
-                        <img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
-                    Embed HTML iframe:<br />
-                    <input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="30"
-                        onclick="linkToMapOpened(document.location.href)" /><br />
-                    Embed HTML Object tag:<br />
-                    <input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="30"
-                        onclick="linkToMapOpened(document.location.href)" /><br />
-                    <!-- Directe link deze kaart:<br/><input type="text" value="" id="emaillink" name="emaillink" size="30" onclick="linkToMapOpened(document.location.href)"/><br/> -->
-                    Afmetingen kaart:<br />
-                    <input type="radio" value="small" name="mapsizechoice" onchange="linkToMapOpened(document.location.href)" />
-                    klein
-                    <input type="radio" value="medium" name="mapsizechoice" checked="checked" onchange="linkToMapOpened(document.location.href)" />
-                    middel
-                    <input type="radio" value="large" name="mapsizechoice" onchange="linkToMapOpened(document.location.href)" />
-                    groot
-                    <br />
-                    <img class="defaultmarker" src="js/img/marker.png">Locatie tonen op kaart:
-                    <input type="checkbox" checked="checked" id="showmarker" name="showmarker" /><br />
-                    <div id="createscriptcode">
-                        <h4>
-                            Broncode include in webpagina:</h4>
-                        In de HTML Head-sectie plaatsen:<br />
-                        <textarea id="scriptcodeHead" cols="50" rows="12" onclick="linkToMapOpened(document.location.href)"></textarea></br>
-                        In de HTML Body-sectie plaatsen:<br />
-                        <textarea id="scriptcodeBody" cols="50" rows="4" onclick="linkToMapOpened(document.location.href)"></textarea><br />
-                        <h5>
-                            Editor</h5>
-                        Editor inschakelen:
-                        <input type="checkbox" checked="unchecked" id="enableEditor" name="enableEditor" /><br />
-                        Geometrie voor editor:
-                        <select id="editorGeomType">
-                            <option value="point" selected="selected">Punt</option>
-                            <option value="line">Lijn</option>
-                            <option value="polygon">Vlak</option>
-                            <option value="bbox">Rechthoek / box</option>
-                        </select><br />
-                        Formulier Element ID's:<br />
-                        Voor X:
-                        <input type="text" value="x_coordinaat" id="x_coord_element_id" name="x_coord_element_id"
-                            size="12" />
-                        en Y:<input type="text" value="y_coordinaat" id="y_coord_element_id" name="y_coord_element_id"
-                            size="12" />
-                        OF:<br />
-                        Voor geometrie:
-                        <input type="text" value="" id="geometrie_element_id" name="geometrie_element_id"
-                            size="12" /><br />
-                        <br />
-                        Editor mogelijk tussen zoomniveaus:
-                        <input type="text" value="0" id="minZoomEditor" name="minZoomEditor" size="2" />
-                        en
-                        <input type="text" value="13" id="maxZoomEditor" name="maxZoomEditor" size="2" />
-                    </div>
-                </div>
-                <!-- Einde codegenerator resultaat -->
                 <!--                 <h3 id="importfile"><input type="file" id="files" name="files[]" /><output id="list"></output></h3>
                            <script>
                             function handleFileSelect(evt) {
@@ -329,7 +342,7 @@
 				</p> -->
         </div>
     </div>
-    <script>
+    <script type="text/javascript">
         init_pdok();
     </script>
 </body>
