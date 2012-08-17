@@ -19,6 +19,13 @@
  * Inherits from:
  *  - <OpenLayers.Format.XML>
  */
+ 
+Geozet = {}; 
+
+Geozet.Format = {};
+ 
+Geozet.Format.XLSLUS = {};
+ 
 Geozet.Format.XLSLUS = OpenLayers.Class(OpenLayers.Format.XML, {
     
     /**
@@ -31,15 +38,16 @@ Geozet.Format.XLSLUS = OpenLayers.Class(OpenLayers.Format.XML, {
      * APIProperty: version
      * {String} Specify a version string if one is known.
      */
-    version: null,
+    //version: null,
+	version: "1",
     
     /**
      * Property: parser
      * {Object} Instance of the versioned parser.  Cached for multiple read and
      *     write calls of the same version.
      */
-    parser: null,
-
+    //parser: null,
+	parser: Geozet.Format.XLSLUS.v1,
     /**
      * Constructor: Geozet.Format.XLSLUS
      * Create a new parser for XLSLUS.
@@ -67,9 +75,9 @@ Geozet.Format.XLSLUS = OpenLayers.Class(OpenLayers.Format.XML, {
         var version = (options && options.version) ||
                       this.version || this.defaultVersion;
         if(!this.parser || this.parser.VERSION != version) {
-            var format = Geozet.Format.XLSLUS[
+             var format = Geozet.Format.XLSLUS[
                 "v" + version.replace(/\./g, "_")
-            ];
+            ]; 
             if(!format) {
                 throw "Can't find a XLSLUS parser for version " +
                       version;
@@ -98,7 +106,7 @@ Geozet.Format.XLSLUS = OpenLayers.Class(OpenLayers.Format.XML, {
         if(!this.parser || this.parser.VERSION != version) {
             var format = Geozet.Format.XLSLUS[
                 "v" + version.replace(/\./g, "_")
-            ];
+            ]; 
             if(!format) {
                 throw "Can't find a XLSLUS parser for version " +
                       version;
@@ -141,9 +149,9 @@ Geozet.Format.XLSLUS = OpenLayers.Class(OpenLayers.Format.XML, {
             }
         }
         if(!this.parser || this.parser.VERSION != version) {
-            var format = Geozet.Format.XLSLUS[
+             var format = Geozet.Format.XLSLUS[
                 "v" + version.replace(/\./g, "_")
-            ];
+            ]; 
             if(!format) {
                 throw "Can't find a XLSLUS parser for version " +
                       version;
@@ -152,8 +160,8 @@ Geozet.Format.XLSLUS = OpenLayers.Class(OpenLayers.Format.XML, {
         }
         var xlslus = this.parser.read(data);
         return xlslus;
-    },
+    } //,
 
-    CLASS_NAME: "Geozet.Format.XLSLUS" 
+    //CLASS_NAME: "Geozet.Format.XLSLUS" 
 });
 

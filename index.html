@@ -37,8 +37,8 @@
 	<script type="text/javascript" src="js/Geozet.js"></script>
 	<script type="text/javascript" src="js/Geozet/Format/XLSLUS.js"></script>
 	<script type="text/javascript" src="js/Geozet/Format/XLSAddress.js"></script>
-	<!-- <script type="text/javascript" src="js/v1.js"></script>
-    <script type="text/javascript" src="js/v1_1_0.js"></script> -->
+	<script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1.js"></script>
+    <!--<script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1_1_0.js"></script> -->
     
     
 </head>
@@ -216,8 +216,9 @@
                             Druk op de knop genereer om de code te genereren.</p>
                     </div>
                     <div class="row right">
-                        <button onclick="linkToMapOpened(document.location.href);return false;"
-                            onkeypress="return generatecode();">
+                        <!-- <button onclick="linkToMapOpened(document.location.href);return false;"
+                            onkeypress="return generatecode();"> -->
+							<button onclick="generatecode();return false;">
                             Genereer</button><br />
                         <h4>Als URL</h4><br />
                         Link losse kaart:<br />
