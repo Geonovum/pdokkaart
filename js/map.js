@@ -452,7 +452,10 @@ function searchLocationChanged() {
 					var n=str.split(" ");
 					mapPDOKKaart.setCenter(new OpenLayers.LonLat(n[0],n[1]), 7);
 					
-					$('#geocodeerresult').fadeIn();		
+					$('#geocodeerresult').fadeIn();
+
+					handleGeocodeResponse(res, false);	
+					
 				}
 			})};
     return false;
@@ -472,14 +475,14 @@ function searchLocationChanged() {
 function handleGeocodeResponse(req, returnCoords){
     removePopups(markers);
     markers.destroyFeatures();
-    $('#searchResults').html('').show();
+   /*  $('#searchResults').html('').show();
     
     var responseText = req.responseText;
     if (responseText && (responseText.indexOf('FAILED') != -1 ||
         responseText.indexOf('Exception') != -1 )) {
         // fail silently
         return false;
-    }
+    } */
     var xlslusFormat = new Geozet.Format.XLSLUS();
     var xlslus = xlslusFormat.read(req.responseXML || req.responseText);
     var hits=xlslus[0].numberOfGeocodedAddresses;
