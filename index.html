@@ -6,13 +6,13 @@
     <!-- link rel="stylesheet" href="js/theme/default/style.css" type="text/css" / -->
     <link rel="stylesheet" href="css/style.css" type="text/css" />
     <!-- add Cantarell fonts, for CSS3 -->
-    <!-- <link href='http://fonts.googleapis.com/css?family=Cantarell:700italic,700,400italic,400' rel='stylesheet' type='text/css'> -->
-    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Cantarell:700italic,700,400italic,400' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/accounts.css" type="text/css" />
     <link rel="stylesheet" href="css/common.css" type="text/css" />
     <link rel="stylesheet" href="css/print.css" type="text/css" />
     <link rel="stylesheet" href="css/register.css" type="text/css" />
     <link rel="stylesheet" href="css/reset.css" type="text/css" />
+	<link rel="stylesheet" href="css/main.css" type="text/css" />
     <script type="text/javascript" src="js/OpenLayers.js"></script>
     <script type="text/javascript" src="js/pdok-api.js"></script>
     <script type="text/javascript" src="js/pdok_api.js"></script>
@@ -39,6 +39,7 @@
 	<script type="text/javascript" src="js/Geozet/Format/XLSAddress.js"></script>
 	<script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1.js"></script>
     <!--<script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1_1_0.js"></script> -->
+	
     
     
 </head>
@@ -60,13 +61,20 @@
         <div id="content">
             <div id="map" class="functional">
             </div>
+			<div id="geocodeerresult"  class="popInWindow">
+				<span id="closedrawlocation" onclick="$('#geocodeerresult').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>
+				Hier komen de resultaten van de geocodeerservice
+			</div>
             <div id="leftcolumn">
                 <!-- Step 1 - Your map -->
                 <div id="step1" class="container active">
                     <!-- <h2><a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a><a href="mapbuilderhelp.html#1" class="help"><span>Help</span></a></h2> -->
                     <h2>
-                        <a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
+                      <!--   <a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
+                    <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);"> -->
+					  <a  onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
                     <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);">
+					
                     <div class="row">
                         <p>
                             Selecteer een kaartgrootte:</p>
@@ -208,7 +216,7 @@
                 <div id="step4" class="container">
                     <!-- <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2> -->
                     <h2>
-                        <a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer
+                        <a  onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer
                             code</a></h2>
                     <form action="#" name="savecode" id="savecode" onsubmit="return false;">
                     <div class="row">

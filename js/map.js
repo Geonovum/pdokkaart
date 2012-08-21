@@ -505,9 +505,12 @@ function handleGeocodeResponse(req, returnCoords){
 		var minzoom = 15;
 		var features = [];
         // > 0 hit show suggestions        
-        if(hits>0){
+        /* if(hits>0){
             $('#searchResults').html('<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten <a href="#" onclick="$(\'.geozetSuggestions\').toggle();return false;">Tonen/Verbergen</a></h3><ul class="geozetSuggestions"></ul>');
-        }
+        }; */
+		if(hits>0){
+            $('#geocodeerresult').html('<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten <a onclick="$(\'.geozetSuggestions\').toggle();return false;">Tonen/Verbergen</a></h3><ul class="geozetSuggestions"></ul>');
+        };
         for (i=0;i<hits;i++){
             var suggestion='';
             var geom = xlslus[0].features[i].geometry;
@@ -568,7 +571,9 @@ function handleGeocodeResponse(req, returnCoords){
 					newId = newFt.id;
 					features.push(newFt);
                 }
-				var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
+				/* var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
+                $("ul.geozetSuggestions").append(gazHtml); */
+				var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a>('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
                 $("ul.geozetSuggestions").append(gazHtml);
 
                 // set (calculated) height for the result div
