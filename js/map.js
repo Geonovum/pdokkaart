@@ -670,17 +670,22 @@ function addOverlay(layer) {
 function linkToMapOpened(permalink) {
 	if (!permalink) permalink = document.location.href;
 	// $('#drawlocation').hide();	
-	$('#createlink').fadeIn();
+	//$('#createlink').fadeIn();
 		
 	// add the parameters, serialize them just explicitly now.
 	var apiParams = "&loc=" + mapPDOKKaart.getCenter().lon + "," +mapPDOKKaart.getCenter().lat;
 	apiParams += "&zl=" + mapPDOKKaart.getZoom();
 
 	// Only add a marker for the last active feature
-	if (activeFeature && markers.features.length > 0 && $("#showmarker").is(':checked')) {
+	//if (activeFeature && markers.features.length > 0 && $("#showmarker").is(':checked')) {
+	//	apiParams+="&mloc="+activeFeature.geometry.x+","+activeFeature.geometry.y+"&mt=2"+"&titel="+encodeURIComponent(activeFeature.attributes.title)+"&tekst="+encodeURIComponent(activeFeature.attributes.description);
+	//}
+
+	// Toon URL's alleen als er slechts 1 marker op de kaart is gezet
+	if (activeFeature && markers.features.length == 1) {
 		apiParams+="&mloc="+activeFeature.geometry.x+","+activeFeature.geometry.y+"&mt=2"+"&titel="+encodeURIComponent(activeFeature.attributes.title)+"&tekst="+encodeURIComponent(activeFeature.attributes.description);
 	}
-
+	
 	var codeHeadLayer = '';
 	for (var lr in mapPDOKKaart.layers) {
 		var l = mapPDOKKaart.layers[lr];
@@ -721,17 +726,24 @@ function linkToMapOpened(permalink) {
 		mapH= '450';	
 	}
 	// construct the URL, make sure the correct page is used
-    var embedLink = permalink.replace("/?","/api/api.html?");
-    embedLink = embedLink.replace("/index.html?","/api/api.html?");
+	if (activeFeature && markers.features.length == 1) {
+		var embedLink = permalink.replace("/?","/api/api.html?");
+		embedLink = embedLink.replace("/index.html?","/api/api.html?");
+		var embedHtmlIframe = "<iframe width='"+mapW+"' height='"+mapH+"' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='"+embedLink+"' title='PDOK Kaart'></iframe><br /><small>PDOK Kaart: <a href='"+permalink+"' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>"
+		var embedHtmlObject = "<object width='"+mapW+"' height='"+mapH+"' codetype='text/html' data='"+embedLink+"' title='PDOK Kaart'></object><br /><small>PDOK Kaart: <a href='"+permalink+"' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>"
+	}
+	else {
+		embedLink = "";
+		embedHtmlIframe = "";
+		embedHtmlObject = "";
+	};	
 	//var embedLink = permalink.("index.html")[0] + "api/api.html?" + apiParams;
 	
-	var embedHtmlIframe = "<iframe width='"+mapW+"' height='"+mapH+"' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='"+embedLink+"' title='PDOK Kaart'></iframe><br /><small>PDOK Kaart: <a href='"+permalink+"' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>"
-
+	
 	$("#embedhtmliframe").val(embedHtmlIframe);
 	
 	// <object width="400" height="400" data="helloworld.swf"></object> 
-	var embedHtmlObject = "<object width='"+mapW+"' height='"+mapH+"' codetype='text/html' data='"+embedLink+"' title='PDOK Kaart'></object><br /><small>PDOK Kaart: <a href='"+permalink+"' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>"
-	
+		
 	$("#embedhtmlobject").val(embedHtmlObject);
 	
 	$("#embedlink").val(embedLink);
@@ -759,7 +771,8 @@ function linkToMapOpened(permalink) {
 	codeHead +='    loc: ['+ mapPDOKKaart.getCenter().lon +','+ mapPDOKKaart.getCenter().lat +'],';
 	// TODO: if a layer is added by WMS or by the PDOK list, include this
 	// For the demo, now add a WMS layer
-	if (activeFeature && markers.features.length > 0 && $("#showmarker").is(':checked')) {
+	//if (activeFeature && markers.features.length > 0 && $("#showmarker").is(':checked')) {
+	if (activeFeature && markers.features.length > 0 ) {
 		codeHead +='    mloc: ['+activeFeature.geometry.x+','+activeFeature.geometry.y+'],';
 		codeHead +='    externalGraphic: \'http://nieuwsinkaart.nl/pdok/kaart/api/markertypes/information_blue.png\',';		
 		codeHead +='    pointRadius: 20,';

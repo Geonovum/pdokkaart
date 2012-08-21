@@ -226,43 +226,44 @@
                     <div class="row right">
                         <!-- <button onclick="linkToMapOpened(document.location.href);return false;"
                             onkeypress="return generatecode();"> -->
-							<button onclick="generatecode();return false;">
-                            Genereer</button><br />
+							<!-- <button onclick="generatecode();return false;">
+                            Genereer</button><br /> -->
+							<button onclick="linkToMapOpened(document.location.href);return false;">Genereer</button><br />
                         <h4>Als URL</h4><br />
                         Link losse kaart:<br />
-                        <input type="text" value="" id="embedlink" name="embedlink" size="80" onclick="linkToMapOpened(document.location.href)" />
-                        <a href="#" id="A1" onclick="linkToMapOpened(document.location.href)">
+                        <input type="text" value="" id="embedlink" name="embedlink" size="60" onclick="linkToMapOpened(document.location.href)"; />
+                        <a  id="A1" onclick="linkToMapOpened(document.location.href)">
                             <img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
                         Embed HTML iframe:<br />
-                        <input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="80"
+                        <input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="60" 
                             onclick="linkToMapOpened(document.location.href)" /><br />
                         Embed HTML Object tag:<br />
-                        <input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="80"
+                        <input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="60" 
                             onclick="linkToMapOpened(document.location.href)" /><br />
                         <br />
                         <h4>Als broncode</h4>
                         <br />
                         In de HTML Head-sectie plaatsen:<br />
-                        <textarea id="scriptcodeHead" cols="80" rows="12" onclick="linkToMapOpened(document.location.href)"></textarea></br>
+                        <textarea id="scriptcodeHead" cols="60" rows="12" onclick="linkToMapOpened(document.location.href)"></textarea></br>
                         In de HTML Body-sectie plaatsen:<br />
-                        <textarea id="scriptcodeBody" cols="80" rows="4" onclick="linkToMapOpened(document.location.href)"></textarea><br />
+                        <textarea id="scriptcodeBody" cols="60" rows="4" onclick="linkToMapOpened(document.location.href)"></textarea><br />
                         <!-- DIV voor de codegenerator resultaat -->
-                        <div id="createlink" class="popInWindow">
+                       <!--  <div id="createlink" class="popInWindow">
                             <span id="closecreatelink" onclick="$('#createlink').hide()" class="closeWindow"><a
                                 href="#" onclick="return false;">
                                 <img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten" /></a></span>
                             Link losse kaart:<br />
                             <!--input type="text" value="" id="embedlink" name="embedlink" size="30" onclick="linkToMapOpened(document.location.href)" /-->
-                            <a href="#" id="sendemaillink" onclick="linkToMapOpened(document.location.href)">
+                            <!-- <a href="#" id="sendemaillink" onclick="linkToMapOpened(document.location.href)">
                                 <img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
-                            Embed HTML iframe:<br />
+                            Embed HTML iframe:<br /> -->
                             <!--input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="30"
                                     onclick="linkToMapOpened(document.location.href)" /><br /-->
-                            Embed HTML Object tag:<br />
+                           <!--  Embed HTML Object tag:<br /> -->
                             <!--input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="30"
                                     onclick="linkToMapOpened(document.location.href)" /><br /-->
                             <!-- Directe link deze kaart:<br/><input type="text" value="" id="emaillink" name="emaillink" size="30" onclick="linkToMapOpened(document.location.href)"/><br/> -->
-                            Afmetingen kaart:<br />
+                           <!--  Afmetingen kaart:<br />
                             <input type="radio" value="small" name="mapsizechoice" onchange="linkToMapOpened(document.location.href)" />
                             klein
                             <input type="radio" value="medium" name="mapsizechoice" checked="checked" onchange="linkToMapOpened(document.location.href)" />
@@ -275,11 +276,11 @@
                             <div id="createscriptcode">
                                 <h4>
                                     Als broncode include in webpagina:</h4>
-                                In de HTML Head-sectie plaatsen:<br />
+                                In de HTML Head-sectie plaatsen:<br /> -->
                                 <!--textarea id="scriptcodeHead" cols="50" rows="12" onclick="linkToMapOpened(document.location.href)"></textarea></br-->
-                                In de HTML Body-sectie plaatsen:<br />
+                                <!-- In de HTML Body-sectie plaatsen:<br /> -->
                                 <!--textarea id="scriptcodeBody" cols="50" rows="4" onclick="linkToMapOpened(document.location.href)"></textarea><br /-->
-                                <h5>
+                               <!--  <h5>
                                     Editor</h5>
                                 Editor inschakelen:
                                 <input type="checkbox" checked="unchecked" id="enableEditor" name="enableEditor" /><br />
@@ -306,7 +307,7 @@
                                 en
                                 <input type="text" value="13" id="maxZoomEditor" name="maxZoomEditor" size="2" />
                             </div>
-                        </div>
+                        </div> -->
                         <!-- Einde codegenerator resultaat -->
                     </div>
                     </form>
