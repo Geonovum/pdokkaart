@@ -229,9 +229,9 @@ li
 	display: none;
 }
 
-.geozetSuggestions li.selected{
+/* .geozetSuggestions li.selected{
 	background: url(../markertypes/information_blue.png) no-repeat 0px;
-}
+} */
 
 #mapfunctions h3 {
 	position: relative;

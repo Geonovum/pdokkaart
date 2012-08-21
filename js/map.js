@@ -13,6 +13,13 @@ Proj4js.defs["EPSG:28992"] = "+title=Amersfoort / RD New +proj=sterea +lat_0=52.
 // Use the same marker at several places in the settingspage, change the defaultmarkerpath to use a different one
 var defaultmarkerpath = "markertypes/information_blue.png";
 
+
+function ZoomIn(x,y){
+
+	mapPDOKKaart.setCenter(new OpenLayers.LonLat(x,y), 7);
+
+};
+
 function ZetMarkersOpKaart(strInvoerfile) {
 
       //parse de invoer-string en zet de markers op de kaart in de laag markers
@@ -420,7 +427,7 @@ function searchLocationChanged() {
 					//var headline = $(res.responseText).find('a.tsh').text();
 					//alert(headline);
 					//alert (res);
-					if (window.DOMParser)
+					/* if (window.DOMParser)
 						  {
 						  parser=new DOMParser();
 						  var xmlDoc=parser.parseFromString(res.responseText,"text/xml");
@@ -430,7 +437,7 @@ function searchLocationChanged() {
 						  var xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
 						  xmlDoc.async=false;
 						  xmlDoc.loadXML(res.responseText);
-						  };
+						  }; */
 					//$(xmlDoc).find('pos').each(function(){
 						/* var id = $(this).attr('id');
 						var title = $(this).find('title').text();
@@ -444,13 +451,13 @@ function searchLocationChanged() {
 						}); */
 						
 					//var x = xmlDoc.getElementsByTagNameNS("gml","pos");
-					var x = xmlDoc.getElementsByTagName('gml:pos');			
+					//var x = xmlDoc.getElementsByTagName('gml:pos');			
 					//for (i=0;i<x.length;i++) {	
 					//	alert (x[i].childNodes[0].nodeValue);
 					//};
-					var str = x[0].childNodes[0].nodeValue;
+					/* var str = x[0].childNodes[0].nodeValue;
 					var n=str.split(" ");
-					mapPDOKKaart.setCenter(new OpenLayers.LonLat(n[0],n[1]), 7);
+					mapPDOKKaart.setCenter(new OpenLayers.LonLat(n[0],n[1]), 7); */
 					
 					$('#geocodeerresult').fadeIn();
 
@@ -502,7 +509,8 @@ function handleGeocodeResponse(req, returnCoords){
 		var miny = maxEx.top;
 		var maxx = maxEx.left;
 		var maxy = maxEx.bottom;
-		var minzoom = 15;
+		//var minzoom = 15;
+		var minzoom = 3;		
 		var features = [];
         // > 0 hit show suggestions        
         /* if(hits>0){
@@ -573,7 +581,7 @@ function handleGeocodeResponse(req, returnCoords){
                 }
 				/* var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
                 $("ul.geozetSuggestions").append(gazHtml); */
-				var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a>('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
+				var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a onclick="ZoomIn('+x+','+y+')">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
                 $("ul.geozetSuggestions").append(gazHtml);
 
                 // set (calculated) height for the result div
