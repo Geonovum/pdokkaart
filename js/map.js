@@ -756,14 +756,14 @@ function linkToMapOpened(permalink) {
     var codeHead = '<script src="'+basepath+'js/jquery.js"></script>';
 	// load scripts dynamically?
 	// codeHead += '<script src="'+basepath+'js/loadjs.js"></script>';
-	codeHead += '<script src="'+basepath+'api/OpenLayers.js"></script>';
-    codeHead +='<script src="'+basepath+'api/javascripts/proj4js-compressed.js"></script>';
-	// codeHead +='<script src="'+basepath+'api/lusc-api.js"></script>';
-	codeHead +='<script src="http://luuks.github.com/API/lusc-api.js"></script>';
+	codeHead += '<script src="'+basepath+'js/OpenLayers.js"></script>';
+    codeHead +='<script src="'+basepath+'js/proj4js-compressed.js"></script>';
+	codeHead +='<script src="'+basepath+'LuukS-API-20120712/lusc-api.js"></script>';
+	//codeHead +='<script src="http://luuks.github.com/API/lusc-api.js"></script>';
 	codeHead +='<script src="'+basepath+'js/locationeditor.js"></script>';
 
-    codeHead +='<link rel="stylesheet" href="'+basepath+'api/styles/default/style.css" type="text/css">';
-    codeHead +='<link rel="stylesheet" href="'+basepath+'api/style.css" type="text/css">';
+    codeHead +='<link rel="stylesheet" href="'+basepath+'api/styles/default/style.css" type="text/css"/>';
+    codeHead +='<link rel="stylesheet" href="'+basepath+'api/style.css" type="text/css"/>';
 	codeHead +='<script>';
 
 	codeHead +='function createPDOKKaart() {';
@@ -772,13 +772,25 @@ function linkToMapOpened(permalink) {
 	// TODO: if a layer is added by WMS or by the PDOK list, include this
 	// For the demo, now add a WMS layer
 	//if (activeFeature && markers.features.length > 0 && $("#showmarker").is(':checked')) {
-	if (activeFeature && markers.features.length > 0 ) {
+	//for (i=0;i<markers.features.length;i++){
+	 if (activeFeature && markers.features.length > 0 ) {
 		codeHead +='    mloc: ['+activeFeature.geometry.x+','+activeFeature.geometry.y+'],';
 		codeHead +='    externalGraphic: \'http://nieuwsinkaart.nl/pdok/kaart/api/markertypes/information_blue.png\',';		
 		codeHead +='    pointRadius: 20,';
 		codeHead +='    titel: \'' + activeFeature.attributes.title + '\',';
-		codeHead +='    tekst: \'' + activeFeature.attributes.description + '\',';
-	}
+		codeHead +='    tekst: \'' + activeFeature.attributes.description.replace(/[\r\n]/mg,'') + '\',';
+	};
+	/* 	if (i == 0) {
+			codeHead +=' mloc: {['+markers.features[i].geometry.x+','+markers.features[i].geometry.y+'],'; 
+			}
+		else if (i == markers.features.length-1) {
+			codeHead +=' ['+markers.features[i].geometry.x+','+markers.features[i].geometry.y+']},';
+			}
+		else {
+			codeHead +=' ['+markers.features[i].geometry.x+','+markers.features[i].geometry.y+'],';
+		};
+	}; */
+	
 	codeHead += codeHeadLayer;
 	// end, zl always as last, to make sure the comma's are okay
 	codeHead +='    zl: '+mapPDOKKaart.getZoom();
@@ -1025,4 +1037,10 @@ function getStyleMap() {
 	var styleMap = new OpenLayers.StyleMap({'default': defaultStyle,
 			         'select': selectStyle, 'temporary': selectStyle});
 	return styleMap;
+}
+
+function pdok_api_map_resize(w,h) {
+    this.document.getElementById("map").style.height = h + 'px';
+    this.document.getElementById("map").style.width = w + 'px';
+    mapPDOKKaart.updateSize();
 }

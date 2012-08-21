@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="./styles/default/style.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="api-style.css" type="text/css">
     
     <style type="text/css">
       html {
@@ -27,11 +28,16 @@
           bottom: 3px!important;
           background-color: #eee;
       }
+      .olImageLoadError {
+		background-color: transparent; /* may likely be omitted */
+		opacity: 0.0;
+		filter: alpha(opacity=0); /* IE */
+		visibility: hidden;
+	}
     </style>
     
-    <!-- <script src="./OpenLayers.js"></script> -->
-	<script src="../js/OpenLayers.js"></script>
-	<script src="../LuukS-API-20120712/lusc-api.js"></script>
+    <script src="./OpenLayers.js"></script>
+	<script src="lusc-api.js"></script>
     <script>
     
     function init() {
