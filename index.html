@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="js/Geozet/Format/XLSAddress.js"></script>
 	<script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1.js"></script>
     <!--<script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1_1_0.js"></script> -->
-	    
+    
 </head>
 <body>
     <div id="container">
@@ -81,20 +81,43 @@
                             2: Voeg markers toe</a></h2>
                     <form action="#" name="addmarkers" id="addmarkers" onsubmit="return goTo(3); ">
                     <div class="section">
-                        <div id="edit3" class="row">
+                        <div id="edit1" class="row">
                             <input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){return startDrawingPoint();}" />
                             <label>
                                 <strong>Voeg een marker toe aan de kaart</strong> - (selecteer een symbool uit de
                                 lijst en klik op de kaart)</label>
                         </div>
-                        <div class="row">
-                            <label for="selectset">
-                                Select...</label>
-                            <select name="selectset" id="selectset" onchange="return selectSet(this.options[this.selectedIndex].value);">
-                                <option value="red" selected="selected">Red ones - Default</option>
-                                <option value="green">Green ones</option>
-                                <option value="blue">Blue ones</option>
-                            </select>
+                        <div id="edit2" class="row">
+                            <ul id="left-nav" >
+								<li id="mt1"> <button type="button"> <img src="markertypes/information_blue.png"></button></li>
+								<li id="mt2"> <button type="button"> <img src="markertypes/information_green.png"></button></li>
+								<li id="mt2"> <button type="button"> <img src="markertypes/information_yellow.png"></button></li>
+							</ul>
+							<ul id="left-nav">
+								<li id="mt4"> <button type="button"> <img src="markertypes/kadaster_blue.png"></button></li>
+								<li id="mt5"> <button type="button"> <img src="markertypes/kadaster_green.png"></button></li>
+								<li id="mt6"> <button type="button"> <img src="markertypes/kadaster_yellow.png"></button></li>
+							</ul>
+							<ul id="left-nav">
+								<li id="mt7"> <button type="button"> <img src="markertypes/geonovum_blue.png"></button></li>
+								<li id="mt8"> <button type="button"> <img src="markertypes/geonovum_green.png"></button></li>
+								<li id="mt9"> <button type="button"> <img src="markertypes/geonovum_yellow.png"></button></li>
+							</ul>
+							<ul id="left-nav">
+								<li id="mt10"> <button type="button"> <img src="markertypes/rijk_blue.png"></button></li>
+								<li id="mt11"> <button type="button"> <img src="markertypes/rijk_green.png"></button></li>
+								<li id="mt12"> <button type="button"> <img src="markertypes/rijk_yellow.png"></button></li>
+							</ul>
+							<ul id="left-nav">
+								<li id="mt13"> <button type="button"> <img src="markertypes/empty_blue.png"></button></li>
+								<li id="mt14"> <button type="button"> <img src="markertypes/empty_green.png"></button></li>
+								<li id="mt15"> <button type="button"> <img src="markertypes/empty_yellow.png"></button></li>
+							</ul>
+							<ul id="left-nav">
+								<!-- <li id="mt10"> <button type="button"> <img src="markertypes/rijk.png"></button></li> -->
+								<li id="mt11"> <button type="button"> <img src="markertypes/default.png"></button></li>
+								<li id="mt12"> <button type="button"> <img src="markertypes/star-3.png"></button></li>
+							</ul>
                         </div>
                         <!-- <div id="mapmarkers" class="row red">
 							
@@ -113,35 +136,23 @@
                                          <label for="marker3" id="markerlabel3">spot</label>
                                      </span>
 							
-                                 </div> -->
-                        <div id="edit2" class="row">
+                                 </div> -->	 
+                        <div id="edit3" class="edit3">
                             <input type="radio" name="editmarker" id="editmarker3" value="delete" onclick="if (this.checked){return startEditingPoint();}" />
                             <label for="editmarker3" id="editlabel3">
                                 <strong>Wijzig een marker op de kaart - </strong>(selecteer een marker op de kaart
                                 en wijzig, verplaats of verwijder de marker)</label>
+							<input type="hidden" name="editmarker_dummy" id="editmarker5"  />
+							<input type="hidden" name="editmarker_dummy2" id="savemarkerinfo" />
+							<input type="hidden" name="editmarker_dummy3" id="texteditor" />								
                         </div>
-                    </div>
-                    <div id="edit1" class="row section">
-                        <input type="hidden" name="editmarker" id="editmarker2" value="drag" onclick="return manageMarkers(5)" />
-                        <!-- <label for="editmarker2" id="editlabel2"><strong>Add content/drag markers -</strong>select a marker to open the editor to add text or images</label> -->
-                        <div id="texteditor">
-                            <textarea name="editor1" id="editor1" cols="45" rows="10"></textarea>
-                            <div id="savebutton" class="row">
-                                <input type="hidden" value="Save marker info" id="savemarkerinfo" onclick="manageMarkers(2);manageMarkers(5)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div id="edit4" class="row section">
-                        <input type="hidden" name="editmarker" id="editmarker5" value="delete" onclick="manageMarkers(0)" />
-                        <!-- <label for="editmarker5" id="editlabel5"><strong>View markers as they will appear on your map </strong></label> -->
-                    </div>
-                    -->
-                    <div class="row">
-                        <!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
-                        <!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
-                        <button type="submit" class="filterbutton" onclick=" verwijderAlleMarkers(); return false;">
-                            Verwijder alle markers</button>
-                    </div>
+						<div id="edit4" class="row">
+							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
+							<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
+							<button type="submit" class="filterbutton" onclick=" verwijderAlleMarkers(); return false;">
+								Verwijder alle markers</button>
+						</div>
+					</div>	
                     </form>
                 </div>
                 <!-- Step 3 - Add routes -->

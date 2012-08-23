@@ -250,3 +250,7 @@ li
 .defaultmarker {
 	height: 24px;
 }
+
+#left-nav li{ float: none;display:inline;}
+#right-nav {float:right;}
+#edit3 {  clear:both;}
