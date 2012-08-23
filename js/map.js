@@ -13,6 +13,11 @@ Proj4js.defs["EPSG:28992"] = "+title=Amersfoort / RD New +proj=sterea +lat_0=52.
 // Use the same marker at several places in the settingspage, change the defaultmarkerpath to use a different one
 var defaultmarkerpath = "markertypes/information_blue.png";
 
+function SearchArray(arr, obj) {
+    for(var i=0; i<arr.length; i++) {
+        if (arr[i][0] == obj) return arr[i][1];
+    }
+}
 
 function ZoomIn(x,y){
 
@@ -247,7 +252,18 @@ function init_pdok()
 	
 	// controls for the redlining objects (locatieprikker)
 	dragControl = new OpenLayers.Control.DragFeature(markers);
-	drawControl = new OpenLayers.Control.DrawFeature(markers, OpenLayers.Handler.Point);
+	drawControl = new OpenLayers.Control.DrawFeature(markers, OpenLayers.Handler.Point,{handlerOptions: {style: new OpenLayers.Style({
+																										  'pointRadius': 14,
+																										  // graphicwidth/height fail in IE...
+																										  //'graphicWidth':'16',
+																										  //'graphicHeight':'19',
+																										  'externalGraphic': defaultmarkerpath,
+																										  'graphicYOffset':-28,
+																										  'fillColor':'#ffffff',
+																										  'fillOpacity':'1.0',
+																										  'strokeColor':'#FF5C00',
+																										  'strokeWidth':'3'
+																										})}});
 	
 	drawControl.featureAdded = function(feature){
 		   feature.attributes.title="Voer een titel in:";
@@ -322,6 +338,26 @@ function init_pdok()
 		return false;
 	});
 	
+	$(".markerbutton").click( function(eventObject) {
+			defaultmarkerpath = SearchArray(lusc.markers,eventObject.currentTarget.parentElement.id);
+			//$(".defaultmarker").attr("src",defaultmarkerpath);
+			drawControl.handlerOptions = {style: new OpenLayers.Style({
+										  'pointRadius': 14,
+										  // graphicwidth/height fail in IE...
+										  //'graphicWidth':'16',
+										  //'graphicHeight':'19',
+										  'externalGraphic': defaultmarkerpath,
+										  'graphicYOffset':-28,
+										  'fillColor':'#ffffff',
+										  'fillOpacity':'1.0',
+										  'strokeColor':'#FF5C00',
+										  'strokeWidth':'3'
+										})};
+			markers.styleMap = getStyleMap();
+			}
+	);
+
+	
 	mapPDOKKaart.addControls(controls);
 
 	//dragControl.activate();
@@ -339,7 +375,7 @@ function init_pdok()
 
 function startDrawingPoint() {
 	
-	document.getElementById('editmarker4').checked = true;
+	//document.getElementById('editmarker4').checked = true;
 	
 	// before adding, remove all existing markers
     removePopups(markers);
@@ -349,6 +385,7 @@ function startDrawingPoint() {
 	$("#cancelDrawingPoint").fadeIn();
 	//dragControl.activate();
     drawControl.activate();
+	dragControl.deactivate();
 	var blockPanning = false; // to block panning while drawing
     drawControl.handler.stopDown = blockPanning;
     drawControl.handler.stopUp = blockPanning;    

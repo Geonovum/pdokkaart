@@ -251,6 +251,6 @@ li
 	height: 24px;
 }
 
-#left-nav li{ float: none;display:inline;}
-#right-nav {float:right;}
-#edit3 {  clear:both;}
+.left-nav li{ float: none;display:inline;}
+.right-nav {float:right;}
+.edit3class {  clear:both;}

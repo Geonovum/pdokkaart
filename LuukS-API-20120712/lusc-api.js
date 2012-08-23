@@ -139,21 +139,23 @@ Lusc.Api = function(config) {
      * Look up array, having the supported markertypes.
      */
     this.markers = [
-	    "default.png",
-	    "rijk.png",
-	    "information_blue.png",
-	    "information_green.png",
-	    "information_yellow.png",
-	    "geonovum_blue.png",
-	    "geonovum_green.png",
-	    "geonovum_yellow.png",
-	    "kadaster_blue.png",
-	    "kadaster_green.png",
-	    "kadaster_yellow.png",
-	    "rijk_blue.png",
-	    "rijk_green.png",
-	    "rijk_yellow.png",
-	    "star-3.png"
+	    ["mt1","markertypes/information_blue.png"],
+	    ["mt2","markertypes/information_green.png"],
+	    ["mt3","markertypes/information_yellow.png"],
+	    ["mt4","markertypes/geonovum_blue.png"],
+	    ["mt5","markertypes/geonovum_green.png"],
+	    ["mt6","markertypes/geonovum_yellow.png"],
+	    ["mt7","markertypes/kadaster_blue.png"],
+	    ["mt8","markertypes/kadaster_green.png"],
+	    ["mt9","markertypes/kadaster_yellow.png"],
+	    ["mt10","markertypes/rijk_blue.png"],
+	    ["mt11","markertypes/rijk_green.png"],
+	    ["mt12","markertypes/rijk_yellow.png"],
+		["mt13","markertypes/empty_blue.png"],
+	    ["mt14","markertypes/empty_green.png"],
+	    ["mt15","markertypes/empty_yellow.png"],
+	    ["mt16","markertypes/default.png"],
+		["mt17","markertypes/star-3.png"]		
     ];
     
     /**
