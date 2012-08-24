@@ -11,7 +11,7 @@ var pdokachtergrondkaart;
 Proj4js.defs["EPSG:28992"] = "+title=Amersfoort / RD New +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +no_defs";
 
 // Use the same marker at several places in the settingspage, change the defaultmarkerpath to use a different one
-var defaultmarkerpath = "markertypes/information_blue.png";
+//var defaultmarkerpath = "markertypes/information_blue.png";
 
 function SearchArray(arr, obj) {
     for(var i=0; i<arr.length; i++) {
@@ -175,7 +175,7 @@ function init_pdok()
 	setMapSize();
 	addFormEnhancements();
 	$(window).resize(setMapSize);
-	$(".defaultmarker").attr("src",defaultmarkerpath);
+	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
 	// initiate the Lusc API object
 	var o = OpenLayers.Util.getParameters();
@@ -187,14 +187,14 @@ function init_pdok()
 	//mapPDOKKaart = new OpenLayers.Map('map');
 	
 	// Thijs: a vector layer is used to show Geocoderesults
-	markers = new OpenLayers.Layer.Vector("Markers",{
+	/* markers = new OpenLayers.Layer.Vector("Markers",{
             styleMap: getStyleMap(),
             displayInLayerSwitcher: false
-        });
+        }); */
 
 	// add popup functions for geocoding results
 	/* */
-	markers.events.register("mouseover", markers, function(e) {
+	/* markers.events.register("mouseover", markers, function(e) {
 		this.div.style.cursor = "pointer";
 		var feature = this.getFeatureFromEvent(e);
 	    
@@ -237,21 +237,21 @@ function init_pdok()
 		} else {
 		    return true;
 		}	
-	});
+	}); */
 	
 	// add the markers
-	mapPDOKKaart.addLayers([markers]);
+	//mapPDOKKaart.addLayers([markers]);
 
     // TouchNavigation
     /* */
-	var touchNav = new OpenLayers.Control.TouchNavigation({
+	/* var touchNav = new OpenLayers.Control.TouchNavigation({
             dragPanOptions: {
                 enableKinetic: true
             }
         })
-	
+	 */
 	// controls for the redlining objects (locatieprikker)
-	dragControl = new OpenLayers.Control.DragFeature(markers);
+	/* dragControl = new OpenLayers.Control.DragFeature(markers);
 	drawControl = new OpenLayers.Control.DrawFeature(markers, OpenLayers.Handler.Point,{handlerOptions: {style: new OpenLayers.Style({
 																										  'pointRadius': 14,
 																										  // graphicwidth/height fail in IE...
@@ -275,33 +275,33 @@ function init_pdok()
 		   return false;
 	}
 	
-	dragControl.clickFeature = function(feature){
+	dragControl.clickFeature = function(feature){ */
 		   //feature.attributes.title="Voer een titel in:";
 		   //feature.attributes.description="Voer een omschrijving in:";
 		   //startFeatureEdit(feature.id);
 		   //stopDrawingPoint();
-		   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
-		   feature.popupFix = true;
-		   return false;
-	}
+		   //onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
+		   //feature.popupFix = true;
+		   //return false;
+	//}
 	
 	// use a global object for the layerswitcher, to open/close it programmatically
-	layerSwitcher = new OpenLayers.Control.LayerSwitcher()
+	//layerSwitcher = new OpenLayers.Control.LayerSwitcher()
 	
-	controls = [
-		new OpenLayers.Control.MousePosition()
-	    , dragControl
-		, drawControl
-		, layerSwitcher
+	//controls = [
+	//	new OpenLayers.Control.MousePosition()
+	//    , dragControl
+	//	, drawControl
+	//	, layerSwitcher
 		// , new OpenLayers.Control.KeyboardDefaults() // don't use KeyboardDefaults, since this may interfere with other functionality on a page
-		, touchNav
-	]
+	//	, touchNav
+	//]
 
 	// for the future upcoming searchresults
 	// attach click to the li-suggestions (if available)
 	// delegate..
 
-	$('#searchResults').delegate('li/a','click', function (evt) {
+	/* $('#searchResults').delegate('li/a','click', function (evt) {
 		var x = $("span.x", this).text();
 		var y = $("span.y", this).text();
 		var z = $("span.z", this).text();
@@ -336,29 +336,14 @@ function init_pdok()
 	$('#searchResults').delegate('li/a','mouseout', function (evt) {
 		// removePopups(markers);			
 		return false;
-	});
+	}); */
 	
 	$(".markerbutton").click( function(eventObject) {
-			defaultmarkerpath = SearchArray(lusc.markers,eventObject.currentTarget.parentElement.id);
-			//$(".defaultmarker").attr("src",defaultmarkerpath);
-			drawControl.handlerOptions = {style: new OpenLayers.Style({
-										  'pointRadius': 14,
-										  // graphicwidth/height fail in IE...
-										  //'graphicWidth':'16',
-										  //'graphicHeight':'19',
-										  'externalGraphic': defaultmarkerpath,
-										  'graphicYOffset':-28,
-										  'fillColor':'#ffffff',
-										  'fillOpacity':'1.0',
-										  'strokeColor':'#FF5C00',
-										  'strokeWidth':'3'
-										})};
-			markers.styleMap = getStyleMap();
-			}
-	);
+		lusc.enableDrawingTool(eventObject.currentTarget.parentElement.id);
+	});
 
 	
-	mapPDOKKaart.addControls(controls);
+	//mapPDOKKaart.addControls(controls);
 
 	//dragControl.activate();
 	
@@ -375,57 +360,66 @@ function init_pdok()
 
 function startDrawingPoint() {
 	
+	lusc.disableEditingTool();
+	lusc.enableDrawingTool("mt1");
+	
+	
 	//document.getElementById('editmarker4').checked = true;
 	
 	// before adding, remove all existing markers
-    removePopups(markers);
-    //markers.destroyFeatures();
+   /*  removePopups(markers);
+    markers.destroyFeatures();
     $('#searchResults').html('');
 	$("#drawlocationhelp").fadeIn();
 	$("#cancelDrawingPoint").fadeIn();
-	//dragControl.activate();
+	dragControl.activate();
     drawControl.activate();
 	dragControl.deactivate();
 	var blockPanning = false; // to block panning while drawing
     drawControl.handler.stopDown = blockPanning;
-    drawControl.handler.stopUp = blockPanning;    
+    drawControl.handler.stopUp = blockPanning;     */
 }
 
 function startEditingPoint() {
+
+	lusc.disableDrawingTool();
+	lusc.enableEditingTool();
+	
+
 	// before adding, remove all existing markers
-    removePopups(markers);
-    //markers.destroyFeatures();
+   /*  removePopups(markers);
+    markers.destroyFeatures();
     $('#searchResults').html('')
 	$("#drawlocationhelp").fadeIn();
 	$("#cancelDrawingPoint").fadeIn();
-	//dragControl.activate();
+	dragControl.activate();
 	drawControl.deactivate();
 	dragControl.activate();
 	var blockPanning = false; // to block panning while drawing
     dragControl.handler.stopDown = blockPanning;
-    dragControl.handler.stopUp = blockPanning;    
+    dragControl.handler.stopUp = blockPanning;     */
 }
 
 
-function stopDrawingPoint() {
-	drawControl.deactivate();
-	$("#cancelDrawingPoint").fadeOut();	
-	$("#drawlocationhelp").fadeOut();	
+function stopDrawingEditingPoint() {
+	lusc.disableEditingTool();
+	lusc.disableDrawingTool();
+	
 }
 
-function verwijderAlleMarkers(){
+/* function verwijderAlleMarkers(){
 
 	removePopups(markers);
 	markers.destroyFeatures();	
 
 }
 
-
+ */
 /****
     * For Proof of Concept only use some simple functions to perform searches. For advanced / full functionality: see Geozet and include / build on (Geo)Ext
  	*/
 
-var gazetteerConfig = {};
+/* var gazetteerConfig = {};
 var zoomScale = {
     adres: 11,
     postcode: 10,
@@ -434,7 +428,7 @@ var zoomScale = {
     provincie: 5,
     standaard: 9
 };
-gazetteerConfig.gazetteer = {url:"http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?", param:"zoekterm", zoomScale: zoomScale};
+gazetteerConfig.gazetteer = {url:"http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?", param:"zoekterm", zoomScale: zoomScale}; */
 
 // Thijs: code based on Geozet.widgets.Search
 function searchLocationChanged() {
@@ -659,7 +653,7 @@ function handleGeocodeResponse(req, returnCoords){
     return false;
 }
 
-function addWmsLayer() {
+/* function addWmsLayer() {
 	var layername=$('#wmsLayer').val();
 	var layerUrl=$('#wmsUrl').val().replace("request=GetCapabilities","","i") // remove the request=GetCapabilities (case insensitive) part if provided;
 	$('#tmsLayer').val("");
@@ -686,13 +680,13 @@ function addTmsLayer() {
 			{layername: layername, type:"png", visibility: true, isBaseLayer:false, opacity:0.8}
 		);
 	addOverlay(tmsLayer);
-}
+} */
 
-function addPdokLayer(pdokLayerName) {
+//function addPdokLayer(pdokLayerName) {
 	// TODO: add PDOK layer to map, need API function for this --> not implemented in PoC version of API
-}
+//}
 
-function addOverlay(layer) {
+/* function addOverlay(layer) {
 	// remove all WMS and TMS layers (if not basemap)
 	for (var lr in mapPDOKKaart.layers) {
 		var l = mapPDOKKaart.layers[lr];
@@ -704,7 +698,7 @@ function addOverlay(layer) {
 	layerSwitcher.maximizeControl();
 	mapPDOKKaart.addLayer(layer);
 }
-
+ */
 function linkToMapOpened(permalink) {
 	if (!permalink) permalink = document.location.href;
 	// $('#drawlocation').hide();	
@@ -858,7 +852,7 @@ function linkToMapOpened(permalink) {
 	return true;
 }
 
-function onPopupClose(evt, feature) {
+/* function onPopupClose(evt, feature) {
 	if (!feature) feature = activeFeature;
 	if (feature) {
 		mapPDOKKaart.removePopup(feature.popup);
@@ -868,9 +862,9 @@ function onPopupClose(evt, feature) {
 		feature.layer.drawFeature(feature);
 		// mapPDOKKaart.panTo(previousCenter);
 	}
-}
+} */
 
-function onFeatureSelect(feature, full, text) {
+/* function onFeatureSelect(feature, full, text) {
 	removePopups(feature.layer);
 	// var text = '';
 	var popupSize;
@@ -914,9 +908,9 @@ function onFeatureSelect(feature, full, text) {
 	    popup.panMapIfOutOfView = false;
 	}	    
 	mapPDOKKaart.addPopup(popup);
-}
+} */
 
-function markersPopupText(feature, full) {
+/* function markersPopupText(feature, full) {
 	var className = "popupTitleSummary";
 	var text="";
 	if (full) {
@@ -950,17 +944,17 @@ function markersPopupText(feature, full) {
     text+="</div>";
 	return text;
 }
-
-function startFeatureEdit(ft_id) {
+ */
+/* function startFeatureEdit(ft_id) {
 	dragControl.activate();
 	// TODO: change style of marker
 	$("#markertitle").attr("readonly","");
 	$("#markertext").attr("readonly","");
 	// $("#btnStartEdit").attr("disabled","disabled");
 	// $("#btnStopEdit").attr("disabled","");
-}
+} */
 
-function stopFeatureEdit(ft_id) {
+/* function stopFeatureEdit(ft_id) {
 	//linkToMapOpened();
 	 removePopups(markers);
 	// dragControl.deactivate();
@@ -971,8 +965,8 @@ function stopFeatureEdit(ft_id) {
 	// $("#btnStopEdit").attr("disabled","disabled");
 
 }
-
-function removeFeature (ft_id) {
+ */
+/* function removeFeature (ft_id) {
 	var ok = confirm ("Deze locatie verwijderen?")
 	if (ok) {
 		$('#listitem_'+ft_id.split('.')[2]).remove()
@@ -981,9 +975,9 @@ function removeFeature (ft_id) {
 		markers.removeFeatures([ft]);
 		// also from the list
 	}
-}
+} */
 
-function removePopups(layer) {
+/* function removePopups(layer) {
 	for (var i=0;i<layer.features.length;i++) {
 		var ft = layer.features[i];
 		if (ft.popup!=null) {
@@ -995,7 +989,7 @@ function removePopups(layer) {
 			ft.popup = null;
 		}
 	}
-}
+} */
 
 /** GUI functions **/
 function setMapSize() {
@@ -1009,7 +1003,7 @@ function setMapSize() {
     jQuery("#map").width(wW-470);    
 }
 
-function addFormEnhancements(){
+ function addFormEnhancements(){
     // remove default values if focus is set
     /* jQuery("input[type|='text']").each(function(index, element) {
             var defaultValue = jQuery(this).val();
@@ -1032,22 +1026,22 @@ function addFormEnhancements(){
 		// Select field contents
 		this.select();
 	});
-}
+} 
 
 
-function updateMarkerTitle(markerTitle, ft_id) {
+/* function updateMarkerTitle(markerTitle, ft_id) {
 	var ft = markers.getFeatureById(ft_id);
 	ft.attributes.title = markerTitle;
-}
+} */
 
 
-function updateMarkerText(markerText, ft_id) {
+/* function updateMarkerText(markerText, ft_id) {
 	var ft = markers.getFeatureById(ft_id);
 	ft.attributes.description = markerText;
 }
+ */
 
-
-function getStyleMap() {
+/* function getStyleMap() {
 
 	var defaultStyle = new OpenLayers.Style({
 	  'pointRadius': 14,
@@ -1075,7 +1069,7 @@ function getStyleMap() {
 	var styleMap = new OpenLayers.StyleMap({'default': defaultStyle,
 			         'select': selectStyle, 'temporary': selectStyle});
 	return styleMap;
-}
+} */
 
 function pdok_api_map_resize(w,h) {
     this.document.getElementById("map").style.height = h + 'px';
