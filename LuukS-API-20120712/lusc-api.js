@@ -116,6 +116,11 @@ Lusc.Api = function(config) {
      */
     this.pointRadius = null;
     
+	/**
+     * Reference to the styles object with all marker, lines and polygon rules
+     */
+    this.styles = null;
+	
     /**
      * @private
      * Look up array, having the supported layers.
@@ -180,12 +185,16 @@ Lusc.Api = function(config) {
      */
     this.attribution = '&copy; <a target="_parent" href="http://www.terrestris.de">terrestris GmbH & Co. KG</a>,</br>' +
         'Data by <a target="_parent" href="http://www.openstreetmap.org">OpenStreetMap</a> and contributors, <a target="_parent" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-    
+   
+	
     if (config) {
         
         // read out and validate the given values
         this.validateConfig(config);
         
+		// create the styles object
+        this.styles = this.createStylesObject();
+		
         // create the OpenLayers Map instance
         this.map = this.createOlMap();
         
@@ -547,8 +556,12 @@ Lusc.Api.prototype.createOlMap = function() {
         if ((this.pointRadius !=null) && (this.pointRadius > 0)){
         	this.styleObj.pointRadius = this.pointRadius;
         }
-        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
+        /* var markerLayer = new OpenLayers.Layer.Vector('Marker', {
             styleMap: new OpenLayers.StyleMap(this.styleObj)
+        }); */
+		
+		var markerLayer = new OpenLayers.Layer.Vector('Marker', {
+            styleMap: this.styles
         });
 
 	    // add popup if the parameters titel or tekst are used
@@ -907,3 +920,84 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 		}
 	}
 }
+
+/**
+ * @private
+ * 
+ * Creates a style object with all markerstyles, linestyles and polygonstyles 
+ */
+Lusc.Api.prototype.createStylesObject = function() {
+
+var rule_mt1 = this.createRuleObject(null,null,null,null,"markertypes/information_blue.png");
+var rule_mt2 = this.createRuleObject(null,null,null,null,"markertypes/information_green.png");
+var rule_mt3 = this.createRuleObject(null,null,null,null,"markertypes/information_yellow.png");
+var rule_lt1 = this.createRuleObject(null,"#ff9933",null, 2,null);
+var rule_pt1 = this.createRuleObject("#ffcc66","#ffcc66",1,2,null);
+
+var styles = new OpenLayers.Style(
+        // the first argument is a base symbolizer
+        // all other symbolizers in rules will extend this one
+        {
+            graphicWidth: 21,
+            graphicHeight: 25,
+            graphicYOffset: -28, // shift graphic up 28 pixels
+            label: "${foo}" // label will be foo attribute value
+        },
+        // the second argument will include all rules
+        {
+            rules: [
+                rule_mt1,
+				rule_mt2,
+				rule_mt3,
+				rule_lt1,
+				rule_pt1
+		]})
+	
+
+return styles;
+
+}
+
+/**
+ * @private
+ * 
+ * Creates a StyleMap object  
+ */
+Lusc.Api.prototype.createRuleObject = function(fillcolor, linecolor, fillopacity, linewidth, externalgraphic) {
+
+
+var stylemap = {
+                default:{
+                    pointRadius: 14,
+                    fillColor: fillcolor,
+                    strokeColor: linecolor,
+                    strokeWidth: linewidth,
+                    graphicZIndex: 1,
+					externalGraphic: externalgraphic,
+					fillOpacity: fillopacity,
+					graphicYOffset: -28
+                },
+                select:{
+                    fillColor: "0000FF",
+                    strokeColor: "0000FF",
+                    graphicZIndex: 2
+                }
+            };
+
+			
+var rule = new OpenLayers.Rule({
+                    // a rule contains an optional filter
+                    filter: new OpenLayers.Filter.Comparison({
+                        type: OpenLayers.Filter.Comparison.EQUALS,
+                        property: "style", // the "style" feature attribute
+                        value: "mt1"
+                    }),
+                    // if a feature matches the above filter, use this symbolizer
+                    symbolizer: {
+                       stylemap
+                    }
+                });			
+						
+return rule;
+}
+ 
