@@ -928,11 +928,11 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
  */
 Lusc.Api.prototype.createStylesObject = function() {
 
-var rule_mt1 = this.createRuleObject(null,null,null,null,"markertypes/information_blue.png");
-var rule_mt2 = this.createRuleObject(null,null,null,null,"markertypes/information_green.png");
-var rule_mt3 = this.createRuleObject(null,null,null,null,"markertypes/information_yellow.png");
-var rule_lt1 = this.createRuleObject(null,"#ff9933",null, 2,null);
-var rule_pt1 = this.createRuleObject("#ffcc66","#ffcc66",1,2,null);
+var rule_mt1 = this.createRuleObject("mt1",null,null,null,null,"markertypes/information_blue.png");
+var rule_mt2 = this.createRuleObject("mt2",null,null,null,null,"markertypes/information_green.png");
+var rule_mt3 = this.createRuleObject("mt3",null,null,null,null,"markertypes/information_yellow.png");
+var rule_lt1 = this.createRuleObject("lt1",null,"#ff9933",null, 2,null);
+var rule_pt1 = this.createRuleObject("pt1","#ffcc66","#ffcc66",1,2,null);
 
 var styles = new OpenLayers.Style(
         // the first argument is a base symbolizer
@@ -963,7 +963,7 @@ return styles;
  * 
  * Creates a StyleMap object  
  */
-Lusc.Api.prototype.createRuleObject = function(fillcolor, linecolor, fillopacity, linewidth, externalgraphic) {
+Lusc.Api.prototype.createRuleObject = function(styletype,fillcolor, linecolor, fillopacity, linewidth, externalgraphic) {
 
 
 var stylemap = {
@@ -990,7 +990,7 @@ var rule = new OpenLayers.Rule({
                     filter: new OpenLayers.Filter.Comparison({
                         type: OpenLayers.Filter.Comparison.EQUALS,
                         property: "style", // the "style" feature attribute
-                        value: "mt1"
+                        value: styletype
                     }),
                     // if a feature matches the above filter, use this symbolizer
                     symbolizer: {
