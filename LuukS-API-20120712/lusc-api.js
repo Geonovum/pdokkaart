@@ -728,6 +728,9 @@ Lusc.Api.prototype.disableDrawingTool = function(){
 }
 
 
+Lusc.Api.prototype.disableEditingTool = function(){
+    // TODO implement or remove
+}
 
 /**
  * Interaction functionality for clicking on the marker
