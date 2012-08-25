@@ -173,8 +173,9 @@ function ZetMarkersOpKaart(strInvoerfile) {
 function init_pdok()
 {
 	setMapSize();
-	addFormEnhancements();
+	//addFormEnhancements();
 	$(window).resize(setMapSize);
+	$('input:radio[name=editmarker]')[0].checked = true;
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
 	// initiate the Lusc API object
@@ -419,7 +420,7 @@ function stopDrawingEditingPoint() {
     * For Proof of Concept only use some simple functions to perform searches. For advanced / full functionality: see Geozet and include / build on (Geo)Ext
  	*/
 
-/* var gazetteerConfig = {};
+var gazetteerConfig = {};
 var zoomScale = {
     adres: 11,
     postcode: 10,
@@ -428,7 +429,7 @@ var zoomScale = {
     provincie: 5,
     standaard: 9
 };
-gazetteerConfig.gazetteer = {url:"http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?", param:"zoekterm", zoomScale: zoomScale}; */
+gazetteerConfig.gazetteer = {url:"http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?", param:"zoekterm", zoomScale: zoomScale}; 
 
 // Thijs: code based on Geozet.widgets.Search
 function searchLocationChanged() {
@@ -511,8 +512,8 @@ function searchLocationChanged() {
 	**/ 
 
 function handleGeocodeResponse(req, returnCoords){
-    removePopups(markers);
-    markers.destroyFeatures();
+    //removePopups(markers);
+    //markers.destroyFeatures();
    /*  $('#searchResults').html('').show();
     
     var responseText = req.responseText;
@@ -648,7 +649,7 @@ function handleGeocodeResponse(req, returnCoords){
 	        // now use the lowest zoomlevel for all results, to make sure that not so fine locations (like provinces) are contained as well
 	        mapPDOKKaart.setCenter(newBounds.getCenterLonLat(), minzoom);
         }
-		markers.addFeatures(features);
+		//markers.addFeatures(features);
     }
     return false;
 }
@@ -1003,7 +1004,7 @@ function setMapSize() {
     jQuery("#map").width(wW-470);    
 }
 
- function addFormEnhancements(){
+// function addFormEnhancements(){
     // remove default values if focus is set
     /* jQuery("input[type|='text']").each(function(index, element) {
             var defaultValue = jQuery(this).val();
@@ -1018,15 +1019,15 @@ function setMapSize() {
         }
     ); */
 	// Add select to all text fields
-	$("#createlink input[type=text]").focus(function(){
+//	$("#createlink input[type=text]").focus(function(){
 		// Select field contents
-		this.select();
-	});
-	$("#createlink input[type=text]").click(function(){
+//		this.select();
+//	});
+//	$("#createlink input[type=text]").click(function(){
 		// Select field contents
-		this.select();
-	});
-} 
+//		this.select();
+//	});
+//} 
 
 
 /* function updateMarkerTitle(markerTitle, ft_id) {
