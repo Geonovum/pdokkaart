@@ -104,12 +104,14 @@ H1 SPAN {
 
 .container {
 	border: 1px solid #273397;
-	background-color: #e5eae3;
+	//background-color: #e5eae3;
+	background-color:#FCE6C9;
 	margin-bottom: 10px;
 }
 
 H2 {
-	background-color: #767a75;
+	//background-color: #767a75;
+	background-color:#EE7600;
 	font-size: 1.5em;
 	padding: 10px;
 	position: relative;
@@ -120,7 +122,8 @@ H2 {
 }
 
 H2 A {
-	color: #a3a6a2;
+	//color: #a3a6a2;
+	color:#FCE6C9;
 	text-decoration: none;
 }
 
