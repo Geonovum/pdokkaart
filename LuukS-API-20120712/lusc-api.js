@@ -618,6 +618,44 @@ Lusc.Api.prototype.addGeometries = function(featurecollection){
 	vector_layer.addFeatures(geojson_format.read(featurecollection));
 }
 
+Lusc.Api.prototype.createStyles = function(){
+
+    var olDefault = OpenLayers.Feature.Vector.style.default;
+
+    this.styles = {};
+    this.styles.pt1 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'red', strokeWidth:1 }, olDefault );
+    this.styles.pt2 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'red', strokeWidth:3 }, olDefault );
+    this.styles.pt3 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'red', strokeWidth:5 }, olDefault );
+    this.styles.pt4 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'green', strokeWidth:5 }, olDefault );
+    this.styles.pt5 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'green', strokeWidth:5 }, olDefault );
+    this.styles.pt6 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'green', strokeWidth:5 }, olDefault );
+
+    this.styles.lt1 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:1 }, olDefault );
+    this.styles.lt2 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:3 }, olDefault );
+    this.styles.lt3 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:5 }, olDefault );
+    this.styles.lt4 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:1 }, olDefault );
+    this.styles.lt5 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:3 }, olDefault );
+    this.styles.lt6 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:5 }, olDefault );
+
+
+    var pdokDefaultPoint = OpenLayers.Util.applyDefaults(
+        {
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37//,
+            //pointRadius: 5,
+            //fillOpacity: 1
+        }, {});
+    this.styles.mt1 = pdokDefaultPoint;
+    this.styles.mt2 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_green.png"}, pdokDefaultPoint);
+    this.styles.mt3 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_yellow.png"}, pdokDefaultPoint);
+    this.styles.mt4 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_blue.png"}, pdokDefaultPoint);
+    this.styles.mt5 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_green.png"}, pdokDefaultPoint);
+    this.styles.mt6 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_yellow.png"}, pdokDefaultPoint);
+
+}
+
 /**
  * If not available, creates a drawFeature control. and activates it.
  * 
@@ -627,32 +665,69 @@ Lusc.Api.prototype.addGeometries = function(featurecollection){
  *       is set: m = marker/point, l = linestring, p = polygon
  */
 Lusc.Api.prototype.enableDrawingTool = function(styletype){
+    this.disableDrawingTool();
+    if (this.styles==null){
+        this.createStyles();
+    }
     if (this.featuresLayer==null){
         this.featuresLayer = new OpenLayers.Layer.Vector("Features");
+        this.featuresLayer.style = OpenLayers.Feature.Vector.style;
         this.map.addLayer(this.featuresLayer);
     }
+    var apiStyles = this.styles;
+    var apiFeaturesLayer = this.featuresLayer;
+    var currentDrawControl;
     if (styletype[0]=='m'){
         if (this.drawFeaturePoint==null){
             this.drawFeaturePoint = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Point);
             this.map.addControl(this.drawFeaturePoint);
         }
-        this.drawFeaturePoint.activate();
+        currentDrawControl = this.drawFeaturePoint;
     }
     else if (styletype[0]=='l'){
         if (this.drawFeatureLine==null){
             this.drawFeatureLine = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Path);
             this.map.addControl(this.drawFeatureLine);
         }
-        this.drawFeatureLine.activate();
+        currentDrawControl = this.drawFeatureLine;
     }
     else if (styletype[0]=='p'){
         if (this.drawFeaturePolygon==null){
             this.drawFeaturePolygon = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Polygon);
             this.map.addControl(this.drawFeaturePolygon);
         }
-        this.drawFeaturePolygon.activate();
+        currentDrawControl = this.drawFeaturePolygon;
+    }
+    currentDrawControl.handler.style = apiStyles[styletype];
+    currentDrawControl.activate();
+    currentDrawControl.featureAdded = function(feature){
+            feature.style = apiStyles[styletype];
+            apiFeaturesLayer.redraw();
+/*
+            feature.attributes.title="Voer een titel in:";
+            feature.attributes.description="Voer een omschrijving in:";
+            startFeatureEdit(feature.id);
+            stopDrawingPoint();
+            onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
+            feature.popupFix = true;
+            return false;
+*/
+        }
+}
+
+Lusc.Api.prototype.disableDrawingTool = function(){
+    if (this.drawFeaturePoint!=null){
+        this.drawFeaturePoint.deactivate();
+    }
+    if (this.drawFeatureLine!=null){
+        this.drawFeatureLine.deactivate();
+    }
+    if (this.drawFeaturePolygon!=null){
+        this.drawFeaturePolygon.deactivate();
     }
 }
+
+
 
 /**
  * Interaction functionality for clicking on the marker
