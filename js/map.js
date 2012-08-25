@@ -13,6 +13,23 @@ Proj4js.defs["EPSG:28992"] = "+title=Amersfoort / RD New +proj=sterea +lat_0=52.
 // Use the same marker at several places in the settingspage, change the defaultmarkerpath to use a different one
 //var defaultmarkerpath = "markertypes/information_blue.png";
 
+function MeerMinderOpties() {
+
+//if (document.getElementById('opties').value == "Meer opties") {
+if ($("#opties").val() ==  "Meer opties") {
+	$('#step3').toggle();
+	$('#opties span').text('Minder opties');
+	$("#opties").attr('value', 'Minder opties');
+
+}
+else {
+	$('#step3').toggle();
+	$('#opties span').text('Meer opties');
+	$("#opties").attr('value', 'Meer opties');
+}	
+	
+}
+
 function SearchArray(arr, obj) {
     for(var i=0; i<arr.length; i++) {
         if (arr[i][0] == obj) return arr[i][1];

@@ -156,9 +156,9 @@
                     </form>
                 </div>
                 <!-- Step 3 - Add routes -->
-                <!--<div id="step3" class="container">
+                <div id="step3" class="container" style="display: none;">
                     <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
-                <!--<h2>
+                <h2>
                         <a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a></h2>
                     <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
                     <strong>
@@ -202,7 +202,7 @@
                         </div>
                     </strong>
                     </form>
-                </div>-->
+                </div>
                 <!-- Step 4 - Save and download code -->
                 <div id="step4" class="container">
                     <!-- <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2> -->
@@ -338,6 +338,12 @@
                           
                             document.getElementById('files').addEventListener('change', handleFileSelect, false);
                           </script>  -->
+				<div id="edit5" class="row">
+					<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
+					<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
+					<button id ="opties" type="submit" onclick=" MeerMinderOpties(); return false;" value="Meer opties">
+						<span>Meer opties</span></button>
+				</div>			  
             </div>
             <!--<p id="searchResults">
 				</p> -->
