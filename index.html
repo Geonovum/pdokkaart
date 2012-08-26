@@ -155,11 +155,11 @@
 					</div>	
                     </form>
                 </div>
-                <!-- Step 3 - Add routes -->
+                <!-- Step 3 optie -->
                 <div id="step3" class="container" style="display: none;">
                     <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
                 <h2>
-                        <a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie:  Lijn, box of vlak toevoegen</a></h2>
+                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Lijn, box of vlak toevoegen</a></h2>
                     <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
                     <strong>
                         <div class="row">
@@ -203,11 +203,107 @@
                     </strong>
                     </form>
                 </div>
-                <!-- Step 4 - Save and download code -->
-                <div id="step4" class="container">
+				<!-- Step 4  optie -->
+                <div id="step4" class="container" style="display: none;">
+                    <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
+                <h2>
+                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(4);" onkeypress="return goTo(4);">Optie:  Extra Kaartlaag toevoegen</a></h2>
+                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(5);">
+                    <strong>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_1" value="radio_makeRoutes"
+                                    onclick="manageRoutes(1)">
+                                make routes (single click to start, double to finish)
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_2" value="radio_editRoutes"
+                                    onclick="manageRoutes(2)">
+                                select and edit routes
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_3" value="radio_deleteRoutes"
+                                    onclick="manageRoutes(3)">
+                                select and delete individual routes</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_4" value="radio_reverseRoutes"
+                                    onclick="manageRoutes(4)">
+                                select and reverse routes</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_5" value="radio_fixRoutes"
+                                    onclick="manageRoutes(5)">
+                                delete all</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_6" value="radio_fixRoutes"
+                                    onclick="manageRoutes(6)">
+                                Finish - view routes as they will appear on your map</label>
+                        </div>
+                    </strong>
+                    </form>
+                </div>
+				<!-- Step 5 optie -->
+                <div id="step5" class="container" style="display: none;">
+                    <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
+                <h2>
+                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(5);" onkeypress="return goTo(5);">Optie: Kaartprikker functionaliteit toevoegen</a></h2>
+                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(6);">
+                    <strong>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_1" value="radio_makeRoutes"
+                                    onclick="manageRoutes(1)">
+                                make routes (single click to start, double to finish)
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_2" value="radio_editRoutes"
+                                    onclick="manageRoutes(2)">
+                                select and edit routes
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_3" value="radio_deleteRoutes"
+                                    onclick="manageRoutes(3)">
+                                select and delete individual routes</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_4" value="radio_reverseRoutes"
+                                    onclick="manageRoutes(4)">
+                                select and reverse routes</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_5" value="radio_fixRoutes"
+                                    onclick="manageRoutes(5)">
+                                delete all</label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input type="radio" name="radiogroup_routes" id="radio_routes_6" value="radio_fixRoutes"
+                                    onclick="manageRoutes(6)">
+                                Finish - view routes as they will appear on your map</label>
+                        </div>
+                    </strong>
+                    </form>
+                </div>
+                <!-- Step 6 - Save and download code -->
+                <div id="step6" class="container">
                     <!-- <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2> -->
                     <h2>
-                        <a  onclick="stopDrawingEditingPoint();return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer
+                        <a  onclick="stopDrawingEditingPoint();return goTo(6);" onkeypress="return goTo(6);">Stap 3: Genereer
                             code</a></h2>
                     <form action="#" name="savecode" id="savecode" onsubmit="return false;">
                     <div class="row">
