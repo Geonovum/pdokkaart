@@ -201,6 +201,7 @@ function init_pdok()
 	//addFormEnhancements();
 	$(window).resize(setMapSize);
 	$('input:radio[name=editmarker]')[0].checked = true;
+	$('input:radio[name=editline]')[0].checked = true;
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
 	// initiate the Lusc API object
