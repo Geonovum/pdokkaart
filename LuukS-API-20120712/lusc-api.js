@@ -706,6 +706,7 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
             if (featureAddedCallback){
                 featureAddedCallback(feature);
             }
+            currentDrawControl.deactivate();
 /*
             feature.attributes.title="Voer een titel in:";
             feature.attributes.description="Voer een omschrijving in:";
