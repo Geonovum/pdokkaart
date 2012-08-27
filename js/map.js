@@ -2,6 +2,7 @@
 // So make config object, with anonymous function, proper getters/setters etc
 
 var mapPDOKKaart, markers, activeFeature, dragControl, drawControl, layerSwitcher;
+var mouseover,mouseout,click,touchend;
 var pdokachtergrondkaart;
 
 // The proxyhost is needed for the geocoder
@@ -12,6 +13,71 @@ Proj4js.defs["EPSG:28992"] = "+title=Amersfoort / RD New +proj=sterea +lat_0=52.
 
 // Use the same marker at several places in the settingspage, change the defaultmarkerpath to use a different one
 //var defaultmarkerpath = "markertypes/information_blue.png";
+
+function unregisterEvents(){
+if (markers.events != {} ) {
+	markers.events.unregister("mouseover", markers , mouseover);
+	markers.events.unregister("mouseout", markers, mouseout);
+	markers.events.unregister("click", markers, click);
+	markers.events.unregister("touchend",markers , touchend);
+}
+}
+
+function registerEvents(){
+
+mouseover = function(e) {
+	this.div.style.cursor = "pointer";
+	var feature = this.getFeatureFromEvent(e);
+	
+	if (feature) {
+		// add a popup
+		onFeatureSelect(feature, false, markersPopupText(feature, false));
+		feature.popupFix = false;
+	}
+}
+
+markers.events.register("mouseover", markers, mouseover);
+
+mouseout = function(e) {
+	this.div.style.cursor = "default";
+	var feature = this.getFeatureFromEvent(e);
+	if (feature) {
+	   // add a popup
+	   // onFeatureSelect(feature);
+	   if (!feature.popupFix) {
+		onPopupClose(null, feature);
+	   }
+	}
+}
+ 
+markers.events.register("mouseout", markers, mouseout); 
+
+click = function(e) {
+	this.div.style.cursor = "default";
+	var feature = this.getFeatureFromEvent(e);
+	if (feature) {
+	   // add a popup
+	   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
+	   feature.popupFix = true;			   
+	}
+}
+markers.events.register("click", markers, click);
+
+touchend = function(e) {
+	this.div.style.cursor = "default";
+	var feature = this.getFeatureFromEvent(e);
+	if (feature) {
+	   // add a popup
+	   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
+	   feature.popupFix = true;
+	} else {
+		return true;
+	}	
+}
+
+markers.events.register("touchend", markers, touchend ); 
+
+}
 
 function verwijderAlleMarkers(){
 
@@ -197,9 +263,10 @@ function ZetMarkersOpKaart(strInvoerfile) {
 
 function init_pdok()
 {
-	setMapSize();
+	
+	//setMapSize();
 	//addFormEnhancements();
-	$(window).resize(setMapSize);
+	//$(window).resize(setMapSize);
 	$('input:radio[name=editmarker]')[0].checked = true;
 	$('input:radio[name=editline]')[0].checked = true;
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
@@ -211,6 +278,8 @@ function init_pdok()
 	
 	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
 	mapPDOKKaart = lusc.getMapObject();
+	pdok_api_map_resize(550,440);
+	markers = lusc.featuresLayer;
 	//mapPDOKKaart = new OpenLayers.Map('map');
 	
 	// Thijs: a vector layer is used to show Geocoderesults
@@ -220,51 +289,8 @@ function init_pdok()
         }); */
 
 	// add popup functions for geocoding results
-	/* */
-	/* markers.events.register("mouseover", markers, function(e) {
-		this.div.style.cursor = "pointer";
-		var feature = this.getFeatureFromEvent(e);
-	    
-		if (feature) {
-		    // add a popup
-		    onFeatureSelect(feature, false, markersPopupText(feature, false));
-	        feature.popupFix = false;
-		}
-	});
-
-	markers.events.register("mouseout", markers, function(e) {
-		this.div.style.cursor = "default";
-		var feature = this.getFeatureFromEvent(e);
-		if (feature) {
-		   // add a popup
-		   // onFeatureSelect(feature);
-		   if (!feature.popupFix) {
-			onPopupClose(null, feature);
-		   }
-		}
-	}); 
-
-	markers.events.register("click", markers, function(e) {
-		this.div.style.cursor = "default";
-		var feature = this.getFeatureFromEvent(e);
-		if (feature) {
-		   // add a popup
-		   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
-		   feature.popupFix = true;			   
-		}
-	});
-
-	markers.events.register("touchend", markers, function(e) {
-		this.div.style.cursor = "default";
-		var feature = this.getFeatureFromEvent(e);
-		if (feature) {
-		   // add a popup
-		   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
-		   feature.popupFix = true;
-		} else {
-		    return true;
-		}	
-	}); */
+	
+	
 	
 	// add the markers
 	//mapPDOKKaart.addLayers([markers]);
@@ -366,7 +392,16 @@ function init_pdok()
 	}); */
 	
 	$(".markerbutton").click( function(eventObject) {
-		lusc.enableDrawingTool(eventObject.currentTarget.parentElement.id);
+		removePopups(markers);
+		unregisterEvents();
+		lusc.enableDrawingTool(eventObject.currentTarget.parentElement.id, function(feature){
+											   feature.attributes.title="Voer een titel in:";
+											   feature.attributes.description="Voer een omschrijving in:";
+											   //startFeatureEdit(feature.id);
+											   //stopDrawingPoint();
+											   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
+											   feature.popupFix = true;
+											   return false;	})
 	});
 
 	
@@ -385,53 +420,22 @@ function init_pdok()
 	} */
 }
 
-function startDrawingPoint() {
-	
-	lusc.disableEditingTool();
-	lusc.enableDrawingTool("mt1");
-	
-	
-	//document.getElementById('editmarker4').checked = true;
-	
-	// before adding, remove all existing markers
-   /*  removePopups(markers);
-    markers.destroyFeatures();
-    $('#searchResults').html('');
-	$("#drawlocationhelp").fadeIn();
-	$("#cancelDrawingPoint").fadeIn();
-	dragControl.activate();
-    drawControl.activate();
-	dragControl.deactivate();
-	var blockPanning = false; // to block panning while drawing
-    drawControl.handler.stopDown = blockPanning;
-    drawControl.handler.stopUp = blockPanning;     */
-}
-
 function startEditingPoint() {
-
+	removePopups(markers);
 	lusc.disableDrawingTool();
 	lusc.enableEditingTool();
-	
+	registerEvents();
 
-	// before adding, remove all existing markers
-   /*  removePopups(markers);
-    markers.destroyFeatures();
-    $('#searchResults').html('')
-	$("#drawlocationhelp").fadeIn();
-	$("#cancelDrawingPoint").fadeIn();
-	dragControl.activate();
-	drawControl.deactivate();
-	dragControl.activate();
-	var blockPanning = false; // to block panning while drawing
-    dragControl.handler.stopDown = blockPanning;
-    dragControl.handler.stopUp = blockPanning;     */
 }
 
 
 function stopDrawingEditingPoint() {
+	removePopups(markers);
+	unregisterEvents();
 	lusc.disableEditingTool();
 	lusc.disableDrawingTool();
-	
+	$('input:radio[name=editmarker]')[0].checked = true;
+	$('input:radio[name=editline]')[0].checked = true;	
 }
 
 /* function verwijderAlleMarkers(){
@@ -879,19 +883,19 @@ function linkToMapOpened(permalink) {
 	return true;
 }
 
-/* function onPopupClose(evt, feature) {
+function onPopupClose(evt, feature) {
 	if (!feature) feature = activeFeature;
 	if (feature) {
 		mapPDOKKaart.removePopup(feature.popup);
 		feature.popup.destroy();
 		feature.popup = null;
 	    feature.renderIntent='default';
-		feature.layer.drawFeature(feature);
+		//feature.layer.drawFeature(feature);
 		// mapPDOKKaart.panTo(previousCenter);
 	}
-} */
+} 
 
-/* function onFeatureSelect(feature, full, text) {
+function onFeatureSelect(feature, full, text) {
 	removePopups(feature.layer);
 	// var text = '';
 	var popupSize;
@@ -924,7 +928,7 @@ function linkToMapOpened(permalink) {
 		             popupCloseButton, onPopupClose);
 	feature.popup = popup;
 	feature.renderIntent='select';
-	feature.layer.drawFeature(feature);
+	//feature.layer.drawFeature(feature);
     popup.setBorder("1px solid #888888");
 	popup.setOpacity(1.0);
 	popup.autoSize = true;
@@ -935,9 +939,9 @@ function linkToMapOpened(permalink) {
 	    popup.panMapIfOutOfView = false;
 	}	    
 	mapPDOKKaart.addPopup(popup);
-} */
+} 
 
-/* function markersPopupText(feature, full) {
+function markersPopupText(feature, full) {
 	var className = "popupTitleSummary";
 	var text="";
 	if (full) {
@@ -971,7 +975,7 @@ function linkToMapOpened(permalink) {
     text+="</div>";
 	return text;
 }
- */
+
 /* function startFeatureEdit(ft_id) {
 	dragControl.activate();
 	// TODO: change style of marker
@@ -981,7 +985,7 @@ function linkToMapOpened(permalink) {
 	// $("#btnStopEdit").attr("disabled","");
 } */
 
-/* function stopFeatureEdit(ft_id) {
+ function stopFeatureEdit(ft_id) {
 	//linkToMapOpened();
 	 removePopups(markers);
 	// dragControl.deactivate();
@@ -992,8 +996,8 @@ function linkToMapOpened(permalink) {
 	// $("#btnStopEdit").attr("disabled","disabled");
 
 }
- */
-/* function removeFeature (ft_id) {
+
+function removeFeature (ft_id) {
 	var ok = confirm ("Deze locatie verwijderen?")
 	if (ok) {
 		$('#listitem_'+ft_id.split('.')[2]).remove()
@@ -1002,9 +1006,9 @@ function linkToMapOpened(permalink) {
 		markers.removeFeatures([ft]);
 		// also from the list
 	}
-} */
+} 
 
-/* function removePopups(layer) {
+function removePopups(layer) {
 	for (var i=0;i<layer.features.length;i++) {
 		var ft = layer.features[i];
 		if (ft.popup!=null) {
@@ -1016,7 +1020,7 @@ function linkToMapOpened(permalink) {
 			ft.popup = null;
 		}
 	}
-} */
+} 
 
 /** GUI functions **/
 function setMapSize() {
@@ -1056,17 +1060,17 @@ function setMapSize() {
 //} 
 
 
-/* function updateMarkerTitle(markerTitle, ft_id) {
+function updateMarkerTitle(markerTitle, ft_id) {
 	var ft = markers.getFeatureById(ft_id);
 	ft.attributes.title = markerTitle;
-} */
+} 
 
 
-/* function updateMarkerText(markerText, ft_id) {
+ function updateMarkerText(markerText, ft_id) {
 	var ft = markers.getFeatureById(ft_id);
 	ft.attributes.description = markerText;
 }
- */
+ 
 
 /* function getStyleMap() {
 
