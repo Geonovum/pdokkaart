@@ -390,7 +390,7 @@ function init_pdok()
 	}); */
 	
 	$(".markerbutton").click( function(eventObject) {
-		
+		removePopups(markers);
 		unregisterEvents();
 		lusc.enableDrawingTool(eventObject.currentTarget.parentElement.id, function(feature){
 											   feature.attributes.title="Voer een titel in:";
@@ -419,7 +419,7 @@ function init_pdok()
 }
 
 function startEditingPoint() {
-
+	removePopups(markers);
 	lusc.disableDrawingTool();
 	lusc.enableEditingTool();
 	registerEvents();
@@ -428,9 +428,12 @@ function startEditingPoint() {
 
 
 function stopDrawingEditingPoint() {
+	removePopups(markers);
 	unregisterEvents();
 	lusc.disableEditingTool();
-	lusc.disableDrawingTool();	
+	lusc.disableDrawingTool();
+	$('input:radio[name=editmarker]')[0].checked = true;
+	$('input:radio[name=editline]')[0].checked = true;	
 }
 
 /* function verwijderAlleMarkers(){
@@ -885,7 +888,7 @@ function onPopupClose(evt, feature) {
 		feature.popup.destroy();
 		feature.popup = null;
 	    feature.renderIntent='default';
-		feature.layer.drawFeature(feature);
+		//feature.layer.drawFeature(feature);
 		// mapPDOKKaart.panTo(previousCenter);
 	}
 } 
