@@ -603,7 +603,7 @@ Lusc.Api.prototype.createOlMap = function() {
     if (this.featuresLayer==null){
         this.featuresLayer = new OpenLayers.Layer.Vector("Features");
         this.featuresLayer.style = OpenLayers.Feature.Vector.style;
-        this.map.addLayer(this.featuresLayer);
+        olMap.addLayer(this.featuresLayer);
     }
 
     return olMap;
