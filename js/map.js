@@ -263,9 +263,10 @@ function ZetMarkersOpKaart(strInvoerfile) {
 
 function init_pdok()
 {
-	setMapSize();
+	
+	//setMapSize();
 	//addFormEnhancements();
-	$(window).resize(setMapSize);
+	//$(window).resize(setMapSize);
 	$('input:radio[name=editmarker]')[0].checked = true;
 	$('input:radio[name=editline]')[0].checked = true;
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
@@ -277,6 +278,7 @@ function init_pdok()
 	
 	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
 	mapPDOKKaart = lusc.getMapObject();
+	pdok_api_map_resize(550,440);
 	markers = lusc.featuresLayer;
 	//mapPDOKKaart = new OpenLayers.Map('map');
 	
