@@ -600,6 +600,12 @@ Lusc.Api.prototype.createOlMap = function() {
         markerLayer.addFeatures([markerFeat]);
     }
 
+    if (this.featuresLayer==null){
+        this.featuresLayer = new OpenLayers.Layer.Vector("Features");
+        this.featuresLayer.style = OpenLayers.Feature.Vector.style;
+        this.map.addLayer(this.featuresLayer);
+    }
+
     return olMap;
 }
 
@@ -669,11 +675,6 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype){
     if (this.styles==null){
         this.createStyles();
     }
-    if (this.featuresLayer==null){
-        this.featuresLayer = new OpenLayers.Layer.Vector("Features");
-        this.featuresLayer.style = OpenLayers.Feature.Vector.style;
-        this.map.addLayer(this.featuresLayer);
-    }
     var apiStyles = this.styles;
     var apiFeaturesLayer = this.featuresLayer;
     var currentDrawControl;
@@ -734,6 +735,10 @@ Lusc.Api.prototype.disableEditingTool = function(){
 
 Lusc.Api.prototype.enableEditingTool = function(){
     // TODO implement or remove
+}
+
+Lusc.Api.prototype.getBookMarkUrl = function(){
+    
 }
 
 /**
@@ -1033,84 +1038,3 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 		}
 	}
 }
-
-/**
- * @private
- * 
- * Creates a style object with all markerstyles, linestyles and polygonstyles 
- */
-//Lusc.Api.prototype.createStylesObject = function() {
-//
-//var rule_mt1 = this.createRuleObject("mt1",null,null,null,null,"markertypes/information_blue.png");
-//var rule_mt2 = this.createRuleObject("mt2",null,null,null,null,"markertypes/information_green.png");
-//var rule_mt3 = this.createRuleObject("mt3",null,null,null,null,"markertypes/information_yellow.png");
-//var rule_lt1 = this.createRuleObject("lt1",null,"#ff9933",null, 2,null);
-//var rule_pt1 = this.createRuleObject("pt1","#ffcc66","#ffcc66",1,2,null);
-//
-//var styles = new OpenLayers.Style(
-//        // the first argument is a base symbolizer
-//        // all other symbolizers in rules will extend this one
-//        {
-//            graphicWidth: 21,
-//            graphicHeight: 25,
-//            graphicYOffset: -28, // shift graphic up 28 pixels
-//            label: "${foo}" // label will be foo attribute value
-//        },
-//        // the second argument will include all rules
-//        {
-//            rules: [
-//                rule_mt1,
-//				rule_mt2,
-//				rule_mt3,
-//				rule_lt1,
-//				rule_pt1
-//		]})
-//	
-//
-//return styles;
-//
-//}
-//
-///**
-// * @private
-// * 
-// * Creates a StyleMap object  
-// */
-//Lusc.Api.prototype.createRuleObject = function(styletype,fillcolor, linecolor, fillopacity, linewidth, externalgraphic) {
-//
-//
-//var stylemap = {
-//                default:{
-//                    pointRadius: 14,
-//                    fillColor: fillcolor,
-//                    strokeColor: linecolor,
-//                    strokeWidth: linewidth,
-//                    graphicZIndex: 1,
-//					externalGraphic: externalgraphic,
-//					fillOpacity: fillopacity,
-//					graphicYOffset: -28
-//                },
-//                select:{
-//                    fillColor: "0000FF",
-//                    strokeColor: "0000FF",
-//                    graphicZIndex: 2
-//                }
-//            };
-//
-//			
-//var rule = new OpenLayers.Rule({
-//                    // a rule contains an optional filter
-//                    filter: new OpenLayers.Filter.Comparison({
-//                        type: OpenLayers.Filter.Comparison.EQUALS,
-//                        property: "style", // the "style" feature attribute
-//                        value: styletype
-//                    }),
-//                    // if a feature matches the above filter, use this symbolizer
-//                    symbolizer: {
-//                       stylemap
-//                    }
-//                });			
-//						
-//return rule;
-//}
- 
