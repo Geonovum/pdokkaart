@@ -599,12 +599,11 @@ Lusc.Api.prototype.createOlMap = function() {
         olMap.addLayer(markerLayer);
         markerLayer.addFeatures([markerFeat]);
     }
-
-    if (this.featuresLayer==null){
-        this.featuresLayer = new OpenLayers.Layer.Vector("Features");
-        this.featuresLayer.style = OpenLayers.Feature.Vector.style;
-        olMap.addLayer(this.featuresLayer);
-    }
+    
+    // featuresLayer is used for all features/markers
+    this.featuresLayer = new OpenLayers.Layer.Vector("Features");
+    this.featuresLayer.style = OpenLayers.Feature.Vector.style;
+    olMap.addLayer(this.featuresLayer);
 
     return olMap;
 }
@@ -670,7 +669,7 @@ Lusc.Api.prototype.createStyles = function(){
  *       based on the first char of the styletype, the type of feature
  *       is set: m = marker/point, l = linestring, p = polygon
  */
-Lusc.Api.prototype.enableDrawingTool = function(styletype){
+Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback){
     this.disableDrawingTool();
     if (this.styles==null){
         this.createStyles();
@@ -704,6 +703,9 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype){
     currentDrawControl.featureAdded = function(feature){
             feature.style = apiStyles[styletype];
             apiFeaturesLayer.redraw();
+            if (featureAddedCallback){
+                featureAddedCallback(feature);
+            }
 /*
             feature.attributes.title="Voer een titel in:";
             feature.attributes.description="Voer een omschrijving in:";
