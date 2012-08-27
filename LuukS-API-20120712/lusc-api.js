@@ -132,6 +132,7 @@ Lusc.Api = function(config) {
      * Reference to featuresLayer (= layer where you draw feature on)
      */
     this.featuresLayer = null;
+    this.features = [];
 
     /**
      * @private
@@ -189,6 +190,9 @@ Lusc.Api = function(config) {
           pointRadius : 12,
           externalGraphic: './markertypes/default.png'
     };
+
+
+    this.createStyles();
 
     
     /**
@@ -304,6 +308,18 @@ Lusc.Api.prototype.validateConfig = function(config) {
     
     if (config.div) {
     	this.div = config.div;
+    }
+
+    var MAXNUMBEROFFEATURES = 100;
+    for (var i = 1; i<=MAXNUMBEROFFEATURES; i++){
+        if(config['fgeom'+i]) {
+            // TODO more sanity checks here
+            var ft = this.createFeature(config['fgeom'+i], config['ftype'+i], config['fname'+i], config['fdesc'+i]);
+            this.features.push(ft);
+        }
+        else{
+            break;
+        }
     }
 }
 
@@ -605,6 +621,16 @@ Lusc.Api.prototype.createOlMap = function() {
     this.featuresLayer.style = OpenLayers.Feature.Vector.style;
     olMap.addLayer(this.featuresLayer);
 
+    selectControl2 = new OpenLayers.Control.SelectFeature(this.featuresLayer);
+    olMap.addControl(selectControl2);
+    this.featuresLayer.events.on({
+        'featureselected': onFeatureSelect,
+        'featureunselected': onFeatureUnselect
+    });
+    selectControl2.activate();
+
+    this.featuresLayer.addFeatures(this.features);
+
     return olMap;
 }
 
@@ -621,6 +647,26 @@ Lusc.Api.prototype.addGeometries = function(featurecollection){
 	var vector_layer = new OpenLayers.Layer.Vector(); 
 	this.map.addLayer(vector_layer);
 	vector_layer.addFeatures(geojson_format.read(featurecollection));
+}
+
+
+// fgeom1  wkt
+// fname1  name or title for popup
+// fdesc1  description for popup
+// ftype1  styletype as defined for point/markers, lines or polygons (like mt1, pt3 etc)
+Lusc.Api.prototype.createFeature = function(wkt, typestyle, name, description){
+    var wktFormat = new OpenLayers.Format.WKT();
+    // OpenLayers.Util.getParameters() splits paramaters with comma's into an array
+    // because a LINESTRING wkt contains comma we have to concat them back
+    if (wkt instanceof Array) {
+        wkt = wkt.join();
+    }
+    var feature = wktFormat.read(wkt);
+    feature.attributes['styletype']=typestyle;
+    feature.attributes['name']=name;
+    feature.attributes['description']=description;
+    feature.style=this.styles[typestyle];
+    return feature;
 }
 
 Lusc.Api.prototype.createStyles = function(){
@@ -648,9 +694,7 @@ Lusc.Api.prototype.createStyles = function(){
             externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
-            graphicYOffset: -37//,
-            //pointRadius: 5,
-            //fillOpacity: 1
+            graphicYOffset: -37
         }, {});
     this.styles.mt1 = pdokDefaultPoint;
     this.styles.mt2 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_green.png"}, pdokDefaultPoint);
@@ -671,9 +715,6 @@ Lusc.Api.prototype.createStyles = function(){
  */
 Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback){
     this.disableDrawingTool();
-    if (this.styles==null){
-        this.createStyles();
-    }
     var apiStyles = this.styles;
     var apiFeaturesLayer = this.featuresLayer;
     var currentDrawControl;
