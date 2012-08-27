@@ -211,6 +211,7 @@ function init_pdok()
 	
 	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
 	mapPDOKKaart = lusc.getMapObject();
+	markers = lusc.featuresLayer;
 	//mapPDOKKaart = new OpenLayers.Map('map');
 	
 	// Thijs: a vector layer is used to show Geocoderesults
@@ -220,8 +221,8 @@ function init_pdok()
         }); */
 
 	// add popup functions for geocoding results
-	/* */
-	/* markers.events.register("mouseover", markers, function(e) {
+	
+	markers.events.register("mouseover", markers, function(e) {
 		this.div.style.cursor = "pointer";
 		var feature = this.getFeatureFromEvent(e);
 	    
@@ -264,7 +265,7 @@ function init_pdok()
 		} else {
 		    return true;
 		}	
-	}); */
+	});
 	
 	// add the markers
 	//mapPDOKKaart.addLayers([markers]);
@@ -879,7 +880,7 @@ function linkToMapOpened(permalink) {
 	return true;
 }
 
-/* function onPopupClose(evt, feature) {
+function onPopupClose(evt, feature) {
 	if (!feature) feature = activeFeature;
 	if (feature) {
 		mapPDOKKaart.removePopup(feature.popup);
@@ -889,9 +890,9 @@ function linkToMapOpened(permalink) {
 		feature.layer.drawFeature(feature);
 		// mapPDOKKaart.panTo(previousCenter);
 	}
-} */
+} 
 
-/* function onFeatureSelect(feature, full, text) {
+function onFeatureSelect(feature, full, text) {
 	removePopups(feature.layer);
 	// var text = '';
 	var popupSize;
@@ -935,9 +936,9 @@ function linkToMapOpened(permalink) {
 	    popup.panMapIfOutOfView = false;
 	}	    
 	mapPDOKKaart.addPopup(popup);
-} */
+} 
 
-/* function markersPopupText(feature, full) {
+function markersPopupText(feature, full) {
 	var className = "popupTitleSummary";
 	var text="";
 	if (full) {
@@ -971,7 +972,7 @@ function linkToMapOpened(permalink) {
     text+="</div>";
 	return text;
 }
- */
+
 /* function startFeatureEdit(ft_id) {
 	dragControl.activate();
 	// TODO: change style of marker
@@ -993,7 +994,7 @@ function linkToMapOpened(permalink) {
 
 }
  */
-/* function removeFeature (ft_id) {
+function removeFeature (ft_id) {
 	var ok = confirm ("Deze locatie verwijderen?")
 	if (ok) {
 		$('#listitem_'+ft_id.split('.')[2]).remove()
@@ -1002,9 +1003,9 @@ function linkToMapOpened(permalink) {
 		markers.removeFeatures([ft]);
 		// also from the list
 	}
-} */
+} 
 
-/* function removePopups(layer) {
+function removePopups(layer) {
 	for (var i=0;i<layer.features.length;i++) {
 		var ft = layer.features[i];
 		if (ft.popup!=null) {
@@ -1016,7 +1017,7 @@ function linkToMapOpened(permalink) {
 			ft.popup = null;
 		}
 	}
-} */
+} 
 
 /** GUI functions **/
 function setMapSize() {
@@ -1056,17 +1057,17 @@ function setMapSize() {
 //} 
 
 
-/* function updateMarkerTitle(markerTitle, ft_id) {
+function updateMarkerTitle(markerTitle, ft_id) {
 	var ft = markers.getFeatureById(ft_id);
 	ft.attributes.title = markerTitle;
-} */
+} 
 
 
-/* function updateMarkerText(markerText, ft_id) {
+ function updateMarkerText(markerText, ft_id) {
 	var ft = markers.getFeatureById(ft_id);
 	ft.attributes.description = markerText;
 }
- */
+ 
 
 /* function getStyleMap() {
 
