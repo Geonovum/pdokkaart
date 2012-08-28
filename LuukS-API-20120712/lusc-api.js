@@ -335,7 +335,7 @@ Lusc.Api.prototype.createOlMap = function() {
         controls: [
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.ZoomPanel(),
+            new OpenLayers.Control.Zoom(),
 			new OpenLayers.Control.ScaleLine()
         ],
         maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
@@ -782,27 +782,16 @@ Lusc.Api.prototype.getBookMarkUrl = function(){
     
 }
 
-/**
- * Interaction functionality for clicking on the marker
- */
-Lusc.Api.prototype.onPopupClose = function(evt) {
-    // 'this' is the popup.
-    var feature = this.feature;
-    if (feature.layer) { // The feature is not destroyed
-        selectControl.unselect(feature);
-    } else { // After "moveend" or "refresh" events on POIs layer all 
-             //     features have been destroyed by the Strategy.BBOX
-        this.destroy();
-    }
-}
-
 Lusc.Api.prototype.onFeatureSelect = function(evt) {
     feature = evt.feature;
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
-                             feature.geometry.getBounds().getCenterLonLat(),
-                             new OpenLayers.Size(100,100),
-                             feature.attributes.oms,
-                             null, true, onPopupClose);
+                feature.geometry.getBounds().getCenterLonLat(),
+                new OpenLayers.Size(100,100),
+                feature.attributes.oms,
+                null, true, function(evt) {
+                    this.hide();
+                }
+            );
     feature.popup = popup;
     popup.feature = feature;
     this.map.addPopup(popup, true);
