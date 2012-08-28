@@ -568,8 +568,15 @@ Lusc.Api.prototype.createOlMap = function() {
     }
     
     // add marker and use markertype if given, otherwise the default marker
+    // backward compatibility: mloc is alway point
     if (this.mloc != null) {
-       var markerGeom = new OpenLayers.Geometry.Point(this.mloc[0], this.mloc[1]);
+        var wkt = 'POINT('+this.mloc[0]+' '+this.mloc[1]+')';
+        if (this.mt==null){
+            this.mt='mt0'; // mt0 is default point symbol
+        }
+        this.features.push(this.createFeature(wkt, this.mt, this.titel, this.tekst));
+
+    /* var markerGeom = new OpenLayers.Geometry.Point(this.mloc[0], this.mloc[1]);
        var markerFeat = new OpenLayers.Feature.Vector(markerGeom);
        if (this.mt != null){
 	        if ((this.mt >= 0) && (this.mt < this.markers.length)){
@@ -585,9 +592,9 @@ Lusc.Api.prototype.createOlMap = function() {
         if ((this.pointRadius !=null) && (this.pointRadius > 0)){
         	this.styleObj.pointRadius = this.pointRadius;
         }
-        /* var markerLayer = new OpenLayers.Layer.Vector('Marker', {
+        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
             styleMap: new OpenLayers.StyleMap(this.styleObj)
-        }); */
+        });
 		
 		var markerLayer = new OpenLayers.Layer.Vector('Marker', {
             styleMap: this.styles
@@ -612,14 +619,13 @@ Lusc.Api.prototype.createOlMap = function() {
                 'featureunselected': onFeatureUnselect
             });
 		}
-
         olMap.addLayer(markerLayer);
         markerLayer.addFeatures([markerFeat]);
+        */
     }
-    
+
     // featuresLayer is used for all features/markers
     this.featuresLayer = new OpenLayers.Layer.Vector("Features");
-    //this.featuresLayer.style = OpenLayers.Feature.Vector.style;
     olMap.addLayer(this.featuresLayer);
     selectControl2 = new OpenLayers.Control.SelectFeature(this.featuresLayer);
     olMap.addControl(selectControl2);
@@ -630,6 +636,8 @@ Lusc.Api.prototype.createOlMap = function() {
     selectControl2.activate();
 
     this.featuresLayer.addFeatures(this.features);
+
+    olMap.zoomToExtent([-15000,300000,300000,640000],true);
 
     return olMap;
 }
@@ -665,7 +673,6 @@ Lusc.Api.prototype.createFeature = function(wkt, typestyle, name, description){
     feature.attributes['styletype']=typestyle;
     feature.attributes['name']=name;
     feature.attributes['description']=description;
-    feature.attributes['oms']=name+' '+description
     feature.style=this.styles[typestyle];
     return feature;
 }
@@ -692,12 +699,13 @@ Lusc.Api.prototype.createStyles = function(){
 
     var pdokDefaultPoint = OpenLayers.Util.applyDefaults(
         {
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png",
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/default.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
         }, {});
-    this.styles.mt1 = pdokDefaultPoint;
+    this.styles.mt0 = pdokDefaultPoint;
+    this.styles.mt1 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png"}, pdokDefaultPoint);
     this.styles.mt2 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_green.png"}, pdokDefaultPoint);
     this.styles.mt3 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_yellow.png"}, pdokDefaultPoint);
     this.styles.mt4 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_blue.png"}, pdokDefaultPoint);
@@ -783,10 +791,17 @@ Lusc.Api.prototype.getBookMarkUrl = function(){
 
 Lusc.Api.prototype.onFeatureSelect = function(evt) {
     feature = evt.feature;
+    var content = "";
+    if (feature.attributes['name']!=null){
+        content=feature.attributes['name'];
+    }
+    if (feature.attributes['description']!=null){
+        content=content+" "+feature.attributes['description'];
+    }
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
                 feature.geometry.getBounds().getCenterLonLat(),
                 new OpenLayers.Size(100,100),
-                feature.attributes.oms,
+                content, //feature.attributes.oms,
                 null, true, function(evt) {
                     this.hide();
                 }
@@ -894,7 +909,7 @@ Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,poin
         }
         
 	    // add popup if the parameters titel or tekst are used
-	    if (titel != null || tekst != null) {
+	    /*if (titel != null || tekst != null) {
 	    	strOms = "";
 	    	if (titel != null){
 		    	strOms = "<h2>" + titel + "</h2>";
@@ -907,10 +922,10 @@ Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,poin
                 'featureselected': onFeatureSelect,
                 'featureunselected': onFeatureUnselect
             });
-		}
+		}*/
         //markerLayer.addFeatures([vctMarkerFeat]);
         //var markerStyle = {externalGraphic: "./markertypes/default.png", graphicWidth: 16, graphicHeight: 16, graphicYOffset: -16, graphicOpacity: 0.7};
-        markerLayer.addFeatures([new OpenLayers.Feature.Vector(pntMarkerGeom, {oms: strOms}, markerStyle)]);
+        //markerLayer.addFeatures([new OpenLayers.Feature.Vector(pntMarkerGeom, {oms: strOms}, markerStyle)]);
     }
 }
 
