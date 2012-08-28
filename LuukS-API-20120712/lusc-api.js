@@ -124,9 +124,10 @@ Lusc.Api = function(config) {
     /**
      * References to different drawing controls
      */
-     this.drawFeaturePoint = null;
-     this.drawFeatureLine = null;
-     this.drawFeaturePolygon = null;
+    this.drawFeaturePointControl = null;
+    this.drawFeatureLineControl = null;
+    this.drawFeaturePolygonControl = null;
+    this.editFeatureControl = null;
 	
     /**
      * Reference to featuresLayer (= layer where you draw feature on)
@@ -624,8 +625,8 @@ Lusc.Api.prototype.createOlMap = function() {
     selectControl2 = new OpenLayers.Control.SelectFeature(this.featuresLayer);
     olMap.addControl(selectControl2);
     this.featuresLayer.events.on({
-        'featureselected': onFeatureSelect,
-        'featureunselected': onFeatureUnselect
+        'featureselected': this.onFeatureSelect,
+        'featureunselected': this.onFeatureUnselect
     });
     selectControl2.activate();
 
@@ -665,6 +666,7 @@ Lusc.Api.prototype.createFeature = function(wkt, typestyle, name, description){
     feature.attributes['styletype']=typestyle;
     feature.attributes['name']=name;
     feature.attributes['description']=description;
+    feature.attributes['oms']=name+' '+description
     feature.style=this.styles[typestyle];
     return feature;
 }
@@ -719,25 +721,25 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
     var apiFeaturesLayer = this.featuresLayer;
     var currentDrawControl;
     if (styletype[0]=='m'){
-        if (this.drawFeaturePoint==null){
-            this.drawFeaturePoint = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Point);
-            this.map.addControl(this.drawFeaturePoint);
+        if (this.drawFeaturePointControl==null){
+            this.drawFeaturePointControl = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Point);
+            this.map.addControl(this.drawFeaturePointControl);
         }
-        currentDrawControl = this.drawFeaturePoint;
+        currentDrawControl = this.drawFeaturePointControl;
     }
     else if (styletype[0]=='l'){
-        if (this.drawFeatureLine==null){
-            this.drawFeatureLine = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Path);
-            this.map.addControl(this.drawFeatureLine);
+        if (this.drawFeatureLineControl==null){
+            this.drawFeatureLineControl = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Path);
+            this.map.addControl(this.drawFeatureLineControl);
         }
-        currentDrawControl = this.drawFeatureLine;
+        currentDrawControl = this.drawFeatureLineControl;
     }
     else if (styletype[0]=='p'){
-        if (this.drawFeaturePolygon==null){
-            this.drawFeaturePolygon = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Polygon);
-            this.map.addControl(this.drawFeaturePolygon);
+        if (this.drawFeaturePolygonControl==null){
+            this.drawFeaturePolygonControl = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Polygon);
+            this.map.addControl(this.drawFeaturePolygonControl);
         }
-        currentDrawControl = this.drawFeaturePolygon;
+        currentDrawControl = this.drawFeaturePolygonControl;
     }
     currentDrawControl.handler.style = apiStyles[styletype];
     currentDrawControl.activate();
@@ -748,27 +750,18 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
                 featureAddedCallback(feature);
             }
             currentDrawControl.deactivate();
-/*
-            feature.attributes.title="Voer een titel in:";
-            feature.attributes.description="Voer een omschrijving in:";
-            startFeatureEdit(feature.id);
-            stopDrawingPoint();
-            onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
-            feature.popupFix = true;
-            return false;
-*/
         }
 }
 
 Lusc.Api.prototype.disableDrawingTool = function(){
-    if (this.drawFeaturePoint!=null){
-        this.drawFeaturePoint.deactivate();
+    if (this.drawFeaturePointControl!=null){
+        this.drawFeaturePointControl.deactivate();
     }
-    if (this.drawFeatureLine!=null){
-        this.drawFeatureLine.deactivate();
+    if (this.drawFeatureLineControl!=null){
+        this.drawFeatureLineControl.deactivate();
     }
-    if (this.drawFeaturePolygon!=null){
-        this.drawFeaturePolygon.deactivate();
+    if (this.drawFeaturePolygonControl!=null){
+        this.drawFeaturePolygonControl.deactivate();
     }
 }
 
@@ -778,7 +771,11 @@ Lusc.Api.prototype.disableEditingTool = function(){
 }
 
 Lusc.Api.prototype.enableEditingTool = function(){
-    // TODO implement or remove
+    if (this.editFeatureControl == null) {
+        this.editFeatureControl = new OpenLayers.Control.ModifyFeature(this.featuresLayer);
+        this.map.addControl(this.editFeatureControl);
+    }
+    this.editFeatureControl.activate();
 }
 
 Lusc.Api.prototype.getBookMarkUrl = function(){
@@ -788,7 +785,7 @@ Lusc.Api.prototype.getBookMarkUrl = function(){
 /**
  * Interaction functionality for clicking on the marker
  */
-function onPopupClose(evt) {
+Lusc.Api.prototype.onPopupClose = function(evt) {
     // 'this' is the popup.
     var feature = this.feature;
     if (feature.layer) { // The feature is not destroyed
@@ -799,7 +796,7 @@ function onPopupClose(evt) {
     }
 }
 
-function onFeatureSelect(evt) {
+Lusc.Api.prototype.onFeatureSelect = function(evt) {
     feature = evt.feature;
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
                              feature.geometry.getBounds().getCenterLonLat(),
@@ -811,7 +808,7 @@ function onFeatureSelect(evt) {
     this.map.addPopup(popup, true);
 }
 
-function onFeatureUnselect(evt) {
+Lusc.Api.prototype.onFeatureUnselect = function(evt) {
     feature = evt.feature;
     if (feature.popup) {
         popup.feature = null;
