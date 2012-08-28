@@ -619,9 +619,8 @@ Lusc.Api.prototype.createOlMap = function() {
     
     // featuresLayer is used for all features/markers
     this.featuresLayer = new OpenLayers.Layer.Vector("Features");
-    this.featuresLayer.style = OpenLayers.Feature.Vector.style;
+    //this.featuresLayer.style = OpenLayers.Feature.Vector.style;
     olMap.addLayer(this.featuresLayer);
-
     selectControl2 = new OpenLayers.Control.SelectFeature(this.featuresLayer);
     olMap.addControl(selectControl2);
     this.featuresLayer.events.on({
