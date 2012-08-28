@@ -411,7 +411,7 @@ Lusc.Api.prototype.createOlMap = function() {
 		{
 			switch (this.layer[l].toUpperCase()){
 				case "AAN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"AAN",
 							"http://geodata.nationaalgeoregister.nl/aan/wms",
 							{layers: 'aan',transparent: 'true',format: "image/png"},
@@ -421,7 +421,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "ADRESSEN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"ADRESSEN",
 							"http://geodata.nationaalgeoregister.nl/inspireadressen/wms",
 							{layers: 'inspireadressen',transparent: 'true',format: "image/png"},
@@ -431,7 +431,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "AHN25M":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"AHN25M",
 							"http://geodata.nationaalgeoregister.nl/ahn25m/wms",
 							{layers: 'ahn25m',transparent: 'true',format: "image/png"},
@@ -441,7 +441,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "BBG2008":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"BBG2008",
 							"http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms",
 							{layers: 'bbg2008',transparent: 'true',format: "image/png"},
@@ -451,7 +451,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "BESCHERMDENATUURMONUMENTEN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"beschermdenatuurmonumenten",
 							"http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms",
 							{layers: 'beschermdenatuurmonumenten',transparent: 'true',format: "image/png"},
@@ -461,7 +461,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "GEMEENTEGRENZEN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
 							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
@@ -471,7 +471,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "GEMEENTEGRENZEN_LABEL":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld",
 							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
@@ -481,7 +481,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "NATIONALE_PARKEN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"Nationale parken",
 							"http://geodata.nationaalgeoregister.nl/nationaleparken/wms",
 							{layers: 'nationaleparken',transparent: 'true',format: "image/png"},
@@ -499,7 +499,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "NOK2011":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"NOK2011",
 							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
 							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/png"},
@@ -509,7 +509,7 @@ Lusc.Api.prototype.createOlMap = function() {
 					olMap.addLayer(layer);
 					break;
 				case "TEXEL_20120423_OUTLINE":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"Gevectoriseerde Bonnebladen",
 							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
 							{layers: 'TEXEL_20120423_OUTLINE',transparent: 'true',format: "image/png"},
@@ -531,7 +531,7 @@ Lusc.Api.prototype.createOlMap = function() {
 	
     // apply WMSURL and WMSLAYERS if applicable
 	if ((this.wmsurl != null) && (this.wmslayers != null)) {
-		var lyrWMS = new OpenLayers.Layer.WMS.Untiled(
+		var lyrWMS = new OpenLayers.Layer.WMS(
 				this.wmslayers,
 				this.wmsurl, 
 				{layers: this.wmslayers,transparent: 'true',format: "image/png"},
@@ -931,7 +931,7 @@ Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,poin
 
 Lusc.Api.prototype.addWMS = function(wmsurl,wmslayers) {
 	if ((wmsurl != null) && (wmslayers != null)) {
-		var lyrWMS = new OpenLayers.Layer.WMS.Untiled(
+		var lyrWMS = new OpenLayers.Layer.WMS(
 				wmslayers,
 				wmsurl, 
 				{layers: wmslayers,transparent: 'true',format: "image/png"},
@@ -964,7 +964,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 		{
 			switch (arrLayerNames[l].toUpperCase()){
 				case "AAN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"AAN",
 							"http://geodata.nationaalgeoregister.nl/aan/wms",
 							{layers: 'aan',transparent: 'true',format: "image/png"},
@@ -974,7 +974,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					this.map.addLayer(layer);
 					break;
 				case "ADRESSEN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"ADRESSEN",
 							"http://geodata.nationaalgeoregister.nl/inspireadressen/wms",
 							{layers: 'inspireadressen',transparent: 'true',format: "image/png"},
@@ -984,7 +984,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					olMap.addLayer(layer);
 					break;
 				case "AHN25M":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"AHN25M",
 							"http://geodata.nationaalgeoregister.nl/ahn25m/wms",
 							{layers: 'ahn25m',transparent: 'true',format: "image/png"},
@@ -994,7 +994,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					this.map.addLayer(layer);
 					break;
 				case "BBG2008":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"BBG2008",
 							"http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms",
 							{layers: 'bbg2008',transparent: 'true',format: "image/png"},
@@ -1004,7 +1004,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					olMap.addLayer(layer);
 					break;
 				case "BESCHERMDENATUURMONUMENTEN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"beschermdenatuurmonumenten",
 							"http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms",
 							{layers: 'beschermdenatuurmonumenten',transparent: 'true',format: "image/png"},
@@ -1014,7 +1014,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					olMap.addLayer(layer);
 					break;
 				case "GEMEENTEGRENZEN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
 							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
@@ -1024,7 +1024,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					this.map.addLayer(layer);
 					break;
 				case "GEMEENTEGRENZEN_LABEL":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"Gemeentegrenzen",
 							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld",
 							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
@@ -1034,7 +1034,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					this.map.addLayer(layer);
 					break;
 				case "NATIONALE_PARKEN":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"Nationale parken",
 							"http://geodata.nationaalgeoregister.nl/nationaleparken/wms",
 							{layers: 'nationaleparken',transparent: 'true',format: "image/png"},
@@ -1052,7 +1052,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					this.map.addLayer(layer);
 					break;
 				case "NOK2011":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"NOK2011",
 							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
 							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/png"},
@@ -1062,7 +1062,7 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames){
 					this.map.addLayer(layer);
 					break;
 				case "TEXEL_20120423_OUTLINE":
-					var layer = new OpenLayers.Layer.WMS.Untiled(
+					var layer = new OpenLayers.Layer.WMS(
 							"Gevectoriseerde Bonnebladen",
 							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
 							{layers: 'TEXEL_20120423_OUTLINE',transparent: 'true',format: "image/png"},
