@@ -269,6 +269,7 @@ function init_pdok()
 	//$(window).resize(setMapSize);
 	$('input:radio[name=editmarker]')[0].checked = true;
 	$('input:radio[name=editline]')[0].checked = true;
+	$('input:radio[name=mapsize]')[2].checked = true;
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
 	// initiate the Lusc API object
@@ -278,8 +279,8 @@ function init_pdok()
 	
 	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
 	mapPDOKKaart = lusc.getMapObject();
-	pdok_api_map_resize(550,440);
 	markers = lusc.featuresLayer;
+	pdok_api_map_resize(550,440);
 	//mapPDOKKaart = new OpenLayers.Map('map');
 	
 	// Thijs: a vector layer is used to show Geocoderesults
@@ -1106,4 +1107,6 @@ function pdok_api_map_resize(w,h) {
     this.document.getElementById("map").style.height = h + 'px';
     this.document.getElementById("map").style.width = w + 'px';
     mapPDOKKaart.updateSize();
+	//mapPDOKKaart.zoomToMaxExtent();
+	//markers.redraw();
 }
