@@ -80,13 +80,13 @@
                         <a onclick="stopDrawingEditingPoint();startDrawingPoint(); return goTo(2); " onkeypress="return goTo(2);">Stap
                             2: Voeg markers toe</a></h2> -->
 					<h2>
-                        <a onclick="stopDrawingEditingPoint(); return goTo(2); " onkeypress="return goTo(2);">Stap
+                        <a onclick="stopDrawingEditingPoint();enableStyleSelector(); return goTo(2); " onkeypress="return goTo(2);">Stap
                             2: Voeg markers toe</a></h2>		
                     <form action="#" name="addmarkers" id="addmarkers" onsubmit="return goTo(3); ">
                     <div class="section">
                         <div id="edit1" class="row">
                            <!--  <input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){return startDrawingPoint();}" /> -->
-						   <input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){}" />
+						   <input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){enableStyleSelector();}" />
                             <label>
                                 <strong>Voeg een marker toe aan de kaart</strong> - (selecteer een symbool uit de
                                 lijst en klik op de kaart)</label>
