@@ -91,7 +91,6 @@ function MeerMinderOpties() {
 if ($("#opties").val() ==  "Meer opties") {
 	$('#step3').toggle();
 	$('#step4').toggle();
-	$('#step5').toggle();
 	$('#opties span').text('Minder opties');
 	$("#opties").attr('value', 'Minder opties');
 
@@ -99,7 +98,6 @@ if ($("#opties").val() ==  "Meer opties") {
 else {
 	$('#step3').toggle();
 	$('#step4').toggle();
-	$('#step5').toggle();
 	$('#opties span').text('Meer opties');
 	$("#opties").attr('value', 'Meer opties');
 }	
