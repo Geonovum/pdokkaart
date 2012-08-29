@@ -91,7 +91,6 @@ function MeerMinderOpties() {
 if ($("#opties").val() ==  "Meer opties") {
 	$('#step3').toggle();
 	$('#step4').toggle();
-	$('#step5').toggle();
 	$('#opties span').text('Minder opties');
 	$("#opties").attr('value', 'Minder opties');
 
@@ -99,7 +98,6 @@ if ($("#opties").val() ==  "Meer opties") {
 else {
 	$('#step3').toggle();
 	$('#step4').toggle();
-	$('#step5').toggle();
 	$('#opties span').text('Meer opties');
 	$("#opties").attr('value', 'Meer opties');
 }	
@@ -270,7 +268,6 @@ function init_pdok()
 	//addFormEnhancements();
 	//$(window).resize(setMapSize);
 	$('input:radio[name=editmarker]')[0].checked = true;
-	$('input:radio[name=editline]')[0].checked = true;
 	$('input:radio[name=mapsize]')[2].checked = true;
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
@@ -462,7 +459,6 @@ function stopDrawingEditingPoint() {
 	lusc.disableEditingTool();
 	lusc.disableDrawingTool();
 	$('input:radio[name=editmarker]')[0].checked = true;
-	$('input:radio[name=editline]')[0].checked = true;	
 }
 
 /* function verwijderAlleMarkers(){
