@@ -433,10 +433,13 @@ function init_pdok()
         }
     }
     $('#styleselector ul').append(html);
-    $('body').delegate('li', 'click', function(){
+    $('#styleselector').delegate('li', 'click', function(){
+        $('#styleselector li').removeClass('styleselected');
+        $(this).addClass('styleselected');
         var styleId = $(this).attr('id');
         featureModifiedCallback = function(feature){
-            console.log(feature);
+            // you get a handle here to the feature last modified
+            // console.log(feature);
         }
         lusc.enableDrawingTool(styleId, featureModifiedCallback);
     });

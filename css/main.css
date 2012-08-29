@@ -264,7 +264,10 @@ li
 #styleselector{
     height:300px;
     width:300px;
-    border:solid red 1px;
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+.styleselected{
+    background-color:blue;
 }
