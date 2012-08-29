@@ -259,3 +259,12 @@ li
 .left-nav li{ float: none;display:inline;}
 .right-nav {float:right;}
 .edit3class {  clear:both;}
+
+
+#styleselector{
+    height:300px;
+    width:300px;
+    border:solid red 1px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}

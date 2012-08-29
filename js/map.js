@@ -421,6 +421,30 @@ function init_pdok()
 	for (var l in pdokLayers) {
 		$("#pdokLayerSelector").append("<option value='"+pdokLayers[l]+"'>"+pdokLayers[l]+"</option>");
 	} */
+
+
+    // dynamically creating the selectbox for the feature types
+
+    $('#edit2').html('<div id="styleselector"><ul></ul></div>');
+    var apiStyles = lusc.styles;
+    html = '';
+    for (styleId in apiStyles){
+        // for now only point markers!
+        if (styleId[0]=='m'){
+            var style = apiStyles[styleId];
+            html += '\n<li id="'+styleId+'"><img src="'+style.externalGraphic+'"><span>'+style.name+'</span></li>';
+        }
+    }
+    $('#styleselector ul').append(html);
+    $('body').delegate('li', 'click', function(){
+        var styleId = $(this).attr('id');
+        featureModifiedCallback = function(feature){
+            console.log(feature);
+        }
+        lusc.enableDrawingTool(styleId, featureModifiedCallback);
+    });
+
+
 }
 
 function startEditingPoint() {
