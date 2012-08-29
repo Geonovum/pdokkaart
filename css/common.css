@@ -105,13 +105,16 @@ H1 SPAN {
 .container {
 	border: 1px solid #273397;
 	//background-color: #e5eae3;
-	background-color:#FCE6C9;
+	//background-color:#FCE6C9;
+	background-color:rgb(246,212,178);
 	margin-bottom: 10px;
 }
 
 H2 {
 	//background-color: #767a75;
-	background-color:#EE7600;
+	//background-color:#EE7600;
+	background-color:rgb(225,112,0);
+	//background-color:rgb(20,190,200);
 	font-size: 1.5em;
 	padding: 10px;
 	position: relative;
@@ -119,6 +122,8 @@ H2 {
 
 .active H2 {
 	background-color: #273397;
+	//background-color:rgb(22,66,116);
+	
 }
 
 H2 A {

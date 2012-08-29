@@ -1,7 +1,7 @@
 body
 {
     background-color: #FFFFFF;
-	font-family: 'Cantarell', Arial, sans-serif;
+	font-family: 'HelveticaNeue-Light';
 	/* font-size: 1.0em; */
 	font-size: 0.7em;
 	text-align: left; /* */ /* workaround to center a div in IE: http://www.maxdesign.com.au/presentation/center/ */
@@ -12,12 +12,15 @@ body
 
 #topbar {
     height: 100px;
-    background: url(../img/pdokpartners.jpg) no-repeat right;
+    background-image: url(../img/PDOK-logo.png);
+	background-repeat:no-repeat;
+	background-position:400px; 
 }
 
 #container {
-    width: 100%;
+    width: 940px;
     height: 100%;
+	margin: 0px auto;
 }
 
 #content {
@@ -62,8 +65,8 @@ body
 
 #map.functional {
 	position:absolute;
-	width: 500px;
-	left: 0px;
+	width: 550px;
+	left: 390px;
     border: 1px solid #a0a0a0;
 }
 
@@ -77,9 +80,9 @@ body
 #leftcolumn{
 	margin:0px;
 	padding:0px;
-    width: 450px;
+    width: 360px;
     height: 100%;
-	right: 0px;
+	left: 0px;
     position: absolute;
     /*left: 1200px;*/
    /* z-index: 2000;*/
@@ -110,6 +113,8 @@ body
     color: #004596;
 }
 .filterbutton{
+	background-color: rgb(225,112,0);
+	color : #FFFFFF;
 }
 
 .ui-button-text-only .ui-button-text {
@@ -189,7 +194,7 @@ li
 
 #geocodeerresult {
 	display: none;
-	width: 300px;
+	width: 350px;
 	position: absolute;
 	left: 0px;
 	top: 0px;
