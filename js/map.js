@@ -13,28 +13,29 @@ Proj4js.defs["EPSG:28992"] = "+title=Amersfoort / RD New +proj=sterea +lat_0=52.
 
 // Use the same marker at several places in the settingspage, change the defaultmarkerpath to use a different one
 //var defaultmarkerpath = "markertypes/information_blue.png";
-
+/*
 function unregisterEvents(){
-if (markers.events != {} ) {
-	markers.events.unregister("mouseover", markers , mouseover);
-	markers.events.unregister("mouseout", markers, mouseout);
-	markers.events.unregister("click", markers, click);
-	markers.events.unregister("touchend",markers , touchend);
+    if (markers.events != {} ) {
+        markers.events.unregister("mouseover", markers , mouseover);
+        markers.events.unregister("mouseout", markers, mouseout);
+        markers.events.unregister("click", markers, click);
+        markers.events.unregister("touchend",markers , touchend);
+    }
 }
-}
-
+*/
+/*
 function registerEvents(){
-
-mouseover = function(e) {
-	this.div.style.cursor = "pointer";
-	var feature = this.getFeatureFromEvent(e);
-	
-	if (feature) {
-		// add a popup
-		onFeatureSelect(feature, false, markersPopupText(feature, false));
-		feature.popupFix = false;
-	}
-}
+    return;
+    mouseover = function(e) {
+        this.div.style.cursor = "pointer";
+        var feature = this.getFeatureFromEvent(e);
+        
+        if (feature) {
+            // add a popup
+            onFeatureSelect(feature, false, markersPopupText(feature, false));
+            feature.popupFix = false;
+        }
+    }
 
 markers.events.register("mouseover", markers, mouseover);
 
@@ -78,6 +79,7 @@ touchend = function(e) {
 markers.events.register("touchend", markers, touchend ); 
 
 }
+*/
 
 function verwijderAlleMarkers(){
 
@@ -393,14 +395,14 @@ function init_pdok()
 	}); */
 	
 	$(".markerbutton").click( function(eventObject) {
-		removePopups(markers);
-		unregisterEvents();
+		//removePopups(markers);
+		//unregisterEvents();
 		lusc.enableDrawingTool(eventObject.currentTarget.parentElement.id, function(feature){
 											   feature.attributes.title="Voer een titel in:";
 											   feature.attributes.description="Voer een omschrijving in:";
 											   //startFeatureEdit(feature.id);
 											   //stopDrawingPoint();
-											   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
+									//		   onFeatureSelect(feature, true, markersPopupText(feature, true)); // full=true
 											   feature.popupFix = true;
 											   return false;	})
 	});
@@ -422,17 +424,17 @@ function init_pdok()
 }
 
 function startEditingPoint() {
-	removePopups(markers);
+	//removePopups(markers);
 	lusc.disableDrawingTool();
 	lusc.enableEditingTool();
-	registerEvents();
+	//registerEvents();
 
 }
 
 
 function stopDrawingEditingPoint() {
-	removePopups(markers);
-	unregisterEvents();
+	//removePopups(markers);
+	//unregisterEvents();
 	lusc.disableEditingTool();
 	lusc.disableDrawingTool();
 	$('input:radio[name=editmarker]')[0].checked = true;
@@ -441,7 +443,7 @@ function stopDrawingEditingPoint() {
 
 /* function verwijderAlleMarkers(){
 
-	removePopups(markers);
+	//removePopups(markers);
 	markers.destroyFeatures();	
 
 }
@@ -897,7 +899,7 @@ function onPopupClose(evt, feature) {
 } 
 
 function onFeatureSelect(feature, full, text) {
-	removePopups(feature.layer);
+	//removePopups(feature.layer);
 	// var text = '';
 	var popupSize;
 	var className="";
@@ -942,40 +944,40 @@ function onFeatureSelect(feature, full, text) {
 	mapPDOKKaart.addPopup(popup);
 } 
 
-function markersPopupText(feature, full) {
-	var className = "popupTitleSummary";
-	var text="";
-	if (full) {
-		className="popupTitleFull";
-	}
-	// Thijs: for the marker, add a title and description property that can be edited
-	// these properties are added as marker parameters
-    var ft = feature;
-    if (ft.attributes.description==undefined && (ft.attributes.adres || ft.attributes.plaats || ft.attributes.gemeente || ft.attributes.provincie)) {
-	    var description = "";
-		description += "Adres:\n";
-		description += ft.attributes.adres;
-		description += "\n" + ft.attributes.postcode + " " + ft.attributes.plaats +"\n";
-		description += "Gemeente: " + ft.attributes.gemeente + "\n";
-		description += "Provincie: " + ft.attributes.provincie + "\n";
-	    ft.attributes.description = description;
-    }
-    text += "<div id='popupcontent_"+ft.id+"'><h4 class='"+className+"'><input type='text' value='"+ft.attributes.title + "' id='markertitle' name='markertitle' size='30' onchange='updateMarkerTitle(this.value, \""+ ft.id + "\")'/></h4>";
-    // if not full, then only hide the markertext?
-	// TODO: remove separate functions for editing? Just do that by default?
-    if(full){
-	    text+="<div><textarea id='markertext' name='markertext' cols='40' rows='5' onchange='updateMarkerText(this.value, \""+ ft.id + "\")'>";
-	    // text += ft.attributes.description + "</textarea><br/><button id='btnStartEdit' onclick='startFeatureEdit(\""+ ft.id +"\")'>Bewerken</button> - <button id='btnStopEdit' onclick='stopFeatureEdit(\""+ ft.id +"\")' disabled='disabled'>Klaar met bewerken</button></div>";
-	    text += ft.attributes.description + "</textarea><br/>"
-	    // add coordinates in form
-	    text += "Coordinaten (RD): X: <input type='text' id='location_x' name='location_x' value='"+ft.geometry.x+"' size='8'/>, ";
-	    text += "Y: <input type='text' id='location_y' name='location_y' value='"+ft.geometry.y+"' size='8'/><br/>";
-	    // add buttons for editing marker
-	    text +="<button id='btnStopEdit' onclick='stopFeatureEdit(\""+ ft.id +"\")'>Klaar</button> <button id='btnRemoveMarker' onclick='removeFeature(\""+ ft.id +"\")'>Verwijder locatie</button></div>";
-    }
-    text+="</div>";
-	return text;
-}
+//function markersPopupText(feature, full) {
+//	var className = "popupTitleSummary";
+//	var text="";
+//	if (full) {
+//		className="popupTitleFull";
+//	}
+//	// Thijs: for the marker, add a title and description property that can be edited
+//	// these properties are added as marker parameters
+//    var ft = feature;
+//    if (ft.attributes.description==undefined && (ft.attributes.adres || ft.attributes.plaats || ft.attributes.gemeente || ft.attributes.provincie)) {
+//	    var description = "";
+//		description += "Adres:\n";
+//		description += ft.attributes.adres;
+//		description += "\n" + ft.attributes.postcode + " " + ft.attributes.plaats +"\n";
+//		description += "Gemeente: " + ft.attributes.gemeente + "\n";
+//		description += "Provincie: " + ft.attributes.provincie + "\n";
+//	    ft.attributes.description = description;
+//    }
+//    text += "<div id='popupcontent_"+ft.id+"'><h4 class='"+className+"'><input type='text' value='"+ft.attributes.title + "' id='markertitle' name='markertitle' size='30' onchange='updateMarkerTitle(this.value, \""+ ft.id + "\")'/></h4>";
+//    // if not full, then only hide the markertext?
+//	// TODO: remove separate functions for editing? Just do that by default?
+//    if(full){
+//	    text+="<div><textarea id='markertext' name='markertext' cols='40' rows='5' onchange='updateMarkerText(this.value, \""+ ft.id + "\")'>";
+//	    // text += ft.attributes.description + "</textarea><br/><button id='btnStartEdit' onclick='startFeatureEdit(\""+ ft.id +"\")'>Bewerken</button> - <button id='btnStopEdit' onclick='stopFeatureEdit(\""+ ft.id +"\")' disabled='disabled'>Klaar met bewerken</button></div>";
+//	    text += ft.attributes.description + "</textarea><br/>"
+//	    // add coordinates in form
+//	    text += "Coordinaten (RD): X: <input type='text' id='location_x' name='location_x' value='"+ft.geometry.x+"' size='8'/>, ";
+//	    text += "Y: <input type='text' id='location_y' name='location_y' value='"+ft.geometry.y+"' size='8'/><br/>";
+//	    // add buttons for editing marker
+//	    text +="<button id='btnStopEdit' onclick='stopFeatureEdit(\""+ ft.id +"\")'>Klaar</button> <button id='btnRemoveMarker' onclick='removeFeature(\""+ ft.id +"\")'>Verwijder locatie</button></div>";
+//    }
+//    text+="</div>";
+//	return text;
+//}
 
 /* function startFeatureEdit(ft_id) {
 	dragControl.activate();
@@ -988,7 +990,7 @@ function markersPopupText(feature, full) {
 
  function stopFeatureEdit(ft_id) {
 	//linkToMapOpened();
-	 removePopups(markers);
+	// removePopups(markers);
 	// dragControl.deactivate();
 	// change style
 	// $("#markertitle").attr("readonly", "readonly");
@@ -1008,7 +1010,7 @@ function removeFeature (ft_id) {
 		// also from the list
 	}
 } 
-
+/*
 function removePopups(layer) {
 	for (var i=0;i<layer.features.length;i++) {
 		var ft = layer.features[i];
@@ -1022,7 +1024,7 @@ function removePopups(layer) {
 		}
 	}
 } 
-
+*/
 /** GUI functions **/
 function setMapSize() {
     var wW=jQuery(window).width();
