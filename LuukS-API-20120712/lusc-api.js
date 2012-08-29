@@ -400,8 +400,9 @@ Lusc.Api.prototype.createOlMap = function() {
 		"http://geodata.nationaalgeoregister.nl/tms/",
 		{layername: "top10nl", type:"png8", visibility: false, isBaseLayer:true}
 	);
-    //olMap.addLayers([lyrBRTAchtergrondkaart,lyrTOP10NL]);
-	 olMap.addLayers([lyrBRTAchtergrondkaart]);
+	//olMap.addLayers([lyrBRTAchtergrondkaart]);
+    //olMap.addLayers([lyrTOP10NL]);
+    olMap.addLayers([lyrBRTAchtergrondkaart,lyrTOP10NL]);
 	
     // apply layer if a layer was given
 	if (this.layer != null) {
@@ -564,7 +565,8 @@ Lusc.Api.prototype.createOlMap = function() {
     else if (this.zl != null && this.loc != null) {
 		olMap.setCenter (new OpenLayers.LonLat(parseInt(this.loc[0]), parseInt(this.loc[1])), parseInt(this.zl));
     } else {
-        olMap.zoomToMaxExtent();
+        //olMap.zoomToMaxExtent();
+        olMap.zoomToExtent([-15000,300000,300000,640000],true);
     }
     
     // add marker and use markertype if given, otherwise the default marker
@@ -637,7 +639,6 @@ Lusc.Api.prototype.createOlMap = function() {
 
     this.featuresLayer.addFeatures(this.features);
 
-    olMap.zoomToExtent([-15000,300000,300000,640000],true);
 
     return olMap;
 }
@@ -697,6 +698,77 @@ Lusc.Api.prototype.createStyles = function(){
     this.styles.lt6 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:5 }, olDefault );
 
 
+    // TODO dit styles object komt uit een aparte config-javascript file
+    var styles=[
+        // all point marker styles will use mt0 as default
+        // so you only have to define the props that are different from mt0
+        // we will use OpenLayers.Util.applyDefault to use this one as default
+        {
+            id: 'mt0',
+            name: 'Standaard marker',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/default.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt1',
+            name: 'Informatie blauw',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt2',
+            name: 'Informatie groen',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_green.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt3',
+            name: 'Informatie geel',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_yellow.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt4',
+            name: 'Geonovum blauw',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_blue.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt5',
+            name: 'Geonovum groen',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_green.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt6',
+            name: 'Geonovum geel',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_yellow.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt7',
+            name: 'Verkeershinder',
+            externalGraphic: "http://www.duif.net/pdok/markertypes/pictograms-road_signs-workman_ahead_roadsign.png",
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        }
+    ]
+
     var pdokDefaultPoint = OpenLayers.Util.applyDefaults(
         {
             externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/default.png",
@@ -705,13 +777,10 @@ Lusc.Api.prototype.createStyles = function(){
             graphicYOffset: -37
         }, {});
     this.styles.mt0 = pdokDefaultPoint;
-    this.styles.mt1 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png"}, pdokDefaultPoint);
-    this.styles.mt2 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_green.png"}, pdokDefaultPoint);
-    this.styles.mt3 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_yellow.png"}, pdokDefaultPoint);
-    this.styles.mt4 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_blue.png"}, pdokDefaultPoint);
-    this.styles.mt5 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_green.png"}, pdokDefaultPoint);
-    this.styles.mt6 = OpenLayers.Util.applyDefaults( {externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_yellow.png"}, pdokDefaultPoint);
-
+    for (var i=0;i<styles.length;i++){
+        var style = styles[i];
+        this.styles[style.id] = OpenLayers.Util.applyDefaults( style, pdokDefaultPoint);
+    }
 }
 
 /**
@@ -777,10 +846,22 @@ Lusc.Api.prototype.disableEditingTool = function(){
     // TODO implement or remove
 }
 
-Lusc.Api.prototype.enableEditingTool = function(){
+Lusc.Api.prototype.enableEditingTool = function(featureModifiedFunction){
     if (this.editFeatureControl == null) {
         this.editFeatureControl = new OpenLayers.Control.ModifyFeature(this.featuresLayer);
         this.map.addControl(this.editFeatureControl);
+        /*featureModifiedFunction = function(ft){
+            console.log(ft)
+        }*/
+        this.featuresLayer.events.on({
+              "beforefeaturemodified": featureModifiedFunction,
+              //"afterfeaturemodified": report,
+              //"vertexmodified": report,
+              //"sketchmodified": report,
+              //"sketchstarted": report,
+              //"sketchcomplete": report,
+              "featuremodified": featureModifiedFunction
+        });
     }
     this.editFeatureControl.activate();
 }
@@ -790,6 +871,7 @@ Lusc.Api.prototype.getBookMarkUrl = function(){
 }
 
 Lusc.Api.prototype.onFeatureSelect = function(evt) {
+    return;
     feature = evt.feature;
     var content = "";
     if (feature.attributes['name']!=null){
@@ -804,6 +886,8 @@ Lusc.Api.prototype.onFeatureSelect = function(evt) {
                 content, //feature.attributes.oms,
                 null, true, function(evt) {
                     this.hide();
+                    // deselect ALL features to be able to select this one again
+                    popup.feature.layer.selectedFeatures=[];
                 }
             );
     feature.popup = popup;
@@ -813,6 +897,7 @@ Lusc.Api.prototype.onFeatureSelect = function(evt) {
 
 Lusc.Api.prototype.onFeatureUnselect = function(evt) {
     feature = evt.feature;
+    return
     if (feature.popup) {
         popup.feature = null;
         this.map.removePopup(feature.popup);
