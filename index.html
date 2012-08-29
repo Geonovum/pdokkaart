@@ -159,96 +159,12 @@
 					</div>	
                     </form>
                 </div>
-                <!-- Step 3 optie -->
+				<!-- Step 4  optie -->
                 <div id="step3" class="container" style="display: none;">
                     <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
-               <!--  <h2>
-                        <a href="#" onclick="stopDrawingEditingPoint();startDrawingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Lijn, box of vlak toevoegen</a></h2> -->
-						 <h2>
-                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Lijn, box of vlak toevoegen</a></h2>
-                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
-                    <div class="section">
-                        <div id="edit1" class="row">
-                            <!-- <input type="radio" name="editline" id="editline4" value="delete" onclick="if (this.checked){return startDrawingPoint();}" /> -->
-							<input type="radio" name="editline" id="editline4" value="delete" onclick="if (this.checked){}" />
-                            <label>
-                                <strong>Voeg een lijn, box of vlak toe aan de kaart</strong> - (selecteer een style uit de
-                                lijst en klik op de kaart)</label>
-                        </div>
-                        <div id="edit2" class="row">
-                            <ul class="left-nav" id="lt13" >
-								<li id="lt1"> <button type="button" class="markerbutton"> <img src="markertypes/information_blue.png"></button></li>
-								<li id="lt2"> <button type="button" class="markerbutton"> <img src="markertypes/information_green.png"></button></li>
-								<li id="lt3"> <button type="button" class="markerbutton"> <img src="markertypes/information_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="lt46">
-								<li id="lt4"> <button type="button" class="markerbutton"> <img src="markertypes/geonovum_blue.png"></button></li>
-								<li id="lt5"> <button type="button" class="markerbutton"> <img src="markertypes/geonovum_green.png"></button></li>
-								<li id="lt6"> <button type="button" class="markerbutton"> <img src="markertypes/geonovum_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="pt13">
-								<li id="pt1"> <button type="button" class="markerbutton"> <img src="markertypes/kadaster_blue.png"></button></li>
-								<li id="pt2"> <button type="button" class="markerbutton"> <img src="markertypes/kadaster_green.png"></button></li>
-								<li id="pt3"> <button type="button" class="markerbutton"> <img src="markertypes/kadaster_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="pt46">
-								<li id="pt4"> <button type="button" class="markerbutton"> <img src="markertypes/rijk_blue.png"></button></li>
-								<li id="pt5"> <button type="button" class="markerbutton"> <img src="markertypes/rijk_green.png"></button></li>
-								<li id="pt6"> <button type="button" class="markerbutton"> <img src="markertypes/rijk_yellow.png"></button></li>
-							</ul>
-							<!-- <ul class="left-nav" id="mt1315" >
-								<li id="mt13"> <button type="button" class="markerbutton"> <img src="markertypes/empty_blue.png"></button></li>
-								<li id="mt14"> <button type="button" class="markerbutton"> <img src="markertypes/empty_green.png"></button></li>
-								<li id="mt15"> <button type="button" class="markerbutton"> <img src="markertypes/empty_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="mt1617">
-								<!-- <li id="mt10"> <button type="button"> <img src="markertypes/rijk.png"></button></li> -->
-								<!-- <li id="mt16"> <button type="button" class="markerbutton"> <img src="markertypes/default.png"></button></li>
-								<li id="mt17"> <button type="button" class="markerbutton"> <img src="markertypes/star-3.png"></button></li>
-							</ul> --> 
-                        </div>
-                        <!-- <div id="mapmarkers" class="row red">
-							
-                                     <span id="mapmarker1">
-                                         <input type="radio" name="marker" id="marker1" value="marker1" onchange="if (this.checked){return setMarkerImage(1);}"/>
-                                         <label for="marker1" id="markerlabel1">Cross</label>
-                                     </span>
-							
-                                     <span id="mapmarker2">
-                                         <input type="radio" name="marker" id="marker2" value="marker2" onchange="if (this.checked){return setMarkerImage(2);}" checked="checked" />
-                                         <label for="marker2" id="markerlabel2">Standard</label>
-                                     </span>
-							
-                                     <span id="mapmarker3">
-                                         <input type="radio" name="marker" id="marker3" value="marker3" onchange="if (this.checked){return setMarkerImage(3);}"/>
-                                         <label for="marker3" id="markerlabel3">spot</label>
-                                     </span>
-							
-                                 </div> -->	 
-                        <div id="edit3" class="edit3class">
-                            <input type="radio" name="editline" id="editline3" value="delete" onclick="if (this.checked){return startEditingPoint();}" /> 
-                            <label for="editmarker3" id="editlabel3">
-                                <strong>Wijzig een lijn, box of vlak op de kaart - </strong>(selecteer een lijn, box of vlak op de kaart
-                                en wijzig, verplaats of verwijder lijn, box of vlak)</label>
-							<input type="hidden" name="editmarker_dummy" id="editmarker5" />
-							<input type="hidden" name="editmarker_dummy2" id="savemarkerinfo" />
-							<input type="hidden" name="editmarker_dummy3" id="texteditor" />								
-                        </div>
-						<div id="edit4" class="row">
-							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<button type="submit" class="filterbutton" onclick=" verwijderAlleMarkers(); return false;">
-								Verwijder alle lijnen, boxen en vlakken</button>
-						</div>
-					</div>	
-                    </form>
-                </div>
-				<!-- Step 4  optie -->
-                <div id="step4" class="container" style="display: none;">
-                    <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
                 <h2>
-                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(4);" onkeypress="return goTo(4);">Optie:  Extra Kaartlaag toevoegen</a></h2>
-                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(5);">
+                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Extra Kaartlaag toevoegen</a></h2>
+                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
                     <strong>
                         <div class="row">
                             <label>
@@ -292,11 +208,11 @@
                     </form>
                 </div>
 				<!-- Step 5 optie -->
-                <div id="step5" class="container" style="display: none;">
+                <div id="step4" class="container" style="display: none;">
                     <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
                 <h2>
-                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(5);" onkeypress="return goTo(5);">Optie: Kaartprikker functionaliteit toevoegen</a></h2>
-                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(6);">
+                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(4);" onkeypress="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a></h2>
+                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(5);">
                     <strong>
                         <div class="row">
                             <label>
@@ -340,10 +256,10 @@
                     </form>
                 </div>
                 <!-- Step 6 - Save and download code -->
-                <div id="step6" class="container">
+                <div id="step5" class="container">
                     <!-- <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2> -->
                     <h2>
-                        <a  onclick="stopDrawingEditingPoint();return goTo(6);" onkeypress="return goTo(6);">Stap 3: Genereer
+                        <a  onclick="stopDrawingEditingPoint();return goTo(5);" onkeypress="return goTo(5);">Stap 3: Genereer
                             code</a></h2>
                     <form action="#" name="savecode" id="savecode" onsubmit="return false;">
                     <div class="row">

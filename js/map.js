@@ -270,7 +270,6 @@ function init_pdok()
 	//addFormEnhancements();
 	//$(window).resize(setMapSize);
 	$('input:radio[name=editmarker]')[0].checked = true;
-	$('input:radio[name=editline]')[0].checked = true;
 	$('input:radio[name=mapsize]')[2].checked = true;
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
@@ -438,7 +437,6 @@ function stopDrawingEditingPoint() {
 	lusc.disableEditingTool();
 	lusc.disableDrawingTool();
 	$('input:radio[name=editmarker]')[0].checked = true;
-	$('input:radio[name=editline]')[0].checked = true;	
 }
 
 /* function verwijderAlleMarkers(){
