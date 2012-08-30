@@ -4,6 +4,7 @@
 var mapPDOKKaart, markers, activeFeature, dragControl, drawControl, layerSwitcher;
 var mouseover,mouseout,click,touchend;
 var pdokachtergrondkaart;
+var activeFeature;
 
 // The proxyhost is needed for the geocoder
 //OpenLayers.ProxyHost = "../xmldata.php?url=";
@@ -456,11 +457,16 @@ function disableStyleSelector(){
 function enableStyleSelector(){
 
 	$('#styleselector').show();
+	$('#edit2a').hide();
 	
 	//default style selected
 	featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			//ActiveFeature.fid = feature.fid;
+			activeFeature = feature;
+			createEditAttributes ();
+			$('#edit2a').appendTo($('#edit2'));
 			$('#edit2a').show();
     }
     lusc.enableDrawingTool("mt0", featureCreatedCallback);
@@ -504,6 +510,9 @@ function createStyleSelector(){
         featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			activeFeature = feature;
+			createEditAttributes ();
+			$('#edit2a').appendTo($('#edit2'));
 			$('#edit2a').show();
         }
         lusc.enableDrawingTool(styleId, featureCreatedCallback);
@@ -520,32 +529,44 @@ html = html + '<button type="submit" class="filterbutton" onclick="saveAttribute
 html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen</button>';
 
 $('#edit2a').html(html);
-$('#edit3a').html(html);
+//$('#edit3a').html(html);
 
 }
 
 function saveAttributes() {
 
+    //console.log(activeFeature);
+	
+	activeFeature.attributes.title = $('#title').val();
+	activeFeature.attributes.description = $('#description').val();
+	
+	//console.log(activeFeature);
+	
 	$('#edit2a').hide();
-	$('#edit3a').hide();
+	//$('#edit3a').hide();
 
 }
 
 function deleteFeature() {
 
 	$('#edit2a').hide();
-	$('#edit3a').hide();
+	//$('#edit3a').hide();
 
 }
 
 function startEditingPoint() {
 	//removePopups(markers);
+	$('#edit2a').hide();
 	disableStyleSelector();
 	lusc.disableDrawingTool();
 	featureModifiedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
-			$('#edit3a').show();
+			//ActiveFeature = feature;
+			$('#edit2a').appendTo($('#edit3'));
+			$('#edit2a').show();
+			$('#title').val(feature.attributes['title']);
+			$('#description').val(feature.attributes['description']);
         }
 	lusc.enableEditingTool(featureModifiedCallback);
 	//registerEvents();
