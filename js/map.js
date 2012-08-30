@@ -4,6 +4,7 @@
 var mapPDOKKaart, markers, activeFeature, dragControl, drawControl, layerSwitcher;
 var mouseover,mouseout,click,touchend;
 var pdokachtergrondkaart;
+var activeFeature;
 
 // The proxyhost is needed for the geocoder
 //OpenLayers.ProxyHost = "../xmldata.php?url=";
@@ -462,6 +463,9 @@ function enableStyleSelector(){
 	featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			//ActiveFeature.fid = feature.fid;
+			activeFeature = feature;
+			createEditAttributes ();
 			$('#edit2a').appendTo($('#edit2'));
 			$('#edit2a').show();
     }
@@ -506,6 +510,8 @@ function createStyleSelector(){
         featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			activeFeature = feature;
+			createEditAttributes ();
 			$('#edit2a').appendTo($('#edit2'));
 			$('#edit2a').show();
         }
@@ -529,6 +535,13 @@ $('#edit2a').html(html);
 
 function saveAttributes() {
 
+    //console.log(activeFeature);
+	
+	activeFeature.attributes.title = $('#title').val();
+	activeFeature.attributes.description = $('#description').val();
+	
+	//console.log(activeFeature);
+	
 	$('#edit2a').hide();
 	//$('#edit3a').hide();
 
@@ -549,8 +562,11 @@ function startEditingPoint() {
 	featureModifiedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			//ActiveFeature = feature;
 			$('#edit2a').appendTo($('#edit3'));
 			$('#edit2a').show();
+			$('#title').val(feature.attributes['title']);
+			$('#description').val(feature.attributes['description']);
         }
 	lusc.enableEditingTool(featureModifiedCallback);
 	//registerEvents();
