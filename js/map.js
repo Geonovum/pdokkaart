@@ -465,6 +465,7 @@ function enableStyleSelector(){
     }
     lusc.enableDrawingTool("mt0", featureModifiedCallback);
 	
+	$('#styleselector li').removeClass('styleselected');
 	$('#mt0').addClass('styleselected');
 
 }
