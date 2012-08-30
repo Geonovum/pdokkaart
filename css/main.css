@@ -100,7 +100,7 @@ body
 
 #leftcolumn li {
     font-size: 0.9em;
-    padding: 1px 1px 5px 32px;
+    padding: 10px 4px 5px 32px;
     /* border-bottom: solid 1px grey; */
 }
 
@@ -270,4 +270,8 @@ li
 
 .styleselected{
     background-color:blue;
+}
+
+.listyletext{
+    padding-left:45px;
 }

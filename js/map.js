@@ -424,15 +424,26 @@ function init_pdok()
 
     $('#edit2').html('<div id="styleselector"><ul></ul></div>');
     var apiStyles = lusc.styles;
-    html = '';
+    pointStylesHtml = '';
+    polygonStylesHtml = '';
+    lineStylesHtml = '';
+
     for (styleId in apiStyles){
         // for now only point markers!
         if (styleId[0]=='m'){
             var style = apiStyles[styleId];
-            html += '\n<li id="'+styleId+'"><img src="'+style.externalGraphic+'"><span>'+style.name+'</span></li>';
+            pointStylesHtml += '\n<li id="'+styleId+'"><img src="'+style.externalGraphic+'"><div class="listyletext">'+style.name+'</div></li>';
+        }
+        else if (styleId[0]=='l'){
+            var style = apiStyles[styleId];
+            lineStylesHtml += '\n<li id="'+styleId+'"><div style="opacity:'+style.strokeOpacity+'; border-top: '+style.strokeWidth+'px '+style.strokeColor+' solid;border-left: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
+        }
+        else if (styleId[0]=='p'){
+            var style = apiStyles[styleId];
+            polygonStylesHtml += '\n<li id="'+styleId+'"><div style="opacity:'+style.strokeOpacity+';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span style="opacity:'+style.fillOpacity+';background-color:'+style.fillColor+';">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
         }
     }
-    $('#styleselector ul').append(html);
+    $('#styleselector ul').append(pointStylesHtml+lineStylesHtml+polygonStylesHtml);
     $('#styleselector').delegate('li', 'click', function(){
         $('#styleselector li').removeClass('styleselected');
         $(this).addClass('styleselected');

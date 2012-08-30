@@ -683,19 +683,19 @@ Lusc.Api.prototype.createStyles = function(){
     var olDefault = OpenLayers.Feature.Vector.style.default;
 
     this.styles = {};
-    this.styles.pt1 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'red', strokeWidth:1 }, olDefault );
-    this.styles.pt2 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'red', strokeWidth:3 }, olDefault );
-    this.styles.pt3 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'red', strokeWidth:5 }, olDefault );
-    this.styles.pt4 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'green', strokeWidth:5 }, olDefault );
-    this.styles.pt5 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'green', strokeWidth:5 }, olDefault );
-    this.styles.pt6 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'green', strokeWidth:5 }, olDefault );
+    this.styles.pt1 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'black', strokeWidth:1, name:'rood zwart' }, olDefault );
+    this.styles.pt2 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'black', strokeWidth:3, name:'rood zwart 3 pxiel lijn' }, olDefault );
+    this.styles.pt3 = OpenLayers.Util.applyDefaults( { fillColor:'red', fillOpacity:1, strokeColor:'black', strokeWidth:5, strokeOpacity:0.5, name:'rood, zwart, 5px transp. lijn' }, olDefault );
+    this.styles.pt4 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'blue', strokeWidth:1, name:'groen blauw' }, olDefault );
+    this.styles.pt5 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'blue', strokeWidth:3, strokeOpacity:0.5, name:'groen blauw transp lijn' }, olDefault );
+    this.styles.pt6 = OpenLayers.Util.applyDefaults( { fillColor:'#ffff00', strokeColor:'blue', strokeWidth:5, fillOpacity:1, name:'geel blauw' }, olDefault );
 
-    this.styles.lt1 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:1 }, olDefault );
-    this.styles.lt2 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:3 }, olDefault );
-    this.styles.lt3 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:5 }, olDefault );
-    this.styles.lt4 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:1 }, olDefault );
-    this.styles.lt5 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:3 }, olDefault );
-    this.styles.lt6 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:5 }, olDefault );
+    this.styles.lt1 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:1, name:'lijn 2' }, olDefault );
+    this.styles.lt2 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:3, strokeOpacity:0.5, name:'lijn x' }, olDefault );
+    this.styles.lt3 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:5, name:'lijn 27'  }, olDefault );
+    this.styles.lt4 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:1, name:'lijn6'  }, olDefault );
+    this.styles.lt5 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:3, strokeOpacity:0.5, name:'lijn 4'  }, olDefault );
+    this.styles.lt6 = OpenLayers.Util.applyDefaults( { strokeColor:'#ffff00', strokeWidth:5, strokeOpacity:1, name:'lijn 3'  }, olDefault );
 
 
     // TODO dit styles object komt uit een aparte config-javascript file
