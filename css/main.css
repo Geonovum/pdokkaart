@@ -1,7 +1,7 @@
 body
 {
     background-color: #FFFFFF;
-	font-family: 'HelveticaNeue-Light';
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	/* font-size: 1.0em; */
 	font-size: 0.7em;
 	text-align: left; /* */ /* workaround to center a div in IE: http://www.maxdesign.com.au/presentation/center/ */
