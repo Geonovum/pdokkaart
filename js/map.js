@@ -391,7 +391,7 @@ function init_pdok()
 		return false;
 	}); */
 	
-	$(".markerbutton").click( function(eventObject) {
+	/* $(".markerbutton").click( function(eventObject) {
 		//removePopups(markers);
 		//unregisterEvents();
 		lusc.enableDrawingTool(eventObject.currentTarget.parentElement.id, function(feature){
@@ -403,7 +403,7 @@ function init_pdok()
 											   feature.popupFix = true;
 											   return false;	})
 	});
-
+ */
 	
 	//mapPDOKKaart.addControls(controls);
 
@@ -444,17 +444,33 @@ function init_pdok()
         lusc.enableDrawingTool(styleId, featureModifiedCallback);
     }); */
 
-	//enableStyleSelector();
+	createStyleSelector();
 
 }
 
 function disableStyleSelector(){
 
-	$('#styleselector').empty();
+	$('#styleselector').hide();
 
 }
 
 function enableStyleSelector(){
+
+	$('#styleselector').show();
+	
+	//default style selected
+	featureModifiedCallback = function(feature){
+            // you get a handle here to the feature last modified
+            // console.log(feature);
+    }
+    lusc.enableDrawingTool("mt0", featureModifiedCallback);
+	
+	$('#mt0').addClass('styleselected');
+
+}
+
+
+function createStyleSelector(){
 
 // dynamically creating the selectbox for the feature types
 
@@ -490,13 +506,6 @@ function enableStyleSelector(){
         }
         lusc.enableDrawingTool(styleId, featureModifiedCallback);
     });
-	
-	//default style selected
-	featureModifiedCallback = function(feature){
-            // you get a handle here to the feature last modified
-            // console.log(feature);
-    }
-    lusc.enableDrawingTool("mt0", featureModifiedCallback);
 	
 
 }
