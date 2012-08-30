@@ -487,12 +487,15 @@ Lusc.Api.prototype.defaultLayers = {
  * The values are restored in member vars. On error a default is set.
  */
 Lusc.Api.prototype.validateConfig = function(config) {
-	if (config.layer && !OpenLayers.Util.isArray(config.layer)) {
-		config.layer = [config.layer];
-	}
+    if (config.layer && !OpenLayers.Util.isArray(config.layer)) {
+        config.layer = [config.layer];
+    }
 /*	if (config.layer && OpenLayers.Util.indexOf(this.supportedLayers, config.layer) && OpenLayers.Util.isArray(config.layer)) {
         this.layer = config.layer;
 	}*/
+    if (config.layer) {
+        this.layer = config.layer;
+    }
 
     if (config.zl) {
         this.zl = config.zl;
