@@ -458,11 +458,13 @@ function disableStyleSelector(){
 function enableStyleSelector(){
 
 	$('#styleselector').show();
+	$('#edit2a').hide();
 	
 	//default style selected
 	featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			$('#edit2a').appendTo($('#edit2'));
 			$('#edit2a').show();
     }
     lusc.enableDrawingTool("mt0", featureCreatedCallback);
@@ -506,6 +508,7 @@ function createStyleSelector(){
         featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			$('#edit2a').appendTo($('#edit2'));
 			$('#edit2a').show();
         }
         lusc.enableDrawingTool(styleId, featureCreatedCallback);
@@ -522,32 +525,34 @@ html = html + '<button type="submit" class="filterbutton" onclick="saveAttribute
 html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen</button>';
 
 $('#edit2a').html(html);
-$('#edit3a').html(html);
+//$('#edit3a').html(html);
 
 }
 
 function saveAttributes() {
 
 	$('#edit2a').hide();
-	$('#edit3a').hide();
+	//$('#edit3a').hide();
 
 }
 
 function deleteFeature() {
 
 	$('#edit2a').hide();
-	$('#edit3a').hide();
+	//$('#edit3a').hide();
 
 }
 
 function startEditingPoint() {
 	//removePopups(markers);
+	$('#edit2a').hide();
 	disableStyleSelector();
 	lusc.disableDrawingTool();
 	featureModifiedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
-			$('#edit3a').show();
+			$('#edit2a').appendTo($('#edit3'));
+			$('#edit2a').show();
         }
 	lusc.enableEditingTool(featureModifiedCallback);
 	//registerEvents();
