@@ -260,9 +260,7 @@ function ZetMarkersOpKaart(strInvoerfile) {
       
 
 // init is called after loading the settings page and initilizes the map and some GUI components, like the PDOK map layer selector and the "popin" windows
-
-function init_pdok()
-{
+$(document).ready(function() {
 	
 	//setMapSize();
 	//addFormEnhancements();
@@ -447,7 +445,7 @@ function init_pdok()
 	createStyleSelector();
 	createEditAttributes ();
 
-}
+  });
 
 function disableStyleSelector(){
 
