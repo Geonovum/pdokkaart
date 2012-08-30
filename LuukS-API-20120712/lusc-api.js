@@ -18,7 +18,9 @@
  *    src="/api/api.html?mloc=136260,456394&mt=1&bbox=130000,450000,150000,470000"
  *    style="border: 0">
  */
+
 Lusc = {};
+
 Lusc.Api = function(config) {
     
     /**
@@ -152,57 +154,16 @@ Lusc.Api = function(config) {
     	"TEXEL_20120423_OUTLINE",
     	"TOP10NL"
     ];
-
-    /**
-     * @private
-     * Look up array, having the supported markertypes.
-     */
-    this.markers = [
-	    ["mt1","markertypes/information_blue.png"],
-	    ["mt2","markertypes/information_green.png"],
-	    ["mt3","markertypes/information_yellow.png"],
-	    ["mt4","markertypes/geonovum_blue.png"],
-	    ["mt5","markertypes/geonovum_green.png"],
-	    ["mt6","markertypes/geonovum_yellow.png"],
-	    ["mt7","markertypes/kadaster_blue.png"],
-	    ["mt8","markertypes/kadaster_green.png"],
-	    ["mt9","markertypes/kadaster_yellow.png"],
-	    ["mt10","markertypes/rijk_blue.png"],
-	    ["mt11","markertypes/rijk_green.png"],
-	    ["mt12","markertypes/rijk_yellow.png"],
-		["mt13","markertypes/empty_blue.png"],
-	    ["mt14","markertypes/empty_green.png"],
-	    ["mt15","markertypes/empty_yellow.png"],
-	    ["mt16","markertypes/default.png"],
-		["mt17","markertypes/star-3.png"]		
-    ];
     
-    /**
-     * @private
-     * The style object for the marker.
-     * Generated with http://www.webmapcenter.de/olstyle/generator.php
-     */
-    this.styleObj = {
-          strokeColor : '#ee0028',
-          strokeWidth : 1,
-          strokeOpacity : 1,
-          fillColor : '#ee000d',
-          fillOpacity : 1,
-          pointRadius : 12,
-          externalGraphic: './markertypes/default.png'
-    };
-
-
+    // create this.styles, based on either this.defaultStyles object, OR via a this.customStyles object (TODO)
     this.createStyles();
 
-    
     /**
      * @private
      * The attribution added to the map
      */
     this.attribution = '&copy; <a target="_parent" href="http://www.terrestris.de">terrestris GmbH & Co. KG</a>,</br>' +
         'Data by <a target="_parent" href="http://www.openstreetmap.org">OpenStreetMap</a> and contributors, <a target="_parent" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-   
 	
     if (config) {
         
@@ -219,6 +180,165 @@ Lusc.Api = function(config) {
         // exception
     }
 }
+
+
+Lusc.Api.prototype.defaultStyles=[
+        // all point marker styles will use mt0 as default
+        // so you only have to define the props that are different from mt0
+        // we will use OpenLayers.Util.applyDefault to use this one as default
+        {
+            id: 'mt0',
+            name: 'Standaard marker',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/default.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt1',
+            name: 'Informatie blauw',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt2',
+            name: 'Informatie groen',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_green.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt3',
+            name: 'Informatie geel',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_yellow.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt4',
+            name: 'Geonovum blauw',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_blue.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt5',
+            name: 'Geonovum groen',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_green.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt6',
+            name: 'Geonovum geel',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_yellow.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt7',
+            name: 'Verkeershinder',
+            externalGraphic: "http://www.duif.net/pdok/markertypes/pictograms-road_signs-workman_ahead_roadsign.png",
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id:'pt1', 
+            fillColor:'red', 
+            strokeColor:'black', 
+            strokeWidth:1, 
+            name:'rood zwart'
+        },
+        {
+            id:'pt2', 
+            fillColor:'red', 
+            strokeColor:'black', 
+            strokeWidth:3, 
+            name:'rood zwart 3 pxiel lijn'
+        },
+        {
+            id:'pt3', 
+            fillColor:'red', 
+            fillOpacity:1, 
+            strokeColor:'black', 
+            strokeWidth:5, 
+            strokeOpacity:0.5, 
+            name:'rood, zwart, 5px transp. lijn'
+        },
+        {
+            id:'pt4', 
+            fillColor:'green', 
+            strokeColor:'blue', 
+            strokeWidth:1, 
+            name:'groen blauw'
+        },
+        {
+            id:'pt5', 
+            fillColor:'green', 
+            strokeColor:'blue', 
+            strokeWidth:3, 
+            strokeOpacity:0.5, 
+            name:'groen blauw transp lijn'
+        },
+        {
+            id:'pt6', 
+            fillColor:'#ffff00', 
+            strokeColor:'blue', 
+            strokeWidth:5, 
+            fillOpacity:1, 
+            name:'geel blauw'
+        },
+
+        {
+            id:'lt1', 
+            strokeColor:'red', 
+            strokeWidth:1, 
+            name:'lijn 2'
+        },
+        {
+            id:'lt2', 
+            strokeColor:'red', 
+            strokeWidth:3, 
+            strokeOpacity:0.5, 
+            name:'lijn x'
+        },
+        {
+            id:'lt3', 
+            strokeColor:'red', 
+            strokeWidth:5, 
+            name:'lijn 27' 
+        },
+        {
+            id:'lt4', 
+            strokeColor:'green', 
+            strokeWidth:1, 
+            name:'lijn6' 
+        },
+        {
+            id:'lt5', 
+            strokeColor:'green', 
+            strokeWidth:3, 
+            strokeOpacity:0.5, 
+            name:'lijn 4' 
+        },
+        {
+            id:'lt6', 
+            strokeColor:'#ffff00', 
+            strokeWidth:5, 
+            strokeOpacity:1, 
+            name:'lijn 3'
+        }
+    ]
+
+
 
 /**
  * @private
@@ -577,53 +697,6 @@ Lusc.Api.prototype.createOlMap = function() {
             this.mt='mt0'; // mt0 is default point symbol
         }
         this.features.push(this.createFeature(wkt, this.mt, this.titel, this.tekst));
-
-    /* var markerGeom = new OpenLayers.Geometry.Point(this.mloc[0], this.mloc[1]);
-       var markerFeat = new OpenLayers.Feature.Vector(markerGeom);
-       if (this.mt != null){
-	        if ((this.mt >= 0) && (this.mt < this.markers.length)){
-		        this.styleObj.externalGraphic = markerPath + this.markers[parseInt(this.mt)];
-		    }
-		    else{
-		        this.styleObj.externalGraphic = markerPath + this.markers[0];
-		    }
-        }
-        else if (this.externalGraphic != null){
-        	this.styleObj.externalGraphic = this.externalGraphic;
-        }
-        if ((this.pointRadius !=null) && (this.pointRadius > 0)){
-        	this.styleObj.pointRadius = this.pointRadius;
-        }
-        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
-            styleMap: new OpenLayers.StyleMap(this.styleObj)
-        });
-		
-		var markerLayer = new OpenLayers.Layer.Vector('Marker', {
-            styleMap: this.styles
-        });
-
-	    // add popup if the parameters titel or tekst are used
-	    if (this.titel != null || this.tekst != null) {
-	    	strOms = "";
-	    	if (this.titel != null){
-		    	strOms = "<h2>" + this.titel + "</h2>";
-	    	}
-	    	if (this.tekst != null){
-		    	strOms = strOms + this.tekst;
-	    	}
-	    	markerFeat.attributes.oms = strOms;
-	    	// Interaction; not needed for initial display.
-            selectControl = new OpenLayers.Control.SelectFeature(markerLayer);
-            olMap.addControl(selectControl);
-            selectControl.activate();
-            markerLayer.events.on({
-                'featureselected': onFeatureSelect,
-                'featureunselected': onFeatureUnselect
-            });
-		}
-        olMap.addLayer(markerLayer);
-        markerLayer.addFeatures([markerFeat]);
-        */
     }
 
     // featuresLayer is used for all features/markers
@@ -683,92 +756,10 @@ Lusc.Api.prototype.createStyles = function(){
     var olDefault = OpenLayers.Feature.Vector.style.default;
 
     this.styles = {};
-    this.styles.pt1 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'black', strokeWidth:1, name:'rood zwart' }, olDefault );
-    this.styles.pt2 = OpenLayers.Util.applyDefaults( { fillColor:'red', strokeColor:'black', strokeWidth:3, name:'rood zwart 3 pxiel lijn' }, olDefault );
-    this.styles.pt3 = OpenLayers.Util.applyDefaults( { fillColor:'red', fillOpacity:1, strokeColor:'black', strokeWidth:5, strokeOpacity:0.5, name:'rood, zwart, 5px transp. lijn' }, olDefault );
-    this.styles.pt4 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'blue', strokeWidth:1, name:'groen blauw' }, olDefault );
-    this.styles.pt5 = OpenLayers.Util.applyDefaults( { fillColor:'green', strokeColor:'blue', strokeWidth:3, strokeOpacity:0.5, name:'groen blauw transp lijn' }, olDefault );
-    this.styles.pt6 = OpenLayers.Util.applyDefaults( { fillColor:'#ffff00', strokeColor:'blue', strokeWidth:5, fillOpacity:1, name:'geel blauw' }, olDefault );
-
-    this.styles.lt1 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:1, name:'lijn 2' }, olDefault );
-    this.styles.lt2 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:3, strokeOpacity:0.5, name:'lijn x' }, olDefault );
-    this.styles.lt3 = OpenLayers.Util.applyDefaults( { strokeColor:'red', strokeWidth:5, name:'lijn 27'  }, olDefault );
-    this.styles.lt4 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:1, name:'lijn6'  }, olDefault );
-    this.styles.lt5 = OpenLayers.Util.applyDefaults( { strokeColor:'green', strokeWidth:3, strokeOpacity:0.5, name:'lijn 4'  }, olDefault );
-    this.styles.lt6 = OpenLayers.Util.applyDefaults( { strokeColor:'#ffff00', strokeWidth:5, strokeOpacity:1, name:'lijn 3'  }, olDefault );
 
 
-    // TODO dit styles object komt uit een aparte config-javascript file
-    var styles=[
-        // all point marker styles will use mt0 as default
-        // so you only have to define the props that are different from mt0
-        // we will use OpenLayers.Util.applyDefault to use this one as default
-        {
-            id: 'mt0',
-            name: 'Standaard marker',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/default.png",
-            graphicHeight: 37,
-            graphicWidth: 32,
-            graphicYOffset: -37
-        },
-        {
-            id: 'mt1',
-            name: 'Informatie blauw',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png",
-            graphicHeight: 37,
-            graphicWidth: 32,
-            graphicYOffset: -37
-        },
-        {
-            id: 'mt2',
-            name: 'Informatie groen',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_green.png",
-            graphicHeight: 37,
-            graphicWidth: 32,
-            graphicYOffset: -37
-        },
-        {
-            id: 'mt3',
-            name: 'Informatie geel',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_yellow.png",
-            graphicHeight: 37,
-            graphicWidth: 32,
-            graphicYOffset: -37
-        },
-        {
-            id: 'mt4',
-            name: 'Geonovum blauw',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_blue.png",
-            graphicHeight: 37,
-            graphicWidth: 32,
-            graphicYOffset: -37
-        },
-        {
-            id: 'mt5',
-            name: 'Geonovum groen',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_green.png",
-            graphicHeight: 37,
-            graphicWidth: 32,
-            graphicYOffset: -37
-        },
-        {
-            id: 'mt6',
-            name: 'Geonovum geel',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_yellow.png",
-            graphicHeight: 37,
-            graphicWidth: 32,
-            graphicYOffset: -37
-        },
-        {
-            id: 'mt7',
-            name: 'Verkeershinder',
-            externalGraphic: "http://www.duif.net/pdok/markertypes/pictograms-road_signs-workman_ahead_roadsign.png",
-            graphicHeight: 32,
-            graphicWidth: 32,
-            graphicYOffset: -32
-        }
-    ]
-
+ 
+    // create a default Point style
     var pdokDefaultPoint = OpenLayers.Util.applyDefaults(
         {
             externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/default.png",
@@ -776,9 +767,17 @@ Lusc.Api.prototype.createStyles = function(){
             graphicWidth: 32,
             graphicYOffset: -37
         }, {});
+
     this.styles.mt0 = pdokDefaultPoint;
-    for (var i=0;i<styles.length;i++){
-        var style = styles[i];
+
+    // if the the user added their own styles, they should create a variable 'customStyles'
+    // hereby overriding the inbuild defaultStyles
+    // TODO ?? or only extending ?????
+    if (this.customStyles) {
+        this.defaultStyles = customStyles;
+    }
+    for (var i = 0; i<this.defaultStyles.length; i++){
+        var style = this.defaultStyles[i];
         this.styles[style.id] = OpenLayers.Util.applyDefaults( style, pdokDefaultPoint);
     }
 }
@@ -910,9 +909,6 @@ Lusc.Api.prototype.getLayers = function(){
 	return this.supportedLayers;
 }    
 
-Lusc.Api.prototype.getMarkers = function(){
-	return this.markers;
-}
 Lusc.Api.prototype.getMarkerPath = function(){
 	return markerPath;
 }
@@ -936,83 +932,85 @@ Lusc.Api.prototype.reprojectWGS84toRD = function(lat,lon){
 	return(pointRD);
 }
 
-Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,pointRadius) {
-    if (mloc != null) {
-	   // Bij een bestaande markerlayer moet de markerfeature een andere icon krijgen
-	   var pntMarkerGeom = new OpenLayers.Geometry.Point(mloc[0],mloc[1]);
-	   var vctMarkerFeat = new OpenLayers.Feature.Vector(pntMarkerGeom);
-       var styObjStyle = {
-			strokeColor : '#ee0028',
-			strokeWidth : 1,
-			strokeOpacity : 1,
-			fillColor : '#ee000d',
-			fillOpacity : 1,
-			pointRadius : 12,
-			externalGraphic: './markertypes/default.png'
-       };
-       var markerStyle = {
-			strokeColor : '#ee0028',
-			strokeWidth : 1,
-			strokeOpacity : 1,
-			fillColor : '#ee000d',
-			fillOpacity : 1,
-			pointRadius : 12
-       };
-       if (mt != null){
-	        if ((mt >= 0) && (mt < this.markers.length)){
-		        styObjStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
-		        markerStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
-		    }
-		    else{
-		        styObjStyle.externalGraphic = markerPath + this.markers[0];
-		        markerStyle.externalGraphic = markerPath + this.markers[0];
-		    }
-        }
-        else if (externalGraphic != null){
-        	styObjStyle.externalGraphic = externalGraphic;
-        	markerStyle.externalGraphic = externalGraphic;
-        }
-        if ((pointRadius !=null) && (pointRadius > 0)){
-        	styObjStyle.pointRadius = pointRadius;
-        	markerStyle.pointRadius = pointRadius;
-        }
-        else{
-        	styObjStyle.pointRadius = 12;
-        	markerStyle.pointRadius = 12;
-        }
-        if (this.map.getLayersByClass("OpenLayers.Layer.Vector").length > 0){
-        	var markerLayer = this.map.getLayersByClass("OpenLayers.Layer.Vector")[0];
-        }
-        else{
-	        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
-	            styleMap: new OpenLayers.StyleMap(markerStyle)
-    	    });
-	        this.map.addLayer(markerLayer);
-            selectControl = new OpenLayers.Control.SelectFeature(markerLayer);
-            this.map.addControl(selectControl);
-            selectControl.activate();
-        }
-        
-	    // add popup if the parameters titel or tekst are used
-	    /*if (titel != null || tekst != null) {
-	    	strOms = "";
-	    	if (titel != null){
-		    	strOms = "<h2>" + titel + "</h2>";
-	    	}
-	    	if (tekst != null){
-		    	strOms = strOms + tekst;
-	    	}
-	    	vctMarkerFeat.attributes.oms = strOms;
-            markerLayer.events.on({
-                'featureselected': onFeatureSelect,
-                'featureunselected': onFeatureUnselect
-            });
-		}*/
-        //markerLayer.addFeatures([vctMarkerFeat]);
-        //var markerStyle = {externalGraphic: "./markertypes/default.png", graphicWidth: 16, graphicHeight: 16, graphicYOffset: -16, graphicOpacity: 0.7};
-        //markerLayer.addFeatures([new OpenLayers.Feature.Vector(pntMarkerGeom, {oms: strOms}, markerStyle)]);
-    }
-}
+// TODO: create addFeature as Api call
+
+//Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,pointRadius) {
+//    if (mloc != null) {
+//	   // Bij een bestaande markerlayer moet de markerfeature een andere icon krijgen
+//	   var pntMarkerGeom = new OpenLayers.Geometry.Point(mloc[0],mloc[1]);
+//	   var vctMarkerFeat = new OpenLayers.Feature.Vector(pntMarkerGeom);
+//       var styObjStyle = {
+//			strokeColor : '#ee0028',
+//			strokeWidth : 1,
+//			strokeOpacity : 1,
+//			fillColor : '#ee000d',
+//			fillOpacity : 1,
+//			pointRadius : 12,
+//			externalGraphic: './markertypes/default.png'
+//       };
+//       var markerStyle = {
+//			strokeColor : '#ee0028',
+//			strokeWidth : 1,
+//			strokeOpacity : 1,
+//			fillColor : '#ee000d',
+//			fillOpacity : 1,
+//			pointRadius : 12
+//       };
+//       if (mt != null){
+//	        if ((mt >= 0) && (mt < this.markers.length)){
+//		        styObjStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
+//		        markerStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
+//		    }
+//		    else{
+//		        styObjStyle.externalGraphic = markerPath + this.markers[0];
+//		        markerStyle.externalGraphic = markerPath + this.markers[0];
+//		    }
+//        }
+//        else if (externalGraphic != null){
+//        	styObjStyle.externalGraphic = externalGraphic;
+//        	markerStyle.externalGraphic = externalGraphic;
+//        }
+//        if ((pointRadius !=null) && (pointRadius > 0)){
+//        	styObjStyle.pointRadius = pointRadius;
+//        	markerStyle.pointRadius = pointRadius;
+//        }
+//        else{
+//        	styObjStyle.pointRadius = 12;
+//        	markerStyle.pointRadius = 12;
+//        }
+//        if (this.map.getLayersByClass("OpenLayers.Layer.Vector").length > 0){
+//        	var markerLayer = this.map.getLayersByClass("OpenLayers.Layer.Vector")[0];
+//        }
+//        else{
+//	        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
+//	            styleMap: new OpenLayers.StyleMap(markerStyle)
+//    	    });
+//	        this.map.addLayer(markerLayer);
+//            selectControl = new OpenLayers.Control.SelectFeature(markerLayer);
+//            this.map.addControl(selectControl);
+//            selectControl.activate();
+//        }
+//        
+//	    // add popup if the parameters titel or tekst are used
+//	    /*if (titel != null || tekst != null) {
+//	    	strOms = "";
+//	    	if (titel != null){
+//		    	strOms = "<h2>" + titel + "</h2>";
+//	    	}
+//	    	if (tekst != null){
+//		    	strOms = strOms + tekst;
+//	    	}
+//	    	vctMarkerFeat.attributes.oms = strOms;
+//            markerLayer.events.on({
+//                'featureselected': onFeatureSelect,
+//                'featureunselected': onFeatureUnselect
+//            });
+//		}*/
+//        //markerLayer.addFeatures([vctMarkerFeat]);
+//        //var markerStyle = {externalGraphic: "./markertypes/default.png", graphicWidth: 16, graphicHeight: 16, graphicYOffset: -16, graphicOpacity: 0.7};
+//        //markerLayer.addFeatures([new OpenLayers.Feature.Vector(pntMarkerGeom, {oms: strOms}, markerStyle)]);
+//    }
+//}
 
 Lusc.Api.prototype.addWMS = function(wmsurl,wmslayers) {
 	if ((wmsurl != null) && (wmslayers != null)) {
