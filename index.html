@@ -92,55 +92,9 @@
                                 lijst en klik op de kaart)</label>
                         </div>
                         <div id="edit2" class="row">
-                            <ul class="left-nav" id="mt13" >
-								<li id="mt1"> <button type="button" class="markerbutton"> <img src="markertypes/information_blue.png"></button></li>
-								<li id="mt2"> <button type="button" class="markerbutton"> <img src="markertypes/information_green.png"></button></li>
-								<li id="mt3"> <button type="button" class="markerbutton"> <img src="markertypes/information_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="mt46">
-								<li id="mt4"> <button type="button" class="markerbutton"> <img src="markertypes/geonovum_blue.png"></button></li>
-								<li id="mt5"> <button type="button" class="markerbutton"> <img src="markertypes/geonovum_green.png"></button></li>
-								<li id="mt6"> <button type="button" class="markerbutton"> <img src="markertypes/geonovum_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="mt79">
-								<li id="mt7"> <button type="button" class="markerbutton"> <img src="markertypes/kadaster_blue.png"></button></li>
-								<li id="mt8"> <button type="button" class="markerbutton"> <img src="markertypes/kadaster_green.png"></button></li>
-								<li id="mt9"> <button type="button" class="markerbutton"> <img src="markertypes/kadaster_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="mt1012">
-								<li id="mt10"> <button type="button" class="markerbutton"> <img src="markertypes/rijk_blue.png"></button></li>
-								<li id="mt11"> <button type="button" class="markerbutton"> <img src="markertypes/rijk_green.png"></button></li>
-								<li id="mt12"> <button type="button" class="markerbutton"> <img src="markertypes/rijk_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="mt1315" >
-								<li id="mt13"> <button type="button" class="markerbutton"> <img src="markertypes/empty_blue.png"></button></li>
-								<li id="mt14"> <button type="button" class="markerbutton"> <img src="markertypes/empty_green.png"></button></li>
-								<li id="mt15"> <button type="button" class="markerbutton"> <img src="markertypes/empty_yellow.png"></button></li>
-							</ul>
-							<ul class="left-nav" id="mt1617">
-								<!-- <li id="mt10"> <button type="button"> <img src="markertypes/rijk.png"></button></li> -->
-								<li id="mt16"> <button type="button" class="markerbutton"> <img src="markertypes/default.png"></button></li>
-								<li id="mt17"> <button type="button" class="markerbutton"> <img src="markertypes/star-3.png"></button></li>
-							</ul>
                         </div>
-                        <!-- <div id="mapmarkers" class="row red">
-							
-                                     <span id="mapmarker1">
-                                         <input type="radio" name="marker" id="marker1" value="marker1" onchange="if (this.checked){return setMarkerImage(1);}"/>
-                                         <label for="marker1" id="markerlabel1">Cross</label>
-                                     </span>
-							
-                                     <span id="mapmarker2">
-                                         <input type="radio" name="marker" id="marker2" value="marker2" onchange="if (this.checked){return setMarkerImage(2);}" checked="checked" />
-                                         <label for="marker2" id="markerlabel2">Standard</label>
-                                     </span>
-							
-                                     <span id="mapmarker3">
-                                         <input type="radio" name="marker" id="marker3" value="marker3" onchange="if (this.checked){return setMarkerImage(3);}"/>
-                                         <label for="marker3" id="markerlabel3">spot</label>
-                                     </span>
-							
-                                 </div> -->	 
+						<div id="edit2a" class="row" style="display: none;">
+                        </div>
                         <div id="edit3" class="edit3class">
                             <input type="radio" name="editmarker" id="editmarker3" value="delete" onclick="if (this.checked){return startEditingPoint();}" />
                             <label for="editmarker3" id="editlabel3">
@@ -149,6 +103,8 @@
 							<input type="hidden" name="editmarker_dummy" id="editmarker5" />
 							<input type="hidden" name="editmarker_dummy2" id="savemarkerinfo" />
 							<input type="hidden" name="editmarker_dummy3" id="texteditor" />								
+                        </div>
+						<div id="edit3a" class="row" style="display: none;">
                         </div>
 						<div id="edit4" class="row">
 							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->

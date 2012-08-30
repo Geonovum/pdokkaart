@@ -410,9 +410,9 @@ function init_pdok()
 	//dragControl.activate();
 	
 	// only set the map center if not already done by lusc api
-	if (!mapPDOKKaart.getCenter()) {
+	/* if (!mapPDOKKaart.getCenter()) {
 	 	mapPDOKKaart.setCenter(new OpenLayers.LonLat(155000,463000), 3);
-	}	
+	} */	
 	
 	/* var pdokLayers = lusc.getLayers();
 	for (var l in pdokLayers) {
@@ -445,6 +445,7 @@ function init_pdok()
     }); */
 
 	createStyleSelector();
+	createEditAttributes ();
 
 }
 
@@ -459,11 +460,12 @@ function enableStyleSelector(){
 	$('#styleselector').show();
 	
 	//default style selected
-	featureModifiedCallback = function(feature){
+	featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			$('#edit2a').show();
     }
-    lusc.enableDrawingTool("mt0", featureModifiedCallback);
+    lusc.enableDrawingTool("mt0", featureCreatedCallback);
 	
 	$('#styleselector li').removeClass('styleselected');
 	$('#mt0').addClass('styleselected');
@@ -501,13 +503,40 @@ function createStyleSelector(){
         $('#styleselector li').removeClass('styleselected');
         $(this).addClass('styleselected');
         var styleId = $(this).attr('id');
-        featureModifiedCallback = function(feature){
+        featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
+			$('#edit2a').show();
         }
-        lusc.enableDrawingTool(styleId, featureModifiedCallback);
+        lusc.enableDrawingTool(styleId, featureCreatedCallback);
     });
 	
+
+}
+
+function createEditAttributes () {
+
+var html = '<input id="title" type="text" value="Voer een titel in :" name="searchLocation" title="Postcode of plaatsnaam" size="20"/>';
+html = html + '<textarea id="description" cols="43" rows="10">Voer een omschrijving in : </textarea>';
+html = html + '<button type="submit" class="filterbutton" onclick="saveAttributes();return false;">Opslaan</button>';
+html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen</button>';
+
+$('#edit2a').html(html);
+$('#edit3a').html(html);
+
+}
+
+function saveAttributes() {
+
+	$('#edit2a').hide();
+	$('#edit3a').hide();
+
+}
+
+function deleteFeature() {
+
+	$('#edit2a').hide();
+	$('#edit3a').hide();
 
 }
 
@@ -515,7 +544,12 @@ function startEditingPoint() {
 	//removePopups(markers);
 	disableStyleSelector();
 	lusc.disableDrawingTool();
-	lusc.enableEditingTool();
+	featureModifiedCallback = function(feature){
+            // you get a handle here to the feature last modified
+            // console.log(feature);
+			$('#edit3a').show();
+        }
+	lusc.enableEditingTool(featureModifiedCallback);
 	//registerEvents();
 
 }
