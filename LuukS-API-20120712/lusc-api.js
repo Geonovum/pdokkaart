@@ -22,7 +22,7 @@
 Lusc = {};
 
 Lusc.Api = function(config) {
-    
+
     /**
      * Reference to the zoomlevel object
      */
@@ -37,12 +37,12 @@ Lusc.Api = function(config) {
      * Reference to the BBOX object
      */
     this.bbox = null;
-    
+
     /**
      * Reference to the layer
      */
     this.layer = null;
-    
+
     /**
      * Reference to map object
      */
@@ -62,7 +62,7 @@ Lusc.Api = function(config) {
      * Reference to popup titel object
      */
     this.titel = null;
-    
+
     /**
      * Reference to markertype object
      */
@@ -72,7 +72,7 @@ Lusc.Api = function(config) {
      * Reference to Textfile URL object
      */
     this.txturl = null;
-    
+
     /**
      * Reference to WMS-URL object
      */
@@ -107,7 +107,7 @@ Lusc.Api = function(config) {
      * Reference to the DIV-id the map should be rendered in
      */
     this.div = null;
-    
+
     /**
      * Reference to the graphic URL for the marker
      */
@@ -117,7 +117,7 @@ Lusc.Api = function(config) {
      * Reference to the graphic radius for the marker
      */
     this.pointRadius = null;
-    
+
 	/**
      * Reference to the styles object with all marker, lines and polygon rules
      */
@@ -137,45 +137,26 @@ Lusc.Api = function(config) {
     this.featuresLayer = null;
     this.features = [];
 
-    /**
-     * @private
-     * Look up array, having the supported layers.
-     */
-    this.supportedLayers = [
-    	"AAN",
-    	"ADRESSEN",
-    	"AHN25M",
-    	"BBG2008",
-    	"BESCHERMDENATUURMONUMENTEN",
-    	"GEMEENTEGRENZEN",
-    	"GEMEENTEGRENZEN_LABEL",
-    	"NATIONALE_PARKEN",
-    	"NOK2011",
-    	"TEXEL_20120423_OUTLINE",
-    	"TOP10NL"
-    ];
-    
-    // create this.styles, based on either this.defaultStyles object, OR via a this.customStyles object (TODO)
-    this.createStyles();
 
     /**
      * @private
      * The attribution added to the map
      */
+    // TODO moet dit?
     this.attribution = '&copy; <a target="_parent" href="http://www.terrestris.de">terrestris GmbH & Co. KG</a>,</br>' +
         'Data by <a target="_parent" href="http://www.openstreetmap.org">OpenStreetMap</a> and contributors, <a target="_parent" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-	
+
     if (config) {
-        
+
         // read out and validate the given values
         this.validateConfig(config);
-        
-		// create the styles object
-        //this.styles = this.createStylesObject();
-		
+
+        // create this.styles, based on either this.defaultStyles object, OR via a this.customStyles object (TODO)
+        this.createStyles();
+
         // create the OpenLayers Map instance
         this.map = this.createOlMap();
-        
+
     } else {
         // exception
     }
@@ -338,7 +319,166 @@ Lusc.Api.prototype.defaultStyles=[
         }
     ]
 
-
+Lusc.Api.prototype.defaultLayers = {
+        BRT: {
+            layertype: 'WMTS',
+            name: 'BRT Achtergrondkaart (wmts)',
+            url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+            layer: 'brtachtergrondkaart',
+            style: '_null',
+            matrixSet: 'EPSG:28992',
+            visibility: true, 
+            isBaseLayer: true
+        },
+        BRT2: {
+            layertype: 'TMS',
+            name: 'BRT Achtergrondkaart (tms)',
+            url: 'http://geodata.nationaalgeoregister.nl/tms/',
+            layername: 'brtachtergrondkaart',
+            type:'png8',
+            visibility: true,
+            isBaseLayer:true
+        },
+        TOP10NL: {
+            layertype: 'WMTS',
+            name: 'Top10NL (wmts)',
+            url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+            layer: 'top10nl',
+            style: '_null',
+            matrixSet: 'EPSG:28992',
+            visibility: true, 
+            isBaseLayer: true
+        },
+        TOP10NL2: {
+            layertype: 'TMS',
+            name: 'Top10NL (tms)',
+            url: 'http://geodata.nationaalgeoregister.nl/tms/',
+            layername: 'top10nl',
+            type:'png8',
+            visibility: true,
+            isBaseLayer:true
+        },
+        AAN: {
+            layertype: 'WMS',
+            name: 'Agrarisch Areaal Nederland WMS',
+            url: 'http://geodata.nationaalgeoregister.nl/aan/wms',
+            layers: 'aan',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        ADRESSEN: {
+            layertype: 'WMS',
+            name: 'Inspire Adressen',
+            url: 'http://geodata.nationaalgeoregister.nl/inspireadressen/wms',
+            layers: 'inspireadressen',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        AHN25M: {
+            layertype: 'WMS',
+            name: 'AHN 25 meter',
+            url: 'http://geodata.nationaalgeoregister.nl/ahn25m/wms',
+            layers: 'ahn25m',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        BBG2008: {
+            layertype: 'WMS',
+            name: 'BBG 2008',
+            url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms',
+            layers: 'bbg2008',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        BESCHERMDENATUURMONUMENTEN:{
+            layertype: 'WMS',
+            name: 'Beschermde Natuurmonumenten',
+            url: 'http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms',
+            layers: 'beschermdenatuurmonumenten',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        GEMEENTEGRENZEN: {
+            layertype: 'WMS',
+            name: 'Gemeentegrenzen',
+            url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld',
+            layers: 'gemeenten_2012',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        GEMEENTEGRENZEN_LABEL: {
+            layertype: 'WMS',
+            name: 'Gemeentegrenzen met labes (sld)',
+            url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld',
+            layers: 'gemeenten_2012',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        NATIONALE_PARKEN: {
+            layertype: 'WMS',
+            name: 'Nationale parken',
+            url: 'http://geodata.nationaalgeoregister.nl/nationaleparken/wms',
+            layers: 'nationaleparken',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        NATURA2000: {
+            layertype: 'TMS',
+            name: 'Natura2000 gebieden',
+            url: 'http://geodata.nationaalgeoregister.nl/tms/',
+            layername: 'natura2000',
+            type:'png8',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        NOK2011: {
+            layertype: 'WMS',
+            name: 'NOK2011',
+            url: 'http://geodata.nationaalgeoregister.nl/nok2011/wms',
+            layers: 'begrenzing,planologischeehs,verwervinginrichting',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        TEXEL_20120423_OUTLINE: {
+            layertype: 'WMS',
+            name: 'Gevectoriseerde Bonnebladen',
+            url: 'http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map',
+            layers: 'TEXEL_20120423_OUTLINE',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        }
+    }
 
 /**
  * @private
@@ -350,10 +490,10 @@ Lusc.Api.prototype.validateConfig = function(config) {
 	if (config.layer && !OpenLayers.Util.isArray(config.layer)) {
 		config.layer = [config.layer];
 	}
-	if (config.layer && OpenLayers.Util.indexOf(this.supportedLayers, config.layer) && OpenLayers.Util.isArray(config.layer)) {
+/*	if (config.layer && OpenLayers.Util.indexOf(this.supportedLayers, config.layer) && OpenLayers.Util.isArray(config.layer)) {
         this.layer = config.layer;
-	}
-    
+	}*/
+
     if (config.zl) {
         this.zl = config.zl;
     }
@@ -365,11 +505,11 @@ Lusc.Api.prototype.validateConfig = function(config) {
     if (config.bbox && OpenLayers.Util.isArray(config.bbox) && config.bbox.length == 4) {
         this.bbox = config.bbox;
     }
-    
+
     if (config.mloc && OpenLayers.Util.isArray(config.mloc) && config.mloc.length == 2) {
         this.mloc = config.mloc;
     }
-    
+
     if (config.mt) {
         this.mt = config.mt;
     }
@@ -381,11 +521,11 @@ Lusc.Api.prototype.validateConfig = function(config) {
     if (config.tekst) {
         this.tekst = config.tekst;
     }
-    
+
     if (config.txturl) {
         this.txturl = config.txturl;
     }
-    
+
     if (config.wmsurl) {
         this.wmsurl = config.wmsurl;
     }
@@ -426,7 +566,7 @@ Lusc.Api.prototype.validateConfig = function(config) {
     if (config.pointRadius) {
         this.pointRadius = config.pointRadius;
     }
-    
+
     if (config.div) {
     	this.div = config.div;
     }
@@ -507,149 +647,21 @@ Lusc.Api.prototype.createOlMap = function() {
 	
 		panel.addControls([openLufo,openTOP10,openBRT]);
 		olMap.addControl(panel);
-	}    
-    
-    // create TMS-lagen voor de achtergrond
-	lyrBRTAchtergrondkaart = new OpenLayers.Layer.TMS(
-		"BRT Achtergrondkaart",
-		"http://geodata.nationaalgeoregister.nl/tms/",
-		{layername: "brtachtergrondkaart", type:"png8", visibility: true, isBaseLayer:true}
-	);
-	lyrTOP10NL = new OpenLayers.Layer.TMS(
-		"TOP10NL",
-		"http://geodata.nationaalgeoregister.nl/tms/",
-		{layername: "top10nl", type:"png8", visibility: false, isBaseLayer:true}
-	);
-	//olMap.addLayers([lyrBRTAchtergrondkaart]);
-    //olMap.addLayers([lyrTOP10NL]);
-    olMap.addLayers([lyrBRTAchtergrondkaart,lyrTOP10NL]);
-	
-    // apply layer if a layer was given
-	if (this.layer != null) {
-		var layer = null;
-		var l;
-		for (l in this.layer)
-		{
-			switch (this.layer[l].toUpperCase()){
-				case "AAN":
-					var layer = new OpenLayers.Layer.WMS(
-							"AAN",
-							"http://geodata.nationaalgeoregister.nl/aan/wms",
-							{layers: 'aan',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "ADRESSEN":
-					var layer = new OpenLayers.Layer.WMS(
-							"ADRESSEN",
-							"http://geodata.nationaalgeoregister.nl/inspireadressen/wms",
-							{layers: 'inspireadressen',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "AHN25M":
-					var layer = new OpenLayers.Layer.WMS(
-							"AHN25M",
-							"http://geodata.nationaalgeoregister.nl/ahn25m/wms",
-							{layers: 'ahn25m',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "BBG2008":
-					var layer = new OpenLayers.Layer.WMS(
-							"BBG2008",
-							"http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms",
-							{layers: 'bbg2008',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "BESCHERMDENATUURMONUMENTEN":
-					var layer = new OpenLayers.Layer.WMS(
-							"beschermdenatuurmonumenten",
-							"http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms",
-							{layers: 'beschermdenatuurmonumenten',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "GEMEENTEGRENZEN":
-					var layer = new OpenLayers.Layer.WMS(
-							"Gemeentegrenzen",
-							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
-							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "GEMEENTEGRENZEN_LABEL":
-					var layer = new OpenLayers.Layer.WMS(
-							"Gemeentegrenzen",
-							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld",
-							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "NATIONALE_PARKEN":
-					var layer = new OpenLayers.Layer.WMS(
-							"Nationale parken",
-							"http://geodata.nationaalgeoregister.nl/nationaleparken/wms",
-							{layers: 'nationaleparken',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "NATURA2000":
-					var layer = new OpenLayers.Layer.TMS(
-						"NATURA2000",
-						"http://geodata.nationaalgeoregister.nl/tms/",
-						{layername: "natura2000", type:"png8", visibility: true, isBaseLayer:false, opacity:0.8}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "NOK2011":
-					var layer = new OpenLayers.Layer.WMS(
-							"NOK2011",
-							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
-							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "TEXEL_20120423_OUTLINE":
-					var layer = new OpenLayers.Layer.WMS(
-							"Gevectoriseerde Bonnebladen",
-							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
-							{layers: 'TEXEL_20120423_OUTLINE',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true},
-							{
-								attribution: this.attribution
-							} 
-					);
-					olMap.addLayer(layer);
-					break;
-				default:
-					//do nothing
-					var layer;
-					break;
-			}
-		}
 	}
-	
+
+    // apply layer if a layer was given
+    if (this.layer != null) {
+        // TODO: for now: either give ALL layers via layer param (including baselayers)
+        this.addLayers(this.layer, olMap);
+    }
+    else {
+        // not layer param, at least load one default layer
+        this.addLayers(['BRT'], olMap);
+    }
+
+
+
+
     // apply WMSURL and WMSLAYERS if applicable
 	if ((this.wmsurl != null) && (this.wmslayers != null)) {
 		var lyrWMS = new OpenLayers.Layer.WMS(
@@ -753,7 +765,7 @@ Lusc.Api.prototype.createFeature = function(wkt, typestyle, name, description){
 
 Lusc.Api.prototype.createStyles = function(){
 
-    var olDefault = OpenLayers.Feature.Vector.style.default;
+    var olDefault = OpenLayers.Feature.Vector.style['default'];
 
     this.styles = {};
 
@@ -905,10 +917,6 @@ Lusc.Api.prototype.onFeatureUnselect = function(evt) {
     }
 }
 
-Lusc.Api.prototype.getLayers = function(){
-	return this.supportedLayers;
-}    
-
 Lusc.Api.prototype.getMarkerPath = function(){
 	return markerPath;
 }
@@ -1039,129 +1047,150 @@ Lusc.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
 	}
 }
 
-Lusc.Api.prototype.addLayers = function(arrLayerNames){
-	if (arrLayerNames != null) {
-		var layer = null;
-		var l;
-		for (l in arrLayerNames)
-		{
-			switch (arrLayerNames[l].toUpperCase()){
-				case "AAN":
-					var layer = new OpenLayers.Layer.WMS(
-							"AAN",
-							"http://geodata.nationaalgeoregister.nl/aan/wms",
-							{layers: 'aan',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					this.map.addLayer(layer);
-					break;
-				case "ADRESSEN":
-					var layer = new OpenLayers.Layer.WMS(
-							"ADRESSEN",
-							"http://geodata.nationaalgeoregister.nl/inspireadressen/wms",
-							{layers: 'inspireadressen',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "AHN25M":
-					var layer = new OpenLayers.Layer.WMS(
-							"AHN25M",
-							"http://geodata.nationaalgeoregister.nl/ahn25m/wms",
-							{layers: 'ahn25m',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					this.map.addLayer(layer);
-					break;
-				case "BBG2008":
-					var layer = new OpenLayers.Layer.WMS(
-							"BBG2008",
-							"http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms",
-							{layers: 'bbg2008',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "BESCHERMDENATUURMONUMENTEN":
-					var layer = new OpenLayers.Layer.WMS(
-							"beschermdenatuurmonumenten",
-							"http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms",
-							{layers: 'beschermdenatuurmonumenten',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					olMap.addLayer(layer);
-					break;
-				case "GEMEENTEGRENZEN":
-					var layer = new OpenLayers.Layer.WMS(
-							"Gemeentegrenzen",
-							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld",
-							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					this.map.addLayer(layer);
-					break;
-				case "GEMEENTEGRENZEN_LABEL":
-					var layer = new OpenLayers.Layer.WMS(
-							"Gemeentegrenzen",
-							"http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld",
-							{layers: 'gemeenten_2012',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					this.map.addLayer(layer);
-					break;
-				case "NATIONALE_PARKEN":
-					var layer = new OpenLayers.Layer.WMS(
-							"Nationale parken",
-							"http://geodata.nationaalgeoregister.nl/nationaleparken/wms",
-							{layers: 'nationaleparken',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					this.map.addLayer(layer);
-					break;
-				case "NATURA2000":
-					var layer = new OpenLayers.Layer.TMS(
-						"NATURA2000",
-						"http://geodata.nationaalgeoregister.nl/tms/",
-						{layername: "natura2000", type:"png8", visibility: true, isBaseLayer:false, opacity:0.8}
-					);
-					this.map.addLayer(layer);
-					break;
-				case "NOK2011":
-					var layer = new OpenLayers.Layer.WMS(
-							"NOK2011",
-							"http://geodata.nationaalgeoregister.nl/nok2011/wms",
-							{layers: 'begrenzing,planologischeehs,verwervinginrichting',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true}
-					);
-					this.map.addLayer(layer);
-					break;
-				case "TEXEL_20120423_OUTLINE":
-					var layer = new OpenLayers.Layer.WMS(
-							"Gevectoriseerde Bonnebladen",
-							"http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map", 
-							{layers: 'TEXEL_20120423_OUTLINE',transparent: 'true',format: "image/png"},
-							{visibility: true,isBaseLayer:false},
-							{singleTile: true},
-							{
-								attribution: this.attribution
-							} 
-					);
-					this.map.addLayer(layer);
-					break;
-				default:
-					//do nothing
-					var layer;
-					break;
-			}
-		}
-	}
+Lusc.Api.prototype.createTMSLayer = function(layerConfigObj) {
+
+    // default TMS or WMTS layer object to set defaults:
+    // missing values in config object will be replaced by sensible defaults:
+    var defaults = {
+            name: 'layer',
+            url: '',
+            layertype: '',
+            layername: '',
+            type:'png',
+            visibility: true,
+            isBaseLayer:true
+    };
+
+    layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
+
+    var layer = new OpenLayers.Layer.TMS(
+        layerConfigObj.name,
+        layerConfigObj.url,
+        {   layername: layerConfigObj.layername, 
+            type:layerConfigObj.type, 
+            visibility: layerConfigObj.visibility, 
+            isBaseLayer: layerConfigObj.isBaseLayer
+        }
+    );
+
+    return layer;
+}
+
+Lusc.Api.prototype.createWMTSLayer = function(layerConfigObj) {
+
+    // From WMTS openlayers example:
+    // If tile matrix identifiers differ from zoom levels (0, 1, 2, ...)
+    // then they must be explicitly provided.
+    var matrixIds = new Array(26);
+    for (var i=0; i<26; ++i) {
+        matrixIds[i] = layerConfigObj.matrixSet+':' + i;
+    }
+
+    // default WMTS layer object to set defaults:
+    // missing values in config object will be replaced by sensible defaults:
+    var defaults = {
+            layername: 'layer',
+            url: '',
+            layer: '',
+            style: true,
+            matrixSet: '',
+            matrixIds: matrixIds,
+            visibility: true,
+            isBaseLayer: true,
+            format: 'image/png8'
+    };
+
+    layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
+
+     /* var wmts = new OpenLayers.Layer.WMTS({
+     *     name: "My WMTS Layer",
+     *     url: "http://example.com/wmts",·
+     *     layer: "layer_id",
+     *     style: "default",
+     *     matrixSet: "matrix_id"
+     * });
+     */
+    var layer = new OpenLayers.Layer.WMTS(
+        {
+            name: layerConfigObj.layername,
+            url:layerConfigObj.url,
+            layer: layerConfigObj.layer,
+            style: layerConfigObj.style,
+            matrixSet: layerConfigObj.matrixSet,
+            matrixIds: layerConfigObj.matrixIds,
+            format: layerConfigObj.format,
+            visibility: layerConfigObj.visibility,
+            isBaseLayer: layerConfigObj.isBaseLayer
+        }
+    );
+
+    return layer;
+}
+
+Lusc.Api.prototype.createWMSLayer = function(layerConfigObj) {
+
+    // default WMS layer object to set defaults:
+    // missing values in config object will be replaced by sensible defaults:
+    var defaults = {
+            layername: 'layer',
+            url: '',
+            layers: '',
+            styles: '',
+            visibility: true,
+            isBaseLayer: false,
+            format: 'image/png',
+            singleTile: false
+    };
+
+    layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
+
+    var layer = new OpenLayers.Layer.WMS(
+            layerConfigObj.layername,
+            layerConfigObj.url,
+            {
+                layers: layerConfigObj.layers, 
+                transparent: layerConfigObj.transparent, 
+                format: layerConfigObj.format
+            },
+            {
+                visibility: layerConfigObj.visibility, 
+                isBaseLayer: layerConfigObj.isBaseLayer, 
+                singleTile: layerConfigObj.singleTile 
+            }
+    );
+
+    return layer;
+}
+
+Lusc.Api.prototype.addLayers = function(arrLayerNames, map){
+
+    if (arrLayerNames==null){
+        alert('null object as layernames');
+        return;
+    }
+
+    if (map == undefined){
+        map = this.map;
+    }
+    for (l in arrLayerNames)
+    {
+        var layerId = arrLayerNames[l];
+        if (this.defaultLayers[layerId]){
+            if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMS'){
+                map.addLayer(this.createWMSLayer( this.defaultLayers[layerId]));
+            }
+            else if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMTS'){
+                map.addLayer(this.createWMTSLayer( this.defaultLayers[layerId]));
+            }
+            else if (this.defaultLayers[layerId].layertype.toUpperCase()=='TMS'){
+                map.addLayer(this.createTMSLayer( this.defaultLayers[layerId]));
+            }
+            else {
+                alert('layertype not available (wrong config?): ' + this.defaultLayers.l.layertype);
+            }
+        }
+        else{
+            alert('layerid not available: ' + layerId);
+        }
+    }
 }
