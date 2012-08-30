@@ -422,6 +422,42 @@ function init_pdok()
 
     // dynamically creating the selectbox for the feature types
 
+   /*  $('#edit2').html('<div id="styleselector"><ul></ul></div>');
+    var apiStyles = lusc.styles;
+    html = '';
+    for (styleId in apiStyles){
+        // for now only point markers!
+        if (styleId[0]=='m'){
+            var style = apiStyles[styleId];
+            html += '\n<li id="'+styleId+'"><img src="'+style.externalGraphic+'"><span>'+style.name+'</span></li>';
+        }
+    }
+    $('#styleselector ul').append(html);
+    $('#styleselector').delegate('li', 'click', function(){
+        $('#styleselector li').removeClass('styleselected');
+        $(this).addClass('styleselected');
+        var styleId = $(this).attr('id');
+        featureModifiedCallback = function(feature){
+            // you get a handle here to the feature last modified
+            // console.log(feature);
+        }
+        lusc.enableDrawingTool(styleId, featureModifiedCallback);
+    }); */
+
+	//enableStyleSelector();
+
+}
+
+function disableStyleSelector(){
+
+	$('#styleselector').empty();
+
+}
+
+function enableStyleSelector(){
+
+// dynamically creating the selectbox for the feature types
+
     $('#edit2').html('<div id="styleselector"><ul></ul></div>');
     var apiStyles = lusc.styles;
     pointStylesHtml = '';
@@ -454,12 +490,20 @@ function init_pdok()
         }
         lusc.enableDrawingTool(styleId, featureModifiedCallback);
     });
-
+	
+	//default style selected
+	featureModifiedCallback = function(feature){
+            // you get a handle here to the feature last modified
+            // console.log(feature);
+    }
+    lusc.enableDrawingTool("mt0", featureModifiedCallback);
+	
 
 }
 
 function startEditingPoint() {
 	//removePopups(markers);
+	disableStyleSelector();
 	lusc.disableDrawingTool();
 	lusc.enableEditingTool();
 	//registerEvents();
