@@ -753,11 +753,9 @@ Lusc.Api.prototype.createFeature = function(wkt, typestyle, name, description){
 
 Lusc.Api.prototype.createStyles = function(){
 
-    var olDefault = OpenLayers.Feature.Vector.style.default;
+    var olDefault = OpenLayers.Feature.Vector.style['default'];
 
     this.styles = {};
-
-
  
     // create a default Point style
     var pdokDefaultPoint = OpenLayers.Util.applyDefaults(
