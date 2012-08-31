@@ -112,6 +112,18 @@ function SearchArray(arr, obj) {
     }
 }
 
+function changeZoom1() {
+
+mapPDOKKaart.zoomTo($("select#vanaf").val());
+
+}
+
+function changeZoom2() {
+
+mapPDOKKaart.zoomTo($("select#totenmet").val());
+
+}
+
 function ZoomIn(x,y){
 
 	mapPDOKKaart.setCenter(new OpenLayers.LonLat(x,y), 7);
@@ -578,14 +590,14 @@ function startEditingPoint() {
 	$('#edit2a').hide();
 	disableStyleSelector();
 	lusc.disableDrawingTool();
-	featureModifiedCallback = function(feature){
+	featureModifiedCallback = function(event){
             // you get a handle here to the feature last modified
             // console.log(feature);
 			//ActiveFeature = feature;
 			$('#edit2a').appendTo($('#edit3'));
 			$('#edit2a').show();
-			$('#title').val(feature.attributes['title']);
-			$('#description').val(feature.attributes['description']);
+			$('#title').val(event.feature.attributes.title);
+			$('#description').val(event.feature.attributes.description);
         }
 	lusc.enableEditingTool(featureModifiedCallback);
 	//registerEvents();

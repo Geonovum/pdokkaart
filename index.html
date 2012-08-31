@@ -169,46 +169,110 @@
                 <h2>
                         <a href="#" onclick="stopDrawingEditingPoint();return goTo(4);" onkeypress="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a></h2>
                     <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(5);">
-                    <strong>
+						<div class="row">
+							<label>
+							<strong>	
+							Selecteer een tekenobject en vul de veldnaam in waar de waarde ingezet moet worden.
+							</strong>
+							</label>
+						</div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_1" value="radio_makeRoutes"
-                                    onclick="manageRoutes(1)">
-                                make routes (single click to start, double to finish)
+                                <input type="radio" name="radiogroup_kp" id="kp1" >
+                                geen
                             </label>
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_2" value="radio_editRoutes"
-                                    onclick="manageRoutes(2)">
-                                select and edit routes
+                                <input type="radio" name="radiogroup_kp" id="kp2" >
+                                punt
                             </label>
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_3" value="radio_deleteRoutes"
-                                    onclick="manageRoutes(3)">
-                                select and delete individual routes</label>
+                                <input type="radio" name="radiogroup_kp" id="kp3" >
+                                lijn
+							</label>
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_4" value="radio_reverseRoutes"
-                                    onclick="manageRoutes(4)">
-                                select and reverse routes</label>
+                                <input type="radio" name="radiogroup_kp" id="kp4">
+                                box
+							</label>
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_5" value="radio_fixRoutes"
-                                    onclick="manageRoutes(5)">
-                                delete all</label>
+                                <input type="radio" name="radiogroup_kp" id="kp5">
+                                vlak
+							</label>
                         </div>
-                        <div class="row">
+                        <div id="search">
+							<label>Veldnaam:
+							<input id="searchLocation" type="text" value="" name="searchLocation" title="Postcode of plaatsnaam"
+								size="30" />
+							</label>							
+						</div>
+						<div class="row">
+							<label>
+							<strong>	
+							Geef aan vanaf en tot welk niveau de Kaartprikker gebruikt mag worden.
+							</strong>
+							</label>
+						</div>
+						<div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_6" value="radio_fixRoutes"
-                                    onclick="manageRoutes(6)">
-                                Finish - view routes as they will appear on your map</label>
+								Kaartprikker mogelijk vanaf zoom niveau:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <select id="vanaf" onclick="changeZoom1()">
+								  <option value="1">1</option>
+								  <option value="2">2</option>
+								  <option value="3">3</option>
+								  <option value="4">4</option>
+								  <option value="1">5</option>
+								  <option value="2">6</option>
+								  <option value="3">7</option>
+								  <option value="4">8</option>
+								  <option value="1">9</option>
+								  <option value="2">10</option>
+								  <option value="3">11</option>
+								  <option value="4">12</option>
+								  <option value="1">13</option>
+								  <option value="2">14</option>
+								  <option value="3">15</option>
+								  <option value="4">16</option>
+								  <option value="1">17</option>
+								  <option value="2">18</option>
+								  <option value="3">19</option>
+								  <option value="4">20</option>
+								</select> 
+							</label>
+						</div>
+						<div class="row">
+							<label>
+								Kaartprikker mogelijk tot en met zoom niveau:
+                                <select id="totenmet" onclick="changeZoom2()">
+								  <option value="1">1</option>
+								  <option value="2">2</option>
+								  <option value="3">3</option>
+								  <option value="4">4</option>
+								  <option value="1">5</option>
+								  <option value="2">6</option>
+								  <option value="3">7</option>
+								  <option value="4">8</option>
+								  <option value="1">9</option>
+								  <option value="2">10</option>
+								  <option value="3">11</option>
+								  <option value="4">12</option>
+								  <option value="1">13</option>
+								  <option value="2">14</option>
+								  <option value="3">15</option>
+								  <option value="4">16</option>
+								  <option value="1">17</option>
+								  <option value="2">18</option>
+								  <option value="3">19</option>
+								  <option value="4">20</option>
+								</select> 
+							</label>
                         </div>
-                    </strong>
                     </form>
                 </div>
                 <!-- Step 6 - Save and download code -->
