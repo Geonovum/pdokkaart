@@ -830,7 +830,6 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
         if (this.drawFeaturePolygonControl==null){
             this.drawFeaturePolygonControl = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Polygon);
             this.map.addControl(this.drawFeaturePolygonControl);
-        currentDrawControl.handler.style.externalGraphic = null;
         }
         currentDrawControl = this.drawFeaturePolygonControl;
         currentDrawControl.handler.style = apiStyles[styletype];
