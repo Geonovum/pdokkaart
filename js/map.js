@@ -535,7 +535,7 @@ function createStyleSelector(){
 
 function createEditAttributes () {
 
-var html = '<input id="title" type="text" value="Voer een titel in :" name="searchLocation" title="Postcode of plaatsnaam" size="20"/>';
+var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Postcode of plaatsnaam" size="20"/>';
 html = html + '<textarea id="description" cols="43" rows="10">Voer een omschrijving in : </textarea>';
 html = html + '<button type="submit" class="filterbutton" onclick="saveAttributes();return false;">Opslaan</button>';
 html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen</button>';
@@ -549,7 +549,7 @@ function saveAttributes() {
 
     //console.log(activeFeature);
 	
-	activeFeature.attributes.title = $('#title').val();
+	activeFeature.attributes.name = $('#attr_name').val();
 	activeFeature.attributes.description = $('#description').val();
 	
 	//console.log(activeFeature);
@@ -560,7 +560,12 @@ function saveAttributes() {
 }
 
 function deleteFeature() {
-
+	
+	var ok = confirm ("Deze feature verwijderen?")
+	if (ok) {
+		markers.removeFeatures([activeFeature]);
+		markers.refresh();
+	}
 	$('#edit2a').hide();
 	//$('#edit3a').hide();
 
@@ -571,14 +576,14 @@ function startEditingPoint() {
 	$('#edit2a').hide();
 	disableStyleSelector();
 	lusc.disableDrawingTool();
-	featureModifiedCallback = function(event){
+	featureModifiedCallback = function(domevent){
             // you get a handle here to the feature last modified
             // console.log(feature);
-			//ActiveFeature = feature;
+			activeFeature = domevent.feature;
 			$('#edit2a').appendTo($('#edit3'));
 			$('#edit2a').show();
-			$('#title').val(event.feature.attributes.title);
-			$('#description').val(event.feature.attributes.description);
+			$('#attr_name').val(domevent.feature.attributes.name);
+			$('#description').val(domevent.feature.attributes.description);
         }
 	lusc.enableEditingTool(featureModifiedCallback);
 	//registerEvents();
