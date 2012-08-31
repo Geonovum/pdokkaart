@@ -579,14 +579,18 @@ function saveAttributes() {
 }
 
 function deleteFeature() {
-	
-	var ok = confirm ("Deze feature verwijderen?")
-	if (ok) {
-		markers.removeFeatures([activeFeature]);
-		markers.refresh();
-	}
-	$('#edit2a').hide();
-	//$('#edit3a').hide();
+
+    var ok = confirm ("Deze feature verwijderen?")
+    if (ok) {
+        markers.removeFeatures([activeFeature]);
+        markers.refresh();
+        // without this disabling and enabling we have a 
+        // null pointer somewhere in the event handling of OL
+        lusc.disableEditingTool();
+        lusc.enableEditingTool(featureModifiedCallback);
+    }
+    $('#edit2a').hide();
+    //$('#edit3a').hide();
 
 }
 

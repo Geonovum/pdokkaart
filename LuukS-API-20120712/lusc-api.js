@@ -856,7 +856,9 @@ Lusc.Api.prototype.disableDrawingTool = function(){
 
 
 Lusc.Api.prototype.disableEditingTool = function(){
-    // TODO implement or remove
+    if (this.editFeatureControl) {
+        this.editFeatureControl.deactivate();
+    }
 }
 
 Lusc.Api.prototype.enableEditingTool = function(featureModifiedFunction){
