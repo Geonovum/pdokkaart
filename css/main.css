@@ -275,3 +275,8 @@ li
 .listyletext{
     padding-left:45px;
 }
+
+input, select, textarea {
+     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+     /* font-size:  100%; */
+}

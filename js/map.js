@@ -561,6 +561,15 @@ html = html + '<button type="submit" class="filterbutton" onclick="saveAttribute
 html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen</button>';
 
 $('#edit2a').html(html);
+$("#attr_name").click(function(){
+    // Select input field contents
+    this.select();
+});
+$("#description").click(function(){
+    // Select input field contents
+    this.select();
+});
+
 //$('#edit3a').html(html);
 
 }
