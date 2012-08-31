@@ -268,12 +268,25 @@ li
     overflow-y: scroll;
 }
 
+#styleselector li{
+    padding-left: 18px;
+    height: 30px;
+    font-size:1em;
+}
+
+#styleselector img{
+    float:left;
+    margin-top:-5px;
+}
+
 .styleselected{
-    background-color:blue;
+    background-color: #e17000;
 }
 
 .listyletext{
-    padding-left:45px;
+    padding-left: 45px;
+    padding-top: 5px;
+    font-size: 1.1em;
 }
 
 input, select, textarea {

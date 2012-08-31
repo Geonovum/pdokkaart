@@ -523,7 +523,7 @@ function createStyleSelector(){
         // for now only point markers!
         if (styleId[0]=='m'){
             var style = apiStyles[styleId];
-            pointStylesHtml += '\n<li id="'+styleId+'"><img src="'+style.externalGraphic+'"><div class="listyletext">'+style.name+'</div></li>';
+            pointStylesHtml += '\n<li id="'+styleId+'"><div><img src="'+style.externalGraphic+'"><div class="listyletext">'+style.name+'</div></div></li>';
         }
         else if (styleId[0]=='l'){
             var style = apiStyles[styleId];
