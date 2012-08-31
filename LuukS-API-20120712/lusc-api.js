@@ -834,6 +834,7 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
         }
         currentDrawControl = this.drawFeaturePolygonControl;
         currentDrawControl.handler.style = apiStyles[styletype];
+        currentDrawControl.handler.style.externalGraphic = null;
     }
     currentDrawControl.activate();
     currentDrawControl.featureAdded = function(feature){
