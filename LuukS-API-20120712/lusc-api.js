@@ -815,6 +815,7 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
             this.map.addControl(this.drawFeaturePointControl);
         }
         currentDrawControl = this.drawFeaturePointControl;
+        currentDrawControl.handler.style = apiStyles[styletype];
     }
     else if (styletype[0]=='l'){
         if (this.drawFeatureLineControl==null){
@@ -822,15 +823,18 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
             this.map.addControl(this.drawFeatureLineControl);
         }
         currentDrawControl = this.drawFeatureLineControl;
+        currentDrawControl.handler.style = apiStyles[styletype];
+        currentDrawControl.handler.style.externalGraphic = null;
     }
     else if (styletype[0]=='p'){
         if (this.drawFeaturePolygonControl==null){
             this.drawFeaturePolygonControl = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Polygon);
             this.map.addControl(this.drawFeaturePolygonControl);
+        currentDrawControl.handler.style.externalGraphic = null;
         }
         currentDrawControl = this.drawFeaturePolygonControl;
+        currentDrawControl.handler.style = apiStyles[styletype];
     }
-    currentDrawControl.handler.style = apiStyles[styletype];
     currentDrawControl.activate();
     currentDrawControl.featureAdded = function(feature){
             feature.style = apiStyles[styletype];
