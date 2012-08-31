@@ -86,7 +86,7 @@
       */
     if(!singleFile) {
         var jsfiles = new Array(
-            "Geozet/Viewer.js",
+           /* "Geozet/Viewer.js",
             "Geozet/plugins/ResizeMap.js",
             "Geozet/Format/XLSAddress",
             "Geozet/Format/XLSLUS.js",
@@ -103,7 +103,7 @@
             "Geozet/widgets/Search.js",
             "Geozet/widgets/Legend.js",
             "Geozet/Control/Click.js",
-            "Geozet/Control/ScaleBar.js"
+            "Geozet/Control/ScaleBar.js" */
         ); // etc.
 
         var agent = navigator.userAgent;
