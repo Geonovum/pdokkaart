@@ -292,6 +292,7 @@ $(document).ready(function() {
 	mapPDOKKaart = lusc.getMapObject();
 	markers = lusc.featuresLayer;
 	pdok_api_map_resize(550,440);
+    lusc.map.zoomToExtent([-15000,300000,300000,640000], true);
     
     $('#geocodeerresult').delegate('li/a','click', function (evt) {
 		var x = $("span.x", this).text();
