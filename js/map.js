@@ -8,6 +8,7 @@ var activeFeature;
 
 // The proxyhost is needed for the geocoder
 //OpenLayers.ProxyHost = "../xmldata.php?url=";
+OpenLayers.ProxyHost = "http://localhost/cgi-bin/proxy.cgi?url=";
 
 // Include the RD definition
 Proj4js.defs["EPSG:28992"] = "+title=Amersfoort / RD New +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +no_defs";
@@ -279,6 +280,24 @@ $(document).ready(function() {
 	mapPDOKKaart = lusc.getMapObject();
 	markers = lusc.featuresLayer;
 	pdok_api_map_resize(550,440);
+    
+    $('#geocodeerresult').delegate('li/a','click', function (evt) {
+		var x = $("span.x", this).text();
+		var y = $("span.y", this).text();
+		var z = $("span.z", this).text();
+		var ft_id = $("span.ft_id", this).text();
+		if(x && y){
+			mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
+			var ft = markers.getFeatureById(ft_id);
+		    onFeatureSelect(ft, true, markersPopupText(ft, true)); // full=true
+		    ft.popupFix = true;
+		}
+		else {
+			alert("fout met coordinaten");
+		}
+		return false;
+	});
+
 	//mapPDOKKaart = new OpenLayers.Map('map');
 	
 	// Thijs: a vector layer is used to show Geocoderesults
@@ -589,26 +608,30 @@ function stopDrawingEditingPoint() {
 
 }
 
- */
 /****
     * For Proof of Concept only use some simple functions to perform searches. For advanced / full functionality: see Geozet and include / build on (Geo)Ext
  	*/
 
 var gazetteerConfig = {};
 var zoomScale = {
-    adres: 11,
-    postcode: 10,
+    adres: 13,
+    postcode: 11,
     plaats: 8,
     gemeente: 8,
     provincie: 5,
     standaard: 9
 };
-gazetteerConfig.gazetteer = {url:"http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?", param:"zoekterm", zoomScale: zoomScale}; 
+gazetteerConfig.gazetteer = {
+    url:"http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?", 
+    param:"zoekterm", 
+    zoomScale: 
+    zoomScale
+};
 
 // Thijs: code based on Geozet.widgets.Search
 function searchLocationChanged() {
 	var searchString = jQuery("#searchLocation").val();
-    /* var params = {request: 'geocode'};
+    var params = {request: 'geocode'};
     params[gazetteerConfig.gazetteer.param] = searchString;
     if (searchString && searchString.length>0){            
         OpenLayers.Request.GET({
@@ -618,61 +641,9 @@ function searchLocationChanged() {
             success: handleGeocodeResponse
             // failure: this.handleError
         });
-    } */
-	if (searchString && searchString.length > 0) {
-	    //alert("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
-	    //debugger;
-		//var xml = lusc.loadDoc("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
-		$.ajax({
-				url: "http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString,
-				//url: "http://www.w3schools.com/xml/cd_catalog.xml",
-				//url: "file:///D:/repository/xml/default-layers.xml",
-				dataType: "xml",
-				type: 'GET',
-				success: function(res) {
-					//var headline = $(res.responseText).find('a.tsh').text();
-					//alert(headline);
-					//alert (res);
-					/* if (window.DOMParser)
-						  {
-						  parser=new DOMParser();
-						  var xmlDoc=parser.parseFromString(res.responseText,"text/xml");
-						  }
-					else // Internet Explorer
-						  {
-						  var xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
-						  xmlDoc.async=false;
-						  xmlDoc.loadXML(res.responseText);
-						  }; */
-					//$(xmlDoc).find('pos').each(function(){
-						/* var id = $(this).attr('id');
-						var title = $(this).find('title').text();
-						var url = $(this).find('url').text();
-						$('<div class="items" id="link_'+id+'"></div>').html('<a href="'+url+'">'+title+'</a>').appendTo('#page-wrap');
-						$(this).find('desc').each(function(){
-							var brief = $(this).find('brief').text();
-							var long = $(this).find('long').text();
-							$('<div class="brief"></div>').html(brief).appendTo('#link_'+id);
-							$('<div class="long"></div>').html(long).appendTo('#link_'+id);
-						}); */
-						
-					//var x = xmlDoc.getElementsByTagNameNS("gml","pos");
-					//var x = xmlDoc.getElementsByTagName('gml:pos');			
-					//for (i=0;i<x.length;i++) {	
-					//	alert (x[i].childNodes[0].nodeValue);
-					//};
-					/* var str = x[0].childNodes[0].nodeValue;
-					var n=str.split(" ");
-					mapPDOKKaart.setCenter(new OpenLayers.LonLat(n[0],n[1]), 7); */
-					
-					$('#geocodeerresult').fadeIn();
-
-					handleGeocodeResponse(res, false);	
-					
-				}
-			})};
+    }
     return false;
-};
+}
 
 /** Thijs: code based on Geozet.widgets.Search
 	 * params: 
@@ -688,14 +659,14 @@ function searchLocationChanged() {
 function handleGeocodeResponse(req, returnCoords){
     //removePopups(markers);
     //markers.destroyFeatures();
-   /*  $('#searchResults').html('').show();
+    $('#searchResults').html('').show();
     
     var responseText = req.responseText;
     if (responseText && (responseText.indexOf('FAILED') != -1 ||
         responseText.indexOf('Exception') != -1 )) {
         // fail silently
         return false;
-    } */
+    }
     var xlslusFormat = new Geozet.Format.XLSLUS();
     var xlslus = xlslusFormat.read(req.responseXML || req.responseText);
     var hits=xlslus[0].numberOfGeocodedAddresses;
@@ -715,17 +686,14 @@ function handleGeocodeResponse(req, returnCoords){
 		var miny = maxEx.top;
 		var maxx = maxEx.left;
 		var maxy = maxEx.bottom;
-		//var minzoom = 15;
-		var minzoom = 3;		
+		var minzoom = 15;
 		var features = [];
         // > 0 hit show suggestions        
-        /* if(hits>0){
-            $('#searchResults').html('<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten <a href="#" onclick="$(\'.geozetSuggestions\').toggle();return false;">Tonen/Verbergen</a></h3><ul class="geozetSuggestions"></ul>');
-        }; */
-		if(hits>0){
+        if(hits>0){
+            //$('#searchResults').html('<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten <a href="#" onclick="$(\'.geozetSuggestions\').toggle();return false;">Tonen/Verbergen</a></h3><ul class="geozetSuggestions"></ul>');
             $('#geocodeerresult').html('<span id="closedrawlocation" onclick="$(\'#geocodeerresult\').fadeOut(\'fast\')" class="closeWindow"><a onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>' +
-			'<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten <a onclick="$(\'.geozetSuggestions\').toggle();return false;">Tonen/Verbergen</a></h3><ul class="geozetSuggestions"></ul>');
-        };
+                '<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten <a onclick="$(\'.geozetSuggestions\').toggle();return false;">Tonen/Verbergen</a></h3><ul class="geozetSuggestions"></ul>');
+        }
         for (i=0;i<hits;i++){
             var suggestion='';
             var geom = xlslus[0].features[i].geometry;
@@ -786,9 +754,7 @@ function handleGeocodeResponse(req, returnCoords){
 					newId = newFt.id;
 					features.push(newFt);
                 }
-				/* var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
-                $("ul.geozetSuggestions").append(gazHtml); */
-				var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a onclick="ZoomIn('+x+','+y+')">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
+				var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
                 $("ul.geozetSuggestions").append(gazHtml);
 
                 // set (calculated) height for the result div
@@ -813,7 +779,8 @@ function handleGeocodeResponse(req, returnCoords){
                 }
             }
         }
-        $("ul.geozetSuggestions").show();
+        //$("ul.geozetSuggestions").show();
+        $('#geocodeerresult').show()
         // calculate the new bbox, if hits > 0
         if (hits > 0) {
 	        // first calculate the center of the new bbox	        
@@ -827,6 +794,244 @@ function handleGeocodeResponse(req, returnCoords){
     }
     return false;
 }
+
+///****
+//    * For Proof of Concept only use some simple functions to perform searches. For advanced / full functionality: see Geozet and include / build on (Geo)Ext
+// 	*/
+//
+//var gazetteerConfig = {};
+//var zoomScale = {
+//    adres: 11,
+//    postcode: 10,
+//    plaats: 8,
+//    gemeente: 8,
+//    provincie: 5,
+//    standaard: 9
+//};
+//gazetteerConfig.gazetteer = {url:"http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?", param:"zoekterm", zoomScale: zoomScale}; 
+//
+//// Thijs: code based on Geozet.widgets.Search
+//function searchLocationChanged() {
+//	var searchString = jQuery("#searchLocation").val();
+//    /* var params = {request: 'geocode'};
+//    params[gazetteerConfig.gazetteer.param] = searchString;
+//    if (searchString && searchString.length>0){            
+//        OpenLayers.Request.GET({
+//            url: gazetteerConfig.gazetteer.url,
+//            params: params,
+//            scope: this,
+//            success: handleGeocodeResponse
+//            // failure: this.handleError
+//        });
+//    } */
+//	if (searchString && searchString.length > 0) {
+//	    //alert("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
+//	    //debugger;
+//		//var xml = lusc.loadDoc("http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString);
+//		$.ajax({
+//				url: "http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?zoekterm=" + searchString,
+//				//url: "http://www.w3schools.com/xml/cd_catalog.xml",
+//				//url: "file:///D:/repository/xml/default-layers.xml",
+//				dataType: "xml",
+//				type: 'GET',
+//				success: function(res) {
+//					//var headline = $(res.responseText).find('a.tsh').text();
+//					//alert(headline);
+//					//alert (res);
+//					/* if (window.DOMParser)
+//						  {
+//						  parser=new DOMParser();
+//						  var xmlDoc=parser.parseFromString(res.responseText,"text/xml");
+//						  }
+//					else // Internet Explorer
+//						  {
+//						  var xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+//						  xmlDoc.async=false;
+//						  xmlDoc.loadXML(res.responseText);
+//						  }; */
+//					//$(xmlDoc).find('pos').each(function(){
+//						/* var id = $(this).attr('id');
+//						var title = $(this).find('title').text();
+//						var url = $(this).find('url').text();
+//						$('<div class="items" id="link_'+id+'"></div>').html('<a href="'+url+'">'+title+'</a>').appendTo('#page-wrap');
+//						$(this).find('desc').each(function(){
+//							var brief = $(this).find('brief').text();
+//							var long = $(this).find('long').text();
+//							$('<div class="brief"></div>').html(brief).appendTo('#link_'+id);
+//							$('<div class="long"></div>').html(long).appendTo('#link_'+id);
+//						}); */
+//						
+//					//var x = xmlDoc.getElementsByTagNameNS("gml","pos");
+//					//var x = xmlDoc.getElementsByTagName('gml:pos');			
+//					//for (i=0;i<x.length;i++) {	
+//					//	alert (x[i].childNodes[0].nodeValue);
+//					//};
+//					/* var str = x[0].childNodes[0].nodeValue;
+//					var n=str.split(" ");
+//					mapPDOKKaart.setCenter(new OpenLayers.LonLat(n[0],n[1]), 7); */
+//					
+//					$('#geocodeerresult').fadeIn();
+//
+//					handleGeocodeResponse(res, false);	
+//					
+//				}
+//			})};
+//    return false;
+//};
+//
+///** Thijs: code based on Geozet.widgets.Search
+//	 * params: 
+//	 *	req = the OpenLayers request
+//	 *	returnCoords - Boolean if False or None map will be zoomed/panned
+//     *  if True map will not change, but coordinates will be returned
+//     * 
+//     * Returns:
+//     * {OpenLayers.LonLat} - if returnCoords == True  one hit/result 
+//     * Boolean - if other == False OR more or no results
+//	**/ 
+//
+//function handleGeocodeResponse(req, returnCoords){
+//    //removePopups(markers);
+//    //markers.destroyFeatures();
+//   /*  $('#searchResults').html('').show();
+//    
+//    var responseText = req.responseText;
+//    if (responseText && (responseText.indexOf('FAILED') != -1 ||
+//        responseText.indexOf('Exception') != -1 )) {
+//        // fail silently
+//        return false;
+//    } */
+//    var xlslusFormat = new Geozet.Format.XLSLUS();
+//    var xlslus = xlslusFormat.read(req.responseXML || req.responseText);
+//    var hits=xlslus[0].numberOfGeocodedAddresses;
+//    if (hits==0){
+//        // zero responses
+//        this.showError(OpenLayers.i18n("noLocationFound"));
+//    }
+//    else{
+//		var maxEx = mapPDOKKaart.restrictedExtent;
+//		// minx,miny,maxx,maxy are used to calcultate a bbox of the geocoding results
+//		// initializes these with the max/min values of the extent of the map, so swap the left /right and bottomo/top of the maxExtent
+//		// i.e.: the calculate minx will allways be smaller than the right-border of the map;
+//		// TODO: for production use the map's restricted Extent, so request a change to Lucs API
+//		/// For now: just values
+//		maxEx = new OpenLayers.Bounds(-285401.92, 22598.08, 595401.92, 903401.92);
+//		var minx = maxEx.right;
+//		var miny = maxEx.top;
+//		var maxx = maxEx.left;
+//		var maxy = maxEx.bottom;
+//		//var minzoom = 15;
+//		var minzoom = 3;		
+//		var features = [];
+//        // > 0 hit show suggestions        
+//        /* if(hits>0){
+//            $('#searchResults').html('<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten <a href="#" onclick="$(\'.geozetSuggestions\').toggle();return false;">Tonen/Verbergen</a></h3><ul class="geozetSuggestions"></ul>');
+//        }; */
+//		if(hits>0){
+//            $('#geocodeerresult').html('<span id="closedrawlocation" onclick="$(\'#geocodeerresult\').fadeOut(\'fast\')" class="closeWindow"><a onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>' +
+//			'<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten <a onclick="$(\'.geozetSuggestions\').toggle();return false;">Tonen/Verbergen</a></h3><ul class="geozetSuggestions"></ul>');
+//        };
+//        for (i=0;i<hits;i++){
+//            var suggestion='';
+//            var geom = xlslus[0].features[i].geometry;
+//            var address = xlslus[0].features[i].attributes.address;                 
+//            var plaats = address.place.MunicipalitySubdivision; // toont evt provincie afkorting
+//            var gemeente = address.place.Municipality;
+//            var prov = address.place.CountrySubdivision;
+//            var adres = '';
+//            var postcode = '';
+//            // determine zoom and hash
+//            var zoom = null;
+//            if (address.street && address.street.length>0){
+//                adres = address.street + ' - ' ;
+//                if (address.building){
+//                    var toevoeging = '';
+//                    if (address.building.subdivision){
+//                        toevoeging = address.building.subdivision
+//                    }
+//                    adres += address.building.number+toevoeging+' - ';
+//                }
+//                if(!zoom){zoom='adres'}
+//            }
+//            if (address.postalCode){
+//                adres += address.postalCode+' - ';
+//                if(!zoom){zoom='postcode'}
+//            }
+//            if(plaats){
+//                suggestion=adres+plaats+' (plaats)';
+//                if(!zoom){zoom='plaats'}
+//            }
+//            else if(gemeente){
+//                suggestion=adres+gemeente+' (gemeente)';
+//                if(!zoom){zoom='gemeente'}
+//            }
+//            else if(prov){
+//                suggestion=prov+' (provincie)';
+//                if(!zoom){zoom='provincie'}
+//            }
+//            if(!zoom){zoom='standaard'}
+//
+//            if(hits>0){
+//                // Thijs: added calculation for bbox
+//                // only calulate if a geom is provided
+//                // hack to be able to handle results without geom
+//                var x = geom?geom.x:150000;
+//                var y = geom?geom.y:450000;
+//                var z = geom?gazetteerConfig.gazetteer.zoomScale[zoom]:gazetteerConfig.gazetteer.zoomScale['provincie'];
+//                var newId = -1;
+//                if (geom) {
+//                	minx = Math.min(minx, x);
+//                	miny = Math.min(miny, y);
+//                	maxx = Math.max(maxx, x);
+//                	maxy = Math.max(maxy, y);
+//                	minzoom = Math.min(minzoom, gazetteerConfig.gazetteer.zoomScale[zoom]);
+//					var newFt = new OpenLayers.Feature.Vector( new OpenLayers.Geometry.Point(x, y), {"title": suggestion, "postcode": postcode, "adres": adres, "plaats": plaats, "gemeente": gemeente, "provincie": prov}
+//					// ,{externalGraphic: 'js/img/marker.png', graphicHeight: 26, graphicWidth: 20}
+//					);
+//					newId = newFt.id;
+//					features.push(newFt);
+//                }
+//				/* var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
+//                $("ul.geozetSuggestions").append(gazHtml); */
+//				var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a onclick="ZoomIn('+x+','+y+')">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
+//                $("ul.geozetSuggestions").append(gazHtml);
+//
+//                // set (calculated) height for the result div
+//                /* var height = Math.max(Ext.get('geozetAside').getHeight(), Ext.get('geozetArticle').getHeight());
+//                Ext.get(this.contentWrapperId).setHeight(height); */
+//            }
+//            else{
+//                // hack to be able to handle results without geom
+//                var x = geom?geom.x:150000;
+//                var y = geom?geom.y:450000;
+//                var z = geom?gazetteerConfig.gazetteer.zoomScale[zoom]:gazetteerConfig.gazetteer.zoomScale['provincie'];
+//                mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
+//                if (returnCoords === true) {
+//                    return {
+//                        center: new OpenLayers.LonLat(x, y),
+//                        zoom: z
+//                    };
+//                } 
+//                else 
+//                {
+//                    mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
+//                }
+//            }
+//        }
+//        $("ul.geozetSuggestions").show();
+//        // calculate the new bbox, if hits > 0
+//        if (hits > 0) {
+//	        // first calculate the center of the new bbox	        
+//	        var newBounds = new OpenLayers.Bounds([minx, miny, maxx, maxy]);
+//			// compare the zoomlevels of the extent and the calulated zoomlevel, to make sure all results are fetched.
+//			var minzoom = Math.min(mapPDOKKaart.getZoomForExtent(newBounds), minzoom);
+//	        // now use the lowest zoomlevel for all results, to make sure that not so fine locations (like provinces) are contained as well
+//	        mapPDOKKaart.setCenter(newBounds.getCenterLonLat(), minzoom);
+//        }
+//		//markers.addFeatures(features);
+//    }
+//    return false;
+//}
 
 /* function addWmsLayer() {
 	var layername=$('#wmsLayer').val();
