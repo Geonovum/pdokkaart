@@ -227,7 +227,119 @@ Lusc.Api.prototype.defaultStyles=[
         {
             id: 'mt7',
             name: 'Verkeershinder',
-            externalGraphic: "http://www.duif.net/pdok/markertypes/pictograms-road_signs-workman_ahead_roadsign.png",
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-workman_ahead_roadsign.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt8',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w000-general.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt9',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w001-flame.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt10',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w002-rxplosion.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt11',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w008-electricisty.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt12',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w017-low_temerature.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt13',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_bicycles_roadsign.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt14',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_cars_sign.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt15',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_entry.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt16',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_entry_sign_with_a_man.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt17',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-other_dangers_sign.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt18',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-simple_round_sign.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt19',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-stop_sign.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt20',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-traffic_lights_ahead_sign.png',
+            graphicHeight: 32,
+            graphicWidth: 32,
+            graphicYOffset: -32
+        },
+        {
+            id: 'mt21',
+            name: 'TODO',
+            externalGraphic: 'http://www.duif.net/pdok/markertypes/pictographs-ahead_only.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -289,13 +401,13 @@ Lusc.Api.prototype.defaultStyles=[
             id:'lt2', 
             strokeColor:'red', 
             strokeWidth:3, 
-            strokeOpacity:0.5, 
             name:'lijn x'
         },
         {
             id:'lt3', 
             strokeColor:'red', 
             strokeWidth:5, 
+            strokeOpacity:0.5, 
             name:'lijn 27' 
         },
         {
@@ -312,10 +424,18 @@ Lusc.Api.prototype.defaultStyles=[
             name:'lijn 4' 
         },
         {
-            id:'lt6', 
+            id:'lt5', 
+            strokeColor:'green', 
+            strokeWidth:5, 
+            strokeOpacity:0.5, 
+            name:'lijn 4' 
+        },
+        {
+            id:'lt7', 
             strokeColor:'#ffff00', 
             strokeWidth:5, 
             strokeOpacity:1, 
+            strokeOpacity:0.5, 
             name:'lijn 3'
         }
     ]
