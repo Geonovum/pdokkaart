@@ -61,6 +61,11 @@ Lusc.Api = function(config) {
     /**
      * Reference to popup titel object
      */
+    this.showPopup = true;
+
+    /**
+     * Reference to popup titel object
+     */
     this.titel = null;
 
     /**
@@ -1010,7 +1015,6 @@ Lusc.Api.prototype.getBookMarkUrl = function(){
 }
 
 Lusc.Api.prototype.onFeatureSelect = function(evt) {
-    return;
     feature = evt.feature;
     var content = "";
     if (feature.attributes['name']!=null){
@@ -1018,6 +1022,10 @@ Lusc.Api.prototype.onFeatureSelect = function(evt) {
     }
     if (feature.attributes['description']!=null){
         content=content+" "+feature.attributes['description'];
+    }
+    if (!content || content.length==0)
+    {
+        content = '-';
     }
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
                 feature.geometry.getBounds().getCenterLonLat(),
@@ -1036,7 +1044,6 @@ Lusc.Api.prototype.onFeatureSelect = function(evt) {
 
 Lusc.Api.prototype.onFeatureUnselect = function(evt) {
     feature = evt.feature;
-    return
     if (feature.popup) {
         popup.feature = null;
         this.map.removePopup(feature.popup);
