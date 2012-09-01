@@ -281,6 +281,7 @@ $(document).ready(function() {
 	//$(window).resize(setMapSize);
 	$('input:radio[name=editmarker]')[0].checked = true;
 	$('input:radio[name=mapsize]')[2].checked = true;
+	$('input:radio[name=radiogroup_kp]')[0].checked = true;
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
 	// initiate the Lusc API object
@@ -1113,6 +1114,8 @@ function addTmsLayer() {
 }
  */
 function linkToMapOpened(permalink) {
+
+
 	if (!permalink) permalink = document.location.href;
 	// $('#drawlocation').hide();	
 	//$('#createlink').fadeIn();
@@ -1131,16 +1134,16 @@ function linkToMapOpened(permalink) {
 		apiParams+="&mloc="+activeFeature.geometry.x+","+activeFeature.geometry.y+"&mt=2"+"&titel="+encodeURIComponent(activeFeature.attributes.title)+"&tekst="+encodeURIComponent(activeFeature.attributes.description);
 	}
 	
-	var codeHeadLayer = '';
+	/* var codeHeadLayer = '';
 	for (var lr in mapPDOKKaart.layers) {
 		var l = mapPDOKKaart.layers[lr];
-		if ($('#pdokLayerSelector').val() != "-") {
+		 if ($('#pdokLayerSelector').val() != "-") {
 				apiParams+="&layer="+$('#pdokLayerSelector').val();
 				codeHeadLayer = '	layer: \'' + $('#pdokLayerSelector').val() + '\',';
 				break;
-		} else {
-			if (l.name!="Markers" && l.isBaseLayer == false && l.getVisibility()) { // add one overlay to the map, only if it is visible now
-				if (l.CLASS_NAME == "OpenLayers.Layer.WMS" && $('#pdokLayerSelector').val() == "-") {
+		} else { 
+			if (l.name!="Features" && l.isBaseLayer == false && l.getVisibility()) { // add one overlay to the map, only if it is visible now
+				if (l.CLASS_NAME == "OpenLayers.Layer.WMTS" && $('#pdokLayerSelector').val() == "-") {
 					apiParams+="&wmsurl=" + encodeURIComponent(l.url) + "&wmslayers=" + encodeURIComponent(l.params.LAYERS);
 					codeHeadLayer = '	wmsurl: \'' + l.url + '\',';
 					codeHeadLayer += '	wmslayers: \'' + l.params.LAYERS + '\',';
@@ -1152,7 +1155,11 @@ function linkToMapOpened(permalink) {
 				}
 			}
 		}
-	}
+	} */
+	
+	apiParams+="&layer=BRT";
+	codeHeadLayer = '	layer: \'' + "BRT" + '\',';
+	
 
 	permalink = permalink.replace("#","?");
 	permalink = permalink.split("?")[0];
@@ -1246,17 +1253,19 @@ function linkToMapOpened(permalink) {
 	
 	var codeBody ='<div id="map"></div>';
 	codeBody +='<script>var pdokkaart = createPDOKKaart();';
-	if ($("#enableEditor").is(':checked')) {
+	//if ($("#enableEditor").is(':checked')) {
+	if ($('input[name=radiogroup_kp]:checked').val() != "1") {
 		codeBody += 'var options = {';
-		if ($("#geometrie_element_id").val().length > 0) {
-			codeBody += 'geom_id:"'+ $("#geometrie_element_id").val() + '",';			
-		} else {
-			codeBody += 'x_id:"'+ $("#x_coord_element_id").val() +'", y_id:"'+ $("#y_coord_element_id").val() +'",';
+		if ($("#veldnaam").val().length > 0) {
+			codeBody += 'geom_id:"'+ $("#veldnaam").val() + '",';			
+		/* } else {
+			codeBody += 'x_id:"'+ $("#x_coord_element_id").val() +'", y_id:"'+ $("#y_coord_element_id").val() +'",'; */
 		}
 		// var options = {x_id: "pdok_x_coordinaat", y_id:"pdok_y_coordinaat", geom_id: "pdok_geometrie", editorMinZoom: 10, editorMaxZoom: 14};
-		codeBody += 'editorMinZoom:'+ $("#minZoomEditor").val() +', editorMaxZoom:'+ $("#maxZoomEditor").val();
+		codeBody += 'editorMinZoom:'+ $("#vanaf").val() +', editorMaxZoom:'+ $("#totenmet").val();
 		codeBody += '};';
-		codeBody += 'addLocationEditor(pdokkaart, "'+$("#editorGeomType").val()+'", options);'
+		//codeBody += 'addLocationEditor(pdokkaart, "'+$("#editorGeomType").val()+'", options);'
+		codeBody += 'addLocationEditor(pdokkaart,options,"'+ $('input[name=radiogroup_kp]:checked').val() +'");';
 	}
 	codeBody +='</script>';
 	$("#scriptcodeHead").val(codeHead);
