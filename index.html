@@ -178,37 +178,37 @@
 						</div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_kp" id="kp1" >
+                                <input type="radio" name="radiogroup_kp" id="kp1" value="1">
                                 geen
                             </label>
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_kp" id="kp2" >
+                                <input type="radio" name="radiogroup_kp" id="kp2" value="mt1">
                                 punt
                             </label>
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_kp" id="kp3" >
+                                <input type="radio" name="radiogroup_kp" id="kp3" value="lt1">
                                 lijn
 							</label>
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_kp" id="kp4">
+                                <input type="radio" name="radiogroup_kp" id="kp4" value="pt1">
                                 box
 							</label>
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="radiogroup_kp" id="kp5">
+                                <input type="radio" name="radiogroup_kp" id="kp5" value="pt1">
                                 vlak
 							</label>
                         </div>
                         <div id="search">
 							<label>Veldnaam:
-							<input id="searchLocation" type="text" value="" name="searchLocation" title="Postcode of plaatsnaam"
+							<input id="veldnaam" type="text" value="" 
 								size="30" />
 							</label>							
 						</div>
@@ -227,22 +227,16 @@
 								  <option value="2">2</option>
 								  <option value="3">3</option>
 								  <option value="4">4</option>
-								  <option value="1">5</option>
-								  <option value="2">6</option>
-								  <option value="3">7</option>
-								  <option value="4">8</option>
-								  <option value="1">9</option>
-								  <option value="2">10</option>
-								  <option value="3">11</option>
-								  <option value="4">12</option>
-								  <option value="1">13</option>
-								  <option value="2">14</option>
-								  <option value="3">15</option>
-								  <option value="4">16</option>
-								  <option value="1">17</option>
-								  <option value="2">18</option>
-								  <option value="3">19</option>
-								  <option value="4">20</option>
+								  <option value="5">5</option>
+								  <option value="6">6</option>
+								  <option value="7">7</option>
+								  <option value="8">8</option>
+								  <option value="9">9</option>
+								  <option value="10">10</option>
+								  <option value="11">11</option>
+								  <option value="12">12</option>
+								  <option value="13">13</option>
+								  <option value="14">14</option>
 								</select> 
 							</label>
 						</div>
@@ -254,22 +248,16 @@
 								  <option value="2">2</option>
 								  <option value="3">3</option>
 								  <option value="4">4</option>
-								  <option value="1">5</option>
-								  <option value="2">6</option>
-								  <option value="3">7</option>
-								  <option value="4">8</option>
-								  <option value="1">9</option>
-								  <option value="2">10</option>
-								  <option value="3">11</option>
-								  <option value="4">12</option>
-								  <option value="1">13</option>
-								  <option value="2">14</option>
-								  <option value="3">15</option>
-								  <option value="4">16</option>
-								  <option value="1">17</option>
-								  <option value="2">18</option>
-								  <option value="3">19</option>
-								  <option value="4">20</option>
+								  <option value="5">5</option>
+								  <option value="6">6</option>
+								  <option value="7">7</option>
+								  <option value="8">8</option>
+								  <option value="9">9</option>
+								  <option value="10">10</option>
+								  <option value="11">11</option>
+								  <option value="12">12</option>
+								  <option value="13">13</option>
+								  <option value="14">14</option>
 								</select> 
 							</label>
                         </div>
@@ -293,14 +281,14 @@
 							<button onclick="linkToMapOpened(document.location.href);return false;">Genereer</button><br />
                         <h4>Als URL</h4><br />
                         Link losse kaart:<br />
-                        <input type="text" value="" id="embedlink" name="embedlink" size="47" onclick="linkToMapOpened(document.location.href)"; />
+                        <input type="text" value="" id="embedlink" name="embedlink" size="40" onclick="linkToMapOpened(document.location.href)"; />
                         <a  id="A1" onclick="linkToMapOpened(document.location.href)">
                             <img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
                         Embed HTML iframe:<br />
-                        <input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="50" 
+                        <input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="45" 
                             onclick="linkToMapOpened(document.location.href)" /><br />
                         Embed HTML Object tag:<br />
-                        <input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="50" 
+                        <input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="45" 
                             onclick="linkToMapOpened(document.location.href)" /><br />
                         <br />
                         <h4>Als broncode</h4>
