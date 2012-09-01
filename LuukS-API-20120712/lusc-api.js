@@ -59,9 +59,14 @@ Lusc.Api = function(config) {
     this.mt = null;
 
     /**
-     * Reference to popup titel object
+     * if a popup should be used or not
      */
     this.showPopup = true;
+
+    /**
+     * if a popup should be used or not
+     */
+    this.hoverPopup = true;
 
     /**
      * Reference to popup titel object
@@ -843,16 +848,18 @@ Lusc.Api.prototype.createOlMap = function() {
     // featuresLayer is used for all features/markers
     this.featuresLayer = new OpenLayers.Layer.Vector("Features");
     olMap.addLayer(this.featuresLayer);
-    selectControl2 = new OpenLayers.Control.SelectFeature(this.featuresLayer);
+    selectControl2 = new OpenLayers.Control.SelectFeature(this.featuresLayer, {hover:this.hoverPopup});
     olMap.addControl(selectControl2);
-    this.featuresLayer.events.on({
-        'featureselected': this.onFeatureSelect,
-        'featureunselected': this.onFeatureUnselect
-    });
-    selectControl2.activate();
 
+    // if we want to be able to able/disable popus during runtime we have to change this
+    if (this.showPopup){
+        this.featuresLayer.events.on({
+            'featureselected': this.onFeatureSelect,
+            'featureunselected': this.onFeatureUnselect
+        });
+        selectControl2.activate();
+    }
     this.featuresLayer.addFeatures(this.features);
-
 
     return olMap;
 }
@@ -1030,7 +1037,7 @@ Lusc.Api.prototype.onFeatureSelect = function(evt) {
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
                 feature.geometry.getBounds().getCenterLonLat(),
                 new OpenLayers.Size(100,100),
-                content, //feature.attributes.oms,
+                content,
                 null, true, function(evt) {
                     this.hide();
                     // deselect ALL features to be able to select this one again
