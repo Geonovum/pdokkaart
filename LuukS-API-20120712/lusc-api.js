@@ -142,6 +142,11 @@ Lusc.Api = function(config) {
     this.editFeatureControl = null;
 	
     /**
+     * References to select controls
+     */
+    this.selectControl = null;
+
+    /**
      * Reference to featuresLayer (= layer where you draw feature on)
      */
     this.featuresLayer = null;
@@ -848,20 +853,30 @@ Lusc.Api.prototype.createOlMap = function() {
     // featuresLayer is used for all features/markers
     this.featuresLayer = new OpenLayers.Layer.Vector("Features");
     olMap.addLayer(this.featuresLayer);
-    selectControl2 = new OpenLayers.Control.SelectFeature(this.featuresLayer, {hover:this.hoverPopup});
-    olMap.addControl(selectControl2);
 
-    // if we want to be able to able/disable popus during runtime we have to change this
+    // selectControl for popups
+    this.selectControl = new OpenLayers.Control.SelectFeature(this.featuresLayer, {hover:this.hoverPopup});
+    olMap.addControl(this.selectControl);
     if (this.showPopup){
-        this.featuresLayer.events.on({
-            'featureselected': this.onFeatureSelect,
-            'featureunselected': this.onFeatureUnselect
-        });
-        selectControl2.activate();
+        this.enablePopups();
+        this.selectControl.activate();
     }
     this.featuresLayer.addFeatures(this.features);
 
     return olMap;
+}
+
+Lusc.Api.prototype.disablePopups = function(){
+        this.featuresLayer.events.un({
+            'featureselected': this.onFeatureSelect,
+            'featureunselected': this.onFeatureUnselect
+        });
+}
+Lusc.Api.prototype.enablePopups = function(){
+        this.featuresLayer.events.on({
+            'featureselected': this.onFeatureSelect,
+            'featureunselected': this.onFeatureUnselect
+        });
 }
 
 /**
@@ -1006,11 +1021,6 @@ Lusc.Api.prototype.enableEditingTool = function(featureModifiedFunction){
         }*/
         this.featuresLayer.events.on({
               "beforefeaturemodified": featureModifiedFunction,
-              //"afterfeaturemodified": report,
-              //"vertexmodified": report,
-              //"sketchmodified": report,
-              //"sketchstarted": report,
-              //"sketchcomplete": report,
               "featuremodified": featureModifiedFunction
         });
     }
@@ -1081,86 +1091,6 @@ Lusc.Api.prototype.reprojectWGS84toRD = function(lat,lon){
         );
 	return(pointRD);
 }
-
-// TODO: create addFeature as Api call
-
-//Lusc.Api.prototype.addMarker = function(mloc,mt,titel,tekst,externalGraphic,pointRadius) {
-//    if (mloc != null) {
-//	   // Bij een bestaande markerlayer moet de markerfeature een andere icon krijgen
-//	   var pntMarkerGeom = new OpenLayers.Geometry.Point(mloc[0],mloc[1]);
-//	   var vctMarkerFeat = new OpenLayers.Feature.Vector(pntMarkerGeom);
-//       var styObjStyle = {
-//			strokeColor : '#ee0028',
-//			strokeWidth : 1,
-//			strokeOpacity : 1,
-//			fillColor : '#ee000d',
-//			fillOpacity : 1,
-//			pointRadius : 12,
-//			externalGraphic: './markertypes/default.png'
-//       };
-//       var markerStyle = {
-//			strokeColor : '#ee0028',
-//			strokeWidth : 1,
-//			strokeOpacity : 1,
-//			fillColor : '#ee000d',
-//			fillOpacity : 1,
-//			pointRadius : 12
-//       };
-//       if (mt != null){
-//	        if ((mt >= 0) && (mt < this.markers.length)){
-//		        styObjStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
-//		        markerStyle.externalGraphic = markerPath + this.markers[parseInt(mt)];
-//		    }
-//		    else{
-//		        styObjStyle.externalGraphic = markerPath + this.markers[0];
-//		        markerStyle.externalGraphic = markerPath + this.markers[0];
-//		    }
-//        }
-//        else if (externalGraphic != null){
-//        	styObjStyle.externalGraphic = externalGraphic;
-//        	markerStyle.externalGraphic = externalGraphic;
-//        }
-//        if ((pointRadius !=null) && (pointRadius > 0)){
-//        	styObjStyle.pointRadius = pointRadius;
-//        	markerStyle.pointRadius = pointRadius;
-//        }
-//        else{
-//        	styObjStyle.pointRadius = 12;
-//        	markerStyle.pointRadius = 12;
-//        }
-//        if (this.map.getLayersByClass("OpenLayers.Layer.Vector").length > 0){
-//        	var markerLayer = this.map.getLayersByClass("OpenLayers.Layer.Vector")[0];
-//        }
-//        else{
-//	        var markerLayer = new OpenLayers.Layer.Vector('Marker', {
-//	            styleMap: new OpenLayers.StyleMap(markerStyle)
-//    	    });
-//	        this.map.addLayer(markerLayer);
-//            selectControl = new OpenLayers.Control.SelectFeature(markerLayer);
-//            this.map.addControl(selectControl);
-//            selectControl.activate();
-//        }
-//        
-//	    // add popup if the parameters titel or tekst are used
-//	    /*if (titel != null || tekst != null) {
-//	    	strOms = "";
-//	    	if (titel != null){
-//		    	strOms = "<h2>" + titel + "</h2>";
-//	    	}
-//	    	if (tekst != null){
-//		    	strOms = strOms + tekst;
-//	    	}
-//	    	vctMarkerFeat.attributes.oms = strOms;
-//            markerLayer.events.on({
-//                'featureselected': onFeatureSelect,
-//                'featureunselected': onFeatureUnselect
-//            });
-//		}*/
-//        //markerLayer.addFeatures([vctMarkerFeat]);
-//        //var markerStyle = {externalGraphic: "./markertypes/default.png", graphicWidth: 16, graphicHeight: 16, graphicYOffset: -16, graphicOpacity: 0.7};
-//        //markerLayer.addFeatures([new OpenLayers.Feature.Vector(pntMarkerGeom, {oms: strOms}, markerStyle)]);
-//    }
-//}
 
 Lusc.Api.prototype.addWMS = function(wmsurl,wmslayers) {
 	if ((wmsurl != null) && (wmslayers != null)) {

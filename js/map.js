@@ -501,6 +501,8 @@ function enableStyleSelector(){
 			$('#edit2a').appendTo($('#edit2'));
 			$('#edit2a').show();
     }
+    // no popup during editing
+    lusc.disablePopups();
     lusc.enableDrawingTool("mt0", featureCreatedCallback);
 	
 	$('#styleselector li').removeClass('styleselected');
