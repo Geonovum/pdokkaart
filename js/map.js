@@ -288,6 +288,11 @@ $(document).ready(function() {
 	var o = OpenLayers.Util.getParameters();
     //var lusc = new Lusc.Api(o);
 	lusc = new Lusc.Api(o);
+    // popups and selectionControl of Api interfears with modifyFeatureControl
+    // we disable them while we find out how to handle this
+    // TODO handle this ...
+    lusc.disablePopups();
+    lusc.selectControl.deactivate();
 	
 	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
 	mapPDOKKaart = lusc.getMapObject();

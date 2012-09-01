@@ -855,12 +855,37 @@ Lusc.Api.prototype.createOlMap = function() {
     olMap.addLayer(this.featuresLayer);
 
     // selectControl for popups
-    this.selectControl = new OpenLayers.Control.SelectFeature(this.featuresLayer, {hover:this.hoverPopup});
+    this.selectControl = new OpenLayers.Control.SelectFeature(
+            this.featuresLayer, 
+            {
+                hover:this.hoverPopup,
+                // implement some on magic to have a visible selection,
+                // which we lost when we gave every feature a style
+                onBeforeSelect:function(feature){
+                    if(feature.style){
+                        feature.style.strokeWidth+=2;
+                        feature.style.graphicWidth+=5;
+                        feature.style.graphicHeight+=5;
+                    }
+                    //return true;
+                },
+                onUnselect:function(feature){
+                    if(feature.style){
+                        feature.style.strokeWidth-=2;
+                        feature.style.graphicWidth-=5;
+                        feature.style.graphicHeight-=5;
+                        feature.layer.redraw();
+                    }
+                    //return true;
+                }
+                
+            });
     olMap.addControl(this.selectControl);
     if (this.showPopup){
         this.enablePopups();
         this.selectControl.activate();
     }
+
     this.featuresLayer.addFeatures(this.features);
 
     return olMap;
@@ -1018,8 +1043,12 @@ Lusc.Api.prototype.enableEditingTool = function(featureModifiedFunction){
         this.map.addControl(this.editFeatureControl);
         /*featureModifiedFunction = function(ft){
             console.log(ft)
+        }
+        featureBeforeModifiedFunction = function(ft){
+            console.log(ft)
         }*/
         this.featuresLayer.events.on({
+              //"beforefeaturemodified": featureBeforeModifiedFunction,
               "beforefeaturemodified": featureModifiedFunction,
               "featuremodified": featureModifiedFunction
         });
