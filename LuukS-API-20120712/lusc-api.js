@@ -170,7 +170,7 @@ Lusc.Api = function(config) {
         this.validateConfig(config);
 
         // create the OpenLayers Map instance
-        this.map = this.createOlMap();
+        this.createOlMap();
 
     } else {
         // exception
@@ -186,7 +186,7 @@ Lusc.Api.prototype.defaultStyles=[
         {
             id: 'mt0',
             name: 'Standaard marker',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/default.png",
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/star-3.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -241,6 +241,54 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt7',
+            name: 'Rijks blauw',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/rijk_blue.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt8',
+            name: 'Rijks groen',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/rijk_green.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt9',
+            name: 'Rijks geel',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/rijk_yellow.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt10',
+            name: 'Kadaster blauw',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/kadaster_blue.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt11',
+            name: 'Kadaster groen',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/kadaster_green.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt12',
+            name: 'Kadaster geel',
+            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/kadaster_yellow.png",
+            graphicHeight: 37,
+            graphicWidth: 32,
+            graphicYOffset: -37
+        },
+        {
+            id: 'mt13',
             name: 'Verkeershinder',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-workman_ahead_roadsign.png',
             graphicHeight: 32,
@@ -248,7 +296,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt8',
+            id: 'mt14',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w000-general.png',
             graphicHeight: 32,
@@ -256,7 +304,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt9',
+            id: 'mt15',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w001-flame.png',
             graphicHeight: 32,
@@ -264,7 +312,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt10',
+            id: 'mt16',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w002-rxplosion.png',
             graphicHeight: 32,
@@ -272,7 +320,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt11',
+            id: 'mt17',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w008-electricisty.png',
             graphicHeight: 32,
@@ -280,7 +328,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt12',
+            id: 'mt18',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w017-low_temerature.png',
             graphicHeight: 32,
@@ -288,7 +336,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt13',
+            id: 'mt19',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_bicycles_roadsign.png',
             graphicHeight: 32,
@@ -296,7 +344,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt14',
+            id: 'mt20',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_cars_sign.png',
             graphicHeight: 32,
@@ -304,7 +352,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt15',
+            id: 'mt21',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_entry.png',
             graphicHeight: 32,
@@ -312,7 +360,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt16',
+            id: 'mt22',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_entry_sign_with_a_man.png',
             graphicHeight: 32,
@@ -320,7 +368,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt17',
+            id: 'mt23',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-other_dangers_sign.png',
             graphicHeight: 32,
@@ -328,7 +376,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt18',
+            id: 'mt24',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-simple_round_sign.png',
             graphicHeight: 32,
@@ -336,7 +384,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt19',
+            id: 'mt25',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-stop_sign.png',
             graphicHeight: 32,
@@ -344,7 +392,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt20',
+            id: 'mt26',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-traffic_lights_ahead_sign.png',
             graphicHeight: 32,
@@ -352,7 +400,7 @@ Lusc.Api.prototype.defaultStyles=[
             graphicYOffset: -32
         },
         {
-            id: 'mt21',
+            id: 'mt27',
             name: 'TODO',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictographs-ahead_only.png',
             graphicHeight: 32,
@@ -394,8 +442,8 @@ Lusc.Api.prototype.defaultStyles=[
             fillColor:'green', 
             strokeColor:'blue', 
             strokeWidth:3, 
-            strokeOpacity:0.5, 
-            name:'groen blauw transp lijn'
+            fillOpacity:0.5, 
+            name:'groen transparante vulling blauwe lijn'
         },
         {
             id:'pt6', 
@@ -461,7 +509,7 @@ Lusc.Api.prototype.defaultLayers = {
             name: 'BRT Achtergrondkaart (wmts)',
             url: 'http://geodata.nationaalgeoregister.nl/wmts/',
             layer: 'brtachtergrondkaart',
-            style: '_null',
+            style: null,
             matrixSet: 'EPSG:28992',
             visibility: true, 
             isBaseLayer: true
@@ -669,6 +717,16 @@ Lusc.Api.prototype.validateConfig = function(config) {
         this.wmsurl = config.wmsurl;
     }
 
+    if (config.wmtsurl) {
+        this.wmtsurl = config.wmtsurl;
+    }
+    if (config.wmtslayer) {
+        this.wmtslayer = config.wmtslayer;
+    }
+    if (config.wmtsmatrixset) {
+        this.wmtsmatrixset = config.wmtsmatrixset;
+    }
+
     if (config.wmslayers) {
         this.wmslayers = config.wmslayers;
     }
@@ -745,6 +803,7 @@ Lusc.Api.prototype.createOlMap = function() {
         projection: new OpenLayers.Projection("EPSG:28992"),
         div: (this.div != null) ? this.div : 'map'
     });
+    this.map = olMap;
 	
 	function showBRT(){
 		var layers = olMap.getLayersByName("BRT Achtergrondkaart");
@@ -798,29 +857,19 @@ Lusc.Api.prototype.createOlMap = function() {
         this.addLayers(['BRT'], olMap);
     }
 
-
-
-
     // apply WMSURL and WMSLAYERS if applicable
 	if ((this.wmsurl != null) && (this.wmslayers != null)) {
-		var lyrWMS = new OpenLayers.Layer.WMS(
-				this.wmslayers,
-				this.wmsurl, 
-				{layers: this.wmslayers,transparent: 'true',format: "image/png"},
-				{visibility: true,isBaseLayer:false},
-				{singleTile: true}
-		);
-        olMap.addLayer(lyrWMS);
+        this.addWMS(this.wmsurl, this.wmslayers);
+	}
+
+    // apply WMTSURL and WMTSLAYER and WMTSMATRIXSET if applicable
+	if ((this.wmtsurl != null) && (this.wmtslayer != null) && (this.wmtsmatrixset != null)) {
+        this.addWMTS(this.wmtsurl, this.wmtslayer, this.wmtsmatrixset);
 	}
 
     // apply TMSURL and TMSLAYERS if applicable
 	if ((this.tmsurl != null) && (this.tmslayer != null)) {
-		var layer = new OpenLayers.Layer.TMS(
-			this.tmslayer,
-			this.tmsurl,
-			{layername: this.tmslayer, type:this.tmstype, visibility: true, isBaseLayer:false, opacity:0.8}
-		);
-		olMap.addLayer(layer);
+        this.addTMS(this.tmsurl,this.tmslayer, this.tmstype);
 	}
 
     // apply TXTURL if applicable
@@ -935,7 +984,7 @@ Lusc.Api.prototype.createFeature = function(wkt, typestyle, name, description){
     feature.attributes['styletype']=typestyle;
     feature.attributes['name']=name;
     feature.attributes['description']=description;
-    feature.style=this.styles[typestyle];
+    feature.style = this.styles[typestyle];
     return feature;
 }
 
@@ -1014,7 +1063,6 @@ Lusc.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
             if (featureAddedCallback){
                 featureAddedCallback(feature);
             }
-            currentDrawControl.deactivate();
         }
 }
 
@@ -1121,45 +1169,31 @@ Lusc.Api.prototype.reprojectWGS84toRD = function(lat,lon){
 	return(pointRD);
 }
 
-Lusc.Api.prototype.addWMS = function(wmsurl,wmslayers) {
-	if ((wmsurl != null) && (wmslayers != null)) {
-		var lyrWMS = new OpenLayers.Layer.WMS(
-				wmslayers,
-				wmsurl, 
-				{layers: wmslayers,transparent: 'true',format: "image/png"},
-				{visibility: true,isBaseLayer:false},
-				{singleTile: true}
-		);
-        this.map.addLayer(lyrWMS);
-	}
-}
-
 Lusc.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
-	if ((tmsurl != null) && (tmslayer != null)) {
-		if (tmstype == null){
-			tmstype="png";
-		}
-		var lyrTMS = new OpenLayers.Layer.TMS(
-			tmslayer,
-			tmsurl,
-			{layername: tmslayer, type:tmstype, visibility: true, isBaseLayer:false, opacity:0.8}
-		);
-        this.map.addLayer(lyrTMS);
-	}
+    if (tmstype == null){
+        tmstype="png";
+    }
+    var lyrTMS = this.createTMSLayer({
+            url: tmsurl,
+            layername: tmslayer,
+            type: tmstype
+        });
+    this.map.addLayer(lyrTMS);
+
 }
 
 Lusc.Api.prototype.createTMSLayer = function(layerConfigObj) {
 
-    // default TMS or WMTS layer object to set defaults:
+    // default TMS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
-            name: 'layer',
+            name: 'tms layer',
             url: '',
             layertype: '',
             layername: '',
-            type:'png',
+            type: 'png',
             visibility: true,
-            isBaseLayer:true
+            isBaseLayer: false
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1177,6 +1211,18 @@ Lusc.Api.prototype.createTMSLayer = function(layerConfigObj) {
     return layer;
 }
 
+Lusc.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtsstyle, wmtsmatrixids) {
+    var lyrWMTS = this.createWMTSLayer({
+            url: wmtsurl,
+            layer: wmtslayer,
+            matrixSet: wmtsmatrixset,
+            matrixIds: wmtsmatrixids,
+            style: wmtsstyle
+        });
+    this.map.addLayer(lyrWMTS);
+
+}
+
 Lusc.Api.prototype.createWMTSLayer = function(layerConfigObj) {
 
     // From WMTS openlayers example:
@@ -1190,14 +1236,14 @@ Lusc.Api.prototype.createWMTSLayer = function(layerConfigObj) {
     // default WMTS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
-            layername: 'layer',
+            layername: 'wmts layer',
             url: '',
             layer: '',
-            style: true,
+            style: 'default',
             matrixSet: '',
             matrixIds: matrixIds,
             visibility: true,
-            isBaseLayer: true,
+            isBaseLayer: false,
             format: 'image/png8'
     };
 
@@ -1228,19 +1274,36 @@ Lusc.Api.prototype.createWMTSLayer = function(layerConfigObj) {
     return layer;
 }
 
+/**
+ * Api Interface
+ *
+ */
+Lusc.Api.prototype.addWMS = function(wmsurl,wmslayers) {
+    var lyrWMS = this.createWMSLayer({
+            url: wmsurl,
+            layers: wmslayers,
+            transparent: true
+        });
+    this.map.addLayer(lyrWMS);
+}
+
+/**
+ * Internal Interface
+ *
+ */
 Lusc.Api.prototype.createWMSLayer = function(layerConfigObj) {
 
     // default WMS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
-            layername: 'layer',
+            layername: 'wms layer',
             url: '',
             layers: '',
             styles: '',
             visibility: true,
             isBaseLayer: false,
             format: 'image/png',
-            singleTile: false
+            singleTile: true
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1263,6 +1326,12 @@ Lusc.Api.prototype.createWMSLayer = function(layerConfigObj) {
     return layer;
 }
 
+/**
+ * Api Interface
+ * 
+ * addLayers to the map, based on their layerkey-names 
+ * see Lusc.api.defaultLayers object
+ */
 Lusc.Api.prototype.addLayers = function(arrLayerNames, map){
 
     if (arrLayerNames==null){
