@@ -289,7 +289,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt13',
-            name: 'Verkeershinder',
+            name: 'Werkzaamheden',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-workman_ahead_roadsign.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -297,7 +297,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt14',
-            name: 'TODO',
+            name: 'Waarschuwing',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w000-general.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -305,7 +305,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt15',
-            name: 'TODO',
+            name: 'Zeer licht ontvlambaar',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w001-flame.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -313,7 +313,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt16',
-            name: 'TODO',
+            name: 'Explosief',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w002-rxplosion.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -321,7 +321,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt17',
-            name: 'TODO',
+            name: 'Electriciteit',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w008-electricisty.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -329,7 +329,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt18',
-            name: 'TODO',
+            name: 'Lage temperatuur',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictogram-din-w017-low_temerature.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -337,7 +337,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt19',
-            name: 'TODO',
+            name: 'Wielrijders niet toegestaan',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_bicycles_roadsign.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -345,7 +345,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt20',
-            name: 'TODO',
+            name: 'Personenwagens niet toegestaan',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_cars_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -353,7 +353,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt21',
-            name: 'TODO',
+            name: 'Verboden in te rijden',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_entry.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -361,7 +361,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt22',
-            name: 'TODO',
+            name: 'Personen niet toegestaan',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-no_entry_sign_with_a_man.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -369,7 +369,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt23',
-            name: 'TODO',
+            name: 'Opgelet',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-other_dangers_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -377,7 +377,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt24',
-            name: 'TODO',
+            name: 'Verboden voor alle verkeer',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-simple_round_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -385,7 +385,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt25',
-            name: 'TODO',
+            name: 'Stop',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-stop_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -393,7 +393,7 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt26',
-            name: 'TODO',
+            name: 'Verkeerslichten',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictograms-road_signs-traffic_lights_ahead_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
@@ -401,11 +401,12 @@ Lusc.Api.prototype.defaultStyles=[
         },
         {
             id: 'mt27',
-            name: 'TODO',
+            name: 'Verplichte rijrichting',
             externalGraphic: 'http://www.duif.net/pdok/markertypes/pictographs-ahead_only.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
+
         },
         {
             id:'pt1', 
