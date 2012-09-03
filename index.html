@@ -166,9 +166,8 @@
                                 Finish - view routes as they will appear on your map</label>
                         </div>
 						<h4>Voeg een standaard kaartlaag toe</h4>
-						<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">
-							<option value="-">-- Kies een PDOK kaartlaag --</option>
-						</select><br/>
+						<div id="divpdoklayerselector" >
+						</div>
 						<button class="filterbutton" onclick="addPdokLayer();return false;">Voeg toe aan kaart</button>
 						<h4>Voeg een WMS kaartlaag toe</h4>
 						URL van de WMS:<br/>

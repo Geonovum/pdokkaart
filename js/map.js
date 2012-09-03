@@ -490,6 +490,7 @@ $(document).ready(function() {
 
 	createStyleSelector();
 	createEditAttributes ();
+	createPdokLayers();
 
   });
 
@@ -565,6 +566,23 @@ function createStyleSelector(){
         lusc.enableDrawingTool(styleId, featureCreatedCallback);
     });
 	
+
+}
+
+function createPdokLayers(){
+
+var html = '';
+
+html = html + '<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">' +
+			  '<option value="-">-- Kies een PDOK kaartlaag --</option>'
+
+for (layer in lusc.defaultLayers){
+	html = html + '<option value="'+ layer + '">' + lusc.defaultLayers[layer].name + '</option>'
+    
+}
+
+html = html + '</select>'
+$('#divpdoklayerselector').html(html);
 
 }
 
@@ -1108,8 +1126,9 @@ function addWmtsLayer() {
 	addOverlay(tmsLayer); */
 } 
 
-function addPdokLayer(pdokLayerName) {
+function addPdokLayer() {
 	// TODO: add PDOK layer to map, need API function for this --> not implemented in PoC version of API
+	lusc.addLayers([$("#pdokLayerSelector").val()]);
 }
 
 /* function addOverlay(layer) {
