@@ -1,7 +1,7 @@
 body
 {
     background-color: #FFFFFF;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Verdana, Helvetica, Arial, sans-serif;
 	/* font-size: 1.0em; */
 	font-size: 0.7em;
 	text-align: left; /* */ /* workaround to center a div in IE: http://www.maxdesign.com.au/presentation/center/ */
@@ -262,7 +262,7 @@ li
 
 
 #styleselector{
-    height:300px;
+    height:130px;
     width:300px;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -291,5 +291,65 @@ li
 
 input, select, textarea {
      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-     /* font-size:  100%; */
+     width: 298px;
+}
+
+#description{
+	height:60px;
+}	
+
+#editmarker3{
+	width : 20px;
+}
+
+#editmarker4{
+	width : 20px;
+}
+
+#searchLocation{
+	width : 180px;
+}
+
+#kp1{
+	width : 20px;
+}	
+
+#kp2{
+	width : 20px;
+}	
+
+#kp3{
+	width : 20px;
+}	
+
+#kp5{
+	width : 20px;
+}
+
+#vanaf{
+	width : 50px;
+}
+
+#totenmet{
+	width : 50px;
+}
+
+#divvanaf{
+	font-size: 0.68em;
+}
+
+#divtotenmet{
+	font-size: 0.68em;
+}
+
+#mapsize1{
+	width : 20px;
+}	
+
+#mapsize2{
+	width : 20px;
+}	
+
+#mapsize3{
+	width : 20px;
 }

@@ -115,13 +115,17 @@ function SearchArray(arr, obj) {
 function changeZoom1() {
 
 mapPDOKKaart.zoomTo($("select#vanaf").val());
-
+if (parseInt($("select#totenmet").val()) < parseInt($("select#vanaf").val())) {
+	$("select#totenmet").val($("select#vanaf").val());
+}
 }
 
 function changeZoom2() {
 
 mapPDOKKaart.zoomTo($("select#totenmet").val());
-
+if (parseInt($("select#totenmet").val()) < parseInt($("select#vanaf").val())) {
+	$("select#vanaf").val($("select#totenmet").val());
+}
 }
 
 function ZoomIn(x,y){
@@ -282,6 +286,9 @@ $(document).ready(function() {
 	$('input:radio[name=editmarker]')[0].checked = true;
 	$('input:radio[name=mapsize]')[2].checked = true;
 	$('input:radio[name=radiogroup_kp]')[0].checked = true;
+	$("select#vanaf").val('1');
+	$("select#totenmet").val('14');
+	
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
 	// initiate the Lusc API object
@@ -563,10 +570,10 @@ function createStyleSelector(){
 
 function createEditAttributes () {
 
-var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Postcode of plaatsnaam" size="20"/>';
-html = html + '<textarea id="description" cols="43" rows="10">Voer een omschrijving in : </textarea>';
-html = html + '<button type="submit" class="filterbutton" onclick="saveAttributes();return false;">Opslaan</button>';
-html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen</button>';
+var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Postcode of plaatsnaam" />';
+html = html + '<textarea id="description">Voer een omschrijving in : </textarea>';
+html = html + '<button type="submit" class="filterbutton" onclick="saveAttributes();return false;">Opslaan tekst</button>';
+html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen marker</button>';
 
 $('#edit2a').html(html);
 $("#attr_name").click(function(){
