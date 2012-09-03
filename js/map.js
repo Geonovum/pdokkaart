@@ -1072,8 +1072,8 @@ function handleGeocodeResponse(req, returnCoords){
 //    return false;
 //}
 
-/* function addWmsLayer() {
-	var layername=$('#wmsLayer').val();
+ function addWmsLayer() {
+	/* var layername=$('#wmsLayer').val();
 	var layerUrl=$('#wmsUrl').val().replace("request=GetCapabilities","","i") // remove the request=GetCapabilities (case insensitive) part if provided;
 	$('#tmsLayer').val("");
 	$('#tmsUrl').val("");
@@ -1085,11 +1085,11 @@ function handleGeocodeResponse(req, returnCoords){
 							{visibility: true, isBaseLayer:false, opacity: 0.8},
 							{singleTile: true}
 	);
-	addOverlay(wmsLayer)
+	addOverlay(wmsLayer) */
 }
 
-function addTmsLayer() {
-	var layername=$('#tmsLayer').val();
+function addWmtsLayer() {
+/* 	var layername=$('#tmsLayer').val();
 	var layerUrl=$('#tmsUrl').val();
 	$('#wmsLayer').val("");
 	$('#wmsUrl').val("");
@@ -1098,12 +1098,12 @@ function addTmsLayer() {
 			layerUrl,
 			{layername: layername, type:"png", visibility: true, isBaseLayer:false, opacity:0.8}
 		);
-	addOverlay(tmsLayer);
-} */
+	addOverlay(tmsLayer); */
+} 
 
-//function addPdokLayer(pdokLayerName) {
+function addPdokLayer(pdokLayerName) {
 	// TODO: add PDOK layer to map, need API function for this --> not implemented in PoC version of API
-//}
+}
 
 /* function addOverlay(layer) {
 	// remove all WMS and TMS layers (if not basemap)
