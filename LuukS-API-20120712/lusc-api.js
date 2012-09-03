@@ -19,6 +19,11 @@
  *    style="border: 0">
  */
 
+OpenLayers.Feature.Vector.style.default.strokeColor = "red";
+OpenLayers.Feature.Vector.style.default.fillColor = "red";
+OpenLayers.Feature.Vector.style.default.pointRadius = 5;
+OpenLayers.Feature.Vector.style.default.fillOpacity = 0.8;
+
 Lusc = {};
 
 Lusc.Api = function(config) {
@@ -850,7 +855,10 @@ Lusc.Api.prototype.createOlMap = function() {
 
     // apply layer if a layer was given
     if (this.layer != null) {
-        // TODO: for now: either give ALL layers via layer param (including baselayers)
+        // if the map does NOT have a baseLayer, always add BRT layer
+        if (!olMap.baseLayer){
+            olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
+        }
         this.addLayers(this.layer, olMap);
     }
     else {
@@ -917,18 +925,14 @@ Lusc.Api.prototype.createOlMap = function() {
                         feature.style.graphicWidth+=5;
                         feature.style.graphicHeight+=5;
                     }
-                    //return true;
                 },
                 onUnselect:function(feature){
                     if(feature.style){
                         feature.style.strokeWidth-=2;
                         feature.style.graphicWidth-=5;
                         feature.style.graphicHeight-=5;
-                        feature.layer.redraw();
                     }
-                    //return true;
                 }
-                
             });
     olMap.addControl(this.selectControl);
     if (this.showPopup){
@@ -1364,4 +1368,59 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames, map){
             alert('layerid not available: ' + layerId);
         }
     }
+}
+
+
+Lusc.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, y){
+
+    var wktFormat = new OpenLayers.Format.WKT();
+    var apiObject = this;
+    var alerted = false;
+    var map = this.map;
+
+    // selectControl and popups interfere with editing tools: disable all
+    this.selectControl.deactivate();
+    this.disablePopups();
+
+    var finishLocationAction = function(feature){
+        if(feature.feature){
+            feature = feature.feature;
+        }
+        if (feature.geometry.x && feature.geometry.y){
+            if (document.getElementById('x') && document.getElementById('y')) {
+                document.getElementById('x').value = feature.geometry.x
+                document.getElementById('y').value = feature.geometry.y
+            }
+        }
+        if (document.getElementById('wkt')){
+            document.getElementById('wkt').value = wktFormat.write(feature);
+        }
+        startLocationAction();
+    }
+
+    var startLocationAction = function() {
+        if (apiObject.featuresLayer.features.length > 0) {
+            apiObject.enableEditingTool(finishLocationAction);
+            apiObject.disableDrawingTool();
+        }
+        else if (map.getZoom() >= zmin && map.getZoom() <= zmax) {
+            apiObject.enableDrawingTool(styletype, finishLocationAction);
+        } else {
+            var msg = "U kunt alleen tekenen tussen de zoomnivo's: "+zmin+" en "+zmax+". \nU zit nu op: "+map.getZoom();
+            if (map.getZoom() < zmin){
+                msg += "\nZoom minstens "+(zmin-map.getZoom())+" zoomnivo's in.";
+            }
+            else{
+                msg += "\nZoom minstens "+(map.getZoom()-zmax)+" zoomnivo's uit.";
+            }
+            if (!alerted){
+                alerted = true;
+                alert(msg);
+            }
+            apiObject.disableDrawingTool();
+        }
+    }
+
+    this.map.events.register("moveend", map, startLocationAction);
+    startLocationAction();
 }
