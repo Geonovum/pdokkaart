@@ -657,6 +657,13 @@ $('#veldnaam').html(html);
 
 };
 
+function readFile () {
+
+
+$( "#dialog" ).dialog({ modal: true });
+
+}
+
 
 function saveAttributes() {
 
