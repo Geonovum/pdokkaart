@@ -288,6 +288,9 @@ $(document).ready(function() {
 	$('input:radio[name=radiogroup_kp]')[0].checked = true;
 	$("select#vanaf").val('1');
 	$("select#totenmet").val('14');
+	$(".radio_kp").click(function(event) {
+		createFieldnameInput(this);
+	});
 	
 	//$(".defaultmarker").attr("src",defaultmarkerpath);
 
@@ -627,6 +630,33 @@ $("#description").click(function(){
 //$('#edit3a').html(html);
 
 }
+
+function createFieldnameInput(radiobutton) {
+
+ var  geometrie = $(radiobutton).attr('value') ;
+ var html = ''; 
+ 
+ if (geometrie == 'mt1') {
+
+	html = html + '<label>X-coördinaat : <input id="xcoord" type="text" value=""  /></label></br>';
+	html = html + '<label>Y-coördinaat : <input id="ycoord" type="text" value=""  /></label></br>';
+ }
+ 
+ else if (geometrie == 'lt1' || geometrie == 'pt1') {
+
+	html = html + '<label>Veldnaam:<input id="veldnaam" type="text" value=""  /></label>';
+
+ }
+ else {
+ 
+	html = '';
+
+ };
+	
+$('#veldnaam').html(html);
+
+};
+
 
 function saveAttributes() {
 
