@@ -36,6 +36,7 @@
 	}
     </style>
     
+    <script src="../js/proj4js-compressed.js"></script>
     <script src="./OpenLayers.js"></script>
 	<script src="lusc-api.js"></script>
     <script>
@@ -43,6 +44,10 @@
     function init() {
         var o = OpenLayers.Util.getParameters();
         api = new Lusc.Api(o);
+
+        api.addFeaturesFromUrl("../test.kml", "KML");
+        // api.addFeaturesFromUrl("../test1.txt", "TXT");
+        //  api.addFeaturesFromUrl("../test2.txt", "TXT");
     }
     
     </script>

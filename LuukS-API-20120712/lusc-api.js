@@ -24,6 +24,8 @@ OpenLayers.Feature.Vector.style.default.fillColor = "red";
 OpenLayers.Feature.Vector.style.default.pointRadius = 5;
 OpenLayers.Feature.Vector.style.default.fillOpacity = 0.8;
 
+Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
+
 Lusc = {};
 
 Lusc.Api = function(config) {
@@ -418,6 +420,14 @@ Lusc.Api.prototype.defaultStyles=[
 
         },
         {
+            id: 'pt0', 
+            fillColor: '#273397',
+            fillOpacity: 0.3, 
+            strokeColor: '#273397', 
+            strokeWidth: 2, 
+            name: 'default vlak'
+        },
+        {
             id:'pt1', 
             fillColor:'red', 
             strokeColor:'black', 
@@ -463,7 +473,13 @@ Lusc.Api.prototype.defaultStyles=[
             fillOpacity:1, 
             name:'geel blauw'
         },
-
+        {
+            id: 'lt0', 
+            strokeColor: '#273397', 
+            strokeWidth: 5,
+            strokeOpacity: 0.5, 
+            name: 'default lijn'
+        },
         {
             id:'lt1', 
             strokeColor:'red', 
@@ -1464,4 +1480,87 @@ Lusc.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
 
     this.map.events.register("moveend", map, startLocationAction);
     startLocationAction();
+}
+
+
+
+Lusc.Api.prototype.handleGetResponse = function(response){
+    //console.log(response);
+    if (response.status != 200){
+        alert('Fout bij het ophalen van de url');
+        return
+    }
+    var data = response.responseText;
+    // we have data now: add to map
+    this.addFeaturesFromString(data, this.dataType);
+}
+
+Lusc.Api.prototype.addFeaturesFromString = function(data, type){
+    var format;
+    var options = {
+        externalProjection: new OpenLayers.Projection("EPSG:4326"),
+        internalProjection: this.map.baseLayer.projection
+    };
+    if (type.toUpperCase() == 'KML') {
+	    format = new OpenLayers.Format.KML(options);
+    }
+    else if(type.toUpperCase() == "TXT"){
+	    format = new OpenLayers.Format.Text(options);
+    }
+    else{
+        alert('addFeaturesFromUrl aanroep met een niet ondersteund type: '+type);
+        return;
+    }
+
+	features = format.read(data);
+
+    // add styling to features
+    for (f in features){
+        var feature = features[f];
+        if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Point'){
+            feature.style = this.styles['mt0'];
+        }
+        else if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.LineString'){
+            feature.style = this.styles['lt0'];
+        }
+        else if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Polygon'){
+            feature.style = this.styles['pt0'];
+        }
+    }
+
+    this.featuresLayer.addFeatures(features);
+}
+
+Lusc.Api.prototype.addFeaturesFromUrl = function(url, type){
+
+    var apiObject = this;
+    apiObject.dataType = type;
+
+    if (type.toUpperCase() == "KML"){
+        // kml
+    }
+    else if(type.toUpperCase() == "TXT"){
+        // tab separated txt file
+        // format (including header!)
+        // 
+        // point    title   description
+        // 52.64,4.84  foo omschrijving foo
+        //
+        //
+        // OR
+        //
+        // lat  lon title   description
+        // 52.64   4.84    foo omschrijving foo
+    }
+    else{
+        alert('addFeaturesFromUrl aanroep met een niet ondersteund type: '+type);
+        return;
+    }
+
+    OpenLayers.Request.GET({
+            url: url,
+            callback: apiObject.handleGetResponse,
+            scope: apiObject
+    });
+
 }
