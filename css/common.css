@@ -93,7 +93,7 @@ SELECT, TEXTAREA {
 H1 {
 	width: 300px;
 	height: 92px;
-	background-image: url(../images/logo.gif);
+	/*background-image: url(../images/logo.gif);*/
 	margin: 10px 0;
 }
 
