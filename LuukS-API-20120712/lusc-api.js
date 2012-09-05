@@ -151,6 +151,10 @@ Lusc.Api = function(config) {
      */
     this.selectControl = null;
 
+    this.locationToolXfield = 'x';
+    this.locationToolYfield = 'y';
+    this.locationToolWKTfield = 'wkt';
+
     /**
      * Reference to featuresLayer (= layer where you draw feature on)
      */
@@ -1373,6 +1377,28 @@ Lusc.Api.prototype.addLayers = function(arrLayerNames, map){
 
 Lusc.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, y){
 
+    this[xorwkt] = 0;
+
+
+    // if y is defined, this function is called with an x and y field
+    if(y) {
+        this.locationToolXfield = xorwkt;
+        this.locationToolYfield = y;
+        this.locationToolWKTfield = null; // NO wkt
+    }
+    else {
+        // apparently only a wkt field
+        this.locationToolXfield = null;
+        this.locationToolYfield = null;
+        this.locationToolWKTfield = xorwkt;
+    }
+
+    // TODO: remove this, or put features in different layer
+    if (this.featuresLayer.features.length > 0){
+        alert('Op dit moment mogen er geen andere features aanwezig zijn. Begin met een lege kaart.');
+        return;
+    }
+
     var wktFormat = new OpenLayers.Format.WKT();
     var apiObject = this;
     var alerted = false;
@@ -1386,14 +1412,21 @@ Lusc.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
         if(feature.feature){
             feature = feature.feature;
         }
-        if (feature.geometry.x && feature.geometry.y){
-            if (document.getElementById('x') && document.getElementById('y')) {
-                document.getElementById('x').value = feature.geometry.x
-                document.getElementById('y').value = feature.geometry.y
+        if (apiObject.locationToolXfield && apiObject.locationToolYfield) {
+            apiObject[apiObject.locationToolXfield] = feature.geometry.x;
+            apiObject[apiObject.locationToolYfield] = feature.geometry.y;
+            if (feature.geometry.x && feature.geometry.y){
+                if (document.getElementById(apiObject.locationToolXfield) && document.getElementById(apiObject.locationToolYfield)) {
+                    document.getElementById(apiObject.locationToolXfield).value = feature.geometry.x
+                    document.getElementById(apiObject.locationToolYfield).value = feature.geometry.y
+                }
             }
         }
-        if (document.getElementById('wkt')){
-            document.getElementById('wkt').value = wktFormat.write(feature);
+        if (apiObject.locationToolWKTfield) {
+            apiObject[apiObject.locationToolWKTfield] = wktFormat.write(feature);
+            if (document.getElementById(apiObject.locationToolWKTfield)){
+                document.getElementById(apiObject.locationToolWKTfield).value = wktFormat.write(feature);
+            }
         }
         startLocationAction();
     }
@@ -1406,16 +1439,24 @@ Lusc.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
         else if (map.getZoom() >= zmin && map.getZoom() <= zmax) {
             apiObject.enableDrawingTool(styletype, finishLocationAction);
         } else {
-            var msg = "U kunt alleen tekenen tussen de zoomnivo's: "+zmin+" en "+zmax+". \nU zit nu op: "+map.getZoom();
+            var msg = "U kunt alleen tekenen tussen de zoomnivo's: "+zmin+" en "+zmax+". \nU zit nu op zoomnivo: "+map.getZoom();
+            var zoom;
             if (map.getZoom() < zmin){
-                msg += "\nZoom minstens "+(zmin-map.getZoom())+" zoomnivo's in.";
+                //msg += "\nZoom minstens "+(zmin-map.getZoom())+" zoomnivo's in";
+                msg += "\nKlik op OK om "+(zmin-map.getZoom())+" zoomnivo's in te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
+                zoom = zmin;
             }
             else{
-                msg += "\nZoom minstens "+(map.getZoom()-zmax)+" zoomnivo's uit.";
+                //msg += "\nZoom minstens "+(map.getZoom()-zmax)+" zoomnivo's uit";
+                msg += "\nKlik op OK om "+(map.getZoom()-zmax)+" zoomnivo's uit te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
+                zoom = zmax;
+
             }
             if (!alerted){
                 alerted = true;
-                alert(msg);
+                if(confirm(msg)){
+                   map.zoomTo(zoom);
+                }
             }
             apiObject.disableDrawingTool();
         }
