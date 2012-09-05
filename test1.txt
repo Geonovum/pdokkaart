@@ -1,0 +1,7 @@
+point	title	description
+52.64,4.84	foo	omschrijving foo
+52.59,6.38	faa	omschrijving faa
+51.73,5.39	fii	omschrijving fii
+
+
+
