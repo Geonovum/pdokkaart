@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" />
     <link rel="stylesheet" href="css/common.css" type="text/css" />
 	<link rel="stylesheet" href="css/main.css" type="text/css" />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.23/themes/base/jquery-ui.css" type="text/css" media="all" />
     <script type="text/javascript" src="js/OpenLayers.js"></script>
 	<script type="text/javascript" src="LuukS-API-20120712/lusc-api.js"></script>
     <script type="text/javascript" src="js/proj4js-compressed.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
+	<script src="http://code.jquery.com/ui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/map.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="js/jquery.xdomainajax.js"></script>
@@ -109,12 +111,15 @@
                         </div>
 						<div id="edit3a" class="row" style="display: none;">
                         </div>
-						<!-- <div id="edit4" class="row"> -->
+						<div id="edit4" class="row"> 
 							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
 							<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<!-- <button type="submit" class="filterbutton" onclick=" verwijderAlleMarkers(); return false;">
-								Verwijder alle markers</button>
-						</div> -->
+							<button type="submit" class="filterbutton" id="inlezen" onclick=" readFile(); return false;">
+								Inlezen bestand</button>
+						</div>
+						<div id="dialog" title="Basic dialog" style="display: none;">
+							<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+						</div>
 					</div>	
                     </form>
                 </div>
