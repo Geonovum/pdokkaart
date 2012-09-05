@@ -491,6 +491,27 @@ $(document).ready(function() {
 	createStyleSelector();
 	createEditAttributes ();
 	createPdokLayers();
+	
+	$("#embedlink").click(function(){
+    // Select input field contents
+    this.select();
+	});
+	$("#embedhtmliframe").click(function(){
+		// Select input field contents
+		this.select();
+	});
+	$("#embedhtmlobject").click(function(){
+    // Select input field contents
+    this.select();
+	});
+	$("#scriptcodeHead").click(function(){
+		// Select input field contents
+		this.select();
+	});
+	$("#scriptcodeBody").click(function(){
+		// Select input field contents
+		this.select();
+	});
 
   });
 
