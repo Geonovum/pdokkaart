@@ -184,11 +184,18 @@
 						<button class="filterbutton" onclick="addWmsLayer();return false;">Voeg toe aan kaart</button>
 						<h4>Voeg een WMTS kaartlaag toe</h4>
 						URL van de WMTS:<br/>
-						<input type="text" id="tmsUrl" size="30"/></br>
+						<input type="text" id="WmtsUrl" size="30"/></br>
 						Laagnaam van de WMTS:<br/>
-						<input type="text" id="tmsLayer" size="30"/></br>
+						<input type="text" id="WmtsLayer" size="30"/></br>
+						Matrixset van de WMTS:<br/>
+						<input type="text" id="WmtsMatrix" size="30"/></br>
 						<button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>					
-                   
+						<div id="edit5" class="row">
+							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
+							<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
+							<button id ="deletelayers" type="submit" class="filterbutton" onclick=" deleteLayers(); return false;" >
+								<span>Verwijder alle lagen</span></button>
+						</div>	
                     </form>
                 </div>
 				<!-- Step 5 optie -->
