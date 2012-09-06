@@ -78,10 +78,10 @@ $(document).ready(function() {
 	});
 	
 
-	// initiate the Lusc API object
+	// initiate the Pdok API object
 	var o = OpenLayers.Util.getParameters();
-    //var lusc = new Lusc.Api(o);
-	lusc = new Lusc.Api(o);
+    //var lusc = new Pdok.Api(o);
+	lusc = new Pdok.Api(o);
     // popups and selectionControl of Api interfears with modifyFeatureControl
     // we disable them while we find out how to handle this
     // TODO handle this ...
