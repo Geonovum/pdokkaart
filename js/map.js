@@ -176,22 +176,33 @@ function createStyleSelector(){
         // for now only point markers!
         if (styleId[0]=='m'){
             var style = apiStyles[styleId];
-            pointStylesHtml += '\n<li id="'+styleId+'"><div><img src="'+style.externalGraphic+'"><div class="listyletext">'+style.name+'</div></div></li>';
+            pointStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div><img src="'+style.externalGraphic+'"><div class="listyletext">'+style.name+'</div></div></li>';
         }
         else if (styleId[0]=='l'){
             var style = apiStyles[styleId];
-            lineStylesHtml += '\n<li id="'+styleId+'"><div style="opacity:'+style.strokeOpacity+'; border-top: '+style.strokeWidth+'px '+style.strokeColor+' solid;border-left: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
+            lineStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+'; border-top: '+style.strokeWidth+'px '+style.strokeColor+' solid;border-left: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
         }
         else if (styleId[0]=='p'){
             var style = apiStyles[styleId];
-            polygonStylesHtml += '\n<li id="'+styleId+'"><div style="opacity:'+style.strokeOpacity+';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span style="opacity:'+style.fillOpacity+';background-color:'+style.fillColor+';">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
+            polygonStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span style="opacity:'+style.fillOpacity+';background-color:'+style.fillColor+';">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
         }
     }
-    $('#styleselector ul').append(pointStylesHtml+lineStylesHtml+polygonStylesHtml);
+    var pointSeparator = '<li><div class="stylehead">Puntsymbolen<div></li>';
+    var lineSeparator = '<li><div class="stylehead">Lijnstijlen<div></li>';
+    var polygonSeparator = '<li><div class="stylehead">Vlakstijlen<div></li>';
+    $('#styleselector ul').append(
+        pointSeparator+pointStylesHtml+
+        lineSeparator+lineStylesHtml+
+        polygonSeparator+polygonStylesHtml);
     $('#styleselector').delegate('li', 'click', function(){
+        var styleId = $(this).attr('id');
+        // only clickable styles have an id
+        if(!styleId){
+            // probably a title header
+            return;
+        }
         $('#styleselector li').removeClass('styleselected');
         $(this).addClass('styleselected');
-        var styleId = $(this).attr('id');
         featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);

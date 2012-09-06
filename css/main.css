@@ -2,8 +2,7 @@ body
 {
     background-color: #FFFFFF;
     font-family: "Helvetica Neue", Verdana, Helvetica, Arial, sans-serif;
-	/* font-size: 1.0em; */
-	font-size: 0.7em;
+	font-size: 62.5%;
 	text-align: left; /* */ /* workaround to center a div in IE: http://www.maxdesign.com.au/presentation/center/ */
     margin: 0;
     padding: 0;
@@ -282,7 +281,8 @@ li
 #styleselector li{
     padding-left: 18px;
     height: 30px;
-    font-size:1em;
+    font-size: 1em;
+    cursor: pointer;
 }
 
 #styleselector img{
@@ -298,6 +298,12 @@ li
     padding-left: 45px;
     padding-top: 5px;
     font-size: 1.1em;
+}
+.stylehead {
+    font-weight: bold;
+    text-decoration: underline;
+    font-size:1.2em;
+    letter-spacing:1px;
 }
 
 input, select, textarea {
