@@ -265,7 +265,7 @@ function readURL () {
 
 function readCopyPaste () {
 
-
+	api.addFeaturesFromString($('#copypaste').val(), 'KML');
 }
 
 
