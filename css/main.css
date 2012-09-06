@@ -149,6 +149,7 @@ a:hover
 li 
 {
 	margin: 0;
+    list-style-type: none;
 }
 
 .olPopup
@@ -193,15 +194,24 @@ li
 
 #geocodeerresult {
 	display: none;
-	width: 350px;
+	width: 342px;
 	position: absolute;
 	left: 0px;
 	top: 0px;
-	height: 400px;
+	height: 392px;
 	overflow-y: auto;
 	z-index: 2000;
+    padding:24px;
 }
-
+#geocodeerresult li{
+    height: 20px;
+	background: url(../img/link-hover.gif) no-repeat right bottom;
+}
+#geocodeerresult a{
+    color: black;
+    margin: 5px;
+    text-decoration: none;
+}
 #readfile {
 	display: none;
 	width: 350px;
@@ -240,13 +250,22 @@ li
 	height: 500px;
 }
 
+ul.geozetSuggestions{
+    padding:0;
+}
 .geozetSuggestions li a span{
 	display: none;
 }
 
-/* .geozetSuggestions li.selected{
-	background: url(../markertypes/information_blue.png) no-repeat 0px;
-} */
+
+.geozetSuggestions li {
+    margin-top: 4px;
+    width: 95%;
+}
+.geozetSuggestions li:hover {
+	/*background: url(../markertypes/information_blue.png) no-repeat 0px;*/
+    border-bottom: solid 1px black;
+}
 
 #mapfunctions h3 {
 	position: relative;
