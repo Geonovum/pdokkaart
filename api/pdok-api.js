@@ -33,7 +33,7 @@ Pdok.Api = function(config) {
     /**
      * Reference to the zoomlevel object
      */
-    this.zl = null;
+    this.zoom = null;
 
 	/**
      * Reference to the location object
@@ -176,12 +176,6 @@ Pdok.Api = function(config) {
     this.createStyles();
 
     if (config) {
-
-        // read out and validate the given values
-        // this.validateConfig(config);
-
-        console.log(config)
-        console.log(this);
 
         OpenLayers.Util.extend( this, config );
 
@@ -695,122 +689,6 @@ Pdok.Api.prototype.defaultLayers = {
         }
     }
 
-/**
- * @private
- * 
- * Reads out and validates the given config options.
- * The values are restored in member vars. On error a default is set.
- */
-Pdok.Api.prototype.validateConfig = function(config) {
-    if (config.layer && !OpenLayers.Util.isArray(config.layer)) {
-        config.layer = [config.layer];
-    }
-/*	if (config.layer && OpenLayers.Util.indexOf(this.supportedLayers, config.layer) && OpenLayers.Util.isArray(config.layer)) {
-        this.layer = config.layer;
-	}*/
-    if (config.layer) {
-        this.layer = config.layer;
-    }
-
-    if (config.zl) {
-        this.zl = config.zl;
-    }
-
-    if (config.loc && OpenLayers.Util.isArray(config.loc) && config.loc.length == 2) {
-        this.loc = config.loc;
-    }
-
-    if (config.bbox && OpenLayers.Util.isArray(config.bbox) && config.bbox.length == 4) {
-        this.bbox = config.bbox;
-    }
-
-    if (config.mloc && OpenLayers.Util.isArray(config.mloc) && config.mloc.length == 2) {
-        this.mloc = config.mloc;
-    }
-
-    if (config.mt) {
-        this.mt = config.mt;
-    }
-
-    if (config.titel) {
-        this.titel = config.titel;
-    }
-
-    if (config.tekst) {
-        this.tekst = config.tekst;
-    }
-
-    if (config.txturl) {
-        this.txturl = config.txturl;
-    }
-
-    if (config.wmsurl) {
-        this.wmsurl = config.wmsurl;
-    }
-
-    if (config.wmtsurl) {
-        this.wmtsurl = config.wmtsurl;
-    }
-    if (config.wmtslayer) {
-        this.wmtslayer = config.wmtslayer;
-    }
-    if (config.wmtsmatrixset) {
-        this.wmtsmatrixset = config.wmtsmatrixset;
-    }
-
-    if (config.wmslayers) {
-        this.wmslayers = config.wmslayers;
-    }
-
-    if (config.tmsurl) {
-        this.tmsurl = config.tmsurl;
-    }
-
-    if (config.tmslayer) {
-        this.tmslayer = config.tmslayer;
-    }
-
-    if (config.tmstype) {
-        this.tmstype = config.tmstype;
-    }
-    else{
-    	this.tmstype = "png";
-    }
-
-    if (config.ls != null) {
-        this.ls = config.ls;
-        if (config.ls == "true"){
-        	this.ls=true;
-        }
-    }
-    else{
-    	this.ls = false;
-    }
-
-    if (config.externalGraphic) {
-        this.externalGraphic = config.externalGraphic;
-    }
-
-    if (config.pointRadius) {
-        this.pointRadius = config.pointRadius;
-    }
-
-    if (config.div) {
-    	this.div = config.div;
-    }
-
-    var MAXNUMBEROFFEATURES = 100;
-    for (var i = 1; i<=MAXNUMBEROFFEATURES; i++){
-        if(config['fgeom'+i]) {
-            // TODO more sanity checks here
-            var ft = this.createFeature(config['fgeom'+i], config['ftype'+i], config['fname'+i], config['fdesc'+i]);
-            this.features.push(ft);
-        }
-        else{
-            break;
-        }
-    }
-}
 
 /**
  * @private
@@ -824,7 +702,7 @@ Pdok.Api.prototype.createOlMap = function() {
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.Zoom(),
-			new OpenLayers.Control.ScaleLine()
+			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
         ],
         maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
         theme: null,
@@ -916,8 +794,8 @@ Pdok.Api.prototype.createOlMap = function() {
     if (this.bbox != null) {
         olMap.zoomToExtent(OpenLayers.Bounds.fromArray(this.bbox).transform(olMap.displayProjection, olMap.getProjectionObject()));
 	}
-    else if (this.zl != null && this.loc != null) {
-		olMap.setCenter (new OpenLayers.LonLat(parseInt(this.loc[0]), parseInt(this.loc[1])), parseInt(this.zl));
+    else if (this.zoom != null && this.loc != null) {
+		olMap.setCenter (new OpenLayers.LonLat(parseInt(this.loc[0]), parseInt(this.loc[1])), parseInt(this.zoom));
     } else {
         //olMap.zoomToMaxExtent();
         olMap.zoomToExtent([-15000,300000,300000,640000],true);
