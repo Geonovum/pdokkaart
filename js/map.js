@@ -284,7 +284,7 @@ $('#veldnaam').html(html);
 function readFile () {
 
 
-$( "#dialog" ).dialog({ modal: true });
+$('#readfile').show();
 
 }
 
