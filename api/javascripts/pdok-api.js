@@ -1475,3 +1475,19 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type){
     });
 
 }
+
+Pdok.Api.prototype.createIframeTags = function(){
+    return "TODO iframetags";
+}
+Pdok.Api.prototype.createObjectTags = function(){
+    return "TODO objecttags";
+}
+Pdok.Api.prototype.createMapLink = function(){
+    return "TODO maplink";
+}
+Pdok.Api.prototype.createHtmlBody = function(){
+    return "TODO HTMLBODY";
+}
+Pdok.Api.prototype.createHtmlHead = function(){
+    return "TODO HTMLHEAD";
+}
