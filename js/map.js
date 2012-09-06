@@ -94,16 +94,13 @@ $(document).ready(function() {
 	pdok_api_map_resize(550,440);
     api.map.zoomToExtent([-15000,300000,300000,640000], true);
     
-    $('#geocodeerresult').delegate('li/a','click', function (evt) {
+    $('#geocodeerresult').delegate('li a','click', function (evt) {
 		var x = $("span.x", this).text();
 		var y = $("span.y", this).text();
 		var z = $("span.z", this).text();
 		var ft_id = $("span.ft_id", this).text();
 		if(x && y){
 			mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
-			var ft = markers.getFeatureById(ft_id);
-		    onFeatureSelect(ft, true, markersPopupText(ft, true)); // full=true
-		    ft.popupFix = true;
 		}
 		else {
 			alert("fout met coordinaten");
