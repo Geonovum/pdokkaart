@@ -117,26 +117,17 @@ $(document).ready(function() {
 	createPdokLayers();
 	createReadFile();
 	
-	$("#embedlink").click(function(){
-    // Select input field contents
-    this.select();
-	});
-	$("#embedhtmliframe").click(function(){
+	$('.row_right input:text').click(function(){
 		// Select input field contents
 		this.select();
 	});
-	$("#embedhtmlobject").click(function(){
-    // Select input field contents
-    this.select();
-	});
-	$("#scriptcodeHead").click(function(){
+	
+	$('.row_right textarea').click(function(){
 		// Select input field contents
 		this.select();
 	});
-	$("#scriptcodeBody").click(function(){
-		// Select input field contents
-		this.select();
-	});
+	
+	$('#step3 input:text').val('');
 
   });
 
