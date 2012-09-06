@@ -1502,17 +1502,29 @@ Lusc.Api.prototype.addFeaturesFromString = function(data, type){
         internalProjection: this.map.baseLayer.projection
     };
     if (type.toUpperCase() == 'KML') {
-	    format = new OpenLayers.Format.KML(options);
+        format = new OpenLayers.Format.KML(options);
+        features = format.read(data);
     }
     else if(type.toUpperCase() == "TXT"){
-	    format = new OpenLayers.Format.Text(options);
+        // TXT files will default to epsg:28992 / RD coordinates
+        options = {
+            externalProjection: new OpenLayers.Projection("EPSG:28992"),
+            internalProjection: this.map.baseLayer.projection
+        };
+        format = new OpenLayers.Format.Text(options);
+        features = format.read(data);
+        // default OpenLayers.Text format uses 'title' as 'name' attribute
+        // we add a 'name' attribute here
+        for (f in features){
+            var feature = features[f];
+            feature.attributes['name'] = feature.attributes['title'];
+        }
     }
     else{
         alert('addFeaturesFromUrl aanroep met een niet ondersteund type: '+type);
         return;
     }
 
-	features = format.read(data);
 
     // add styling to features
     for (f in features){
