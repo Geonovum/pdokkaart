@@ -313,7 +313,11 @@ function deleteFeature() {
         // null pointer somewhere in the event handling of OL
         lusc.disableEditingTool();
         lusc.enableEditingTool(featureModifiedCallback);
-    }
+    } else {
+		lusc.disableEditingTool();
+        lusc.enableEditingTool(featureModifiedCallback);
+	//lusc.selectControl.activate();
+	}
     $('#edit2a').hide();
     //$('#edit3a').hide();
 
