@@ -209,7 +209,7 @@ li
 	position: absolute;
 	left: 0px;
 	top: 0px;
-	height: 400px;
+	height: 430px;
 	overflow-y: auto;
 	z-index: 2000;
 }
@@ -308,6 +308,10 @@ input, select, textarea {
 #description{
 	height:60px;
 }	
+
+#copypaste{
+	height:180px;
+}
 
 #editmarker3{
 	width : 20px;

@@ -115,6 +115,7 @@ $(document).ready(function() {
 	createStyleSelector();
 	createEditAttributes ();
 	createPdokLayers();
+	createReadFile();
 	
 	$("#embedlink").click(function(){
     // Select input field contents
@@ -233,6 +234,40 @@ html = html + '</select>'
 $('#divpdoklayerselector').html(html);
 
 }
+
+function createReadFile () {
+
+var html = '<strong>Als URL</strong><span id="closedrawlocation" onclick="$(\'#readfile\').fadeOut(\'fast\')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span></br></br> Geef de URL waar het bestand met markerdefinities zich bevindt en kies voor "Haal op ":</br></br>';
+html = html + '<input id="urltext" type="text" value="Voer een URL in :" name="searchLocation" title="Postcode of plaatsnaam" />';
+html = html + '<button type="submit" class="filterbutton" onclick="readURL();return false;">Haal op</button></br></br></br></br>';
+html = html + '<strong>Als Copy/Paste</strong></br></br> Kopieer de marker definities in het onderstaande tekstveld en kies voor "Opslaan":</br></br>'
+html = html + '<textarea id="copypaste">Copy/Paste : </textarea>';
+html = html + '<button type="submit" class="filterbutton" onclick="readCopyPaste();return false;">Opslaan</button>';
+	
+$('#readfile').html(html);
+
+$("#urltext").click(function(){
+    // Select input field contents
+    this.select();
+});
+$("#copypaste").click(function(){
+    // Select input field contents
+    this.select();
+});
+
+}
+
+function readURL () {
+
+	api.addFeaturesFromUrl($('#urltext').val(), 'KML');
+
+}
+
+function readCopyPaste () {
+
+
+}
+
 
 function createEditAttributes () {
 
