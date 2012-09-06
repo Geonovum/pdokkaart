@@ -113,12 +113,12 @@ Pdok.Api = function(config) {
     /**
      * Reference to TMS layer object
      */
-    this.tmstype = null;
+    this.tmstype = 'png';
 
     /**
      * Reference to layerswitch object
      */
-    this.ls = null;
+    this.ls = false;
 
     /**
      * Reference to the DIV-id the map should be rendered in
@@ -178,7 +178,12 @@ Pdok.Api = function(config) {
     if (config) {
 
         // read out and validate the given values
-        this.validateConfig(config);
+        // this.validateConfig(config);
+
+        console.log(config)
+        console.log(this);
+
+        OpenLayers.Util.extend( this, config );
 
         // create the OpenLayers Map instance
         this.createOlMap();
@@ -958,6 +963,18 @@ Pdok.Api.prototype.createOlMap = function() {
     if (this.showPopup){
         this.enablePopups();
         this.selectControl.activate();
+    }
+
+    var MAXNUMBEROFFEATURES = 100;
+    for (var i = 1; i<=MAXNUMBEROFFEATURES; i++){
+        if(this['fgeom'+i]) {
+            // TODO more sanity checks here
+            var ft = this.createFeature(config['fgeom'+i], this['ftype'+i], this['fname'+i], this['fdesc'+i]);
+            this.features.push(ft);
+        }
+        else{
+            break;
+        }
     }
 
     this.featuresLayer.addFeatures(this.features);

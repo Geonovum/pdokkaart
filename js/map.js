@@ -80,19 +80,19 @@ $(document).ready(function() {
 
 	// initiate the Pdok API object
 	var o = OpenLayers.Util.getParameters();
-    //var lusc = new Pdok.Api(o);
-	lusc = new Pdok.Api(o);
+    //var api = new Pdok.Api(o);
+	api = new Pdok.Api(o);
     // popups and selectionControl of Api interfears with modifyFeatureControl
     // we disable them while we find out how to handle this
     // TODO handle this ...
-    lusc.disablePopups();
-    lusc.selectControl.deactivate();
+    api.disablePopups();
+    api.selectControl.deactivate();
 	
 	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
-	mapPDOKKaart = lusc.getMapObject();
-	markers = lusc.featuresLayer;
+	mapPDOKKaart = api.getMapObject();
+	markers = api.featuresLayer;
 	pdok_api_map_resize(550,440);
-    lusc.map.zoomToExtent([-15000,300000,300000,640000], true);
+    api.map.zoomToExtent([-15000,300000,300000,640000], true);
     
     $('#geocodeerresult').delegate('li/a','click', function (evt) {
 		var x = $("span.x", this).text();
@@ -147,8 +147,8 @@ function disableStyleSelector(){
 
 function enableStyleSelector(){
 	
-	lusc.disableEditingTool();
-	lusc.disableDrawingTool();
+	api.disableEditingTool();
+	api.disableDrawingTool();
 
 	$('#styleselector').show();
 	$('#edit2a').hide();
@@ -164,8 +164,8 @@ function enableStyleSelector(){
 			$('#edit2a').show();
     }
     // no popup during editing
-    lusc.disablePopups();
-    lusc.enableDrawingTool("mt0", featureCreatedCallback);
+    api.disablePopups();
+    api.enableDrawingTool("mt0", featureCreatedCallback);
 	
 	$('#styleselector li').removeClass('styleselected');
 	$('#mt0').addClass('styleselected');
@@ -178,7 +178,7 @@ function createStyleSelector(){
 // dynamically creating the selectbox for the feature types
 
     $('#edit2').html('<div id="styleselector"><ul></ul></div>');
-    var apiStyles = lusc.styles;
+    var apiStyles = api.styles;
     pointStylesHtml = '';
     polygonStylesHtml = '';
     lineStylesHtml = '';
@@ -211,7 +211,7 @@ function createStyleSelector(){
 			$('#edit2a').appendTo($('#edit2'));
 			$('#edit2a').show();
         }
-        lusc.enableDrawingTool(styleId, featureCreatedCallback);
+        api.enableDrawingTool(styleId, featureCreatedCallback);
     });
 	
 
@@ -224,8 +224,8 @@ var html = '';
 html = html + '<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">' +
 			  '<option value="-">-- Kies een PDOK kaartlaag --</option>'
 
-for (layer in lusc.defaultLayers){
-	html = html + '<option value="'+ layer + '">' + lusc.defaultLayers[layer].name + '</option>'
+for (layer in api.defaultLayers){
+	html = html + '<option value="'+ layer + '">' + api.defaultLayers[layer].name + '</option>'
     
 }
 
@@ -311,12 +311,12 @@ function deleteFeature() {
         markers.refresh();
         // without this disabling and enabling we have a 
         // null pointer somewhere in the event handling of OL
-        lusc.disableEditingTool();
-        lusc.enableEditingTool(featureModifiedCallback);
+        api.disableEditingTool();
+        api.enableEditingTool(featureModifiedCallback);
     } else {
-		lusc.disableEditingTool();
-        lusc.enableEditingTool(featureModifiedCallback);
-	//lusc.selectControl.activate();
+		api.disableEditingTool();
+        api.enableEditingTool(featureModifiedCallback);
+	//api.selectControl.activate();
 	}
     $('#edit2a').hide();
     //$('#edit3a').hide();
@@ -324,11 +324,11 @@ function deleteFeature() {
 }
 
 function startEditingPoint() {
-	lusc.disableEditingTool();
-	lusc.disableDrawingTool();
+	api.disableEditingTool();
+	api.disableDrawingTool();
 	$('#edit2a').hide();
 	disableStyleSelector();
-	lusc.disableDrawingTool();
+	api.disableDrawingTool();
 	featureModifiedCallback = function(domevent){
             // you get a handle here to the feature last modified
             // console.log(feature);
@@ -338,7 +338,7 @@ function startEditingPoint() {
 			$('#attr_name').val(domevent.feature.attributes.name);
 			$('#description').val(domevent.feature.attributes.description);
         }
-	lusc.enableEditingTool(featureModifiedCallback);
+	api.enableEditingTool(featureModifiedCallback);
 	//registerEvents();
 
 }
@@ -347,8 +347,8 @@ function startEditingPoint() {
 function stopDrawingEditingPoint() {
 	//removePopups(markers);
 	//unregisterEvents();
-	lusc.disableEditingTool();
-	lusc.disableDrawingTool();
+	api.disableEditingTool();
+	api.disableDrawingTool();
 	$('input:radio[name=editmarker]')[0].checked = true;
 }
 
@@ -572,7 +572,7 @@ function addWmtsLayer() {
 
 function addPdokLayer() {
 	// TODO: add PDOK layer to map, need API function for this --> not implemented in PoC version of API
-	lusc.addLayers([$("#pdokLayerSelector").val()]);
+	api.addLayers([$("#pdokLayerSelector").val()]);
 }
 
 /* function addOverlay(layer) {
