@@ -596,8 +596,13 @@ function deleteLayers () {
 }
 
  
-function linkToMapOpened(permalink) {
+function linkToMapOpened() {
 
+	$("#embedlink").val(api.createMapLink());
+	$("#embedhtmliframe").val(api.createIframeTags());
+	$("#embedhtmlobject").val(api.createObjectTags());
+	$("#scriptcodeHead").val(api.createHtmlHead());
+	$("#scriptcodeBody").val(api.createHtmlBody());
 	
 }
 
