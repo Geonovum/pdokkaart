@@ -577,32 +577,11 @@ function handleGeocodeResponse(req, returnCoords){
 
 
  function addWmsLayer() {
-	/* var layername=$('#wmsLayer').val();
-	var layerUrl=$('#wmsUrl').val().replace("request=GetCapabilities","","i") // remove the request=GetCapabilities (case insensitive) part if provided;
-	$('#tmsLayer').val("");
-	$('#tmsUrl').val("");
-	
-	var wmsLayer = new OpenLayers.Layer.WMS(
-							layername, // layername as title for now
-							layerUrl,
-							{layers: layername, transparent: 'true',format: "image/png"},
-							{visibility: true, isBaseLayer:false, opacity: 0.8},
-							{singleTile: true}
-	);
-	addOverlay(wmsLayer) */
+	api.addWMS($("#wmsUrl").val(), $("#wmsLayer").val());
 }
 
 function addWmtsLayer() {
-/* 	var layername=$('#tmsLayer').val();
-	var layerUrl=$('#tmsUrl').val();
-	$('#wmsLayer').val("");
-	$('#wmsUrl').val("");
-	var tmsLayer = new OpenLayers.Layer.TMS(
-			layername,
-			layerUrl,
-			{layername: layername, type:"png", visibility: true, isBaseLayer:false, opacity:0.8}
-		);
-	addOverlay(tmsLayer); */
+	api.addWMTS($("#WmtsUrl").val(), $("#WmtsLayer").val(), $("#WmtsMatrix").val());
 } 
 
 function addPdokLayer() {
@@ -610,19 +589,21 @@ function addPdokLayer() {
 	api.addLayers([$("#pdokLayerSelector").val()]);
 }
 
-/* function addOverlay(layer) {
+function deleteLayers () {
 	// remove all WMS and TMS layers (if not basemap)
 	for (var lr in mapPDOKKaart.layers) {
 		var l = mapPDOKKaart.layers[lr];
-		if (l.name!="Markers" && l.isBaseLayer == false) { // not Geocoderesults or markers?
+		if (l.name!="Features" && l.isBaseLayer == false) { // not Geocoderesults or markers?
 			mapPDOKKaart.removeLayer(l);
 		}
 	}
-	$("#pdokLayerSelector").val("-");
+	
+	
+	/* $("#pdokLayerSelector").val("-");
 	layerSwitcher.maximizeControl();
-	mapPDOKKaart.addLayer(layer);
+	 */
 }
- */
+
  
 function linkToMapOpened(permalink) {
 
