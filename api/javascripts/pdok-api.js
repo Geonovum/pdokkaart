@@ -758,6 +758,10 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // apply layer if a layer was given
     if (this.layer != null) {
+        // if there is just one layer (without comma's), OL returns a String:
+        if (typeof this.layer == 'string') {
+            this.layer=[this.layer];
+        }
         // if the map does NOT have a baseLayer, always add BRT layer
         if (!olMap.baseLayer){
             olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
@@ -1470,4 +1474,20 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type){
             scope: apiObject
     });
 
+}
+
+Pdok.Api.prototype.createIframeTags = function(){
+    return "TODO iframetags";
+}
+Pdok.Api.prototype.createObjectTags = function(){
+    return "TODO objecttags";
+}
+Pdok.Api.prototype.createMapLink = function(){
+    return "TODO maplink";
+}
+Pdok.Api.prototype.createHtmlBody = function(){
+    return "TODO HTMLBODY";
+}
+Pdok.Api.prototype.createHtmlHead = function(){
+    return "TODO HTMLHEAD";
 }
