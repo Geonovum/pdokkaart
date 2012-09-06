@@ -146,6 +146,9 @@ function disableStyleSelector(){
 }
 
 function enableStyleSelector(){
+	
+	lusc.disableEditingTool();
+	lusc.disableDrawingTool();
 
 	$('#styleselector').show();
 	$('#edit2a').hide();
@@ -317,7 +320,8 @@ function deleteFeature() {
 }
 
 function startEditingPoint() {
-	//removePopups(markers);
+	lusc.disableEditingTool();
+	lusc.disableDrawingTool();
 	$('#edit2a').hide();
 	disableStyleSelector();
 	lusc.disableDrawingTool();
