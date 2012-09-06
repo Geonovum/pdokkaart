@@ -1140,7 +1140,7 @@ Lusc.Api.prototype.onFeatureSelect = function(evt) {
         content=feature.attributes['name'];
     }
     if (feature.attributes['description']!=null){
-        content=content+" "+feature.attributes['description'];
+        content=content+"<br/>"+feature.attributes['description'];
     }
     if (!content || content.length==0)
     {
