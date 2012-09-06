@@ -19,10 +19,12 @@
  *    style="border: 0">
  */
 
-OpenLayers.Feature.Vector.style.default.strokeColor = "red";
-OpenLayers.Feature.Vector.style.default.fillColor = "red";
+OpenLayers.Feature.Vector.style.default.strokeColor = 'red';
+OpenLayers.Feature.Vector.style.default.fillColor = 'red';
 OpenLayers.Feature.Vector.style.default.pointRadius = 5;
 OpenLayers.Feature.Vector.style.default.fillOpacity = 0.8;
+
+OpenLayers.ImgPath = 'img/';
 
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
 
@@ -46,9 +48,9 @@ Pdok.Api = function(config) {
     this.bbox = null;
 
     /**
-     * Reference to the layer
+     * Reference to layers
      */
-    this.layer = null;
+    this.layers = null;
 
     /**
      * Reference to map object
@@ -121,9 +123,10 @@ Pdok.Api = function(config) {
     this.ls = false;
 
     /**
-     * Reference to the DIV-id the map should be rendered in
+     * Reference to the DIV-id the map should be rendered in.
+     * Note that you have to set this one to have two maps in one page!
      */
-    this.div = null;
+    this.div = 'map';
 
     /**
      * Reference to the graphic URL for the marker
@@ -556,7 +559,7 @@ Pdok.Api.prototype.defaultLayers = {
             style: '_null',
             matrixSet: 'EPSG:28992',
             visibility: true, 
-            isBaseLayer: true
+            isBaseLayer: false
         },
         TOP10NL2: {
             layertype: 'TMS',
@@ -565,7 +568,7 @@ Pdok.Api.prototype.defaultLayers = {
             layername: 'top10nl',
             type:'png8',
             visibility: true,
-            isBaseLayer:true
+            isBaseLayer: false
         },
         AAN: {
             layertype: 'WMS',
@@ -710,7 +713,7 @@ Pdok.Api.prototype.createOlMap = function() {
 					26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42],
         units: 'm',
         projection: new OpenLayers.Projection("EPSG:28992"),
-        div: (this.div != null) ? this.div : 'map'
+        div: this.div
     });
     this.map = olMap;
 	
@@ -757,16 +760,16 @@ Pdok.Api.prototype.createOlMap = function() {
 	}
 
     // apply layer if a layer was given
-    if (this.layer != null) {
+    if (this.layers != null) {
         // if there is just one layer (without comma's), OL returns a String:
-        if (typeof this.layer == 'string') {
-            this.layer=[this.layer];
+        if (typeof this.layers == 'string') {
+            this.layers=[this.layers];
         }
         // if the map does NOT have a baseLayer, always add BRT layer
         if (!olMap.baseLayer){
             olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
         }
-        this.addLayers(this.layer, olMap);
+        this.addLayers(this.layers, olMap);
     }
     else {
         // not layer param, at least load one default layer
@@ -1043,7 +1046,7 @@ Pdok.Api.prototype.onFeatureSelect = function(evt) {
     }
     if (!content || content.length==0)
     {
-        content = '-';
+        content = '&nbsp;';
     }
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
                 feature.geometry.getBounds().getCenterLonLat(),
@@ -1148,7 +1151,6 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
 }
 
 Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
-
     // From WMTS openlayers example:
     // If tile matrix identifiers differ from zoom levels (0, 1, 2, ...)
     // then they must be explicitly provided.
@@ -1194,7 +1196,6 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
             isBaseLayer: layerConfigObj.isBaseLayer
         }
     );
-
     return layer;
 }
 
@@ -1384,7 +1385,6 @@ Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
 
 
 Pdok.Api.prototype.handleGetResponse = function(response){
-    //console.log(response);
     if (response.status != 200){
         alert('Fout bij het ophalen van de url');
         return
