@@ -179,15 +179,10 @@ Pdok.Api = function(config) {
     this.createStyles();
 
     if (config) {
-
         OpenLayers.Util.extend( this, config );
-
-        // create the OpenLayers Map instance
-        this.createOlMap();
-
-    } else {
-        // exception
     }
+    this.createOlMap();
+
 
 }
 
