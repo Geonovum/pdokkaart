@@ -203,6 +203,17 @@ li
 	z-index: 2000;
 }
 
+#readfile {
+	display: none;
+	width: 350px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	height: 430px;
+	overflow-y: auto;
+	z-index: 2000;
+}
+
 #cancelDrawingPoint {
 	display: none;
 }
@@ -297,6 +308,10 @@ input, select, textarea {
 #description{
 	height:60px;
 }	
+
+#copypaste{
+	height:180px;
+}
 
 #editmarker3{
 	width : 20px;
