@@ -1565,8 +1565,6 @@ Pdok.Api.prototype.getConfig = function() {
             internalProjection: this.map.baseLayer.projection,
             externalProjection: new OpenLayers.Projection("EPSG:4326")
         });
-        console.log(this.featuresLayer.features);
-
         config.features=kmlformat.write(this.featuresLayer.features);
     }
     return config;
