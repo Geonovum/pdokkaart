@@ -160,10 +160,14 @@ Pdok.Api = function(config) {
     this.locationToolYfield = 'y';
     this.locationToolWKTfield = 'wkt';
 
+    this.FEATERSLAYER_NAME = "Features";
+    this.MAXNUMBEROFFEATURES = 5;
     /**
      * Reference to featuresLayer (= layer where you draw feature on)
      */
     this.featuresLayer = null;
+    // this.features can come as KML string from config/params
+    // after handling this, it contains an array of features
     this.features = [];
 
 
@@ -762,7 +766,8 @@ Pdok.Api.prototype.createOlMap = function() {
         }
         // if the map does NOT have a baseLayer, always add BRT layer
         if (!olMap.baseLayer){
-            olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
+            //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
+            this.addLayers(['BRT']);
         }
         this.addLayers(this.layers, olMap);
     }
@@ -802,7 +807,17 @@ Pdok.Api.prototype.createOlMap = function() {
         //olMap.zoomToMaxExtent();
         olMap.zoomToExtent([-15000,300000,300000,640000],true);
     }
-    
+
+    // featuresLayer is used for all features/markers
+    this.featuresLayer = new OpenLayers.Layer.Vector(this.FEATURESLAYER_NAME);
+    olMap.addLayer(this.featuresLayer);
+
+    if (typeof this.features == 'object') {
+        // meaning we received a features string (kml) from the outside
+        // features string handled, this.features now used as feature array
+        this.addFeaturesFromString(this.features.toString(), 'KML');
+    }
+
     // add marker and use markertype if given, otherwise the default marker
     // backward compatibility: mloc is alway point
     if (this.mloc != null) {
@@ -813,9 +828,6 @@ Pdok.Api.prototype.createOlMap = function() {
         this.features.push(this.createFeature(wkt, this.mt, this.titel, this.tekst));
     }
 
-    // featuresLayer is used for all features/markers
-    this.featuresLayer = new OpenLayers.Layer.Vector("Features");
-    olMap.addLayer(this.featuresLayer);
 
     // selectControl for popups
     this.selectControl = new OpenLayers.Control.SelectFeature(
@@ -845,11 +857,9 @@ Pdok.Api.prototype.createOlMap = function() {
         this.selectControl.activate();
     }
 
-    var MAXNUMBEROFFEATURES = 100;
-    for (var i = 1; i<=MAXNUMBEROFFEATURES; i++){
+    for (var i = 1; i<=this.MAXNUMBEROFFEATURES; i++){
         if(this['fgeom'+i]) {
-            // TODO more sanity checks here
-            var ft = this.createFeature(config['fgeom'+i], this['ftype'+i], this['fname'+i], this['fdesc'+i]);
+            var ft = this.createFeature(this['fgeom'+i], this['ftype'+i], this['fname'+i], this['fdesc'+i]);
             this.features.push(ft);
         }
         else{
@@ -883,13 +893,6 @@ Pdok.Api.prototype.getMapObject = function() {
 	return this.map;
 }
 
-Pdok.Api.prototype.addGeometries = function(featurecollection){
-	var geojson_format = new OpenLayers.Format.GeoJSON();
-	var vector_layer = new OpenLayers.Layer.Vector(); 
-	this.map.addLayer(vector_layer);
-	vector_layer.addFeatures(geojson_format.read(featurecollection));
-}
-
 
 // fgeom1  wkt
 // fname1  name or title for popup
@@ -903,10 +906,25 @@ Pdok.Api.prototype.createFeature = function(wkt, typestyle, name, description){
         wkt = wkt.join();
     }
     var feature = wktFormat.read(wkt);
-    feature.attributes['styletype']=typestyle;
     feature.attributes['name']=name;
     feature.attributes['description']=description;
-    feature.style = this.styles[typestyle];
+    // only if we have this typestyle available
+    if (this.styles[typestyle]){
+        // TODO check if this style corresponds with the geometry type (eg for points only mt* etc)
+        feature.style = this.styles[typestyle];
+        feature.attributes['styletype']=typestyle;
+    }
+    else{
+        if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Point'){
+            feature.style = this.styles['mt0'];
+        }
+        else if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.LineString'){
+            feature.style = this.styles['lt0'];
+        }
+        else if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Polygon'){
+            feature.style = this.styles['pt0'];
+        }
+    }
     return feature;
 }
 
@@ -981,6 +999,8 @@ Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
     currentDrawControl.activate();
     currentDrawControl.featureAdded = function(feature){
             feature.style = apiStyles[styletype];
+            // also set an attribute 'styletype' to be able to export features with styletype
+            feature.attributes['styletype'] = styletype;
             apiFeaturesLayer.redraw();
             if (featureAddedCallback){
                 featureAddedCallback(feature);
@@ -1266,17 +1286,22 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     {
         var layerId = arrLayerNames[l];
         if (this.defaultLayers[layerId]){
+            var lyr;
             if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMS'){
-                map.addLayer(this.createWMSLayer( this.defaultLayers[layerId]));
+                lyr = this.createWMSLayer( this.defaultLayers[layerId]);
             }
             else if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMTS'){
-                map.addLayer(this.createWMTSLayer( this.defaultLayers[layerId]));
+                lyr = this.createWMTSLayer( this.defaultLayers[layerId]);
             }
             else if (this.defaultLayers[layerId].layertype.toUpperCase()=='TMS'){
-                map.addLayer(this.createTMSLayer( this.defaultLayers[layerId]));
+                lyr = this.createTMSLayer( this.defaultLayers[layerId]);
             }
             else {
                 alert('layertype not available (wrong config?): ' + this.defaultLayers.l.layertype);
+            }
+            if (lyr){
+                lyr.pdokId = layerId;
+                map.addLayer(lyr);
             }
         }
         else{
@@ -1391,6 +1416,7 @@ Pdok.Api.prototype.handleGetResponse = function(response){
 
 Pdok.Api.prototype.addFeaturesFromString = function(data, type){
     var format;
+    var features;
     var options = {
         externalProjection: new OpenLayers.Projection("EPSG:4326"),
         internalProjection: this.map.baseLayer.projection
@@ -1418,19 +1444,27 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type){
         alert('addFeaturesFromUrl aanroep met een niet ondersteund type: '+type);
         return;
     }
-
-
     // add styling to features
     for (f in features){
         var feature = features[f];
-        if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Point'){
-            feature.style = this.styles['mt0'];
+        if (feature.attributes['styletype']) {
+            var styletype = feature.attributes['styletype'];
+            // some formats (KML) return attr as objects instead of strings
+            if (typeof styletype == 'object') {
+                styletype = styletype.value;
+            }
+            feature.style = this.styles[styletype];
         }
-        else if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.LineString'){
-            feature.style = this.styles['lt0'];
-        }
-        else if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Polygon'){
-            feature.style = this.styles['pt0'];
+        else {
+            if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Point'){
+                feature.style = this.styles['mt0'];
+            }
+            else if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.LineString'){
+                feature.style = this.styles['lt0'];
+            }
+            else if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Polygon'){
+                feature.style = this.styles['pt0'];
+            }
         }
     }
 
@@ -1448,10 +1482,9 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type){
     else if(type.toUpperCase() == "TXT"){
         // tab separated txt file
         // format (including header!)
-        // 
+        //
         // point    title   description
         // 52.64,4.84  foo omschrijving foo
-        //
         //
         // OR
         //
@@ -1472,17 +1505,115 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type){
 }
 
 Pdok.Api.prototype.createIframeTags = function(){
+    // <iframe width='650' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></iframe><br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
+    /* 
+        <iframe width='650' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></iframe>
+        <br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
+    */
     return "TODO iframetags";
 }
 Pdok.Api.prototype.createObjectTags = function(){
+    // <object width='650' height='450' codetype='text/html' data='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></object><br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
+    /* 
+        <object width='650' height='450' codetype='text/html' data='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></object>
+        <br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
+    */
     return "TODO objecttags";
 }
 Pdok.Api.prototype.createMapLink = function(){
-    return "TODO maplink";
+    return 'http://localhost/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
 }
 Pdok.Api.prototype.createHtmlBody = function(){
     return "TODO HTMLBODY";
 }
 Pdok.Api.prototype.createHtmlHead = function(){
-    return "TODO HTMLHEAD";
+    return this.serialize(this.getConfig());
+}
+Pdok.Api.prototype.getConfig = function() {
+    var config = {};
+
+    // zoom
+    config.zoom = this.map.getZoom();
+    // bbox
+    config.bbox = this.map.getExtent().toArray();
+    // layers
+    var layers = [];
+    for (layer in this.map.layers){
+        var pdokId = this.map.layers[layer].pdokId;
+        // only layers with a pdokId, and NOT our this.featuresLayer
+        if (pdokId && this.map.layers[layer].name != this.FEATERSLAYER_NAME){
+            layers.push(pdokId);
+        }
+        else{
+            // we have a layer from 'outside'
+        }
+    }
+    if (layers.length>0) {
+        config.layers = [layers.join()];
+    }
+    // features
+    if (this.featuresLayer.features.length>0) {
+        var kmlformat = new OpenLayers.Format.KML({
+            foldersDesc: null,
+            foldersName: null,
+            placemarksDesc: '-',
+            internalProjection: this.map.baseLayer.projection,
+            externalProjection: new OpenLayers.Projection("EPSG:4326")
+        });
+        console.log(this.featuresLayer.features);
+
+        config.features=kmlformat.write(this.featuresLayer.features);
+    }
+    return config;
+}
+
+
+Pdok.Api.prototype.serialize = function(obj){
+  var returnVal;
+  if(obj != undefined){
+  switch(obj.constructor)
+  {
+   case Array:
+    //var vArr="[";
+    var vArr="'";
+    for(var i=0;i<obj.length;i++)
+    {
+     if(i>0) vArr += ",";
+     vArr += this.serialize(obj[i]);
+    }
+    //vArr += "]"
+    vArr += "'"
+    return vArr;
+   case String:
+    //returnVal = escape("'" + obj + "'");
+    returnVal = obj;
+    return returnVal;
+   case Number:
+    returnVal = isFinite(obj) ? obj.toString() : null;
+    return returnVal;    
+   case Date:
+    returnVal = "#" + obj + "#";
+    return returnVal;  
+   default:
+    if(typeof obj == "object"){
+     var vobj=[];
+     for(attr in obj)
+     {
+      if(typeof obj[attr] != "function")
+      {
+       vobj.push('"' + attr + '":' + this.serialize(obj[attr]));
+      }
+     }
+      if(vobj.length >0)
+       return "{" + vobj.join(",") + "}";
+      else
+       return "{}";
+    }  
+    else
+    {
+     return obj.toString();
+    }
+  }
+  }
+  return null;
 }
