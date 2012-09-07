@@ -815,7 +815,9 @@ Pdok.Api.prototype.createOlMap = function() {
     if (typeof this.features == 'object') {
         // meaning we received a features string (kml) from the outside
         // features string handled, this.features now used as feature array
-        this.addFeaturesFromString(this.features.toString(), 'KML');
+        if (this.features.toString().length>0) {
+            this.addFeaturesFromString(this.features.toString(), 'KML');
+        }
     }
 
     // add marker and use markertype if given, otherwise the default marker
@@ -1521,7 +1523,8 @@ Pdok.Api.prototype.createObjectTags = function(){
     return "TODO objecttags";
 }
 Pdok.Api.prototype.createMapLink = function(){
-    return 'http://localhost/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
+    //return 'http://localhost/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
+    return 'http://'+window.location.host+'/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
 }
 Pdok.Api.prototype.createHtmlBody = function(){
     return "TODO HTMLBODY";
@@ -1536,6 +1539,8 @@ Pdok.Api.prototype.getConfig = function() {
     config.zoom = this.map.getZoom();
     // bbox
     config.bbox = this.map.getExtent().toArray();
+    // or better ? loc
+    config.loc = this.map.getCenter().toShortString();
     // layers
     var layers = [];
     for (layer in this.map.layers){
