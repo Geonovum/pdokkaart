@@ -1,18 +1,16 @@
 var currentStep = 1;
 
 function goTo(step) {	
-	//de-activate markers and routes 
-    //manageRoutes(0);
-    //manageMarkers(0);
-	
-	//if add content/drag markers incorectly exited, then switch navigation and
-	//keyboard controls back on
-    //osMap.controls[0].activate();
-	//osMap.controls[1].activate();			
-	
+	// if the step is allready open, close the step
+	if ($('#step'+step).hasClass('active')){
+		console.log('closing')
+		$('#step'+step).removeClass('active');
+		stopDrawingEditingPoint();
+		return;
+	}
+
 	//make sure correct radio states for each step
 	if (step == 2){		
-		//document.getElementById("radio_routes_6").checked = "false";
 		document.getElementById("editmarker5").checked = "true";
 	}
 	
