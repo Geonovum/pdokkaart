@@ -1179,6 +1179,9 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
 }
 
 Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtsstyle, wmtsmatrixids) {
+    this.wmtsurl = wmtsurl;
+    this.wmtslayer = wmtslayer;
+    this.wmtsmatrixset = wmtsmatrixset;
     var lyrWMTS = this.createWMTSLayer({
             url: wmtsurl,
             layer: wmtslayer,
@@ -1245,6 +1248,8 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
  *
  */
 Pdok.Api.prototype.addWMS = function(wmsurl,wmslayers) {
+    this.wmsurl = wmsurl;
+    this.wmslayers = wmslayers;
     var lyrWMS = this.createWMSLayer({
             url: wmsurl,
             layers: wmslayers,
@@ -1630,6 +1635,18 @@ Pdok.Api.prototype.getConfig = function() {
     }
     if (layers.length>0) {
         config.layers = [layers.join()];
+    }
+    // wmsurl AND wmslayers
+    if(this.wmsurl && this.wmsurl.length>0 && this.wmslayers && this.wmslayers.length>0) {
+        config.wmsurl = this.wmsurl;
+        config.wmslayers = this.wmslayers;
+    }
+    // wmts
+    if (this.wmtsurl != null && this.wmtslayer != null && this.wmtsmatrixset != null && 
+        this.wmtsurl.length>0 && this.wmtslayer.length>0 && this.wmtsmatrixset.length>0) {
+        config.wmtsurl = this.wmtsurl;
+        config.wmtslayer = this.wmtslayer;
+        config.wmtsmatrixset = this.wmtsmatrixset;
     }
     // locationtool
     if(this.locationtool) {
