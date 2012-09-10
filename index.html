@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Pdok wizzard by Geonovum</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Pdok wizzard</h1>
+        <h2>Wizzard to create pdok map....</h2>
+        <a href="https://github.com/Geonovum/pdok_wizzard" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>Welkom bij de PDOKKaart API.</p>
+
+<p>API voor eenvoudig gebruik PDOK en OGC services in websites</p>
+
+<p><br>
+De API wordt aangeboden via een URL. De actuele versie van de API is <a href="http://pdokkaartapi.nl/api/pdok-api.js">http://pdokkaartapi.nl/api/pdok-api.js</a>. Naast de actuele versie worden ook voorgaande versies en de in ontwikkeling zijnde versie aangeboden. De voorgaande versies hebben in de URL naar de API een versienummer, bijvoorbeeld <a href="http://pdokkaartapi.nl/api/v1/pdok-api.js">http://pdokkaartapi.nl/api/v1/pdok-api.js</a>. De in ontwikkeling zijnde versie staat in de dev directory van de API: <a href="http://pdokkaart.pdokloket.nl/api/dev/pdok-api.js">http://pdokkaart.pdokloket.nl/api/dev/pdok-api.js</a>.<br><br>
+Beschikbare parameters:<br>bbox<br>
+Hiermee kan een rechthoek opgegeven worden waarop ingezoomd moet worden<br>
+Bijvoorbeeld: bbox=130000,450000,150000,470000<br>loc<br>
+Hiermee kan een loctie opgegeven worden waarop ingezoomd moet worden.<br>
+Bijvoorbeeld: loc=136260,456394<br>mloc<br>
+Hiermee kan een locatie opgegeven worden waar een marker getoond moet worden op de kaart<br>
+Bijvoorbeeld: mloc=136260,456394<br>mt<br>
+Hiermee kan een voorgedefinieerde marker opgegeven worden. De volgende markertypes zijn beschikbaar:<br>
+0 <img src="./markertypes/default.png"> dit is het standaard symbool<br>
+1 <img src="./markertypes/rijk.png"><br>
+2 <img src="./markertypes/information_blue.png">, 
+3 <img src="./markertypes/information_green.png">, 
+4 <img src="./markertypes/information_yellow.png"><br>
+5 <img src="./markertypes/geonovum_blue.png">, 
+6 <img src="./markertypes/geonovum_green.png">, 
+7 <img src="./markertypes/geonovum_yellow.png"><br>
+8 <img src="./markertypes/kadaster_blue.png">, 
+9 <img src="./markertypes/kadaster_green.png">, 
+10 <img src="./markertypes/kadaster_yellow.png"><br>
+11 <img src="./markertypes/rijk_blue.png">, 
+12 <img src="./markertypes/rijk_green.png">, 
+13 <img src="./markertypes/rijk_yellow.png"><br>
+14 <img src="./markertypes/star-3.png"><br>layer<br>
+Hier kan een komma-gescheiden lijst opgegeven worden met namen van kaartlagen welke in de viewer getoond moeten worden<br>
+Momenteel worden de volgende kaartlagen gebruikt:<br></p>
+
+<ul>
+<li>AAN,<br>
+</li>
+<li>ADRESSEN,<br>
+</li>
+<li>AHN25M,<br>
+</li>
+<li>BBG2008,<br>
+</li>
+<li>BESCHERMDENATUURMONUMENTEN,<br>
+</li>
+<li>GEMEENTEGRENZEN (dit is een alternatieve opmaak van de bestuurlijke gemeentegrenzen),<br>
+</li>
+<li>GEMEENTEGRENZEN_LABEL (dit is een alternatieve opmaak van de bestuurlijke gemeentegrenzen met labels van de gemeente op basis van een SLD),<br>
+</li>
+<li>NATIONALE_PARKEN,<br>
+</li>
+<li>NOK2011,<br>
+</li>
+<li>TOP10NL (dit is de TMS met de TOP10NL)
+Bijvoorbeeld: layer=AAN,NATIONALE_PARKEN,TEXEL_20120423_OUTLINE<br>
+De laag welke vooraan in de lijst staat is de onderste laag. Dat betekent dat in het bovenstaande voorbeeld onderop de AAN laag weergegeven wordt, dan de Nationale Parken en dan de omlijning van de gevectoriseerde Bonnebladen.<br>zl<br>
+Hiermee wordt een zoomnivo voor de BRTAchtergrondkaart opgegeven waarop ingezoomd wordt<br>
+Bijvoorbeeld: zl=9<br>titel<br>
+Hiermee kan een popup met een titel getoond worden indien een marker op de kaart getoond wordt. Deze parameter bevat de titel van de popup<br>tekst<br>
+Hiermee kan een popup van extra tekst voorzien worden indien een marker op de kaart getoond wordt. De popup wordt geopend als op de marker geklikt wordt<br>wmsurl<br>
+Hiermee kan een URL van een WMS opgegeven worden. Als de parameter wmslayers ook is ingevuld zal de WMS aan de kaart worden toegevoegd<br>wmslayers<br>
+Hiermee kan/kunnen de WMS layer(s) opgegeven worden welke aan de kaart moeten worden toegevoegd<br>tmsurl<br>
+Hiermee kan de URL van een TMS opgegeven worden. Als de parameter tmslayer ook is ingevuld zal de TMS aan de kaart worden toegevoegd<br>tmslayer<br>
+Hiermee kan de TMS layer opgegeven worden welke aan de kaart moet worden toegevoegd<br>tmstype<br>
+Hiermee kan de extensie opgegeven worden van de plaatjes van de TMS (voor PDOK services is dit png8, andere mogelijkheden zijn bijvoorbeeld png, jpg of jpeg)<br>ls<br>
+Hiermee kan aangegeven worden dat op de kaart een layerswitch getoond wordt, hiermee kan gekozen worden om de Luchtfoto's (echter pas als deze beschikbaar zijn), de TOP10NL of de BRT Achtergrondkaart als ondergrond gebruikt worden<br>
+Demo URL's:<br><br><hr>ToDo<br>
+Parameters werkend maken:<br>
+</li>
+<li>Parameter zl wordt vervangen door z of zoom<br>
+</li>
+<li>Parameter layer doet het nog niet<br>
+</li>
+<li>Parameter mt doet het nog niet<br><br>
+Voorbeelden in zelfstandige pagina's werkend maken<br><hr>
+<a href="./api/dev/api.html" target="_blank">Default viewer</a><br><a href="./api/dev/api.html?ls=1" target="_blank">Default viewer met de layerswitch zichtbaar</a><br><a href="./api/dev/api.html?mloc=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe DLG kantoor in Utrecht</a><br><a href="./api/dev/api.html?loc=136260,456394&amp;zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie</a><br><a href="./api/dev/api.html?loc=136260,456394&amp;zl=12&amp;layer=TOP10NL" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie met de TOP10NL als extra kaartlaag</a><br><a href="./api/dev/api.html?loc=136260,456394&amp;zl=12&amp;mloc=136260,456394" target="_blank">Bovenstaande viewer met marker op de locatie</a><br><a href="./api/dev/api.html?loc=195000,530000&amp;zl=9&amp;tmsurl=http://geodata.nationaalgeoregister.nl/tms/&amp;tmslayer=nok2011" target="_blank">Viewer ingezoomd op de Weerribben naar nivo 9 en de NOK2011 als TMS toegevoegd aan de kaart</a><br><a href="./api/dev/api.html?bbox=130000,450000,150000,470000" target="_blank">Viewer ingezoomd op een bounding box</a><br><a href="./api/dev/api.html?mloc=136260,456394&amp;bbox=130000,450000,150000,470000&amp;layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart en een marker</a><br><a href="./api/dev/api.html?bbox=158536,304712,221940,343719&amp;layer=AHN25M,gemeentegrenzen_label" target="_blank">Viewer ingezoomd op Limburg plus de AHN en de alternatieve opmaak van de gemeentekaart met labels</a><br><a href="./api/dev/api.html?loc=176212,317748&amp;zl=8&amp;mloc=176212,317748&amp;mt=4&amp;layer=gemeentegrenzen_label&amp;titel=Maastricht&amp;tekst=Vrijthof" target="_blank">Viewer ingezoomd op Maastricht plus de alternatieve opmaak van de gemeentekaart met labels en een eenvoudige tekstuele popup</a><br><a href="./api/dev/api.html?loc=176212,317748&amp;zl=8&amp;mloc=176212,317748&amp;mt=4&amp;titel=Maastricht&amp;tekst=Vrijthof%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fwww.wigosite.nl%2FMaastrichtoudeprenten%2FV-10_Maastricht_Vrijthof_01_425_v.jpg%22%3E%3CBR%3ELegenda%20snelwegen%3A%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fgeodata.nationaalgeoregister.nl%2Fnwbwegen%2Fwms%3FTRANSPARENT%3Dtrue%26SERVICE%3DWMS%26VERSION%3D1.1.1%26REQUEST%3DGetLegendGraphic%26EXCEPTIONS%3Dapplication%252Fvnd.ogc.se_xml%26LAYER%3Dwegvakken%26FORMAT%3Dimage%252Fgif%22%3E&amp;wmsurl=http://geodata.nationaalgeoregister.nl/nwbwegen/wms&amp;wmslayers=wegvakken,hectopunten" target="_blank">Viewer ingezoomd op Maastricht plus een popup met plaatjes welke van het internet komen. Tevens wordt de WMS met de NWB wegen geladen in de kaart</a><br><a href="./api/dev/api.html?bbox=104356,473255,130080,481742&amp;layer=gemeentegrenzen_label&amp;wmsurl=http://qgiscloud.com/luuk/westwijk_qgiscloud/wms&amp;wmslayers=westwijk" target="_blank">Viewer ingezoomd op Amstelveen met een WMS van QGISCloud welke de wijken van Westwijk laat zien</a><br><br>
+Demo html pagina's met JavaScript-include:<br><a href="./api/dev/api-via-javascript.html" target="_blank">Viewer ingezoomd op coordinaat 150.000,450.000, met een custom-marker en een custom popup met images (dit kan alleen via JavaScript)</a><br><a href="./api/dev/api-via-javascript-add-wms.html" target="_blank">Viewer welke inzoomt op Harlingen en de NOK2011 en de bevaarbaarheid van de Vaarwegen in Nederland laat zien. De legenda wordt in de popup getoond</a><br><a href="./api/dev/api-via-javascript-add-wms-via-function.html" target="_blank">Viewer welke inzoomt op Amstelveen en een WMS van QGISCloud via een functie toevoegd aan de kaart</a><br><a href="./api/dev/api-via-javascript-add-tms-via-function.html" target="_blank">Viewer welke inzoomt op IJmuiden en de TOP10NL toevoegt aan de kaart</a><br><a href="./api/dev/api-via-javascript-add-textlayer.html" target="_blank">Viewer welke de layerswitch toont, plus de Natura2000 en een tab-gescheiden textbestand (volgens het formaat:point    title   description icon)</a><br><hr>
+</li>
+</ul>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/Geonovum/pdok_wizzard/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/Geonovum/pdok_wizzard/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/Geonovum/pdok_wizzard"></a> is maintained by <a href="https://github.com/Geonovum">Geonovum</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
