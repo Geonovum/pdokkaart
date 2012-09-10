@@ -75,7 +75,7 @@ Pdok.Api = function(config) {
     /**
      * if a popup should be used or not
      */
-    this.hoverPopup = true;
+    this.hoverPopup = false;
 
     /**
      * Reference to popup titel object
@@ -156,9 +156,16 @@ Pdok.Api = function(config) {
      */
     this.selectControl = null;
 
-    this.locationToolXfield = 'x';
-    this.locationToolYfield = 'y';
-    this.locationToolWKTfield = 'wkt';
+    /**
+     * Locationtool defaults
+     */
+    this.locationtool = false;
+    this.locationtoolstyle = 'mt0';
+    this.locationtoolxfield = 'x';
+    this.locationtoolyfield = null;
+    this.locationtoolwktfield = 'wkt';
+    this.locationtoolzmin = '0';
+    this.locationtoolzmax = '30';
 
     this.FEATERSLAYER_NAME = "Features";
     this.MAXNUMBEROFFEATURES = 5;
@@ -698,7 +705,6 @@ Pdok.Api.prototype.defaultLayers = {
  * Creates an OpenLayers Map object due to the given config.
  */
 Pdok.Api.prototype.createOlMap = function() {
-    markerPath = "./markertypes/";
     var olMap = new OpenLayers.Map ({
         controls: [
             new OpenLayers.Control.Attribution(),
@@ -838,6 +844,7 @@ Pdok.Api.prototype.createOlMap = function() {
                 hover:this.hoverPopup,
                 // implement some on magic to have a visible selection,
                 // which we lost when we gave every feature a style
+                /*
                 onBeforeSelect:function(feature){
                     if(feature.style){
                         feature.style.strokeWidth+=2;
@@ -852,6 +859,7 @@ Pdok.Api.prototype.createOlMap = function() {
                         feature.style.graphicHeight-=5;
                     }
                 }
+                */
             });
     olMap.addControl(this.selectControl);
     if (this.showPopup){
@@ -871,6 +879,19 @@ Pdok.Api.prototype.createOlMap = function() {
 
     this.featuresLayer.addFeatures(this.features);
 
+    // enable Locationtool IF this.locationtool is set via config
+    if (this.locationtool){
+        var yorwkt = this.locationtoolwktfield;
+        if(this.locationtoolyfield){
+            yorwkt = this.locationtoolyfield;
+        }
+        this.enableLocationTool( this.locationtoolstyle,
+            this.locationtoolzmin,
+            this.locationtoolzmax,
+            this.locationtoolxfield,
+            yorwkt
+            );
+    }
     return olMap;
 }
 
@@ -879,12 +900,14 @@ Pdok.Api.prototype.disablePopups = function(){
             'featureselected': this.onFeatureSelect,
             'featureunselected': this.onFeatureUnselect
         });
+        return true;
 }
 Pdok.Api.prototype.enablePopups = function(){
         this.featuresLayer.events.on({
             'featureselected': this.onFeatureSelect,
             'featureunselected': this.onFeatureUnselect
         });
+        return true;
 }
 
 /**
@@ -1007,7 +1030,8 @@ Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
             if (featureAddedCallback){
                 featureAddedCallback(feature);
             }
-        }
+    }
+    return true;
 }
 
 Pdok.Api.prototype.disableDrawingTool = function(){
@@ -1020,6 +1044,7 @@ Pdok.Api.prototype.disableDrawingTool = function(){
     if (this.drawFeaturePolygonControl!=null){
         this.drawFeaturePolygonControl.deactivate();
     }
+    return true;
 }
 
 
@@ -1027,6 +1052,7 @@ Pdok.Api.prototype.disableEditingTool = function(){
     if (this.editFeatureControl) {
         this.editFeatureControl.deactivate();
     }
+    return true;
 }
 
 Pdok.Api.prototype.enableEditingTool = function(featureModifiedFunction){
@@ -1046,10 +1072,7 @@ Pdok.Api.prototype.enableEditingTool = function(featureModifiedFunction){
         });
     }
     this.editFeatureControl.activate();
-}
-
-Pdok.Api.prototype.getBookMarkUrl = function(){
-    
+    return true;
 }
 
 Pdok.Api.prototype.onFeatureSelect = function(evt) {
@@ -1090,21 +1113,21 @@ Pdok.Api.prototype.onFeatureUnselect = function(evt) {
     }
 }
 
-Pdok.Api.prototype.getMarkerPath = function(){
-	return markerPath;
-}
-
 Pdok.Api.prototype.setLocation = function(loc) {
-	this.map.setCenter (new OpenLayers.LonLat(parseInt(loc[0]), parseInt(loc[1])));
+    // if loc is a string like '150000,450000', split
+    if( typeof(loc) == 'string'){
+        loc = loc.split(',');
+    }
+    this.map.setCenter (new OpenLayers.LonLat(parseInt(loc[0]), parseInt(loc[1])));
+    return true;
 }
 
 Pdok.Api.prototype.setZoomLevel = function(zl) {
-	this.map.zoomTo (zl);
+    this.map.zoomTo (zl);
+    return true;
 }
 
 Pdok.Api.prototype.reprojectWGS84toRD = function(lat,lon){
-	Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
-	//Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs <>";
 	pointRD = new OpenLayers.LonLat(lon,lat)
         .transform(
             new OpenLayers.Projection("EPSG:4326"), // transform from wgs84 
@@ -1123,7 +1146,7 @@ Pdok.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
             type: tmstype
         });
     this.map.addLayer(lyrTMS);
-
+    return true;
 }
 
 Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
@@ -1165,6 +1188,7 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
         });
     this.map.addLayer(lyrWMTS);
 
+    return true;
 }
 
 Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
@@ -1227,6 +1251,7 @@ Pdok.Api.prototype.addWMS = function(wmsurl,wmslayers) {
             transparent: true
         });
     this.map.addLayer(lyrWMS);
+    return true;
 }
 
 /**
@@ -1310,25 +1335,44 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
             alert('layerid not available: ' + layerId);
         }
     }
+    return true;
 }
 
 
+Pdok.Api.prototype.disableLocationTool = function(){
+    // this.lationtool is INTERNAL flag to know if we have abled/disabled the locationtool, needed for code generation
+    this.locationtool = false;
+    return true;
+}
 Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, y){
 
+    // this.lationtool is INTERNAL flag to know if we have abled/disabled the locationtool, needed for code generation
+    this.locationtool = true;
     this[xorwkt] = 0;
 
-
+    if (styletype){
+        this.locationtoolstyletype = styletype;
+    }
     // if y is defined, this function is called with an x and y field
     if(y) {
-        this.locationToolXfield = xorwkt;
-        this.locationToolYfield = y;
-        this.locationToolWKTfield = null; // NO wkt
+        this.locationtoolxfield = xorwkt;
+        this.locationtoolyfield = y;
+        this.locationtoolwktfield = null; // NO wkt
+    }
+    else if(xorwkt) {
+        // apparently only a wkt field
+        this.locationtoolxfield = null;
+        this.locationtoolyfield = null;
+        this.locationtoolwktfield = xorwkt;
     }
     else {
-        // apparently only a wkt field
-        this.locationToolXfield = null;
-        this.locationToolYfield = null;
-        this.locationToolWKTfield = xorwkt;
+        // called without params, use api defaults
+    }
+    if(zmin){
+        this.locationtoolzmin = zmin;
+    }
+    if(zmax){
+        this.locationtoolzmax = zmax;
     }
 
     // TODO: remove this, or put features in different layer
@@ -1350,20 +1394,20 @@ Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
         if(feature.feature){
             feature = feature.feature;
         }
-        if (apiObject.locationToolXfield && apiObject.locationToolYfield) {
-            apiObject[apiObject.locationToolXfield] = feature.geometry.x;
-            apiObject[apiObject.locationToolYfield] = feature.geometry.y;
+        if (apiObject.locationtoolxfield && apiObject.locationtoolyfield) {
+            apiObject[apiObject.locationtoolxfield] = feature.geometry.x;
+            apiObject[apiObject.locationtoolyfield] = feature.geometry.y;
             if (feature.geometry.x && feature.geometry.y){
-                if (document.getElementById(apiObject.locationToolXfield) && document.getElementById(apiObject.locationToolYfield)) {
-                    document.getElementById(apiObject.locationToolXfield).value = feature.geometry.x
-                    document.getElementById(apiObject.locationToolYfield).value = feature.geometry.y
+                if (document.getElementById(apiObject.locationtoolxfield) && document.getElementById(apiObject.locationtoolyfield)) {
+                    document.getElementById(apiObject.locationtoolxfield).value = feature.geometry.x
+                    document.getElementById(apiObject.locationtoolyfield).value = feature.geometry.y
                 }
             }
         }
-        if (apiObject.locationToolWKTfield) {
-            apiObject[apiObject.locationToolWKTfield] = wktFormat.write(feature);
-            if (document.getElementById(apiObject.locationToolWKTfield)){
-                document.getElementById(apiObject.locationToolWKTfield).value = wktFormat.write(feature);
+        if (apiObject.locationtoolwktfield) {
+            apiObject[apiObject.locationtoolwktfield] = wktFormat.write(feature);
+            if (document.getElementById(apiObject.locationtoolwktfield)){
+                document.getElementById(apiObject.locationtoolwktfield).value = wktFormat.write(feature);
             }
         }
         startLocationAction();
@@ -1374,20 +1418,23 @@ Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
             apiObject.enableEditingTool(finishLocationAction);
             apiObject.disableDrawingTool();
         }
-        else if (map.getZoom() >= zmin && map.getZoom() <= zmax) {
+        else if (map.getZoom() >= apiObject.locationtoolzmin && map.getZoom() <= apiObject.locationtoolzmax) {
+            if(!styletype){
+                styletype = apiObject.locationtoolstyle;
+            }
             apiObject.enableDrawingTool(styletype, finishLocationAction);
         } else {
-            var msg = "U kunt alleen tekenen tussen de zoomnivo's: "+zmin+" en "+zmax+". \nU zit nu op zoomnivo: "+map.getZoom();
+            var msg = "U kunt alleen tekenen tussen de zoomnivo's: "+apiObject.locationtoolzmin+" en "+apiObject.locationtoolzmax+". \nU zit nu op zoomnivo: "+map.getZoom();
             var zoom;
-            if (map.getZoom() < zmin){
+            if (map.getZoom() < apiObject.locationtoolzmin){
                 //msg += "\nZoom minstens "+(zmin-map.getZoom())+" zoomnivo's in";
-                msg += "\nKlik op OK om "+(zmin-map.getZoom())+" zoomnivo's in te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
-                zoom = zmin;
+                msg += "\nKlik op OK om "+(apiObject.locationtoolzmin-map.getZoom())+" zoomnivo's in te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
+                zoom = apiObject.locationtoolzmin;
             }
             else{
                 //msg += "\nZoom minstens "+(map.getZoom()-zmax)+" zoomnivo's uit";
-                msg += "\nKlik op OK om "+(map.getZoom()-zmax)+" zoomnivo's uit te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
-                zoom = zmax;
+                msg += "\nKlik op OK om "+(map.getZoom()-apiObject.locationtoolzmax)+" zoomnivo's uit te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
+                zoom = apiObject.locationtoolzmax;
 
             }
             if (!alerted){
@@ -1399,9 +1446,9 @@ Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
             apiObject.disableDrawingTool();
         }
     }
-
     this.map.events.register("moveend", map, startLocationAction);
     startLocationAction();
+    return true;
 }
 
 
@@ -1471,6 +1518,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type){
     }
 
     this.featuresLayer.addFeatures(features);
+    return true;
 }
 
 Pdok.Api.prototype.addFeaturesFromUrl = function(url, type){
@@ -1504,33 +1552,53 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type){
             scope: apiObject
     });
 
+    return true;
 }
 
 Pdok.Api.prototype.createIframeTags = function(){
+    // map div size
+    var mapSize = this.map.getSize();
     // <iframe width='650' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></iframe><br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
     /* 
         <iframe width='650' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></iframe>
         <br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
     */
-    return "TODO iframetags";
+    var iframeTags = '<iframe width="'+mapSize.w+'" height="'+mapSize.h+'" frameborder="0" scrolling=no marginheight="0" marginwidth="0" src="'+this.createMapLink()+'" title="PDOK Kaart"></iframe>';
+        //'<br /><small>PDOK Kaart: <a href="'+this.createMapLink()+'" style="color:#0000FF;text-align:left">Grotere kaart weergeven</a></small>';
+    return iframeTags;
 }
 Pdok.Api.prototype.createObjectTags = function(){
+    // map div size
+    var mapSize = this.map.getSize();
     // <object width='650' height='450' codetype='text/html' data='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></object><br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
     /* 
         <object width='650' height='450' codetype='text/html' data='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></object>
         <br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
     */
-    return "TODO objecttags";
+    var objectTags = '<object width="'+mapSize.w+'" height="'+mapSize.h+'" codetype="text/html" data="'+this.createMapLink()+'" title="PDOK Kaart"></object>';
+        //'<br /><small>PDOK Kaart: <a href="'+this.createMapLink()+'" style="color:#0000FF;text-align:left">Grotere kaart weergeven</a></small>';
+    return objectTags;
 }
 Pdok.Api.prototype.createMapLink = function(){
-    //return 'http://localhost/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
     return 'http://'+window.location.host+'/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
 }
 Pdok.Api.prototype.createHtmlBody = function(){
-    return "TODO HTMLBODY";
+    var html = '<div id="map"></div>\n'+
+               '<script>var  api = createPDOKKaart();\n'+
+               '</script>';
+    return html;
 }
 Pdok.Api.prototype.createHtmlHead = function(){
-    return this.serialize(this.getConfig());
+    var host = window.location.host; // TODO make this a baseuri config?
+
+    var head = '\n<script src="http://'+host+'/pdok/js/jquery.js"></script>'+
+    '\n<script src="http://'+host+'/pdok/api/javascripts/OpenLayers.js"></script>'+
+    '\n<script src="http://'+host+'/pdok/api/javascripts/proj4js-compressed.js"></script>'+
+    '\n<script src="http://'+host+'/pdok/api/javascripts/pdok-api.js"></script>'+
+    '\n<link rel="stylesheet" href="http://'+host+'/pdok/api/styles/default/style.css" type="text/css">'+
+    '\n<link rel="stylesheet" href="http://'+host+'/pdok/api/styles/style.css" type="text/css">'+
+    '\n<script>var config = '+this.serialize(this.getConfig(), true)+';\nfunction createPDOKKaart() {  var api = new Pdok.Api(config);return api}\n</script>';
+    return head;
 }
 Pdok.Api.prototype.getConfig = function() {
     var config = {};
@@ -1538,7 +1606,7 @@ Pdok.Api.prototype.getConfig = function() {
     // zoom
     config.zoom = this.map.getZoom();
     // bbox
-    config.bbox = this.map.getExtent().toArray();
+    // config.bbox = this.map.getExtent().toArray();
     // or better ? loc
     config.loc = this.map.getCenter().toShortString();
     // layers
@@ -1556,6 +1624,16 @@ Pdok.Api.prototype.getConfig = function() {
     if (layers.length>0) {
         config.layers = [layers.join()];
     }
+    // locationtool
+    if(this.locationtool) {
+        config.locationtool = true;
+        config.locationtoolstyle = this.locationtoolstyle;
+        config.locationtoolxfield = this.locationtoolxfield;
+        config.locationtoolyfield = this.locationtoolyfield;
+        config.locationtoolwktfield = this.locationtoolwktfield;
+        config.locationtoolzmin = this.locationtoolzmin;
+        config.locationtoolzmax = this.locationtoolzmax;
+    }
     // features
     if (this.featuresLayer.features.length>0) {
         var kmlformat = new OpenLayers.Format.KML({
@@ -1571,8 +1649,9 @@ Pdok.Api.prototype.getConfig = function() {
 }
 
 
-Pdok.Api.prototype.serialize = function(obj){
+Pdok.Api.prototype.serialize = function(obj, stringQuotes){
   var returnVal;
+  if(stringQuotes){}else{stringQuotes = false;}
   if(obj != undefined){
   switch(obj.constructor)
   {
@@ -1588,8 +1667,11 @@ Pdok.Api.prototype.serialize = function(obj){
     vArr += "'"
     return vArr;
    case String:
-    //returnVal = escape("'" + obj + "'");
     returnVal = obj;
+    if (stringQuotes){
+        //returnVal = escape("'" + obj + "'");
+        returnVal = "'" + obj + "'";
+    }
     return returnVal;
    case Number:
     returnVal = isFinite(obj) ? obj.toString() : null;
@@ -1604,11 +1686,11 @@ Pdok.Api.prototype.serialize = function(obj){
      {
       if(typeof obj[attr] != "function")
       {
-       vobj.push('"' + attr + '":' + this.serialize(obj[attr]));
+       vobj.push('\n"' + attr + '":' + this.serialize(obj[attr], stringQuotes));
       }
      }
       if(vobj.length >0)
-       return "{" + vobj.join(",") + "}";
+       return "{" + vobj.join(",") + "\n}";
       else
        return "{}";
     }  

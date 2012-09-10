@@ -1,3 +1,30 @@
+
+html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+}
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+#map {
+    width: 100%;
+    height: 100%;
+}
+.olControlAttribution {
+    bottom: 3px!important;
+    background-color: #eee;
+}
+
+.olImageLoadError {
+  background-color: transparent; /* may likely be omitted */
+  opacity: 0.0;
+  filter: alpha(opacity=0); /* IE */
+  visibility: hidden;
+}
+
 div.olMap {
     z-index: 0;
     padding: 0 !important;
@@ -271,12 +298,6 @@ div.olControlSaveFeaturesItemInactive {
 .olControlNoSelect {
  -moz-user-select: none;
  -khtml-user-select: none;
-}
-
-.olImageLoadError {
-    background-color: pink;
-    opacity: 0.5;
-    filter: alpha(opacity=50); /* IE */
 }
 
 /**
