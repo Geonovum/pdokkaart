@@ -1342,6 +1342,9 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
 Pdok.Api.prototype.disableLocationTool = function(){
     // this.lationtool is INTERNAL flag to know if we have abled/disabled the locationtool, needed for code generation
     this.locationtool = false;
+    this.featuresLayer.removeAllFeatures();
+    this.disableDrawingTool();
+    this.disableEditingTool();
     return true;
 }
 Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, y){

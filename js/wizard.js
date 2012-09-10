@@ -198,6 +198,32 @@ $(document).ready(function() {
 	createEditAttributes ();
 	createPdokLayers();
 	createReadFile();
+
+    // onchange handler for different inputs of the locationtool
+    // None / geen
+    $('#kp1').change(function(){
+        api.disableLocationTool();
+    });
+    // other inputs
+    $('body').delegate('#kp2,#kp3,#kp5,#veldnaam,#xcoord,#ycoordi,#vanaf,#totenmet', 'change', function(){
+
+        // TODO getting the arguments of the enableLocationtool:
+        // styletype, zmin, zmax, x, yorwkt
+        var from = $('#vanaf').val();
+        var till = $('#totenmet').val();
+        if($(this).val()=='lt0'){
+            // enable default line
+            api.enableLocationTool('lt0', from, till);
+        }
+        else if($(this).val()=='pt0'){
+            // enable default line
+            api.enableLocationTool('pt0', from, till);
+        }
+        else if($(this).val()=='mt0'){
+            api.enableLocationTool('mt0', from, till);
+        }
+    });
+
 	
 	$('.row_right input:text').click(function(){
 		// Select input field contents
@@ -304,40 +330,40 @@ function createStyleSelector(){
 
 function createPdokLayers(){
 
-var html = '';
+    var html = '';
 
-html = html + '<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">' +
-			  '<option value="-">-- Kies een PDOK kaartlaag --</option>'
+    html = html + '<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">' +
+                '<option value="-">-- Kies een PDOK kaartlaag --</option>'
 
-for (layer in api.defaultLayers){
-	html = html + '<option value="'+ layer + '">' + api.defaultLayers[layer].name + '</option>'
-    
-}
+    for (layer in api.defaultLayers){
+        html = html + '<option value="'+ layer + '">' + api.defaultLayers[layer].name + '</option>'
+        
+    }
 
-html = html + '</select>'
-$('#divpdoklayerselector').html(html);
+    html = html + '</select>'
+    $('#divpdoklayerselector').html(html);
 
 }
 
 function createReadFile () {
 
-var html = '<strong>Als URL</strong><span id="closedrawlocation" onclick="$(\'#readfile\').fadeOut(\'fast\')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span></br></br> Geef de URL waar het bestand met markerdefinities zich bevindt en kies voor "Haal op ":</br></br>';
-html = html + '<input id="urltext" type="text" value="Voer een URL in :" name="searchLocation" title="Postcode of plaatsnaam" />';
-html = html + '<button type="submit" class="filterbutton" onclick="readURL();return false;">Haal op</button></br></br></br></br>';
-html = html + '<strong>Als Copy/Paste</strong></br></br> Kopieer de marker definities in het onderstaande tekstveld en kies voor "Opslaan":</br></br>'
-html = html + '<textarea id="copypaste">Copy/Paste : </textarea>';
-html = html + '<button type="submit" class="filterbutton" onclick="readCopyPaste();return false;">Opslaan</button>';
-	
-$('#readfile').html(html);
+    var html = '<strong>Als URL</strong><span id="closedrawlocation" onclick="$(\'#readfile\').fadeOut(\'fast\')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span></br></br> Geef de URL waar het bestand met markerdefinities zich bevindt en kies voor "Haal op ":</br></br>';
+    html = html + '<input id="urltext" type="text" value="Voer een URL in :" name="searchLocation" title="Postcode of plaatsnaam" />';
+    html = html + '<button type="submit" class="filterbutton" onclick="readURL();return false;">Haal op</button></br></br></br></br>';
+    html = html + '<strong>Als Copy/Paste</strong></br></br> Kopieer de marker definities in het onderstaande tekstveld en kies voor "Opslaan":</br></br>'
+    html = html + '<textarea id="copypaste">Copy/Paste : </textarea>';
+    html = html + '<button type="submit" class="filterbutton" onclick="readCopyPaste();return false;">Opslaan</button>';
+        
+    $('#readfile').html(html);
 
-$("#urltext").click(function(){
-    // Select input field contents
-    this.select();
-});
-$("#copypaste").click(function(){
-    // Select input field contents
-    this.select();
-});
+    $("#urltext").click(function(){
+        // Select input field contents
+        this.select();
+    });
+    $("#copypaste").click(function(){
+        // Select input field contents
+        this.select();
+    });
 
 }
 
@@ -355,48 +381,48 @@ function readCopyPaste () {
 
 function createEditAttributes () {
 
-var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Postcode of plaatsnaam" />';
-html = html + '<textarea id="description">Voer een omschrijving in : </textarea>';
-html = html + '<button type="submit" class="filterbutton" onclick="saveAttributes();return false;">Opslaan tekst</button>';
-html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen marker</button>';
+    var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Postcode of plaatsnaam" />';
+    html = html + '<textarea id="description">Voer een omschrijving in : </textarea>';
+    html = html + '<button type="submit" class="filterbutton" onclick="saveAttributes();return false;">Opslaan tekst</button>';
+    html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen marker</button>';
 
-$('#edit2a').html(html);
-$("#attr_name").click(function(){
-    // Select input field contents
-    this.select();
-});
-$("#description").click(function(){
-    // Select input field contents
-    this.select();
-});
+    $('#edit2a').html(html);
+    $("#attr_name").click(function(){
+        // Select input field contents
+        this.select();
+    });
+    $("#description").click(function(){
+        // Select input field contents
+        this.select();
+    });
 
-//$('#edit3a').html(html);
+    //$('#edit3a').html(html);
 
-}
+    }
 
-function createFieldnameInput(radiobutton) {
+    function createFieldnameInput(radiobutton) {
 
- var  geometrie = $(radiobutton).attr('value') ;
- var html = ''; 
- 
- if (geometrie == 'mt1') {
+    var  geometrie = $(radiobutton).attr('value') ;
+    var html = ''; 
+    
+    if (geometrie == 'mt1') {
 
-	html = html + '<label>X-coördinaat : <input id="xcoord" type="text" value=""  /></label></br>';
-	html = html + '<label>Y-coördinaat : <input id="ycoord" type="text" value=""  /></label></br>';
- }
- 
- else if (geometrie == 'lt1' || geometrie == 'pt1') {
+        html = html + '<label>X-co&ouml;rdinaat  : <input id="xcoord" type="text" value=""  /></label></br>';
+        html = html + '<label>Y-co&ouml;rdinaat : <input id="ycoord" type="text" value=""  /></label></br>';
+    }
+    
+    else if (geometrie == 'lt1' || geometrie == 'pt1') {
 
-	html = html + '<label>Veldnaam:<input id="veldnaam" type="text" value=""  /></label>';
+        html = html + '<label>Veldnaam (wkt):<input id="veldnaam" type="text" value=""  /></label>';
 
- }
- else {
- 
-	html = '';
+    }
+    else {
+    
+        html = '';
 
- };
-	
-$('#veldnaam').html(html);
+    };
+
+    $('#divveldnaam').html(html);
 
 };
 
