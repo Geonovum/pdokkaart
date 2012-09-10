@@ -895,17 +895,55 @@ Pdok.Api.prototype.createOlMap = function() {
     return olMap;
 }
 
+Pdok.Api.prototype.onPopupFeatureSelect = function(evt) {
+    feature = evt.feature;
+    var content = "";
+    if (feature.attributes['name']!=null){
+        content=feature.attributes['name'];
+    }
+    if (feature.attributes['description']!=null){
+        content=content+"<br/>"+feature.attributes['description'];
+    }
+    if (!content || content.length==0)
+    {
+        content = '&nbsp;';
+    }
+    popup = new OpenLayers.Popup.FramedCloud("featurePopup",
+                feature.geometry.getBounds().getCenterLonLat(),
+                new OpenLayers.Size(100,100),
+                content,
+                null, true, function(evt) {
+                    this.hide();
+                    // deselect ALL features to be able to select this one again
+                    popup.feature.layer.selectedFeatures=[];
+                }
+            );
+    feature.popup = popup;
+    popup.feature = feature;
+    this.map.addPopup(popup, true);
+}
+
+Pdok.Api.prototype.onPopupFeatureUnselect = function(evt) {
+    feature = evt.feature;
+    if (feature.popup) {
+        popup.feature = null;
+        this.map.removePopup(feature.popup);
+        feature.popup.destroy();
+        feature.popup = null;
+    }
+}
+
 Pdok.Api.prototype.disablePopups = function(){
         this.featuresLayer.events.un({
-            'featureselected': this.onFeatureSelect,
-            'featureunselected': this.onFeatureUnselect
+            'featureselected': this.onPopupFeatureSelect,
+            'featureunselected': this.onPopupFeatureUnselect
         });
         return true;
 }
 Pdok.Api.prototype.enablePopups = function(){
         this.featuresLayer.events.on({
-            'featureselected': this.onFeatureSelect,
-            'featureunselected': this.onFeatureUnselect
+            'featureselected': this.onPopupFeatureSelect,
+            'featureunselected': this.onPopupFeatureUnselect
         });
         return true;
 }
@@ -1073,44 +1111,6 @@ Pdok.Api.prototype.enableEditingTool = function(featureModifiedFunction){
     }
     this.editFeatureControl.activate();
     return true;
-}
-
-Pdok.Api.prototype.onFeatureSelect = function(evt) {
-    feature = evt.feature;
-    var content = "";
-    if (feature.attributes['name']!=null){
-        content=feature.attributes['name'];
-    }
-    if (feature.attributes['description']!=null){
-        content=content+"<br/>"+feature.attributes['description'];
-    }
-    if (!content || content.length==0)
-    {
-        content = '&nbsp;';
-    }
-    popup = new OpenLayers.Popup.FramedCloud("featurePopup",
-                feature.geometry.getBounds().getCenterLonLat(),
-                new OpenLayers.Size(100,100),
-                content,
-                null, true, function(evt) {
-                    this.hide();
-                    // deselect ALL features to be able to select this one again
-                    popup.feature.layer.selectedFeatures=[];
-                }
-            );
-    feature.popup = popup;
-    popup.feature = feature;
-    this.map.addPopup(popup, true);
-}
-
-Pdok.Api.prototype.onFeatureUnselect = function(evt) {
-    feature = evt.feature;
-    if (feature.popup) {
-        popup.feature = null;
-        this.map.removePopup(feature.popup);
-        feature.popup.destroy();
-        feature.popup = null;
-    }
 }
 
 Pdok.Api.prototype.setLocation = function(loc) {
