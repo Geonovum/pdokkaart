@@ -1585,6 +1585,10 @@ Pdok.Api.prototype.createObjectTags = function(){
 Pdok.Api.prototype.createMapLink = function(){
     return 'http://'+window.location.host+'/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
 }
+Pdok.Api.prototype.createMailLink = function(){
+    return 'mailto:UwMailAdres@provider.nl?Subject=PDOKKaart%20URL&BODY=URL%3A%20' + encodeURIComponent('http://'+window.location.host+'/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig()));
+}
+
 Pdok.Api.prototype.createHtmlBody = function(){
     var html = '<div id="map"></div>\n'+
                '<script>var  api = createPDOKKaart();\n'+
