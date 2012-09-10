@@ -19,6 +19,11 @@ function goTo(step) {
 		document.getElementById("radio_routes_6").checked = "true";
 	}
 	
+	// If step 5 is opened the the code must be generated immediately
+	if (step == 5){
+		linkToMapOpened();
+	}
+	
 	//hide text editor functionality
 	document.getElementById("savemarkerinfo").style.visibility = "hidden";
 	hideEditor();
