@@ -45,6 +45,8 @@ function goTo(step) {
 	return false;
 }
 
+/*
+OVERBODIG??
 //set images for markers into html
 function selectSet(set) {	
 	document.getElementById("mapmarkers").className ="row " + set;
@@ -59,6 +61,7 @@ function selectSet(set) {
 		setMarkerImage(3);
 	}	
 }
+*/
 
 //select output code at Step 4
 function selectCode() {
@@ -79,6 +82,8 @@ function hideEditor() {
 	return false;
 }
 
+/*
+OVERBODIG??
 //add help functionality to link to correct part of html page 
 function addHelp() {
 	var pageLinks = document.getElementsByTagName("A");
@@ -97,25 +102,24 @@ function addHelp() {
 		}
 	}
 }
-//++
+*/
 
 function MeerMinderOpties() {
 
-//if (document.getElementById('opties').value == "Meer opties") {
-if ($("#opties").val() ==  "Meer opties") {
-	$('#step3').toggle();
-	$('#step4').toggle();
-	$('#opties span').text('Minder opties');
-	$("#opties").attr('value', 'Minder opties');
+    //if (document.getElementById('opties').value == "Meer opties") {
+    if ($("#opties").val() ==  "Meer opties") {
+        $('#step3').toggle();
+        $('#step4').toggle();
+        $('#opties span').text('Minder opties');
+        $("#opties").attr('value', 'Minder opties');
 
-}
-else {
-	$('#step3').toggle();
-	$('#step4').toggle();
-	$('#opties span').text('Meer opties');
-	$("#opties").attr('value', 'Meer opties');
-}	
-	
+    }
+    else {
+        $('#step3').toggle();
+        $('#step4').toggle();
+        $('#opties span').text('Meer opties');
+        $("#opties").attr('value', 'Meer opties');
+    }	
 }
 
 function SearchArray(arr, obj) {
@@ -124,152 +128,148 @@ function SearchArray(arr, obj) {
     }
 }
 
-function changeZoom1() {
-
-mapPDOKKaart.zoomTo($("select#vanaf").val());
-if (parseInt($("select#totenmet").val()) < parseInt($("select#vanaf").val())) {
-	$("select#totenmet").val($("select#vanaf").val());
-}
-}
-
-function changeZoom2() {
-
-mapPDOKKaart.zoomTo($("select#totenmet").val());
-if (parseInt($("select#totenmet").val()) < parseInt($("select#vanaf").val())) {
-	$("select#vanaf").val($("select#totenmet").val());
-}
-}
-
+/*
+OVERBODIG??
 function ZoomIn(x,y){
-
 	mapPDOKKaart.setCenter(new OpenLayers.LonLat(x,y), 7);
-
 };
-
+*/
 
 // init is called after loading the settings page and initilizes the map and some GUI components, like the PDOK map layer selector and the "popin" windows
 $(document).ready(function() {
-	
-	//setMapSize();
-	//addFormEnhancements();
-	//$(window).resize(setMapSize);
-	$('input:radio[name=editmarker]')[0].checked = true;
-	$('input:radio[name=mapsize]')[2].checked = true;
-	$('input:radio[name=radiogroup_kp]')[0].checked = true;
-	$("select#vanaf").val('1');
-	$("select#totenmet").val('14');
-	$(".radio_kp").click(function(event) {
-		createFieldnameInput(this);
-	});
-	
 
-	// initiate the Pdok API object
-	var o = OpenLayers.Util.getParameters();
+    //setMapSize();
+    //addFormEnhancements();
+    //$(window).resize(setMapSize);
+    $('input:radio[name=editmarker]')[0].checked = true;
+    $('input:radio[name=mapsize]')[2].checked = true;
+
+    // initiate the Pdok API object
+    var o = OpenLayers.Util.getParameters();
     //var api = new Pdok.Api(o);
-	api = new Pdok.Api(o);
+    api = new Pdok.Api(o);
     // popups and selectionControl of Api interfears with modifyFeatureControl
     // we disable them while we find out how to handle this
     // TODO handle this ...
     api.disablePopups();
     api.selectControl.deactivate();
-	
-	// for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
-	mapPDOKKaart = api.getMapObject();
-	markers = api.featuresLayer;
-	pdok_api_map_resize(550,440);
+
+    // for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
+    mapPDOKKaart = api.getMapObject();
+    markers = api.featuresLayer;
+    pdok_api_map_resize(550,440);
     api.map.zoomToExtent([-15000,300000,300000,640000], true);
-    
+
     $('#geocodeerresult').delegate('li a','click', function (evt) {
-		var x = $("span.x", this).text();
-		var y = $("span.y", this).text();
-		var z = $("span.z", this).text();
-		var ft_id = $("span.ft_id", this).text();
-		if(x && y){
-			mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
-		}
-		else {
-			alert("fout met coordinaten");
-		}
-		return false;
-	});
-
-	
-	createStyleSelector();
-	createEditAttributes ();
-	createPdokLayers();
-	createReadFile();
-
-    // onchange handler for different inputs of the locationtool
-    // None / geen
-    $('#kp1').change(function(){
-        api.disableLocationTool();
-    });
-    // other inputs
-    $('body').delegate('#kp2,#kp3,#kp5,#veldnaam,#xcoord,#ycoordi,#vanaf,#totenmet', 'change', function(){
-
-        // TODO getting the arguments of the enableLocationtool:
-        // styletype, zmin, zmax, x, yorwkt
-        var from = $('#vanaf').val();
-        var till = $('#totenmet').val();
-        if($(this).val()=='lt0'){
-            // enable default line
-            api.enableLocationTool('lt0', from, till);
+        var x = $("span.x", this).text();
+        var y = $("span.y", this).text();
+        var z = $("span.z", this).text();
+        var ft_id = $("span.ft_id", this).text();
+        if(x && y){
+            mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
         }
-        else if($(this).val()=='pt0'){
-            // enable default line
-            api.enableLocationTool('pt0', from, till);
+        else {
+            alert("fout met coordinaten");
         }
-        else if($(this).val()=='mt0'){
-            api.enableLocationTool('mt0', from, till);
-        }
+        return false;
     });
 
-	
-	$('.row_right input:text').click(function(){
-		// Select input field contents
-		this.select();
-	});
-	
-	$('.row_right textarea').click(function(){
-		// Select input field contents
-		this.select();
-	});
-	
-	$('#step3 input:text').val('');
+    createStyleSelector();
+    createEditAttributes ();
+    createPdokLayers();
+    createReadFile();
 
-  });
+    // locationtool properties
+    var locationToolPropertyChange = function() {
+        // disable locationtool if 'none' is selected
+        if (this.id=='none'){
+            api.removeLocationToolProps();
+            // hide all field inputs
+            $('#yfield,#xfield,#wktfield').hide();
+            $('#locationtoolzooms').hide();
+        }
+        else {
+            $('#locationtoolzooms').show();
+            var xorwkt = $('#wktfield input').val();
+            var y = $('#yfield input').val();
+            var zmin = parseInt($('#zmin').val());
+            var zmax = parseInt($('#zmax').val());
+            var locationtype = $("input[name=locationtoolstyle]:checked").attr('id');
+            var styletype = $("input[name=locationtoolstyle]:checked").val();
+            if(locationtype=='pointxy'){
+                $('#yfield,#xfield').show();
+                $('#wktfield').hide();
+                xorwkt = $('#xfield input').val();
+                if(xorwkt==''){xorwkt='x'} // no prefilling, but defaulting for prop setting
+                y = $('#yfield input').val();
+                if(y==''){y='y'} // no prefilling, but defaulting for prop setting
+            }
+            else if(locationtype=='line' || locationtype=='point' || locationtype=='polygon'){
+                $('#yfield,#xfield').hide();
+                $('#wktfield').show();
+                if(xorwkt==''){xorwkt='wkt'} // no prefilling, but defaulting for prop setting
+                y = null;
+            }
+
+            if(this.id=='zmin') {
+                if(zmin>zmax) {
+                    zmax = zmin;
+                    $('#zmax').val(zmax);
+                }
+            }
+            else if(this.id=='zmax') {
+                if(zmax<zmin) {
+                    zmin = zmax;
+                    $('#zmin').val(zmin);
+                }
+            }
+            api.setLocationToolProps(styletype, zmin, zmax, xorwkt, y);
+        }
+    }
+    $('#locationtoolform input[type=radio], #locationtoolform select').change(locationToolPropertyChange);
+    $('#locationtoolfield input[type=text]').keyup(locationToolPropertyChange);
+
+    $('.row_right input:text').click(function(){
+        // Select input field contents
+        this.select();
+    });
+
+    $('.row_right textarea').click(function(){
+        // Select input field contents
+        this.select();
+    });
+
+    $('#step3 input:text').val('');
+
+});
+
 
 function disableStyleSelector(){
-
-	$('#styleselector').hide();
-
+    $('#styleselector').hide();
 }
 
-function enableStyleSelector(){
-	
-	api.disableEditingTool();
-	api.disableDrawingTool();
 
-	$('#styleselector').show();
-	$('#edit2a').hide();
-	
-	//default style selected
-	featureCreatedCallback = function(feature){
-            // you get a handle here to the feature last modified
-            // console.log(feature);
-			//ActiveFeature.fid = feature.fid;
-			activeFeature = feature;
-			createEditAttributes ();
-			$('#edit2a').appendTo($('#edit2'));
-			$('#edit2a').show();
+function enableStyleSelector(){
+    api.disableEditingTool();
+    api.disableDrawingTool();
+    $('#styleselector').show();
+    $('#edit2a').hide();
+    //default style selected
+    featureCreatedCallback = function(feature){
+        // you get a handle here to the feature last modified
+        // console.log(feature);
+        //ActiveFeature.fid = feature.fid;
+        activeFeature = feature;
+        createEditAttributes ();
+        $('#edit2a').appendTo($('#edit2'));
+        $('#edit2a').show();
     }
     // no popup during editing
     api.disablePopups();
     api.enableDrawingTool("mt0", featureCreatedCallback);
-	
-	$('#styleselector li').removeClass('styleselected');
-	$('#mt0').addClass('styleselected');
 
+    $('#styleselector li').removeClass('styleselected');
+    $('#mt0').addClass('styleselected');
 }
 
 
@@ -398,9 +398,9 @@ function createEditAttributes () {
 
     //$('#edit3a').html(html);
 
-    }
+}
 
-    function createFieldnameInput(radiobutton) {
+function createFieldnameInput(radiobutton) {
 
     var  geometrie = $(radiobutton).attr('value') ;
     var html = ''; 

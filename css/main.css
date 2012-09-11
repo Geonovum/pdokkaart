@@ -330,6 +330,10 @@ input, select, textarea {
      width: 298px;
 }
 
+#minzoom select, #maxzoom select{
+    font-size:10px;
+}
+
 #description{
 	height:60px;
 }	
@@ -350,38 +354,6 @@ input, select, textarea {
 	width : 180px;
 }
 
-#kp1{
-	width : 20px;
-}	
-
-#kp2{
-	width : 20px;
-}	
-
-#kp3{
-	width : 20px;
-}	
-
-#kp5{
-	width : 20px;
-}
-
-#vanaf{
-	width : 50px;
-}
-
-#totenmet{
-	width : 50px;
-}
-
-#divvanaf{
-	font-size: 0.68em;
-}
-
-#divtotenmet{
-	font-size: 0.68em;
-}
-
 #mapsize1{
 	width : 20px;
 }	
@@ -392,4 +364,51 @@ input, select, textarea {
 
 #mapsize3{
 	width : 20px;
+}
+
+.container form {
+	margin: 10px;
+	display: none;
+}
+
+.active form {
+	display: block;
+}
+
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+	text-align: left;
+	padding: 10px 0;
+}
+
+.container {
+	border: 1px solid #273397;
+	background-color:rgb(246,212,178);
+	margin-bottom: 10px;
+}
+
+h2 {
+	background-color:rgb(225,112,0);
+	font-size: 1.3em;
+	padding: 8px 8px 10px 14px;
+	position: relative;
+}
+
+.active h2 {
+	background-color: #273397;
+}
+
+.active h2 a,#col3 h2,#col4 h2 {
+	color: #fff !important;
+}
+
+#editor1, #codeoutput {
+	border: 1px solid #273397;
+	width: 100%;
+	font-family: "Courier New", Courier, monospace;
+}
+
+select, textarea {
+	font-size: 1.25em;
 }

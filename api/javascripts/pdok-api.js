@@ -143,6 +143,15 @@ Pdok.Api = function(config) {
      */
     this.styles = null;
 
+    this.FEATERSLAYER_NAME = "Features";
+    this.MAXNUMBEROFFEATURES = 5;
+    // this.features can come as KML string from config/params
+    // after handling this, it contains an array of features
+    this.features = [];
+    /**
+     * Reference to featuresLayer (= layer where you draw feature on)
+     */
+    this.featuresLayer = null;
     /**
      * References to different drawing controls
      */
@@ -152,30 +161,31 @@ Pdok.Api = function(config) {
     this.editFeatureControl = null;
 	
     /**
-     * References to select controls
+     * References to select control for features in the featurelayer
      */
     this.selectControl = null;
 
+    /**
+     * Reference to locationLayer (= layer to be used by the locationtool)
+     */
+    this.locationLayer = null;
+    /**
+     * References to different drawing controls to be used by the locationtool
+     */
+    this.drawLocationPointControl = null;
+    this.drawLocationLineControl = null;
+    this.drawLocationPolygonControl = null;
+    this.editLocationControl = null;
     /**
      * Locationtool defaults
      */
     this.locationtool = false;
     this.locationtoolstyle = 'mt0';
     this.locationtoolxfield = 'x';
-    this.locationtoolyfield = null;
+    this.locationtoolyfield = 'y';
     this.locationtoolwktfield = 'wkt';
     this.locationtoolzmin = '0';
     this.locationtoolzmax = '30';
-
-    this.FEATERSLAYER_NAME = "Features";
-    this.MAXNUMBEROFFEATURES = 5;
-    /**
-     * Reference to featuresLayer (= layer where you draw feature on)
-     */
-    this.featuresLayer = null;
-    // this.features can come as KML string from config/params
-    // after handling this, it contains an array of features
-    this.features = [];
 
 
     /**
@@ -818,6 +828,12 @@ Pdok.Api.prototype.createOlMap = function() {
     this.featuresLayer = new OpenLayers.Layer.Vector(this.FEATURESLAYER_NAME);
     olMap.addLayer(this.featuresLayer);
 
+    
+    this.locationLayer = new OpenLayers.Layer.Vector('locationtool', {
+        displayInLayerSwitcher:false
+    });
+    olMap.addLayer(this.locationLayer);
+
     if (typeof this.features == 'object') {
         // meaning we received a features string (kml) from the outside
         // features string handled, this.features now used as feature array
@@ -1021,18 +1037,22 @@ Pdok.Api.prototype.createStyles = function(){
 }
 
 /**
- * If not available, creates a drawFeature control. and activates it.
- * 
+ *
  * Parameters:
  * styletype - {String} styletype (eg 'mt1' or 'lt1' or 'pt1')
  *       based on the first char of the styletype, the type of feature
  *       is set: m = marker/point, l = linestring, p = polygon
+ * featureAddedCallback - {Function{ handler function to be called after feature is added}
  */
 Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback){
-    this.disableDrawingTool();
+    this.disableDrawingTool();  // to be sure we do not have two drawfeature controls active at once
     var apiStyles = this.styles;
     var apiFeaturesLayer = this.featuresLayer;
     var currentDrawControl;
+    // default to mt0 if called without a styletype
+    if (styletype == undefined) {
+        styletype = 'mt0';
+    }
     if (styletype[0]=='m'){
         if (this.drawFeaturePointControl==null){
             this.drawFeaturePointControl = new OpenLayers.Control.DrawFeature(this.featuresLayer, OpenLayers.Handler.Point);
@@ -1084,7 +1104,6 @@ Pdok.Api.prototype.disableDrawingTool = function(){
     }
     return true;
 }
-
 
 Pdok.Api.prototype.disableEditingTool = function(){
     if (this.editFeatureControl) {
@@ -1345,21 +1364,31 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
 
 
 Pdok.Api.prototype.disableLocationTool = function(){
-    // this.lationtool is INTERNAL flag to know if we have abled/disabled the locationtool, needed for code generation
-    this.locationtool = false;
-    this.featuresLayer.removeAllFeatures();
-    this.disableDrawingTool();
-    this.disableEditingTool();
+
+    if (this.drawLocationPointControl!=null){
+        this.drawLocationPointControl.deactivate();
+    }
+    if (this.drawLocationLineControl!=null){
+        this.drawLocationLineControl.deactivate();
+    }
+    if (this.drawLocationPolygonControl!=null){
+        this.drawLocationPolygonControl.deactivate();
+    }
     return true;
 }
-Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, y){
 
-    // this.lationtool is INTERNAL flag to know if we have abled/disabled the locationtool, needed for code generation
+/**
+ * Api method to set the api location properties, detached from starting of the
+ * locationtool to be able to only configure the tool within a wizard
+ *
+ */
+
+Pdok.Api.prototype.setLocationToolProps = function(styletype, zmin, zmax, xorwkt, y){
+
+    //console.log('setting locationtoolprops: '+styletype+' '+zmin+' '+ zmax+' '+ xorwkt+' '+y);
     this.locationtool = true;
-    this[xorwkt] = 0;
-
     if (styletype){
-        this.locationtoolstyletype = styletype;
+        this.locationtoolstyle = styletype;
     }
     // if y is defined, this function is called with an x and y field
     if(y) {
@@ -1374,7 +1403,8 @@ Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
         this.locationtoolwktfield = xorwkt;
     }
     else {
-        // called without params, use api defaults
+        // default to x y field from api defaults
+        this.locationtoolwktfield = null; // NO wkt
     }
     if(zmin){
         this.locationtoolzmin = zmin;
@@ -1382,29 +1412,134 @@ Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
     if(zmax){
         this.locationtoolzmax = zmax;
     }
+    return true;
+}
 
-    // TODO: remove this, or put features in different layer
-    if (this.featuresLayer.features.length > 0){
-        alert('Op dit moment mogen er geen andere features aanwezig zijn. Begin met een lege kaart.');
-        return;
-    }
 
-    var wktFormat = new OpenLayers.Format.WKT();
+/**
+ * Api method to UNset the locationtool, and set the api location properties to default values
+ * this is necceary to be able to create code and a map link with or without the locationtool-props
+ *
+ */
+Pdok.Api.prototype.removeLocationToolProps = function(){
+    //console.log('remove locationtoolprops');
+    // back to defaults
+    this.locationtool = false;
+    this.locationtoolstyle = 'mt0';
+    this.locationtoolxfield = 'x';
+    this.locationtoolyfield = 'y';
+    this.locationtoolwktfield = 'wkt';
+    this.locationtoolzmin = '0';
+    this.locationtoolzmax = '30';
+    return true;
+}
+
+Pdok.Api.prototype.enableLocationTool = function(){
     var apiObject = this;
+
     var alerted = false;
-    var map = this.map;
+    var locationToolCheck = function() {
+        if (apiObject.locationLayer.features.length > 0) {
+            // stop all locationtool controls
+            if (confirm('Er is al een geldige lokatie. \nKlik OK om verder te gaan,\nof Annuleren/Cancel om opnieuw te klikken.')) {
+                apiObject.map.events.unregister("moveend", apiObject.map, locationToolCheck);
+                apiObject.disableLocationTool();
+            }
+            else {
+                apiObject.locationLayer.removeAllFeatures();
+                apiObject.startLocationTool();
+            }
+            return false;
+        }
+        else if (apiObject.map.getZoom() >= apiObject.locationtoolzmin && apiObject.map.getZoom() <= apiObject.locationtoolzmax) {
+            if(!apiObject.locationtoolstyle){
+                apiObject.locationtoolstyle = 'mt0';
+            }
+            apiObject.startLocationTool();
+        } else {
+            var msg = "U kunt alleen tekenen tussen de zoomnivo's: "+apiObject.locationtoolzmin+" en "+apiObject.locationtoolzmax+". \nU zit nu op zoomnivo: "+apiObject.map.getZoom();
+            var zoom;
+            if (apiObject.map.getZoom() < apiObject.locationtoolzmin){
+                msg += "\nKlik op OK om "+(apiObject.locationtoolzmin-apiObject.map.getZoom())+" zoomnivo's in te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
+                zoom = apiObject.locationtoolzmin;
+            }
+            else{
+                msg += "\nKlik op OK om "+(mapiObject.ap.getZoom()-apiObject.locationtoolzmax)+" zoomnivo's uit te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
+                zoom = apiObject.locationtoolzmax;
+
+            }
+            if (!alerted){
+                alerted = true;
+                if(confirm(msg)){
+                   apiObject.map.zoomTo(zoom);
+                }
+            }
+        }
+    }
+    // register above check function to listen to moveend events of the map
+    this.map.events.register("moveend", this.map, locationToolCheck);
+    // first check
+    locationToolCheck();
+    return true;
+}
+
+
+Pdok.Api.prototype.startLocationTool = function(){
+    this.disableLocationTool();  // to be sure we do not have two drawfeature controls active at once
 
     // selectControl and popups interfere with editing tools: disable all
     this.selectControl.deactivate();
     this.disablePopups();
 
-    var finishLocationAction = function(feature){
+    // create controls
+    var currentDrawControl;
+    if (this.locationtoolstyle == undefined) {
+        this.locationtoolstyle = 'mt0';
+    }
+    if (this.locationtoolstyle[0]=='m'){
+        if (this.drawLocationPointControl==null){
+            this.drawLocationPointControl = new OpenLayers.Control.DrawFeature(this.locationLayer, OpenLayers.Handler.Point);
+            this.map.addControl(this.drawLocationPointControl);
+        }
+        currentDrawControl = this.drawLocationPointControl;
+        currentDrawControl.handler.style = this.styles[this.locationtoolstyle];
+    }
+    else if (this.locationtoolstyle[0]=='l'){
+        if (this.drawLocationLineControl==null){
+            this.drawLocationLineControl = new OpenLayers.Control.DrawFeature(this.locationLayer, OpenLayers.Handler.Path);
+            this.map.addControl(this.drawLocationLineControl);
+        }
+        currentDrawControl = this.drawLocationLineControl;
+        currentDrawControl.handler.style = this.styles[this.locationtoolstyle];
+        currentDrawControl.handler.style.externalGraphic = null;
+    }
+    else if (this.locationtoolstyle[0]=='p'){
+        if (this.drawLocationPolygonControl==null){
+            this.drawlocationPolygonControl = new OpenLayers.Control.DrawFeature(this.locationLayer, OpenLayers.Handler.Polygon);
+            this.map.addControl(this.drawLocationPolygonControl);
+        }
+        currentDrawControl = this.drawLocationPolygonControl;
+        currentDrawControl.handler.style = this.styles[this.locationtoolstyle];
+        currentDrawControl.handler.style.externalGraphic = null;
+    }
+
+    var apiObject = this;
+    var locationtoolfeatureadded = function(feature) {
+        // sometimes we receive an event object (with a feature)
         if(feature.feature){
             feature = feature.feature;
         }
+        feature.style = apiObject.styles[apiObject.locationtoolstyle];
+        feature.layer.redraw();
+        // also set an attribute 'styletype' to be able to export features with styletype
+        feature.attributes['styletype'] = apiObject.locationtoolstyle;
+
+        var wktFormat = new OpenLayers.Format.WKT();
+
         if (apiObject.locationtoolxfield && apiObject.locationtoolyfield) {
             apiObject[apiObject.locationtoolxfield] = feature.geometry.x;
             apiObject[apiObject.locationtoolyfield] = feature.geometry.y;
+            // only for points
             if (feature.geometry.x && feature.geometry.y){
                 if (document.getElementById(apiObject.locationtoolxfield) && document.getElementById(apiObject.locationtoolyfield)) {
                     document.getElementById(apiObject.locationtoolxfield).value = feature.geometry.x
@@ -1418,47 +1553,14 @@ Pdok.Api.prototype.enableLocationTool = function(styletype, zmin, zmax, xorwkt, 
                 document.getElementById(apiObject.locationtoolwktfield).value = wktFormat.write(feature);
             }
         }
-        startLocationAction();
+        currentDrawControl.deactivate();
     }
 
-    var startLocationAction = function() {
-        if (apiObject.featuresLayer.features.length > 0) {
-            apiObject.enableEditingTool(finishLocationAction);
-            apiObject.disableDrawingTool();
-        }
-        else if (map.getZoom() >= apiObject.locationtoolzmin && map.getZoom() <= apiObject.locationtoolzmax) {
-            if(!styletype){
-                styletype = apiObject.locationtoolstyle;
-            }
-            apiObject.enableDrawingTool(styletype, finishLocationAction);
-        } else {
-            var msg = "U kunt alleen tekenen tussen de zoomnivo's: "+apiObject.locationtoolzmin+" en "+apiObject.locationtoolzmax+". \nU zit nu op zoomnivo: "+map.getZoom();
-            var zoom;
-            if (map.getZoom() < apiObject.locationtoolzmin){
-                //msg += "\nZoom minstens "+(zmin-map.getZoom())+" zoomnivo's in";
-                msg += "\nKlik op OK om "+(apiObject.locationtoolzmin-map.getZoom())+" zoomnivo's in te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
-                zoom = apiObject.locationtoolzmin;
-            }
-            else{
-                //msg += "\nZoom minstens "+(map.getZoom()-zmax)+" zoomnivo's uit";
-                msg += "\nKlik op OK om "+(map.getZoom()-apiObject.locationtoolzmax)+" zoomnivo's uit te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
-                zoom = apiObject.locationtoolzmax;
+    currentDrawControl.featureAdded = locationtoolfeatureadded;
+    currentDrawControl.activate();
 
-            }
-            if (!alerted){
-                alerted = true;
-                if(confirm(msg)){
-                   map.zoomTo(zoom);
-                }
-            }
-            apiObject.disableDrawingTool();
-        }
-    }
-    this.map.events.register("moveend", map, startLocationAction);
-    startLocationAction();
     return true;
 }
-
 
 
 Pdok.Api.prototype.handleGetResponse = function(response){
@@ -1652,9 +1754,13 @@ Pdok.Api.prototype.getConfig = function() {
     if(this.locationtool) {
         config.locationtool = true;
         config.locationtoolstyle = this.locationtoolstyle;
-        config.locationtoolxfield = this.locationtoolxfield;
-        config.locationtoolyfield = this.locationtoolyfield;
-        config.locationtoolwktfield = this.locationtoolwktfield;
+        if (this.locationwktfield) {
+            config.locationtoolwktfield = this.locationtoolwktfield;
+        }
+        else {
+            config.locationtoolxfield = this.locationtoolxfield;
+            config.locationtoolyfield = this.locationtoolyfield;
+        }
         config.locationtoolzmin = this.locationtoolzmin;
         config.locationtoolzmax = this.locationtoolzmax;
     }
