@@ -182,6 +182,8 @@ $(document).ready(function() {
 
     $('#step3 input:text').val('');
 
+    // not sure if we want this here
+    api.map.events.register("moveend", this, linkToMapOpened );
 });
 
 

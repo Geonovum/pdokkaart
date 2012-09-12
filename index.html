@@ -35,10 +35,6 @@
         <div id="content">
             <div id="map" class="functional">
             </div>
-			<!--<div id="readfile"  class="popInWindow">
-				<span id="closedrawlocation" onclick="$('#readfile').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>
-				Hier komt de dialoog voor het inlezen van een bestand
-			</div>-->
 			<div id="geocodeerresult"  class="popInWindow">
 				<span id="closedrawlocation" onclick="$('#geocodeerresult').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>
 				Hier komen de resultaten van de geocodeerservice
@@ -46,9 +42,7 @@
             <div id="leftcolumn">
                 <!-- Step 1 - Your map -->
                 <div id="step1" class="container active">
-                    <!-- <h2><a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a><a href="mapbuilderhelp.html#1" class="help"><span>Help</span></a></h2> -->
                     <h2>
-                      <!--   <a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
                     <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);"> -->
                     <a  onclick="stopDrawingEditingPoint();return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
                     <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);">
@@ -116,7 +110,6 @@
                 </div>
                 <!-- Step 4  optie -->
                 <div id="step3" class="container" style="display: none;">
-                    <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
                 <h2>
                     <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Extra Kaartlaag toevoegen</a></h2>
                     <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
@@ -138,8 +131,6 @@
                         <input type="text" id="WmtsMatrix" size="30"/></br>
                         <button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>					
                         <div id="edit5" class="row">
-                            <!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
-                            <!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
                             <button id ="deletelayers" type="submit" class="filterbutton" onclick=" deleteLayers(); return false;" >
                                 <span>Verwijder alle lagen</span></button>
                         </div>	
@@ -148,7 +139,6 @@
 
                 <!-- Step 5 optie -->
                 <div id="step4" class="container" style="display: none;">
-                    <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
                 <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a></h2>
 
                     <form id="locationtoolform">
@@ -233,28 +223,17 @@
                     </form>
                 </div>
 
-
                 <!-- Step 6 - Save and download code -->
                 <div id="step5" class="container">
-                    <!-- <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Stap 3: Genereer code</a><a href="mapbuilderhelp.html#4" class="help"><span>Help</span></a></h2> -->
                     <h2>
                         <a  onclick="stopDrawingEditingPoint();return goTo(5);" onkeypress="return goTo(5);">Stap 3: Genereer
                             code</a></h2>
                     <form action="#" name="savecode" id="savecode" onsubmit="return false;">
-                    <div class="row">
-                            Druk op de knop "Genereer" om de code te genereren.
-                    </div>
                     <div class="row_right">
-                        <!-- <button onclick="linkToMapOpened(document.location.href);return false;"
-                            onkeypress="return generatecode();"> -->
-							<!-- <button onclick="generatecode();return false;">
-                            Genereer</button><br /> -->
-							<button onclick="linkToMapOpened();return false;">Genereer</button><br />
-                        <h4>Als URL</h4><br />
+                        <p><strong>Als URL</strong></p>
                         Link losse kaart:<br />
                         <input type="text" value="" id="embedlink" name="embedlink" size="40" onclick="linkToMapOpened()"; />
-                        <a id="A1" onclick="this.href=api.createMailLink();">
-                            <img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
+                        <a id="A1" onclick="this.href=api.createMailLink();"><img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
                         Embed HTML iframe:<br />
                         <input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="45" 
                             onclick="linkToMapOpened(document.location.href)" /><br />
@@ -262,11 +241,10 @@
                         <input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="45" 
                             onclick="linkToMapOpened(document.location.href)" /><br />
                         <br />
-                        <h4>Als broncode</h4>
-                        <br />
-                        In de HTML Head-sectie plaatsen:<br />
+                        <p><strong>Als broncode</strong></p>
+                        <p>In de HTML Head-sectie plaatsen:</p>
                         <textarea id="scriptcodeHead" cols="43" rows="12" onclick="linkToMapOpened(document.location.href)"></textarea></br>
-                        In de HTML Body-sectie plaatsen:<br />
+                        <p>In de HTML Body-sectie plaatsen:</p>
                         <textarea id="scriptcodeBody" cols="43" rows="4" onclick="linkToMapOpened(document.location.href)"></textarea><br />
                     </div>
                     </form>
@@ -307,14 +285,10 @@
                             document.getElementById('files').addEventListener('change', handleFileSelect, false);
                           </script>  -->
 				<div id="edit5" class="row">
-					<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
-					<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
 					<button id ="opties" type="submit" class="filterbutton" onclick=" MeerMinderOpties(); return false;" value="Meer opties">
 						<span>Meer opties</span></button>
 				</div>			  
             </div>
-            <!--<p id="searchResults">
-				</p> -->
         </div>
     </div>
 </body>
