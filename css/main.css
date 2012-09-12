@@ -112,8 +112,14 @@ body
     color: #004596;
 }
 .filterbutton{
-	background-color: rgb(225,112,0);
-	color : #FFFFFF;
+    background-color: rgb(225,112,0);
+    color : #FFFFFF;
+    font-size: 1.1em;
+    padding: 2px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 5px;
 }
 
 .ui-button-text-only .ui-button-text {
@@ -287,11 +293,10 @@ ul.geozetSuggestions{
 
 .left-nav li{ float: none;display:inline;}
 .right-nav {float:right;}
-.edit3class {  clear:both;}
 
 
 #styleselector{
-    height:130px;
+    height:250px;
     width:300px;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -320,14 +325,19 @@ ul.geozetSuggestions{
 }
 .stylehead {
     font-weight: bold;
-    text-decoration: underline;
     font-size:1.2em;
-    letter-spacing:1px;
+    /*text-decoration: underline;
+    letter-spacing:1px;*/
 }
 
 input, select, textarea {
-     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-     width: 298px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:12px;
+    width: 298px;
+}
+
+.lefting{
+    width:15px;
 }
 
 #minzoom select, #maxzoom select{
@@ -407,8 +417,4 @@ h2 {
 	border: 1px solid #273397;
 	width: 100%;
 	font-family: "Courier New", Courier, monospace;
-}
-
-select, textarea {
-	font-size: 1.25em;
 }

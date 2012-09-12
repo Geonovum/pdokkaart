@@ -21,12 +21,12 @@ function goTo(step) {
 
 	//make sure correct radio states for each step
 	if (step == 2){		
-		document.getElementById("editmarker5").checked = "true";
+		//document.getElementById("editmarker5").checked = "true";
 	}
 	
 	if (step == 3){
-		document.getElementById("editmarker5").checked = "false";
-		document.getElementById("radio_routes_6").checked = "true";
+		//document.getElementById("editmarker5").checked = "false";
+		//document.getElementById("radio_routes_6").checked = "true";
 	}
 	
 	// If step 5 is opened the the code must be generated immediately
@@ -35,8 +35,8 @@ function goTo(step) {
 	}
 	
 	//hide text editor functionality
-	document.getElementById("savemarkerinfo").style.visibility = "hidden";
-	hideEditor();
+	//document.getElementById("savemarkerinfo").style.visibility = "hidden";
+	//hideEditor();
 
     //set container for css styling i.e. make tabs active on selection	
 	document.getElementById("step" + currentStep).className = "container";
@@ -68,7 +68,7 @@ function selectCode() {
 	document.getElementById("codeoutput").select();
 	return false;
 }
-
+/*
 //show ck editor
 function showEditor() {
 	document.getElementById("texteditor").style.display = "block";
@@ -81,7 +81,7 @@ function hideEditor() {
 	document.getElementById("texteditor").style.display = "none";
 	return false;
 }
-
+*/
 /*
 OVERBODIG??
 //add help functionality to link to correct part of html page 
@@ -141,7 +141,7 @@ $(document).ready(function() {
     //setMapSize();
     //addFormEnhancements();
     //$(window).resize(setMapSize);
-    $('input:radio[name=editmarker]')[0].checked = true;
+    //$('input:radio[name=editmarkers]')[0].checked = true;
     $('input:radio[name=mapsize]')[2].checked = true;
 
     // initiate the Pdok API object
@@ -177,27 +177,53 @@ $(document).ready(function() {
     createStyleSelector();
     createEditAttributes ();
     createPdokLayers();
-    createReadFile();
     createLocationToolLogic();
-
-
-    $('.row_right input:text').click(function(){
-        // Select input field contents
-        this.select();
-    });
-
-    $('.row_right textarea').click(function(){
-        // Select input field contents
-        this.select();
-    });
+    createMarkersLogic();
 
     $('#step3 input:text').val('');
 
 });
 
 
-function disableStyleSelector(){
-    $('#styleselector').hide();
+function createMarkersLogic() {
+    $('#editmarkers input[type=radio]').change(function(){ 
+        if (this.id == 'addfeatures') {
+            $('#addviamap').show();
+            $('#editviamap').hide();
+            $('#addviaurltxt').hide();
+            enableStyleSelector();
+        }
+        else if (this.id == 'editfeatures') {
+            $('#addviamap').hide();
+            $('#editviamap').show();
+            $('#addviaurltxt').hide();
+            startEditingPoint();
+        }
+        else if (this.id == 'externalfeatures') {
+            $('#addviamap').hide();
+            $('#editviamap').hide();
+            $('#addviaurltxt').show();
+        }
+    });
+
+    $('#getfeaturesfromurl').click(function(){
+        var format = $('#addviaurltxt input[name=urltype]:checked').val();
+        api.addFeaturesFromUrl($('#urltext').val(), format.toUpperCase(), true);
+        return false;
+    });
+
+    $('#getfeaturesfromtxt').click(function(){
+        var format = $('#addviaurltxt input[name=txttype]:checked').val();
+        api.addFeaturesFromString($('#copypaste').val(), format.toUpperCase(), true);
+        return false;
+    });
+    // Select input field contents
+    $('.row_right input:text').click(function(){ this.select(); });
+    $('.row_right textarea').click(function(){ this.select(); });
+    // Select input field contents
+    $("#urltext").click(function(){ this.select(); });
+    $("#copypaste").click(function(){ this.select(); });
+
 }
 
 function createLocationToolLogic() {
@@ -270,7 +296,7 @@ function enableStyleSelector(){
         //ActiveFeature.fid = feature.fid;
         activeFeature = feature;
         createEditAttributes ();
-        $('#edit2a').appendTo($('#edit2'));
+        $('#edit2a').appendTo($('#addviamap2'));
         $('#edit2a').show();
     }
     // no popup during editing
@@ -328,7 +354,7 @@ function createStyleSelector(){
             // console.log(feature);
 			activeFeature = feature;
 			createEditAttributes ();
-			$('#edit2a').appendTo($('#edit2'));
+			$('#edit2a').appendTo($('#editviamap2'));
 			$('#edit2a').show();
         }
         api.enableDrawingTool(styleId, featureCreatedCallback);
@@ -339,54 +365,14 @@ function createStyleSelector(){
 
 function createPdokLayers(){
 
-    var html = '';
-
-    html = html + '<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">' +
+    var html = '<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">' +
                 '<option value="-">-- Kies een PDOK kaartlaag --</option>'
-
     for (layer in api.defaultLayers){
         html = html + '<option value="'+ layer + '">' + api.defaultLayers[layer].name + '</option>'
-        
     }
-
     html = html + '</select>'
     $('#divpdoklayerselector').html(html);
-
 }
-
-function createReadFile () {
-
-    var html = '<strong>Als URL</strong><span id="closedrawlocation" onclick="$(\'#readfile\').fadeOut(\'fast\')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span></br></br> Geef de URL waar het bestand met markerdefinities zich bevindt en kies voor "Haal op ":</br></br>';
-    html = html + '<input id="urltext" type="text" value="Voer een URL in :" name="searchLocation" title="Postcode of plaatsnaam" />';
-    html = html + '<button type="submit" class="filterbutton" onclick="readURL();return false;">Haal op</button></br></br></br></br>';
-    html = html + '<strong>Als Copy/Paste</strong></br></br> Kopieer de marker definities in het onderstaande tekstveld en kies voor "Opslaan":</br></br>'
-    html = html + '<textarea id="copypaste">Copy/Paste : </textarea>';
-    html = html + '<button type="submit" class="filterbutton" onclick="readCopyPaste();return false;">Opslaan</button>';
-        
-    $('#readfile').html(html);
-
-    $("#urltext").click(function(){
-        // Select input field contents
-        this.select();
-    });
-    $("#copypaste").click(function(){
-        // Select input field contents
-        this.select();
-    });
-
-}
-
-function readURL () {
-
-	api.addFeaturesFromUrl($('#urltext').val(), 'KML');
-
-}
-
-function readCopyPaste () {
-
-	api.addFeaturesFromString($('#copypaste').val(), 'KML');
-}
-
 
 function createEditAttributes () {
 
@@ -435,13 +421,6 @@ function createFieldnameInput(radiobutton) {
 
 };
 
-function readFile () {
-
-
-$('#readfile').show();
-
-}
-
 
 function saveAttributes() {
 
@@ -478,23 +457,18 @@ function deleteFeature() {
 }
 
 function startEditingPoint() {
-	api.disableEditingTool();
-	api.disableDrawingTool();
-	$('#edit2a').hide();
-	disableStyleSelector();
-	api.disableDrawingTool();
-	featureModifiedCallback = function(domevent){
+    api.disableEditingTool();
+    api.disableDrawingTool();
+    featureModifiedCallback = function(domevent){
             // you get a handle here to the feature last modified
             // console.log(feature);
-			activeFeature = domevent.feature;
-			$('#edit2a').appendTo($('#edit3'));
-			$('#edit2a').show();
-			$('#attr_name').val(domevent.feature.attributes.name);
-			$('#description').val(domevent.feature.attributes.description);
+            activeFeature = domevent.feature;
+            $('#edit2a').appendTo($('#editviamap'));
+            $('#edit2a').show();
+            $('#attr_name').val(domevent.feature.attributes.name);
+            $('#description').val(domevent.feature.attributes.description);
         }
-	api.enableEditingTool(featureModifiedCallback);
-	//registerEvents();
-
+    api.enableEditingTool(featureModifiedCallback);
 }
 
 
@@ -503,7 +477,7 @@ function stopDrawingEditingPoint() {
 	//unregisterEvents();
 	api.disableEditingTool();
 	api.disableDrawingTool();
-	$('input:radio[name=editmarker]')[0].checked = true;
+	//$('input:radio[name=editmarkers]')[0].checked = true;
 }
 
 

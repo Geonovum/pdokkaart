@@ -1570,10 +1570,10 @@ Pdok.Api.prototype.handleGetResponse = function(response){
     }
     var data = response.responseText;
     // we have data now: add to map
-    this.addFeaturesFromString(data, this.dataType);
+    this.addFeaturesFromString(data, this.dataType, this.zoomToFeatures);
 }
 
-Pdok.Api.prototype.addFeaturesFromString = function(data, type){
+Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     var format;
     var features;
     var options = {
@@ -1626,30 +1626,36 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type){
             }
         }
     }
-
     this.featuresLayer.addFeatures(features);
+    if (zoomToFeatures && this.featuresLayer.features.length>0) {
+        // zoom to dataextent
+        var totalFeaturesExtent = this.featuresLayer.getDataExtent();
+        this.featuresLayer.map.zoomToExtent(totalFeaturesExtent);
+    }
     return true;
 }
 
-Pdok.Api.prototype.addFeaturesFromUrl = function(url, type){
+Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
 
     var apiObject = this;
+    // little dirty way to pass type and zoomToFeatures:
     apiObject.dataType = type;
+    apiObject.zoomToFeatures = zoomToFeatures;
 
     if (type.toUpperCase() == "KML"){
         // kml
     }
     else if(type.toUpperCase() == "TXT"){
-        // tab separated txt file
+        // tab separated txt file (in EPSG:28992)
         // format (including header!)
         //
         // point    title   description
-        // 52.64,4.84  foo omschrijving foo
+        // 150000,350000  foo omschrijving foo
         //
         // OR
         //
         // lat  lon title   description
-        // 52.64   4.84    foo omschrijving foo
+        // 150000   350000    foo omschrijving foo
     }
     else{
         alert('addFeaturesFromUrl aanroep met een niet ondersteund type: '+type);

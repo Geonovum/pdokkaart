@@ -35,10 +35,10 @@
         <div id="content">
             <div id="map" class="functional">
             </div>
-			<div id="readfile"  class="popInWindow">
+			<!--<div id="readfile"  class="popInWindow">
 				<span id="closedrawlocation" onclick="$('#readfile').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>
 				Hier komt de dialoog voor het inlezen van een bestand
-			</div>
+			</div>-->
 			<div id="geocodeerresult"  class="popInWindow">
 				<span id="closedrawlocation" onclick="$('#geocodeerresult').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="js/theme/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>
 				Hier komen de resultaten van de geocodeerservice
@@ -50,150 +50,103 @@
                     <h2>
                       <!--   <a href="#" onclick="return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
                     <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);"> -->
-					  <a  onclick="stopDrawingEditingPoint();return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
+                    <a  onclick="stopDrawingEditingPoint();return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
                     <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);">
-					
+
                     <div class="row">
-                        <p>
-                            Selecteer een kaartgrootte:</p>
-						<div class="row">	
-							<input type="radio" name="mapsize" id="mapsize1" value="small" onclick="pdok_api_map_resize(300,250)" />
-							<label for="mapsize1">
-								Klein (300x250 pixels)</label>
-						</div>
-						<div class="row">
-							<input type="radio" name="mapsize" id="mapsize2" value="medium" onclick="pdok_api_map_resize(400,350)"
-								checked="checked" />
-							<label for="mapsize2">
-								Middel (400x350 pixels)</label>
-						</div>
-						<div class="row">	
-							<input type="radio" name="mapsize" id="mapsize3" value="large" onclick="pdok_api_map_resize(550,440)"
-								checked="checked" />
-							<label for="mapsize3">
-								Groot (550x440 pixels)</label>
-						</div>		
+                        <p>Selecteer een kaartgrootte:</p>
+                        <div class="row">	
+                            <input type="radio" name="mapsize" id="mapsize1" value="small" onclick="pdok_api_map_resize(300,250)" />
+                            <label for="mapsize1"> Klein (300x250 pixels)</label>
+                        </div>
+                        <div class="row">
+                            <input type="radio" name="mapsize" id="mapsize2" value="medium" onclick="pdok_api_map_resize(400,350)"
+                                checked="checked" />
+                            <label for="mapsize2"> Middel (400x350 pixels)</label>
+                        </div>
+                        <div class="row">	
+                            <input type="radio" name="mapsize" id="mapsize3" value="large" onclick="pdok_api_map_resize(550,440)"
+                                checked="checked" />
+                            <label for="mapsize3"> Groot (550x440 pixels)</label>
+                        </div>
                     </div>
                     </form>
                 </div>
                 <!-- Step 2 - Add markers -->
                 <div id="step2" class="container">
-                    <!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a><a href="mapbuilderhelp.html#2" class="help"><span>Help</span></a></h2> -->
-                    <!-- <h2><a href="#" onclick="return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2> -->
-                    <!-- <h2>
-                        <a onclick="stopDrawingEditingPoint();startDrawingPoint(); return goTo(2); " onkeypress="return goTo(2);">Stap
-                            2: Voeg markers toe</a></h2> -->
-					<h2>
-                        <a onclick="stopDrawingEditingPoint();enableStyleSelector(); return goTo(2); " onkeypress="return goTo(2);">Stap
-                            2: Voeg markers toe</a></h2>		
-                    <form action="#" name="addmarkers" id="addmarkers" onsubmit="return goTo(3); ">
-                    <div class="section">
-                        <div id="edit1" class="row">
-                           <!--  <input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){return startDrawingPoint();}" /> -->
-						   <input type="radio" name="editmarker" id="editmarker4" value="delete" onclick="if (this.checked){enableStyleSelector();}" />
-                            <label>
-                                <strong>Voeg een marker toe aan de kaart</strong> - (selecteer een symbool uit de
-                                lijst en klik op de kaart)</label>
-                        </div>
-                        <div id="edit2" class="row">
-                        </div>
-						<div id="edit2a" class="row" style="display: none;">
-                        </div>
-                        <div id="edit3" class="edit3class">
-                            <input type="radio" name="editmarker" id="editmarker3" value="delete" onclick="if (this.checked){return startEditingPoint();}" />
-                            <label for="editmarker3" id="editlabel3">
-                                <strong>Wijzig een marker op de kaart - </strong>(selecteer een marker op de kaart
-                                en wijzig, verplaats of verwijder de marker)</label>
-							<input type="hidden" name="editmarker_dummy" id="editmarker5" />
-							<input type="hidden" name="editmarker_dummy2" id="savemarkerinfo" />
-							<input type="hidden" name="editmarker_dummy3" id="texteditor" />								
-                        </div>
-						<div id="edit3a" class="row" style="display: none;">
-                        </div>
-						<div id="edit4" class="row"> 
-							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<button type="submit" class="filterbutton" id="inlezen" onclick=" readFile(); return false;">
-								Inlezen bestand</button>
-						</div>
-						<div id="dialog" title="Basic dialog" style="display: none;">
-							<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-						</div>
-					</div>	
+                    <h2>
+                        <a onclick="stopDrawingEditingPoint(); return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2>		
+                    <form action="#" name="editmarkers" id="editmarkers" NOTonsubmit="return goTo(3); ">
+                        <div>
+                            <!-- add markers via map -->
+                            <div class="row">
+                                <label><input type="radio" name="editmarkers" id="addfeatures" value="addfeatures" class="lefting"/>
+                                    <strong>Voeg een marker toe via de kaart</strong></label>
+                            </div>
+                            <div id="addviamap" style="display:none">
+                                <div id="addviamap2" class="row">Selecteer een symbool uit de lijst en klik op de kaart</div>
+                                <div id="edit2" class="row"><!-- used for the style selector --></div>
+                                <div id="edit2a" class="row"><!-- used for editing of description and title --></div>
+                            </div>
+                            <!-- edit markers via map -->
+                            <div id="edit3">
+                                <label><input type="radio" name="editmarkers" id="editfeatures" class="lefting"/>
+                                <strong>Wijzig een marker op de kaart</strong></label>
+                            </div>
+                            <div class="row" id="editviamap" style="display:none">Selecteer een marker op de kaart en wijzig, verplaats of verwijder de marker</div>
+                            <!-- add markers via url or text string -->
+                            <div id="edit4" class="row">
+                                <label><input type="radio" name="editmarkers" id="externalfeatures" class="lefting"/> <strong>Markers uit url, bestand of tekst</strong></label><br/>
+                            </div>
+                            <div id="addviaurltxt" style="display:none">
+                                <p><strong>Via URL</strong> Kies datatype, en geef de URL waar het bestand met markerdefinities zich bevindt klik dan "Haal op ":</p>
+                                <label ><input type="radio" checked name="urltype" value="kml" class="lefting">KML</label>
+                                <label ><input type="radio" name="urltype" value="txt" class="lefting">TXT</label>
+                                <input type="text" title="Postcode of plaatsnaam" name="searchLocation" value="Voer een URL in :" id="urltext">
+                                <button id="getfeaturesfromurl" class="filterbutton">Haal op</button>
+                                </br>
+                                <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
+                                <label ><input type="radio" name="txttype" value="kml" class="lefting">KML</label>
+                                <label ><input type="radio" checked name="txttype" value="txt" class="lefting">TXT</label>
+                                <textarea id="copypaste">Copy/Paste:</textarea>
+                                <button id="getfeaturesfromtxt" class="filterbutton">Opslaan</button>
+                            </div>
+                        </div>	
                     </form>
                 </div>
-				<!-- Step 4  optie -->
+                <!-- Step 4  optie -->
                 <div id="step3" class="container" style="display: none;">
                     <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
                 <h2>
-                        <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Extra Kaartlaag toevoegen</a></h2>
+                    <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Extra Kaartlaag toevoegen</a></h2>
                     <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
-                    
-                        <div class="row" style="display: none;">
-                            <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_1" value="radio_makeRoutes"
-                                    onclick="manageRoutes(1)">
-                                make routes (single click to start, double to finish)
-                            </label>
-                        </div>
-                        <div class="row" style="display: none;">
-                            <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_2" value="radio_editRoutes"
-                                    onclick="manageRoutes(2)">
-                                select and edit routes
-                            </label>
-                        </div>
-                        <div class="row" style="display: none;">
-                            <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_3" value="radio_deleteRoutes"
-                                    onclick="manageRoutes(3)">
-                                select and delete individual routes</label>
-                        </div>
-                        <div class="row" style="display: none;">
-                            <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_4" value="radio_reverseRoutes"
-                                    onclick="manageRoutes(4)">
-                                select and reverse routes</label>
-                        </div>
-                        <div class="row" style="display: none;">
-                            <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_5" value="radio_fixRoutes"
-                                    onclick="manageRoutes(5)">
-                                delete all</label>
-                        </div>
-                        <div class="row" style="display: none;">
-                            <label>
-                                <input type="radio" name="radiogroup_routes" id="radio_routes_6" value="radio_fixRoutes"
-                                    onclick="manageRoutes(6)">
-                                Finish - view routes as they will appear on your map</label>
-                        </div>
-						<h4>Voeg een standaard kaartlaag toe</h4>
-						<div id="divpdoklayerselector" >
-						</div>
-						<button class="filterbutton" onclick="addPdokLayer();return false;">Voeg toe aan kaart</button>
-						<h4>Voeg een WMS kaartlaag toe</h4>
-						URL van de WMS:<br/>
-						<input type="text" id="wmsUrl" size="30"/></br>
-						Laagnaam van de WMS:<br/>
-						<input type="text" id="wmsLayer" size="30"/></br>
-						<button class="filterbutton" onclick="addWmsLayer();return false;">Voeg toe aan kaart</button>
-						<h4>Voeg een WMTS kaartlaag toe</h4>
-						URL van de WMTS:<br/>
-						<input type="text" id="WmtsUrl" size="30"/></br>
-						Laagnaam van de WMTS:<br/>
-						<input type="text" id="WmtsLayer" size="30"/></br>
-						Matrixset van de WMTS:<br/>
-						<input type="text" id="WmtsMatrix" size="30"/></br>
-						<button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>					
-						<div id="edit5" class="row">
-							<!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
-							<button id ="deletelayers" type="submit" class="filterbutton" onclick=" deleteLayers(); return false;" >
-								<span>Verwijder alle lagen</span></button>
-						</div>	
+                        <h4>Voeg een standaard kaartlaag toe</h4>
+                        <div id="divpdoklayerselector" > </div>
+                        <button class="filterbutton" onclick="addPdokLayer();return false;">Voeg toe aan kaart</button>
+                        <h4>Voeg een WMS kaartlaag toe</h4>
+                        URL van de WMS:<br/>
+                        <input type="text" id="wmsUrl" size="30"/></br>
+                        Laagnaam van de WMS:<br/>
+                        <input type="text" id="wmsLayer" size="30"/></br>
+                        <button class="filterbutton" onclick="addWmsLayer();return false;">Voeg toe aan kaart</button>
+                        <h4>Voeg een WMTS kaartlaag toe</h4>
+                        URL van de WMTS:<br/>
+                        <input type="text" id="WmtsUrl" size="30"/></br>
+                        Laagnaam van de WMTS:<br/>
+                        <input type="text" id="WmtsLayer" size="30"/></br>
+                        Matrixset van de WMTS:<br/>
+                        <input type="text" id="WmtsMatrix" size="30"/></br>
+                        <button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>					
+                        <div id="edit5" class="row">
+                            <!-- <p><a href="#" onclick="manageMarkers(3)">Delete all markers</a></p> -->
+                            <!-- <p><a  onclick="manageMarkers(3)">Delete all markers</a></p> -->
+                            <button id ="deletelayers" type="submit" class="filterbutton" onclick=" deleteLayers(); return false;" >
+                                <span>Verwijder alle lagen</span></button>
+                        </div>	
                     </form>
                 </div>
-				<!-- Step 5 optie -->
+
+                <!-- Step 5 optie -->
                 <div id="step4" class="container" style="display: none;">
                     <!-- <h2><a href="#" onclick="return goTo(3);" onkeypress="return goTo(3);">Optie</a><a href="mapbuilderhelp.html#3" class="help"><span>Help</span></a></h2> -->
                 <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a></h2>
@@ -204,24 +157,24 @@
                         </div>
                         <div class="row">
                             <label>
-                                <input type="radio" name="locationtoolstyle" id="none" value="mt0" checked class="radio_kp">
+                                <input type="radio" name="locationtoolstyle" id="none" value="mt0" class="lefting" checked>
                                 geen
                             </label>
                             <br/>
                             <label>
-                                <input type="radio" name="locationtoolstyle" id="pointxy" value="mt0" class="radio_kp">
+                                <input type="radio" name="locationtoolstyle" id="pointxy" value="mt0" class="lefting">
                                 punt (xy)
                             </label>
                             <label>
-                                <input type="radio" name="locationtoolstyle" id="point" value="mt0" class="radio_kp">
+                                <input type="radio" name="locationtoolstyle" id="point" value="mt0" class="lefting">
                                 punt (wkt)
                             </label>
                             <label>
-                                <input type="radio" name="locationtoolstyle" id="line" value="lt0" class="radio_kp">
+                                <input type="radio" name="locationtoolstyle" id="line" value="lt0" class="lefting">
                                 lijn (wkt)
                             </label>
                             <label>
-                                <input type="radio" name="locationtoolstyle" id="polygon" value="pt0" class="radio_kp">
+                                <input type="radio" name="locationtoolstyle" id="polygon" value="pt0" class="lefting">
                                 vlak (wkt)
                             </label>
                         </div>
@@ -278,88 +231,6 @@
                             </div>
                         </div>
                     </form>
-
-<!--
-                    <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(5);">
-						<div class="row">
-							<label>
-							<strong>	
-							Selecteer een tekenobject en vul de veldnaam in waar de waarde ingezet moet worden.
-							</strong>
-							</label>
-						</div>
-                        <div class="row">
-                            <label>
-                                <input type="radio" name="radiogroup_kp" id="kp1" value="1" class="radio_kp">
-                                geen
-                            </label>
-							<label>
-                                <input type="radio" name="radiogroup_kp" id="kp2" value="mt0" class="radio_kp">
-                                punt
-                            </label>
-							<label>
-                                <input type="radio" name="radiogroup_kp" id="kp3" value="lt0" class="radio_kp">
-                                lijn
-							</label>
-							<label>
-                                <input type="radio" name="radiogroup_kp" id="kp5" value="pt0" class="radio_kp">
-                                vlak
-							</label>
-                        </div>
-                        <div id="divveldnaam">							
-						</div>
-						<div class="row">
-							<label>
-							<strong>	
-							Geef aan vanaf en tot welk niveau de Kaartprikker gebruikt mag worden.
-							</strong>
-							</label>
-						</div>
-						<div class="row" id="divvanaf">
-                            <label>
-								Kaartprikker mogelijk vanaf zoom niveau:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <select id="vanaf" onchange="changeZoom1()">
-								  <option value="1">1</option>
-								  <option value="2">2</option>
-								  <option value="3">3</option>
-								  <option value="4">4</option>
-								  <option value="5">5</option>
-								  <option value="6">6</option>
-								  <option value="7">7</option>
-								  <option value="8">8</option>
-								  <option value="9">9</option>
-								  <option value="10">10</option>
-								  <option value="11">11</option>
-								  <option value="12">12</option>
-								  <option value="13">13</option>
-								  <option value="14">14</option>
-								</select> 
-							</label>
-						</div>
-						<div class="row" id="divtotenmet">
-							<label>
-								Kaartprikker mogelijk tot en met zoom niveau:
-                                <select id="totenmet" onchange="changeZoom2()">
-								  <option value="1">1</option>
-								  <option value="2">2</option>
-								  <option value="3">3</option>
-								  <option value="4">4</option>
-								  <option value="5">5</option>
-								  <option value="6">6</option>
-								  <option value="7">7</option>
-								  <option value="8">8</option>
-								  <option value="9">9</option>
-								  <option value="10">10</option>
-								  <option value="11">11</option>
-								  <option value="12">12</option>
-								  <option value="13">13</option>
-								  <option value="14">14</option>
-								</select> 
-							</label>
-                        </div>
-                    </form>-->
-
-
                 </div>
 
 
