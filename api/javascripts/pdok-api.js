@@ -1586,7 +1586,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     var options = {
         externalProjection: new OpenLayers.Projection("EPSG:4326"),
         internalProjection: this.map.baseLayer.projection,
-        extraStyles: this.kmlstyles
+        extractStyles: this.kmlstyles
     };
     if (type.toUpperCase() == 'KML') {
         format = new OpenLayers.Format.KML(options);
