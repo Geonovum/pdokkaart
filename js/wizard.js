@@ -178,56 +178,8 @@ $(document).ready(function() {
     createEditAttributes ();
     createPdokLayers();
     createReadFile();
+    createLocationToolLogic();
 
-    // locationtool properties
-    var locationToolPropertyChange = function() {
-        // disable locationtool if 'none' is selected
-        if (this.id=='none'){
-            api.removeLocationToolProps();
-            // hide all field inputs
-            $('#yfield,#xfield,#wktfield').hide();
-            $('#locationtoolzooms').hide();
-        }
-        else {
-            $('#locationtoolzooms').show();
-            var xorwkt = $('#wktfield input').val();
-            var y = $('#yfield input').val();
-            var zmin = parseInt($('#zmin').val());
-            var zmax = parseInt($('#zmax').val());
-            var locationtype = $("input[name=locationtoolstyle]:checked").attr('id');
-            var styletype = $("input[name=locationtoolstyle]:checked").val();
-            if(locationtype=='pointxy'){
-                $('#yfield,#xfield').show();
-                $('#wktfield').hide();
-                xorwkt = $('#xfield input').val();
-                if(xorwkt==''){xorwkt='x'} // no prefilling, but defaulting for prop setting
-                y = $('#yfield input').val();
-                if(y==''){y='y'} // no prefilling, but defaulting for prop setting
-            }
-            else if(locationtype=='line' || locationtype=='point' || locationtype=='polygon'){
-                $('#yfield,#xfield').hide();
-                $('#wktfield').show();
-                if(xorwkt==''){xorwkt='wkt'} // no prefilling, but defaulting for prop setting
-                y = null;
-            }
-
-            if(this.id=='zmin') {
-                if(zmin>zmax) {
-                    zmax = zmin;
-                    $('#zmax').val(zmax);
-                }
-            }
-            else if(this.id=='zmax') {
-                if(zmax<zmin) {
-                    zmin = zmax;
-                    $('#zmin').val(zmin);
-                }
-            }
-            api.setLocationToolProps(styletype, zmin, zmax, xorwkt, y);
-        }
-    }
-    $('#locationtoolform input[type=radio], #locationtoolform select').change(locationToolPropertyChange);
-    $('#locationtoolfield input[type=text]').keyup(locationToolPropertyChange);
 
     $('.row_right input:text').click(function(){
         // Select input field contents
@@ -248,6 +200,63 @@ function disableStyleSelector(){
     $('#styleselector').hide();
 }
 
+function createLocationToolLogic() {
+    // locationtool properties
+    var locationToolPropertyChange = function() {
+        // disable locationtool if 'none' is selected
+        if (this.id=='none'){
+            api.removeLocationToolProps();
+            // hide all field inputs
+            $('#yfield,#xfield,#wktfield').hide();
+            $('#locationtoolzooms').hide();
+        }
+        else {
+            $('#locationtoolzooms').show();
+            var xorwkt = $('#wktfield input').val();
+            var y = $('#yfield input').val();
+            var zmin = parseInt($('#zmin').val());
+            var zmax = parseInt($('#zmax').val());
+            var locationtype = $("input[name=locationtoolstyle]:checked").attr('id');
+            var styletype = $("input[name=locationtoolstyle]:checked").val();
+            // showing and hiding of different inputs
+            if(locationtype=='pointxy'){
+                $('#yfield,#xfield').show();
+                $('#wktfield').hide();
+                xorwkt = $('#xfield input').val();
+                if(xorwkt==''){xorwkt='x'} // no prefilling, but defaulting for prop setting
+                y = $('#yfield input').val();
+                if(y==''){y='y'} // no prefilling, but defaulting for prop setting
+            }
+            else if(locationtype=='line' || locationtype=='point' || locationtype=='polygon'){
+                $('#yfield,#xfield').hide();
+                $('#wktfield').show();
+                if(xorwkt==''){xorwkt='wkt'} // no prefilling, but defaulting for prop setting
+                y = null;
+            }
+            // preview of zoom borders, and some checking that min<max and max>min
+            if(this.id=='zmin') {
+                api.map.zoomTo(zmin); // preview
+                if(zmin>zmax) {
+                    zmax = zmin;
+                    $('#zmax').val(zmax);
+                }
+            }
+            else if(this.id=='zmax') {
+                api.map.zoomTo(zmax); // preview
+                if(zmax<zmin) {
+                    zmin = zmax;
+                    $('#zmin').val(zmin);
+                }
+            }
+            // setting props with current values
+            api.setLocationToolProps(styletype, zmin, zmax, xorwkt, y);
+        }
+    }
+    // attaching above logic to diffent inputs of the locationtool form
+    $('#locationtoolform input[type=radio], #locationtoolform select').change(locationToolPropertyChange);
+    $('#locationtoolfield input[type=text]').keyup(locationToolPropertyChange);
+
+}
 
 function enableStyleSelector(){
     api.disableEditingTool();
