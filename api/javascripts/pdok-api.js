@@ -93,29 +93,30 @@ Pdok.Api = function(config) {
     this.txturl = null;
 
     /**
-     * Reference to WMS-URL object
+     * Reference to WMTS related properties
      */
-    this.wmsurl = null;
+    this.wmtsurl = null;
+    this.wmtslayer = null;
+    this.wmtsmatrixset = null;
 
     /**
-     * Reference to WMS layer(s) object
+     * Reference to WMS related properties
      */
+    this.wmsurl = null;
     this.wmslayers = null;
 
     /**
-     * Reference to TMS-URL object
+     * Reference to TMS related properties
      */
     this.tmsurl = null;
-
-    /**
-     * Reference to TMS layer object
-     */
     this.tmslayer = null;
+    this.tmstype = 'png';
 
     /**
-     * Reference to TMS layer object
+     * Reference to KML related property
      */
-    this.tmstype = 'png';
+    this.kmlurl = null;
+    this.kmlstyles = false; // default to NOT taking internal KML styling into account
 
     /**
      * Reference to layerswitch object
@@ -654,7 +655,7 @@ Pdok.Api.prototype.defaultLayers = {
         },
         GEMEENTEGRENZEN_LABEL: {
             layertype: 'WMS',
-            name: 'Gemeentegrenzen met labes (sld)',
+            name: 'Gemeentegrenzen met labels (sld)',
             url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld',
             layers: 'gemeenten_2012',
             transparent: 'true',
@@ -794,32 +795,37 @@ Pdok.Api.prototype.createOlMap = function() {
     }
 
     // apply WMSURL and WMSLAYERS if applicable
-	if ((this.wmsurl != null) && (this.wmslayers != null)) {
+    if ((this.wmsurl != null) && (this.wmslayers != null)) {
         this.addWMS(this.wmsurl, this.wmslayers);
-	}
+    }
 
     // apply WMTSURL and WMTSLAYER and WMTSMATRIXSET if applicable
-	if ((this.wmtsurl != null) && (this.wmtslayer != null) && (this.wmtsmatrixset != null)) {
+    if ((this.wmtsurl != null) && (this.wmtslayer != null) && (this.wmtsmatrixset != null)) {
         this.addWMTS(this.wmtsurl, this.wmtslayer, this.wmtsmatrixset);
-	}
+    }
 
     // apply TMSURL and TMSLAYERS if applicable
-	if ((this.tmsurl != null) && (this.tmslayer != null)) {
+    if ((this.tmsurl != null) && (this.tmslayer != null)) {
         this.addTMS(this.tmsurl,this.tmslayer, this.tmstype);
-	}
+    }
+
+    // apply KMLURL if applicable
+    if ((this.kmlurl != null)) {
+        this.addKML(this.kmlurl, this.kmlstyles);
+    }
 
     // apply TXTURL if applicable
-	if (this.txturl != null) {
-		var lyrTextLayer = new OpenLayers.Layer.Text( "Textlayer", {location: this.txturl} );
-		olMap.addLayer(lyrTextLayer);
-	}
+    if (this.txturl != null) {
+        var lyrTextLayer = new OpenLayers.Layer.Text( "Textlayer", {location: this.txturl} );
+        olMap.addLayer(lyrTextLayer);
+    }
 
     // apply BBOX or zoomlevel and location
     if (this.bbox != null) {
         olMap.zoomToExtent(OpenLayers.Bounds.fromArray(this.bbox).transform(olMap.displayProjection, olMap.getProjectionObject()));
-	}
+    }
     else if (this.zoom != null && this.loc != null) {
-		olMap.setCenter (new OpenLayers.LonLat(parseInt(this.loc[0]), parseInt(this.loc[1])), parseInt(this.zoom));
+        olMap.setCenter (new OpenLayers.LonLat(parseInt(this.loc[0]), parseInt(this.loc[1])), parseInt(this.zoom));
     } else {
         //olMap.zoomToMaxExtent();
         olMap.zoomToExtent([-15000,300000,300000,640000],true);
@@ -1579,7 +1585,8 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     var features;
     var options = {
         externalProjection: new OpenLayers.Projection("EPSG:4326"),
-        internalProjection: this.map.baseLayer.projection
+        internalProjection: this.map.baseLayer.projection,
+        extraStyles: this.kmlstyles
     };
     if (type.toUpperCase() == 'KML') {
         format = new OpenLayers.Format.KML(options);
@@ -1614,6 +1621,9 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
                 styletype = styletype.value;
             }
             feature.style = this.styles[styletype];
+        }
+        else if (type=='KML' && this.kmlstyles){
+            // ok a KML layer containing styles
         }
         else {
             if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Point'){
@@ -1670,6 +1680,10 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
     });
 
     return true;
+}
+
+Pdok.Api.prototype.addKML = function(url){
+    this.addFeaturesFromUrl(url, 'KML', true);
 }
 
 Pdok.Api.prototype.createIframeTags = function(){
