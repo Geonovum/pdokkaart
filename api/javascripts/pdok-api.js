@@ -143,7 +143,7 @@ Pdok.Api = function(config) {
      */
     this.styles = null;
 
-    this.FEATERSLAYER_NAME = "Features";
+    this.FEATURESLAYER_NAME = "Features";
     this.MAXNUMBEROFFEATURES = 5;
     // this.features can come as KML string from config/params
     // after handling this, it contains an array of features
@@ -720,6 +720,7 @@ Pdok.Api.prototype.createOlMap = function() {
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.Zoom(),
+            new OpenLayers.Control.LayerSwitcher(),
 			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
         ],
         maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
@@ -780,12 +781,12 @@ Pdok.Api.prototype.createOlMap = function() {
         if (typeof this.layers == 'string') {
             this.layers=[this.layers];
         }
+        this.addLayers(this.layers, olMap);
         // if the map does NOT have a baseLayer, always add BRT layer
         if (!olMap.baseLayer){
             //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
             this.addLayers(['BRT']);
         }
-        this.addLayers(this.layers, olMap);
     }
     else {
         // not layer param, at least load one default layer
@@ -1187,7 +1188,7 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
     var layer = new OpenLayers.Layer.TMS(
         layerConfigObj.name,
         layerConfigObj.url,
-        {   layername: layerConfigObj.layername, 
+        {   layername: layerConfigObj.name, 
             type:layerConfigObj.type, 
             visibility: layerConfigObj.visibility, 
             isBaseLayer: layerConfigObj.isBaseLayer
@@ -1248,7 +1249,7 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
      */
     var layer = new OpenLayers.Layer.WMTS(
         {
-            name: layerConfigObj.layername,
+            name: layerConfigObj.name,
             url:layerConfigObj.url,
             layer: layerConfigObj.layer,
             style: layerConfigObj.style,
@@ -1300,7 +1301,7 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
 
     var layer = new OpenLayers.Layer.WMS(
-            layerConfigObj.layername,
+            layerConfigObj.name,
             layerConfigObj.url,
             {
                 layers: layerConfigObj.layers, 
@@ -1734,7 +1735,7 @@ Pdok.Api.prototype.getConfig = function() {
     for (layer in this.map.layers){
         var pdokId = this.map.layers[layer].pdokId;
         // only layers with a pdokId, and NOT our this.featuresLayer
-        if (pdokId && this.map.layers[layer].name != this.FEATERSLAYER_NAME){
+        if (pdokId && this.map.layers[layer].name != this.FEATURESLAYER_NAME){
             layers.push(pdokId);
         }
         else{
