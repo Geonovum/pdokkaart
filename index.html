@@ -225,25 +225,23 @@
                 <div id="step5" class="container">
                     <h2>
                         <a  onclick="stopDrawingEditingPoint();return goTo(5);" onkeypress="return goTo(5);">Stap 3: Genereer
-                            code</a></h2>
+                            code</a>
+                    </h2>
                     <form action="#" name="savecode" id="savecode" onsubmit="return false;">
                     <div class="row_right">
                         <p><strong>Als URL</strong></p>
-                        Link losse kaart:<br />
-                        <input type="text" value="" id="embedlink" name="embedlink" size="40" onclick="linkToMapOpened()"; />
-                        <a id="A1" onclick="this.href=api.createMailLink();"><img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a><br />
-                        Embed HTML iframe:<br />
-                        <input type="text" value="" id="embedhtmliframe" name="embedhtmliframe" size="45" 
-                            onclick="linkToMapOpened(document.location.href)" /><br />
+                        <a href="#" id="apilink1" target="apiexample">Link</a> losse kaart:
+                        <input type="text" value="" id="apilink2">
+                        <a href="#" id="apilink3"><img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a>
+                        Embed HTML iframe:
+                        <input type="text" value="" id="embedhtmliframe">
                         Embed HTML Object tag:<br />
-                        <input type="text" value="" id="embedhtmlobject" name="embedhtmlobject" size="45" 
-                            onclick="linkToMapOpened(document.location.href)" /><br />
-                        <br />
+                        <input type="text" value="" id="embedhtmlobject">
                         <p><strong>Als broncode</strong></p>
                         <p>In de HTML Head-sectie plaatsen:</p>
-                        <textarea id="scriptcodeHead" cols="43" rows="12" onclick="linkToMapOpened(document.location.href)"></textarea></br>
+                        <textarea id="scriptcodeHead" rows="12"></textarea>
                         <p>In de HTML Body-sectie plaatsen:</p>
-                        <textarea id="scriptcodeBody" cols="43" rows="4" onclick="linkToMapOpened(document.location.href)"></textarea><br />
+                        <textarea id="scriptcodeBody" rows="4"></textarea>
                     </div>
                     </form>
                 </div>
@@ -251,7 +249,7 @@
                            <script>
                             function handleFileSelect(evt) {
                               var files = evt.target.files; // FileList object
-                          
+
                               // Loop through the FileList and render image files as thumbnails.
                               for (var i = 0, f; f = files[i]; i++) {
                           

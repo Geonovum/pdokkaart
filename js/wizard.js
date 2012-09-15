@@ -30,11 +30,6 @@ function goTo(step) {
 		//document.getElementById("radio_routes_6").checked = "true";
 	}
 	
-	// If step 5 is opened the the code must be generated immediately
-	if (step == 5){
-		linkToMapOpened();
-	}
-	
 	//hide text editor functionality
 	//document.getElementById("savemarkerinfo").style.visibility = "hidden";
 	//hideEditor();
@@ -182,9 +177,9 @@ $(document).ready(function() {
     createMarkersLogic();
 
     $('#step3 input:text').val('');
-
+    createApiLinksAndCode();
     // not sure if we want this here
-    api.map.events.register("moveend", this, linkToMapOpened );
+    api.map.events.register("moveend", this, createApiLinksAndCode );
 });
 
 
@@ -702,25 +697,26 @@ function deleteLayers () {
 }
 
  
-function linkToMapOpened() {
-
-	$("#embedlink").val(api.createMapLink());
-	$("#embedhtmliframe").val(api.createIframeTags());
-	$("#embedhtmlobject").val(api.createObjectTags());
-	$("#scriptcodeHead").val(api.createHtmlHead());
-	$("#scriptcodeBody").val(api.createHtmlBody());
-	
+function createApiLinksAndCode() {
+    var apiLink = api.createMapLink();
+    $("#apilink1").attr('href', apiLink);
+    $("#apilink2").val(apiLink);
+    $("#apilink3").attr('href', api.createMailLink());
+    $("#embedhtmliframe").val(api.createIframeTags());
+    $("#embedhtmlobject").val(api.createObjectTags());
+    $("#scriptcodeHead").val(api.createHtmlHead());
+    $("#scriptcodeBody").val(api.createHtmlBody());
 }
 
 function removeFeature (ft_id) {
-	var ok = confirm ("Deze locatie verwijderen?")
-	if (ok) {
-		$('#listitem_'+ft_id.split('.')[2]).remove()
-		var ft = markers.getFeatureById(ft_id);
-		mapPDOKKaart.removePopup(ft.popup);
-		markers.removeFeatures([ft]);
-		// also from the list
-	}
+    var ok = confirm ("Deze locatie verwijderen?")
+    if (ok) {
+        $('#listitem_'+ft_id.split('.')[2]).remove()
+        var ft = markers.getFeatureById(ft_id);
+        mapPDOKKaart.removePopup(ft.popup);
+        markers.removeFeatures([ft]);
+        // also from the list
+    }
 } 
 
 
@@ -730,10 +726,9 @@ function setMapSize() {
     var wH=jQuery(window).height();
     jQuery("#container").width(wW);
     jQuery("#container").height(wH);
-    
     jQuery("#content").width(wW-10);
     jQuery("#content").height(wH-105);
-    jQuery("#map").width(wW-470);    
+    jQuery("#map").width(wW-470);
 }
 
 
