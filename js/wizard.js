@@ -374,8 +374,8 @@ function createPdokLayers(){
 
 function createEditAttributes () {
 
-    var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Postcode of plaatsnaam" />';
-    html = html + '<textarea id="description">Voer een omschrijving in : </textarea>';
+    var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Vul een titel in voor de popup" />';
+    html = html + '<textarea id="description" title="Vul een omschrijving in voor de popup">Voer een omschrijving in : </textarea>';
     html = html + '<button type="submit" class="filterbutton" onclick="saveAttributes();return false;">Opslaan tekst</button>';
     html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen marker</button>';
 
