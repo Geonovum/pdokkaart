@@ -50,7 +50,7 @@ Pdok.Api = function(config) {
     /**
      * Reference to layers
      */
-    this.layers = null;
+    this.pdoklayers = null;
 
     /**
      * Reference to map object
@@ -701,17 +701,6 @@ Pdok.Api.prototype.defaultLayers = {
             visibility: true,
             isBaseLayer: false,
             singleTile: true
-        },
-        TEXEL_20120423_OUTLINE: {
-            layertype: 'WMS',
-            name: 'Gevectoriseerde Bonnebladen',
-            url: 'http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect_texel.map',
-            layers: 'TEXEL_20120423_OUTLINE',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
         }
     }
 
@@ -804,12 +793,12 @@ Pdok.Api.prototype.createOlMap = function() {
 	}
 
     // apply layer if a layer was given
-    if (this.layers != null) {
+    if (this.pdoklayers != null) {
         // if there is just one layer (without comma's), OL returns a String:
-        if (typeof this.layers == 'string') {
-            this.layers=[this.layers];
+        if (typeof this.pdoklayers == 'string') {
+            this.pdoklayers=[this.pdoklayers];
         }
-        this.addLayers(this.layers, olMap);
+        this.addLayers(this.pdoklayers, olMap);
         // if the map does NOT have a baseLayer, always add BRT layer
         if (!olMap.baseLayer){
             //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
