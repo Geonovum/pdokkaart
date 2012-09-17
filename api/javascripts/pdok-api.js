@@ -216,7 +216,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt0',
             name: 'Standaard marker',
-            externalGraphic: "./markertypes/star-3.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/star-3.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -224,7 +224,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt1',
             name: 'Informatie blauw',
-            externalGraphic: "./markertypes/information_blue.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/information_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -232,7 +232,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt2',
             name: 'Informatie groen',
-            externalGraphic: "./markertypes/information_green.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/information_green.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -240,7 +240,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt3',
             name: 'Informatie geel',
-            externalGraphic: "./markertypes/information_yellow.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/information_yellow.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -248,7 +248,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt4',
             name: 'Geonovum blauw',
-            externalGraphic: "./markertypes/geonovum_blue.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/geonovum_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -256,7 +256,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt5',
             name: 'Geonovum groen',
-            externalGraphic: "./markertypes/geonovum_green.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/geonovum_green.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -264,7 +264,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt6',
             name: 'Geonovum geel',
-            externalGraphic: "./markertypes/geonovum_yellow.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/geonovum_yellow.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -272,7 +272,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt7',
             name: 'Rijks blauw',
-            externalGraphic: "./markertypes/rijk_blue.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/rijk_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -280,7 +280,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt8',
             name: 'Rijks groen',
-            externalGraphic: "./markertypes/rijk_green.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/rijk_green.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -288,7 +288,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt9',
             name: 'Rijks geel',
-            externalGraphic: "./markertypes/rijk_yellow.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/rijk_yellow.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -296,7 +296,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt10',
             name: 'Kadaster blauw',
-            externalGraphic: "./markertypes/kadaster_blue.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/kadaster_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -304,7 +304,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt11',
             name: 'Kadaster groen',
-            externalGraphic: "./markertypes/kadaster_green.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/kadaster_green.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -312,7 +312,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt12',
             name: 'Kadaster geel',
-            externalGraphic: "./markertypes/kadaster_yellow.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/kadaster_yellow.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -320,7 +320,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt13',
             name: 'Werkzaamheden',
-            externalGraphic: './markertypes/pictograms-road_signs-workman_ahead_roadsign.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-workman_ahead_roadsign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -328,7 +328,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt14',
             name: 'Waarschuwing',
-            externalGraphic: './markertypes/pictogram-din-w000-general.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictogram-din-w000-general.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -336,7 +336,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt15',
             name: 'Zeer licht ontvlambaar',
-            externalGraphic: './markertypes/pictogram-din-w001-flame.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictogram-din-w001-flame.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -344,7 +344,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt16',
             name: 'Explosief',
-            externalGraphic: './markertypes/pictogram-din-w002-rxplosion.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictogram-din-w002-rxplosion.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -352,7 +352,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt17',
             name: 'Electriciteit',
-            externalGraphic: './markertypes/pictogram-din-w008-electricisty.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictogram-din-w008-electricisty.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -360,7 +360,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt18',
             name: 'Lage temperatuur',
-            externalGraphic: './markertypes/pictogram-din-w017-low_temerature.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictogram-din-w017-low_temerature.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -368,7 +368,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt19',
             name: 'Wielrijders niet toegestaan',
-            externalGraphic: './markertypes/pictograms-road_signs-no_bicycles_roadsign.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-no_bicycles_roadsign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -376,7 +376,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt20',
             name: 'Personenwagens niet toegestaan',
-            externalGraphic: './markertypes/pictograms-road_signs-no_cars_sign.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-no_cars_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -384,7 +384,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt21',
             name: 'Verboden in te rijden',
-            externalGraphic: './markertypes/pictograms-road_signs-no_entry.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-no_entry.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -392,7 +392,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt22',
             name: 'Personen niet toegestaan',
-            externalGraphic: './markertypes/pictograms-road_signs-no_entry_sign_with_a_man.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-no_entry_sign_with_a_man.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -400,7 +400,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt23',
             name: 'Opgelet',
-            externalGraphic: './markertypes/pictograms-road_signs-other_dangers_sign.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-other_dangers_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -408,7 +408,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt24',
             name: 'Verboden voor alle verkeer',
-            externalGraphic: './markertypes/pictograms-road_signs-simple_round_sign.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-simple_round_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -416,7 +416,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt25',
             name: 'Stop',
-            externalGraphic: './markertypes/pictograms-road_signs-stop_sign.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-stop_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -424,7 +424,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt26',
             name: 'Verkeerslichten',
-            externalGraphic: './markertypes/pictograms-road_signs-traffic_lights_ahead_sign.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-traffic_lights_ahead_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -432,7 +432,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt27',
             name: 'Verplichte rijrichting',
-            externalGraphic: './markertypes/pictographs-ahead_only.png',
+            externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictographs-ahead_only.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -1025,7 +1025,7 @@ Pdok.Api.prototype.createStyles = function(){
     // create a default Point style
     var pdokDefaultPoint = OpenLayers.Util.applyDefaults(
         {
-            externalGraphic: "./markertypes/default.png",
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/default.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
