@@ -397,24 +397,16 @@ function createFieldnameInput(radiobutton) {
 
     var  geometrie = $(radiobutton).attr('value') ;
     var html = ''; 
-    
     if (geometrie == 'mt1') {
-
         html = html + '<label>X-co&ouml;rdinaat  : <input id="xcoord" type="text" value=""  /></label></br>';
         html = html + '<label>Y-co&ouml;rdinaat : <input id="ycoord" type="text" value=""  /></label></br>';
     }
-    
     else if (geometrie == 'lt1' || geometrie == 'pt1') {
-
         html = html + '<label>Veldnaam (wkt):<input id="veldnaam" type="text" value=""  /></label>';
-
     }
     else {
-    
         html = '';
-
     };
-
     $('#divveldnaam').html(html);
 
 };
@@ -677,7 +669,6 @@ function addWmtsLayer() {
 } 
 
 function addPdokLayer() {
-	// TODO: add PDOK layer to map, need API function for this --> not implemented in PoC version of API
 	api.addLayers([$("#pdokLayerSelector").val()]);
 }
 

@@ -835,7 +835,7 @@ Pdok.Api.prototype.createOlMap = function() {
     this.featuresLayer = new OpenLayers.Layer.Vector(this.FEATURESLAYER_NAME);
     olMap.addLayer(this.featuresLayer);
 
-    
+    // locationLayer holds features for 'kaarprikker/locationtool'
     this.locationLayer = new OpenLayers.Layer.Vector('locationtool', {
         displayInLayerSwitcher:false
     });
@@ -845,7 +845,9 @@ Pdok.Api.prototype.createOlMap = function() {
         // meaning we received a features string (kml) from the outside
         // features string handled, this.features now used as feature array
         if (this.features.toString().length>0) {
-            this.addFeaturesFromString(this.features.toString(), 'KML');
+            var kmlString = this.features.toString();
+            this.features = [];
+            this.addFeaturesFromString(kmlString, 'KML');
         }
     }
 
@@ -1162,6 +1164,18 @@ Pdok.Api.prototype.reprojectWGS84toRD = function(lat,lon){
 	return(pointRD);
 }
 
+/**
+ *  Generic api method to add an already constructed OpenLayers layer 
+ *  to our map. 
+ *  The use of this method guarantees you that locationLayer and featureLayer 
+ *  are always on top
+ * Can be used to add an external layer to the map.
+ */
+Pdok.Api.prototype.addOLLayer = function(openLayersLayer) {
+    this.map.addLayer(openLayersLayer);
+    this.moveVectorLayersToTop();
+}
+
 Pdok.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
     if (tmstype == null){
         tmstype="png";
@@ -1171,7 +1185,7 @@ Pdok.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
             layername: tmslayer,
             type: tmstype
         });
-    this.map.addLayer(lyrTMS);
+    this.addOLLayer(lyrTMS);
     return true;
 }
 
@@ -1215,8 +1229,7 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
             matrixIds: wmtsmatrixids,
             style: wmtsstyle
         });
-    this.map.addLayer(lyrWMTS);
-
+    this.addOLLayer(lyrWMTS);
     return true;
 }
 
@@ -1281,7 +1294,7 @@ Pdok.Api.prototype.addWMS = function(wmsurl,wmslayers) {
             layers: wmslayers,
             transparent: true
         });
-    this.map.addLayer(lyrWMS);
+    this.addOLLayer(lyrWMS);
     return true;
 }
 
@@ -1336,6 +1349,10 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
         alert('null object as layernames');
         return;
     }
+    else if (arrLayerNames == '-') {
+        // this is the 'header' of the selectbox: "choose ..."
+        return;
+    }
 
     if (map == undefined){
         map = this.map;
@@ -1366,7 +1383,20 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
             alert('layerid not available: ' + layerId);
         }
     }
+    // to be sure featuresLayer and locationLayer are always on top
+    this.moveVectorLayersToTop();
     return true;
+}
+
+
+Pdok.Api.prototype.moveVectorLayersToTop = function(){
+    // TODO ??take all vector layers into account??
+    if(this.featuresLayer) {
+        this.map.setLayerIndex(this.featuresLayer, this.map.layers.length-1);
+    }
+    if(this.locationLayer) {
+        this.map.setLayerIndex(this.locationLayer, this.map.layers.length);
+    }
 }
 
 
