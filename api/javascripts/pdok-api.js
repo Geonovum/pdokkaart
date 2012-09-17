@@ -24,7 +24,7 @@ OpenLayers.Feature.Vector.style.default.fillColor = 'red';
 OpenLayers.Feature.Vector.style.default.pointRadius = 5;
 OpenLayers.Feature.Vector.style.default.fillOpacity = 0.8;
 
-OpenLayers.ImgPath = 'img/';
+OpenLayers.ImgPath = './img/';
 
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
 
@@ -216,7 +216,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt0',
             name: 'Standaard marker',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/star-3.png",
+            externalGraphic: "./markertypes/star-3.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -224,7 +224,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt1',
             name: 'Informatie blauw',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_blue.png",
+            externalGraphic: "./markertypes/information_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -232,7 +232,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt2',
             name: 'Informatie groen',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_green.png",
+            externalGraphic: "./markertypes/information_green.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -240,7 +240,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt3',
             name: 'Informatie geel',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/information_yellow.png",
+            externalGraphic: "./markertypes/information_yellow.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -248,7 +248,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt4',
             name: 'Geonovum blauw',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_blue.png",
+            externalGraphic: "./markertypes/geonovum_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -256,7 +256,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt5',
             name: 'Geonovum groen',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_green.png",
+            externalGraphic: "./markertypes/geonovum_green.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -264,7 +264,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt6',
             name: 'Geonovum geel',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/geonovum_yellow.png",
+            externalGraphic: "./markertypes/geonovum_yellow.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -272,7 +272,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt7',
             name: 'Rijks blauw',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/rijk_blue.png",
+            externalGraphic: "./markertypes/rijk_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -280,7 +280,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt8',
             name: 'Rijks groen',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/rijk_green.png",
+            externalGraphic: "./markertypes/rijk_green.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -288,7 +288,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt9',
             name: 'Rijks geel',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/rijk_yellow.png",
+            externalGraphic: "./markertypes/rijk_yellow.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -296,7 +296,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt10',
             name: 'Kadaster blauw',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/kadaster_blue.png",
+            externalGraphic: "./markertypes/kadaster_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -304,7 +304,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt11',
             name: 'Kadaster groen',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/kadaster_green.png",
+            externalGraphic: "./markertypes/kadaster_green.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -312,7 +312,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt12',
             name: 'Kadaster geel',
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/kadaster_yellow.png",
+            externalGraphic: "./markertypes/kadaster_yellow.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -320,7 +320,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt13',
             name: 'Werkzaamheden',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-workman_ahead_roadsign.png',
+            externalGraphic: './markertypes/pictograms-road_signs-workman_ahead_roadsign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -328,7 +328,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt14',
             name: 'Waarschuwing',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictogram-din-w000-general.png',
+            externalGraphic: './markertypes/pictogram-din-w000-general.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -336,7 +336,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt15',
             name: 'Zeer licht ontvlambaar',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictogram-din-w001-flame.png',
+            externalGraphic: './markertypes/pictogram-din-w001-flame.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -344,7 +344,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt16',
             name: 'Explosief',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictogram-din-w002-rxplosion.png',
+            externalGraphic: './markertypes/pictogram-din-w002-rxplosion.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -352,7 +352,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt17',
             name: 'Electriciteit',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictogram-din-w008-electricisty.png',
+            externalGraphic: './markertypes/pictogram-din-w008-electricisty.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -360,7 +360,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt18',
             name: 'Lage temperatuur',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictogram-din-w017-low_temerature.png',
+            externalGraphic: './markertypes/pictogram-din-w017-low_temerature.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -368,7 +368,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt19',
             name: 'Wielrijders niet toegestaan',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-no_bicycles_roadsign.png',
+            externalGraphic: './markertypes/pictograms-road_signs-no_bicycles_roadsign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -376,7 +376,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt20',
             name: 'Personenwagens niet toegestaan',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-no_cars_sign.png',
+            externalGraphic: './markertypes/pictograms-road_signs-no_cars_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -384,7 +384,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt21',
             name: 'Verboden in te rijden',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-no_entry.png',
+            externalGraphic: './markertypes/pictograms-road_signs-no_entry.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -392,7 +392,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt22',
             name: 'Personen niet toegestaan',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-no_entry_sign_with_a_man.png',
+            externalGraphic: './markertypes/pictograms-road_signs-no_entry_sign_with_a_man.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -400,7 +400,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt23',
             name: 'Opgelet',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-other_dangers_sign.png',
+            externalGraphic: './markertypes/pictograms-road_signs-other_dangers_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -408,7 +408,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt24',
             name: 'Verboden voor alle verkeer',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-simple_round_sign.png',
+            externalGraphic: './markertypes/pictograms-road_signs-simple_round_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -416,7 +416,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt25',
             name: 'Stop',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-stop_sign.png',
+            externalGraphic: './markertypes/pictograms-road_signs-stop_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -424,7 +424,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt26',
             name: 'Verkeerslichten',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictograms-road_signs-traffic_lights_ahead_sign.png',
+            externalGraphic: './markertypes/pictograms-road_signs-traffic_lights_ahead_sign.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -432,7 +432,7 @@ Pdok.Api.prototype.defaultStyles=[
         {
             id: 'mt27',
             name: 'Verplichte rijrichting',
-            externalGraphic: 'http://www.duif.net/pdok/api/markertypes/pictographs-ahead_only.png',
+            externalGraphic: './markertypes/pictographs-ahead_only.png',
             graphicHeight: 32,
             graphicWidth: 32,
             graphicYOffset: -32
@@ -1025,7 +1025,7 @@ Pdok.Api.prototype.createStyles = function(){
     // create a default Point style
     var pdokDefaultPoint = OpenLayers.Util.applyDefaults(
         {
-            externalGraphic: "http://www.nieuwsinkaart.nl/pdok/kaart/markertypes/default.png",
+            externalGraphic: "./markertypes/default.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
