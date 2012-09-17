@@ -19,10 +19,10 @@
  *    style="border: 0">
  */
 
-OpenLayers.Feature.Vector.style.default.strokeColor = 'red';
-OpenLayers.Feature.Vector.style.default.fillColor = 'red';
-OpenLayers.Feature.Vector.style.default.pointRadius = 5;
-OpenLayers.Feature.Vector.style.default.fillOpacity = 0.8;
+OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
+OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
+OpenLayers.Feature.Vector.style['default'].pointRadius = 5;
+OpenLayers.Feature.Vector.style['default'].fillOpacity = 0.8;
 
 OpenLayers.ImgPath = './img/';
 
