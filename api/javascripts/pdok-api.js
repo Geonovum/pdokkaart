@@ -122,6 +122,12 @@ Pdok.Api = function(config) {
      * Reference to layerswitch object
      */
     this.ls = false;
+    
+    
+    /**
+     * Reference to the OpenLayers LayerSwitcher object
+     */
+    this.showLayerSwitcher = false;
 
     /**
      * Reference to the DIV-id the map should be rendered in.
@@ -716,14 +722,35 @@ Pdok.Api.prototype.defaultLayers = {
  * Creates an OpenLayers Map object due to the given config.
  */
 Pdok.Api.prototype.createOlMap = function() {
-    var olMap = new OpenLayers.Map ({
-        controls: [
+    var controls = []
+    if (!this.showLayerSwitcher){
+    	controls = [
+            new OpenLayers.Control.Attribution(),
+            new OpenLayers.Control.Navigation(),
+            new OpenLayers.Control.Zoom(),
+			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
+        ]
+    }
+    else if (this.showLayerSwitcher == true || this.showLayerSwitcher.toLowerCase() == "true"){
+    	controls = [
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.Zoom(),
             new OpenLayers.Control.LayerSwitcher(),
 			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
-        ],
+        ]
+    }
+    else
+    {
+    	controls = [
+            new OpenLayers.Control.Attribution(),
+            new OpenLayers.Control.Navigation(),
+            new OpenLayers.Control.Zoom(),
+			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
+        ]
+    }
+    var olMap = new OpenLayers.Map ({
+        controls: controls,
         maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
         theme: null,
 		resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76,
