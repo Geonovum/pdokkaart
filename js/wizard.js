@@ -8,7 +8,6 @@ var activeFeature;
 var currentStep = 1;
 
 // The proxyhost is needed for the geocoder
-OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 OpenLayers.ImgPath = 'api/img/';
 
 //++

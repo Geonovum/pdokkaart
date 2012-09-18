@@ -24,6 +24,8 @@ OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
 OpenLayers.Feature.Vector.style['default'].pointRadius = 5;
 OpenLayers.Feature.Vector.style['default'].fillOpacity = 0.8;
 
+// The proxyhost is needed for the geocoder
+OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 OpenLayers.ImgPath = './img/';
 
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
@@ -1322,7 +1324,7 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
     // default WMS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
-            layername: 'wms layer',
+            name: 'WMS layer',
             url: '',
             layers: '',
             styles: '',
