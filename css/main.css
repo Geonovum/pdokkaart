@@ -45,15 +45,6 @@ body
     text-align: left;
 }
 
-#search{
-	margin-left:5px;
-	padding:0px 0px 0px 0px;
-	position:relative;
-	width:90%;
-	font-size:1.1em;
-	font-weight:bold;
-}
-
 #map
 {
 	height:100%;

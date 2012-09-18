@@ -1742,7 +1742,7 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
         alert('addFeaturesFromUrl aanroep met een niet ondersteund type: '+type);
         return;
     }
-
+console.log(url);
     OpenLayers.Request.GET({
             url: url,
             callback: apiObject.handleGetResponse,

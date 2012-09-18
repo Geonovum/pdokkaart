@@ -20,16 +20,7 @@
 <body>
     <div id="container">
         <div id="topbar">
-            <h1 id="title">
-                PDOK Kaart Wizard</h1>
-            <div id="search">
-                <form id="searchForm" name="searchForm">
-                Zoek een locatie:
-                <input id="searchLocation" type="text" value="" name="searchLocation" />
-                <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
-                    Zoek</button>
-                </form>
-            </div>
+            <h1 id="title">PDOK Kaart Wizard</h1>
         </div>
         <div id="content">
             <div id="map" class="functional">
@@ -39,6 +30,14 @@
 				Hier komen de resultaten van de geocodeerservice
 			</div>
             <div id="leftcolumn">
+                <div id="search" class="container">
+                    <form style="display:block" id="searchForm" name="searchForm">
+                    Zoek een locatie:
+                    <input id="searchLocation" type="text" value="" name="searchLocation" />
+                    <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
+                        Zoek</button>
+                    </form>
+                </div>
                 <!-- Step 1 - Your map -->
                 <div id="step1" class="container active">
                     <h2> <a  onclick="stopDrawingEditingPoint();return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
