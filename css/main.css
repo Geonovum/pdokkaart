@@ -273,6 +273,10 @@ ul.geozetSuggestions{
 	color: black;
 }
 
+.help {
+	float: right;
+}
+
 .defaultmarker {
 	height: 24px;
 }
