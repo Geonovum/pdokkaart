@@ -122,12 +122,11 @@ Pdok.Api = function(config) {
      * Reference to layerswitch object
      */
     this.ls = false;
-    
-    
+        
     /**
      * Reference to the OpenLayers LayerSwitcher object
      */
-    this.showLayerSwitcher = false;
+    this.showLayerSwitcher = true;
 
     /**
      * Reference to the DIV-id the map should be rendered in.
@@ -1224,7 +1223,7 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
     var layer = new OpenLayers.Layer.TMS(
         layerConfigObj.name,
         layerConfigObj.url,
-        {   layername: layerConfigObj.name, 
+        {   layername: layerConfigObj.layername, 
             type:layerConfigObj.type, 
             visibility: layerConfigObj.visibility, 
             isBaseLayer: layerConfigObj.isBaseLayer
