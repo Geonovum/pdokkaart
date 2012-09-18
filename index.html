@@ -127,11 +127,8 @@
                         <input type="text" id="WmtsLayer" size="30"/></br>
                         Matrixset van de WMTS:<br/>
                         <input type="text" id="WmtsMatrix" size="30"/></br>
-                        <button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>					
-                        <div id="edit5" class="row">
-                            <button id ="deletelayers" type="submit" class="filterbutton" onclick=" deleteLayers(); return false;" >
-                                <span>Verwijder alle lagen</span></button>
-                        </div>	
+                        <button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>
+                        <button id ="deletelayers" class="filterbutton" onclick=" api.deleteLayers();return false;" ><span>Verwijder alle lagen</span></button>
                     </form>
                 </div>
 

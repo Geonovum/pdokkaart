@@ -853,7 +853,7 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // locationLayer holds features for 'kaarprikker/locationtool'
     this.locationLayer = new OpenLayers.Layer.Vector('locationtool', {
-        displayInLayerSwitcher:false
+        name:'locations', displayInLayerSwitcher:false
     });
     olMap.addLayer(this.locationLayer);
 
@@ -1692,6 +1692,31 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     return true;
 }
 
+/**
+ *  Deleting layers, visible baseLayer and both internal vector layers
+ *  featureLayer and LocationsLayer will never be deleted
+ */
+Pdok.Api.prototype.deleteLayers = function(nonVectorLayers, vectorLayers) {
+    // defaulting to always the nonVectorLayers and NOT the vectorLayer
+    nonVectorLayers?nonVectorLayers:nonVectorLayers=true;
+    vectorLayers?vectorLayers:vectorLayers=false;
+    for (var i = this.map.layers.length-1; i>=0; i--) {
+        var layer = this.map.layers[i];
+        if (layer.isBaseLayer && layer.visibility == true) {
+            // current visible baselayer: do NOT remove
+        }
+        else if (layer != this.featuresLayer && layer != this.locationLayer){
+            if (layer.CLASS_NAME == 'OpenLayers.Layer.Vector' 
+                    && vectorLayers) {
+                this.map.removeLayer(layer);
+            }
+            else if(nonVectorLayers) {
+                this.map.removeLayer(layer);
+            }
+        }
+    }
+}
+
 Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
 
     var apiObject = this;
@@ -1803,7 +1828,7 @@ Pdok.Api.prototype.getConfig = function() {
         }
     }
     if (layers.length>0) {
-        config.layers = [layers.join()];
+        config.pdoklayers = [layers.join()];
     }
     // wmsurl AND wmslayers
     if(this.wmsurl && this.wmsurl.length>0 && this.wmslayers && this.wmslayers.length>0) {

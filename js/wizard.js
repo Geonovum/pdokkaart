@@ -672,22 +672,6 @@ function addPdokLayer() {
 	api.addLayers([$("#pdokLayerSelector").val()]);
 }
 
-function deleteLayers () {
-	// remove all WMS and TMS layers (if not basemap)
-	for (var lr in mapPDOKKaart.layers) {
-		var l = mapPDOKKaart.layers[lr];
-		if (l.name!="Features" && l.isBaseLayer == false) { // not Geocoderesults or markers?
-			mapPDOKKaart.removeLayer(l);
-		}
-	}
-	
-	
-	/* $("#pdokLayerSelector").val("-");
-	layerSwitcher.maximizeControl();
-	 */
-}
-
- 
 function createApiLinksAndCode() {
     var apiLink = api.createMapLink();
     $("#apilink1").attr('href', apiLink);
