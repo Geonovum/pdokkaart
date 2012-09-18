@@ -883,7 +883,7 @@ Pdok.Api.prototype.createOlMap = function() {
     this.selectControl = new OpenLayers.Control.SelectFeature(
             this.featuresLayer, 
             {
-                hover:this.hoverPopup,
+                hover:this.hoverPopup
                 // implement some on magic to have a visible selection,
                 // which we lost when we gave every feature a style
                 /*
