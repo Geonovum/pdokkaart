@@ -518,6 +518,10 @@ function searchLocationChanged() {
      * Boolean - if other == False OR more or no results
 	**/ 
 
+function showError(msg){
+	alert(msg);
+}
+
 function handleGeocodeResponse(req, returnCoords){
     //removePopups(markers);
     //markers.destroyFeatures();
@@ -531,10 +535,15 @@ function handleGeocodeResponse(req, returnCoords){
     }
     var xlslusFormat = new Geozet.Format.XLSLUS();
     var xlslus = xlslusFormat.read(req.responseXML || req.responseText);
-    var hits=xlslus[0].numberOfGeocodedAddresses;
+    if (xlslus.length == 0){
+    	hits = 0;
+    }
+    else{
+	    var hits=xlslus[0].numberOfGeocodedAddresses;
+	}
     if (hits==0){
         // zero responses
-        this.showError(OpenLayers.i18n("noLocationFound"));
+        this.showError("Geen locaties gevonden ...");
     }
     else{
 		var maxEx = mapPDOKKaart.restrictedExtent;
