@@ -726,8 +726,8 @@ Pdok.Api.prototype.createOlMap = function() {
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.Zoom(),
-            new OpenLayers.Control.LayerSwitcher(),
-			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
+			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''}),
+            new OpenLayers.Control.LayerSwitcher()
         ]
     }
     else
@@ -1812,6 +1812,8 @@ Pdok.Api.prototype.getConfig = function() {
 
     // zoom
     config.zoom = this.map.getZoom();
+    // show the LayerSwitcher or not
+    config.showLayerSwitcher = this.showLayerSwitcher;
     // bbox
     // config.bbox = this.map.getExtent().toArray();
     // or better ? loc
@@ -1871,7 +1873,6 @@ Pdok.Api.prototype.getConfig = function() {
     return config;
 }
 
-
 Pdok.Api.prototype.serialize = function(obj, stringQuotes){
   var returnVal;
   if(stringQuotes){}else{stringQuotes = false;}
@@ -1924,4 +1925,14 @@ Pdok.Api.prototype.serialize = function(obj, stringQuotes){
   }
   }
   return null;
+}
+
+//Function to toggle visibility of the OpenLayers.LayerSwitcher
+Pdok.Api.prototype.setLayerSwitcherVisible = function(isVisible){
+	if (isVisible){
+		this.showLayerSwitcher = true;
+	}
+	else{
+		this.showLayerSwitcher = false;
+	}
 }

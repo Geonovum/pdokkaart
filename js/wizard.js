@@ -733,3 +733,7 @@ function pdok_api_map_resize(w,h) {
     mapPDOKKaart.updateSize();
 	
 }
+
+function setLayerSwitcherVisible(isVisible){
+	api.setLayerSwitcherVisible(isVisible);
+}
