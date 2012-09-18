@@ -2,8 +2,8 @@ body
 {
     background-color: #FFFFFF;
     font-family: "Helvetica Neue", Verdana, Helvetica, Arial, sans-serif;
-	font-size: 62.5%;
-	text-align: left; /* */ /* workaround to center a div in IE: http://www.maxdesign.com.au/presentation/center/ */
+    font-size: 62.5%;
+    text-align: left; /* */ /* workaround to center a div in IE: http://www.maxdesign.com.au/presentation/center/ */
     margin: 0;
     padding: 0;
     color:  #202020; /* #002161 */
@@ -29,8 +29,8 @@ body
     left: 5px;
     position: relative;
     background-color:#FFFFFF;
- 	margin: 0px;
-	padding: 0px;
+    margin: 0px;
+    padding: 0px;
     box-shadow: 0 0 5px grey;
     border: 1px solid #a0a0a0;
 }
@@ -183,11 +183,6 @@ li
 .popInWindow h4 {
 	margin: 0px;
 	margin-top: 8px;
-}
-
-.olControlLayerSwitcher .layersDiv {
-	background-color: #303030;
-	color: white;
 }
 
 #drawlocationhelp {
