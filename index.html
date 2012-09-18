@@ -3,6 +3,16 @@
 <head>
     <title>PDOK Kaartwizard</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+	<link rel="stylesheet" href="./opmaak/screen.css" type="text/css" media="screen" />
+	<!--[if IE 8]><link rel="stylesheet" href="/opmaak/ie/ie8.css" type="text/css" media="screen" /><![endif]-->
+	<!--[if lte IE 7]><link rel="stylesheet" href="/opmaak/ie/ie7.css" type="text/css" media="screen" /><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" href="/opmaak/ie/ie6.css" type="text/css" media="screen" /><![endif]-->
+	<link rel="stylesheet" href="./opmaak/print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="./opmaak/toevoeging.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="./opmaak/iconids.css" type="text/css" media="screen" />
+
+
     <link rel="stylesheet" href="api/styles/default/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/main.css" type="text/css" />
     <script type="text/javascript" src="js/jquery.js"></script>
@@ -14,14 +24,28 @@
 	<script type="text/javascript" src="js/Geozet/Format/XLSLUS.js"></script>
 	<script type="text/javascript" src="js/Geozet/Format/XLSAddress.js"></script>
 	<script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1.js"></script>
-    <!--<script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1_1_0.js"></script> -->
-    
+    <script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1_1_0.js"></script>
+
 </head>
 <body>
-    <div id="container">
-        <div id="topbar">
-            <h1 id="title">PDOK Kaart Wizard</h1>
-        </div>
+    <div class="container equalize page orange default">
+
+		<div class="header">
+            <span></span>
+			<div class="branding">
+                <img alt="PDOK" src="img/PDOK-logo.png">
+                <h1 class="invisible">PDOK Kaart Wizard</h1>
+            </div>
+			
+			<div class="nav_bar">
+				<ul class="nav_main">
+                    <li><a href="http://drupal.pdokloket.nl">Home</a></li>
+                    <li class="sel"><a class="active" href='#'>PDOK Wizard</a></li>
+                </ul>
+			</div>		
+		</div>
+
+		<div class="content_wrapper1"><div class="content_wrapper2">		
         <div id="content">
             <div id="map" class="functional">
             </div>
@@ -30,7 +54,7 @@
 				Hier komen de resultaten van de geocodeerservice
 			</div>
             <div id="leftcolumn">
-                <div id="search" class="container">
+                <div id="search" class="stepwrapper">
                     <form style="display:block" id="searchForm" name="searchForm">
                     Zoek een locatie:
                     <input id="searchLocation" type="text" value="" name="searchLocation" />
@@ -39,7 +63,7 @@
                     </form>
                 </div>
                 <!-- Step 1 - Your map -->
-                <div id="step1" class="container active">
+                <div id="step1" class="stepwrapper active">
                     <h2> <a  onclick="stopDrawingEditingPoint();return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
                     <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);">
 
@@ -63,7 +87,7 @@
                     </form>
                 </div>
                 <!-- Step 2 - Add markers -->
-                <div id="step2" class="container">
+                <div id="step2" class="stepwrapper">
                     <h2>
                         <a onclick="stopDrawingEditingPoint(); return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2>		
                     <form action="#" name="editmarkers" id="editmarkers" NOTonsubmit="return goTo(3); ">
@@ -105,7 +129,7 @@
                     </form>
                 </div>
                 <!-- Step 4  optie -->
-                <div id="step3" class="container" style="display: none;">
+                <div id="step3" class="stepwrapper" style="display: none;">
                 <h2>
                     <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Extra Kaartlaag toevoegen</a></h2>
                     <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
@@ -131,7 +155,7 @@
                 </div>
 
                 <!-- Step 5 optie -->
-                <div id="step4" class="container" style="display: none;">
+                <div id="step4" class="stepwrapper" style="display: none;">
                 <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a></h2>
 
                     <form id="locationtoolform">
@@ -217,7 +241,7 @@
                 </div>
 
                 <!-- Step 6 - Save and download code -->
-                <div id="step5" class="container">
+                <div id="step5" class="stepwrapper">
                     <h2>
                         <a  onclick="stopDrawingEditingPoint();createApiLinksAndCode();return goTo(5);" onkeypress="return goTo(5);">Stap 3: Genereer
                             code</a>
@@ -278,9 +302,10 @@
 				<div id="edit5" class="row">
 					<button id ="opties" type="submit" class="filterbutton" onclick=" MeerMinderOpties(); return false;" value="Meer opties">
 						<span>Meer opties</span></button>
-				</div>			  
+				</div>
             </div>
         </div>
+        </div></div>
     </div>
 </body>
 </html>

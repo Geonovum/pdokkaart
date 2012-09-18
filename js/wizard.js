@@ -34,9 +34,9 @@ function goTo(step) {
 	//hideEditor();
 
     //set container for css styling i.e. make tabs active on selection	
-	document.getElementById("step" + currentStep).className = "container";
+	document.getElementById("step" + currentStep).className = "stepwrapper";
 	currentStep = step;
-	document.getElementById("step" + currentStep).className = "container active";
+	document.getElementById("step" + currentStep).className = "stepwrapper active";
 	return false;
 }
 
