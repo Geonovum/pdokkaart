@@ -64,7 +64,7 @@
                 </div>
                 <!-- Step 1 - Your map -->
                 <div id="step1" class="stepwrapper active">
-                    <h2> <a  onclick="stopDrawingEditingPoint();return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a></h2>
+                    <h2> <a  onclick="stopDrawingEditingPoint();return goTo(1);" onkeypress="return goTo(1);">Stap 1: De Kaart</a><div class="help"><a href="help.html#help1" target="_blank">Help</a></div></h2>
                     <form action="#" name="yourmap" id="yourmap" onsubmit="return goTo(2);">
 
                     <div class="row">
@@ -83,13 +83,18 @@
                                 checked="checked" />
                             <label for="mapsize3"> Groot (550x440 pixels)</label>
                         </div>
+                        <div class="row">	
+                            <input type="checkbox" name="maplayerswitcher" id="maplayerswitcher" onclick="alert(maplayerswitcher.checked);"
+                                checked="checked" />
+                            <label for="mapsize3"> Toon layerswitcher</label>
+                        </div>
                     </div>
                     </form>
                 </div>
                 <!-- Step 2 - Add markers -->
                 <div id="step2" class="stepwrapper">
                     <h2>
-                        <a onclick="stopDrawingEditingPoint(); return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a></h2>		
+                        <a onclick="stopDrawingEditingPoint(); return goTo(2);" onkeypress="return goTo(2);">Stap 2: Voeg markers toe</a><div class="help"><a href="help.html#help2" target="_blank">Help</a></div></h2>		
                     <form action="#" name="editmarkers" id="editmarkers" NOTonsubmit="return goTo(3); ">
                         <div>
                             <!-- add markers via map -->
@@ -131,7 +136,7 @@
                 <!-- Step 4  optie -->
                 <div id="step3" class="stepwrapper" style="display: none;">
                 <h2>
-                    <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Extra Kaartlaag toevoegen</a></h2>
+                    <a href="#" onclick="stopDrawingEditingPoint();return goTo(3);" onkeypress="return goTo(3);">Optie:  Extra Kaartlaag toevoegen</a><div class="help"><a href="help.html#help3" target="_blank">Help</a></div></h2>
                     <form action="#" name="addroutes" id="addroutes" onsubmit="return goTo(4);">
                         <h4>Voeg een standaard kaartlaag toe</h4>
                         <div id="divpdoklayerselector" > </div>
@@ -156,7 +161,7 @@
 
                 <!-- Step 5 optie -->
                 <div id="step4" class="stepwrapper" style="display: none;">
-                <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a></h2>
+                <h2><a href="#" onclick="return goTo(4);" onkeypress="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a><div class="help"><a href="help.html#help4" target="_blank">Help</a></div></h2>
 
                     <form id="locationtoolform">
                         <div class="row">
@@ -244,7 +249,7 @@
                 <div id="step5" class="stepwrapper">
                     <h2>
                         <a  onclick="stopDrawingEditingPoint();createApiLinksAndCode();return goTo(5);" onkeypress="return goTo(5);">Stap 3: Genereer
-                            code</a>
+                            code</a><div class="help"><a href="help.html#help5" target="_blank">Help</a></div>
                     </h2>
                     <form action="#" name="savecode" id="savecode" onsubmit="return false;">
                     <div class="row_right">
