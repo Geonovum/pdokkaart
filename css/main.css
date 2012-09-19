@@ -20,6 +20,10 @@
 	margin: 0px auto;
 }
 
+#content {
+    min-height: 600px;
+}
+
 #map {
     position:absolute;
     width: 550px;
@@ -344,6 +348,7 @@ input, select, textarea {
 	border: 1px solid #F6D4B2;
 	background-color:rgb(246,212,178);
 	margin-bottom: 10px;
+    width: 370px;
 }
 
 h2 {
