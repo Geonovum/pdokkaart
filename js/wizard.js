@@ -519,7 +519,7 @@ function searchLocationChanged() {
 	**/ 
 
 function showError(msg){
-	alert(msg);
+//	alert(msg);
 }
 
 function handleGeocodeResponse(req, returnCoords){
@@ -732,4 +732,8 @@ function pdok_api_map_resize(w,h) {
     this.document.getElementById("map").style.width = w + 'px';
     mapPDOKKaart.updateSize();
 	
+}
+
+function setLayerSwitcherVisible(isVisible){
+	api.setLayerSwitcherVisible(isVisible);
 }
