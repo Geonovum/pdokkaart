@@ -519,7 +519,7 @@ function searchLocationChanged() {
 	**/ 
 
 function showError(msg){
-//	alert(msg);
+	alert(msg);
 }
 
 function handleGeocodeResponse(req, returnCoords){
