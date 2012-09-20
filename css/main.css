@@ -221,8 +221,9 @@ ul.geozetSuggestions{
 
 #styleselector li{
     padding-left: 18px;
+    padding-top: 5px;
     height: 30px;
-    font-size: 1em;
+    font-size: 0.9em;
     cursor: pointer;
     background-image: none;
 }

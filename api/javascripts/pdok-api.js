@@ -155,7 +155,7 @@ Pdok.Api = function(config) {
      */
     this.styles = null;
 
-    this.FEATURESLAYER_NAME = "Features";
+    this.FEATURESLAYER_NAME = "Markers";
     this.MAXNUMBEROFFEATURES = 5;
     // this.features can come as KML string from config/params
     // after handling this, it contains an array of features

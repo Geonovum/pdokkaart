@@ -13,6 +13,10 @@ body {
     width: 100%;
     height: 100%;
 }
+#featurePopup_close{
+    top: 9px!important;
+    right: 9px!important;
+}
 .olControlAttribution {
     bottom: 3px!important;
     /*background-color: #eee;*/
