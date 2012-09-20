@@ -1126,6 +1126,7 @@ Pdok.Api.prototype.createStyles = function(){
  * featureAddedCallback - {Function{ handler function to be called after feature is added}
  */
 Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback){
+    //console.log('enableDrawingTool start');
     this.disableDrawingTool();  // to be sure we do not have two drawfeature controls active at once
     var apiStyles = this.styles;
     var apiFeaturesLayer = this.featuresLayer;
@@ -1174,6 +1175,7 @@ Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
 }
 
 Pdok.Api.prototype.disableDrawingTool = function(){
+    //console.log('disableDrawingTool');
     if (this.drawFeaturePointControl!=null){
         this.drawFeaturePointControl.deactivate();
     }
@@ -1799,7 +1801,6 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
         alert('addFeaturesFromUrl aanroep met een niet ondersteund type: '+type);
         return;
     }
-console.log(url);
     OpenLayers.Request.GET({
             url: url,
             callback: apiObject.handleGetResponse,

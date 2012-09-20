@@ -11,72 +11,38 @@ var currentStep = 1;
 OpenLayers.ImgPath = 'api/img/';
 
 //++
-function goTo(step) {	
-	// if the step is allready open, close the step
-	if ($('#step'+step).hasClass('active')){
-		$('#step'+step).removeClass('active');
-		stopDrawingEditingPoint();
-		return;
-	}
+function goTo(step) {
 
-	//make sure correct radio states for each step
-	if (step == 2){		
-		//document.getElementById("editmarker5").checked = "true";
-	}
-	
-	if (step == 3){
-		//document.getElementById("editmarker5").checked = "false";
-		//document.getElementById("radio_routes_6").checked = "true";
-	}
-	
-	//hide text editor functionality
-	//document.getElementById("savemarkerinfo").style.visibility = "hidden";
-	//hideEditor();
+    // cleanup of edit controls
+    // to always start with a clean sheet
+    $('#addfeatures').attr('checked', false)
+    $('#editfeatures').attr('checked', false)
+    $('#externalfeatures').attr('checked', false)
+    $('#addviamap').hide();
+    $('#editviamap').hide();
+    $('#addviaurltxt').hide();
+    api.disableDrawingTool();
+    api.disableEditingTool();
+
+    // if the step is allready open, close the step
+    if ($('#step'+step).hasClass('active')){
+        $('#step'+step).removeClass('active');
+        return;
+    }
 
     //set container for css styling i.e. make tabs active on selection	
-	document.getElementById("step" + currentStep).className = "stepwrapper";
-	currentStep = step;
-	document.getElementById("step" + currentStep).className = "stepwrapper active";
-	return false;
+    document.getElementById("step" + currentStep).className = "stepwrapper";
+    currentStep = step;
+    document.getElementById("step" + currentStep).className = "stepwrapper active";
+    return false;
 }
 
-/*
-OVERBODIG??
-//set images for markers into html
-function selectSet(set) {	
-	document.getElementById("mapmarkers").className ="row " + set;
-	
-    if(document.getElementById("marker1").checked == true){
-		setMarkerImage(1);
-	}
-    if(document.getElementById("marker2").checked == true){
-		setMarkerImage(2);
-	}	
-    if(document.getElementById("marker3").checked == true){
-		setMarkerImage(3);
-	}	
-}
-*/
 
 //select output code at Step 4
 function selectCode() {
 	document.getElementById("codeoutput").select();
 	return false;
 }
-/*
-//show ck editor
-function showEditor() {
-	document.getElementById("texteditor").style.display = "block";
-	//document.getElementById("editor1").focus();
-	return false;
-}
-
-//hide ck editor
-function hideEditor() {
-	document.getElementById("texteditor").style.display = "none";
-	return false;
-}
-*/
 
 function MeerMinderOpties() {
 
@@ -129,7 +95,7 @@ $(document).ready(function() {
 
     createSearchLogic();
     createStyleSelector();
-    createEditAttributes ();
+    createEditAttributes();
     createPdokLayers();
     createLocationToolLogic();
     createMarkersLogic();
@@ -187,7 +153,8 @@ function createSearchLogic() {
 }
 
 function createMarkersLogic() {
-    $('#editmarkers input[type=radio]').change(function(){ 
+    $('#editmarkers input[type=radio]').change(function(){
+        //console.log('change of editing tools radio');
         if (this.id == 'addfeatures') {
             $('#addviamap').show();
             $('#editviamap').hide();
@@ -296,7 +263,6 @@ function enableStyleSelector(){
         // console.log(feature);
         //ActiveFeature.fid = feature.fid;
         activeFeature = feature;
-        createEditAttributes ();
         $('#edit2a').appendTo($('#addviamap2'));
         $('#edit2a').show();
     }
@@ -353,15 +319,13 @@ function createStyleSelector(){
         featureCreatedCallback = function(feature){
             // you get a handle here to the feature last modified
             // console.log(feature);
-			activeFeature = feature;
-			createEditAttributes ();
-			$('#edit2a').appendTo($('#editviamap2'));
-			$('#edit2a').show();
+            activeFeature = feature;
+            //console.log('editviamap2??')
+            $('#edit2a').appendTo($('#editviamap2'));
+            $('#edit2a').show();
         }
         api.enableDrawingTool(styleId, featureCreatedCallback);
     });
-	
-
 }
 
 function createPdokLayers(){
@@ -378,9 +342,9 @@ function createPdokLayers(){
 function createEditAttributes () {
 
     var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Vul een titel in voor de popup" />';
-    html = html + '<textarea id="description" title="Vul een omschrijving in voor de popup">Voer een omschrijving in : </textarea>';
-    html = html + '<button type="submit" class="filterbutton" onclick="saveAttributes();return false;">Opslaan tekst</button>';
-    html = html + '<button type="submit" class="filterbutton" onclick="deleteFeature();return false;">Verwijderen marker</button>';
+    html += '<textarea id="description" title="Vul een omschrijving in voor de popup">Voer een omschrijving in : </textarea>';
+    html += '<button class="filterbutton" onclick="saveAttributes();return false;">Opslaan tekst</button>';
+    html += '<button class="filterbutton" onclick="deleteFeature();return false;">Verwijderen marker</button>';
 
     $('#edit2a').html(html);
     $("#attr_name").click(function(){
@@ -391,13 +355,10 @@ function createEditAttributes () {
         // Select input field contents
         this.select();
     });
-
-    //$('#edit3a').html(html);
-
 }
 
-function createFieldnameInput(radiobutton) {
 
+function createFieldnameInput(radiobutton) {
     var  geometrie = $(radiobutton).attr('value') ;
     var html = ''; 
     if (geometrie == 'mt1') {
@@ -416,22 +377,25 @@ function createFieldnameInput(radiobutton) {
 
 
 function saveAttributes() {
-
     //console.log(activeFeature);
-	
-	activeFeature.attributes.name = $('#attr_name').val();
-	activeFeature.attributes.description = $('#description').val();
-	
-	//console.log(activeFeature);
-	
-	$('#edit2a').hide();
-	//$('#edit3a').hide();
-
+    activeFeature.attributes.name = $('#attr_name').val();
+    activeFeature.attributes.description = $('#description').val();
+    $('#edit2a').hide();
 }
+
+function featureModifiedCallback(domevent){
+            // you get a handle here to the feature last modified
+            // console.log(feature);
+            activeFeature = domevent.feature;
+            $('#edit2a').appendTo($('#editviamap'));
+            $('#edit2a').show();
+            $('#attr_name').val(domevent.feature.attributes.name);
+            $('#description').val(domevent.feature.attributes.description);
+        }
 
 function deleteFeature() {
 
-    var ok = confirm ("Deze feature verwijderen?")
+    var ok = confirm ("Deze marker verwijderen?")
     if (ok) {
         markers.removeFeatures([activeFeature]);
         markers.refresh();
@@ -442,41 +406,16 @@ function deleteFeature() {
     } else {
 		api.disableEditingTool();
         api.enableEditingTool(featureModifiedCallback);
-	//api.selectControl.activate();
 	}
     $('#edit2a').hide();
-    //$('#edit3a').hide();
-
 }
 
 function startEditingPoint() {
     api.disableEditingTool();
     api.disableDrawingTool();
-    featureModifiedCallback = function(domevent){
-            // you get a handle here to the feature last modified
-            // console.log(feature);
-            activeFeature = domevent.feature;
-            $('#edit2a').appendTo($('#editviamap'));
-            $('#edit2a').show();
-            $('#attr_name').val(domevent.feature.attributes.name);
-            $('#description').val(domevent.feature.attributes.description);
-        }
     api.enableEditingTool(featureModifiedCallback);
 }
 
-
-function stopDrawingEditingPoint() {
-	//removePopups(markers);
-	//unregisterEvents();
-	api.disableEditingTool();
-	api.disableDrawingTool();
-	//$('input:radio[name=editmarkers]')[0].checked = true;
-}
-
-
-/****
-    * For Proof of Concept only use some simple functions to perform searches. For advanced / full functionality: see Geozet and include / build on (Geo)Ext
- 	*/
 
 var gazetteerConfig = {};
 var zoomScale = {
@@ -511,17 +450,6 @@ function searchLocationChanged() {
     return false;
 }
 
-/** Thijs: code based on Geozet.widgets.Search
-	 * params: 
-	 *	req = the OpenLayers request
-	 *	returnCoords - Boolean if False or None map will be zoomed/panned
-     *  if True map will not change, but coordinates will be returned
-     * 
-     * Returns:
-     * {OpenLayers.LonLat} - if returnCoords == True  one hit/result 
-     * Boolean - if other == False OR more or no results
-	**/ 
-
 function showError(msg){
 	alert(msg);
 }
@@ -550,29 +478,28 @@ function handleGeocodeResponse(req, returnCoords){
         this.showError("Geen locaties gevonden ...");
     }
     else{
-		var maxEx = mapPDOKKaart.restrictedExtent;
-		// minx,miny,maxx,maxy are used to calcultate a bbox of the geocoding results
-		// initializes these with the max/min values of the extent of the map, so swap the left /right and bottomo/top of the maxExtent
-		// i.e.: the calculate minx will allways be smaller than the right-border of the map;
-		// TODO: for production use the map's restricted Extent, so request a change to Lucs API
-		/// For now: just values
-		maxEx = new OpenLayers.Bounds(-285401.92, 22598.08, 595401.92, 903401.92);
-		var minx = maxEx.right;
-		var miny = maxEx.top;
-		var maxx = maxEx.left;
-		var maxy = maxEx.bottom;
-		var minzoom = 15;
-		var features = [];
-        // > 0 hit show suggestions        
+        var maxEx = mapPDOKKaart.restrictedExtent;
+        // minx,miny,maxx,maxy are used to calcultate a bbox of the geocoding results
+        // initializes these with the max/min values of the extent of the map, so swap the left /right and bottomo/top of the maxExtent
+        // i.e.: the calculate minx will allways be smaller than the right-border of the map;
+        // TODO: for production use the map's restricted Extent, so request a change to Lucs API
+        /// For now: just values
+        maxEx = new OpenLayers.Bounds(-285401.92, 22598.08, 595401.92, 903401.92);
+        var minx = maxEx.right;
+        var miny = maxEx.top;
+        var maxx = maxEx.left;
+        var maxy = maxEx.bottom;
+        var minzoom = 15;
+        var features = [];
+        // > 0 hit show suggestions
         if(hits>0){
-            //$('#searchResults').html('<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten</h3><ul class="geozetSuggestions"></ul>');
             $('#geocodeerresult').html('<span id="closedrawlocation" onclick="$(\'#geocodeerresult\').fadeOut(\'fast\')" class="closeWindow"><a onclick="return false;"><img style="display:none" src="api/styles/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>' +
                 '<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten</h3><ul class="geozetSuggestions"></ul>');
         }
         for (i=0;i<hits;i++){
             var suggestion='';
             var geom = xlslus[0].features[i].geometry;
-            var address = xlslus[0].features[i].attributes.address;                 
+            var address = xlslus[0].features[i].attributes.address;
             var plaats = address.place.MunicipalitySubdivision; // toont evt provincie afkorting
             var gemeente = address.place.Municipality;
             var prov = address.place.CountrySubdivision;
@@ -618,19 +545,19 @@ function handleGeocodeResponse(req, returnCoords){
                 var z = geom?gazetteerConfig.gazetteer.zoomScale[zoom]:gazetteerConfig.gazetteer.zoomScale['provincie'];
                 var newId = -1;
                 if (geom) {
-                	minx = Math.min(minx, x);
-                	miny = Math.min(miny, y);
-                	maxx = Math.max(maxx, x);
-                	maxy = Math.max(maxy, y);
-                	minzoom = Math.min(minzoom, gazetteerConfig.gazetteer.zoomScale[zoom]);
-					var newFt = new OpenLayers.Feature.Vector( new OpenLayers.Geometry.Point(x, y), {"title": suggestion, "postcode": postcode, "adres": adres, "plaats": plaats, "gemeente": gemeente, "provincie": prov}
-					// ,{externalGraphic: 'js/img/marker.png', graphicHeight: 26, graphicWidth: 20}
-					);
-					newId = newFt.id;
-					features.push(newFt);
+                    minx = Math.min(minx, x);
+                    miny = Math.min(miny, y);
+                    maxx = Math.max(maxx, x);
+                    maxy = Math.max(maxy, y);
+                    minzoom = Math.min(minzoom, gazetteerConfig.gazetteer.zoomScale[zoom]);
+                    var newFt = new OpenLayers.Feature.Vector( new OpenLayers.Geometry.Point(x, y), {"title": suggestion, "postcode": postcode, "adres": adres, "plaats": plaats, "gemeente": gemeente, "provincie": prov}
+                    // ,{externalGraphic: 'js/img/marker.png', graphicHeight: 26, graphicWidth: 20}
+                    );
+                    newId = newFt.id;
+                    features.push(newFt);
                 }
-				//var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
-				var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">' + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
+                //var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
+                var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">' + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
                 $("ul.geozetSuggestions").append(gazHtml);
 
                 // set (calculated) height for the result div
