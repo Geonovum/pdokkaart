@@ -561,17 +561,6 @@ Pdok.Api.prototype.defaultStyles=[
 
 Pdok.Api.prototype.defaultLayers = {
 		AAN: {
-			layertype: 'WMS',
-			name: 'AAN - Agrarisch Areaal Nederland (WMS)',
-			url: 'http://geodata.nationaalgeoregister.nl/aan/wms',
-			layers: 'aan',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		AAN2: {
 			layertype: 'WMTS',
 			name: 'AAN - Agrarisch Areaal Nederland (WMTS)',
 			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
@@ -579,7 +568,7 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: false
 		},
 		ADRESSEN: {
 			layertype: 'WMS',
@@ -625,24 +614,60 @@ Pdok.Api.prototype.defaultLayers = {
 			isBaseLayer: false,
 			singleTile: true
 		},
-		BRT: {
-			layertype: 'TMS',
-			name: 'BRT Achtergrondkaart (TMS)',
-			url: 'http://geodata.nationaalgeoregister.nl/tms/',
-			layername: 'brtachtergrondkaart',
-			type:'png8',
+        BRT: {
+            layertype: 'WMTS',
+            name: 'BRT Achtergrondkaart (wmts)',
+            url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+            layer: 'brtachtergrondkaart',
+            style: null,
+            matrixSet: 'EPSG:28992',
+            visibility: true, 
+            isBaseLayer: true,
+            attribution: '(c) OSM & Kadaster'
+        },
+		CBS_KERNEN_NAMEN: {
+			layertype: 'WMS',
+			name: 'CBS Bevolkingskern namen (2008)',
+			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+			layers: 'naamgeving_kernen_40k_plus,naamgeving_kernen_alles',
+			transparent: 'true',
+			format: 'image/png',
 			visibility: true,
-			isBaseLayer:true
+			isBaseLayer: false,
+			singleTile: true
 		},
-		BRT2: {
-			layertype: 'WMTS',
-			name: 'BRT Achtergrondkaart (WMTS)',
-			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-			layer: 'brtachtergrondkaart',
-			style: null,
-			matrixSet: 'EPSG:28992',
-			visibility: true, 
-			isBaseLayer: true
+		CBS_KERNEN: {
+			layertype: 'WMS',
+			name: 'CBS Bevolkingskernen (2008)',
+			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+			layers: 'cbsbevolkingskernen2008',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		CBS_GEMEENTEN: {
+			layertype: 'WMS',
+			name: 'CBS Gemeentegrenzen (2008)',
+			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+			layers: 'gemeentegrens_generalisatie_2008',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		CBS_PROVINCIES: {
+			layertype: 'WMS',
+			name: 'CBS Provinciegrenzen (2008)',
+			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+			layers: 'provgrens_generalisatie_2008',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
 		},
 		GEMEENTEGRENZEN: {
 			layertype: 'WMS',
@@ -674,7 +699,7 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: false
 		},
 		NATIONALE_PARKEN: {
 			layertype: 'WMS',
@@ -688,17 +713,6 @@ Pdok.Api.prototype.defaultLayers = {
 			singleTile: true
 		},
 		NOK2011: {
-			layertype: 'WMS',
-			name: 'NOK2011 (WMS)',
-			url: 'http://geodata.nationaalgeoregister.nl/nok2011/wms',
-			layers: 'begrenzing,planologischeehs,verwervinginrichting',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		NOK2011_2: {
 			layertype: 'WMTS',
 			name: 'NOK2011 (WMTS)',
 			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
@@ -706,7 +720,40 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: false
+		},
+		NWB_SPOORWEGEN: {
+			layertype: 'WMS',
+			name: 'NWB Vaarwegen',
+			url: 'http://geodata.nationaalgeoregister.nl/nwbspoorwegen/wms',
+			layers: 'hectopunten,overgangen,oversteken,spoorvakken,treinstations',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		NWB_VAARWEGEN: {
+			layertype: 'WMS',
+			name: 'NWB Vaarwegen',
+			url: 'http://geodata.nationaalgeoregister.nl/nwbvaarwegen/wms',
+			layers: 'vaarwegvakken,kmmarkeringen',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		NWB_WEGEN: {
+			layertype: 'WMS',
+			name: 'NWB Wegen',
+			url: 'http://geodata.nationaalgeoregister.nl/nwbwegen/wms',
+			layers: 'wegvakken,hectopunten',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
 		},
 		TOP10NL: {
 			layertype: 'TMS',
@@ -715,17 +762,19 @@ Pdok.Api.prototype.defaultLayers = {
 			layername: 'top10nl',
 			type:'png8',
 			visibility: true,
-			isBaseLayer: false
+			isBaseLayer: false,
+			attribution:'(c) Kadaster'
 		},
 		TOP10NL2: {
 			layertype: 'WMTS',
-			name: 'TOP10 NL (WMTS)',
+			name: 'TOP10 NL Baselayer (WMTS)',
 			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
 			layer: 'top10nl',
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: true,
+			attribution:'(c) Kadaster'
 		},
 		TOP250RASTER: {
 			layertype: 'WMTS',
@@ -735,7 +784,8 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: false,
+			attribution:'(c) Kadaster'
 		},
 		TOP50RASTER: {
 			layertype: 'WMTS',
@@ -745,7 +795,8 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: false,
+			attribution:'(c) Kadaster'
 		},
 		TOP50VECTOR: {
 			layertype: 'WMTS',
@@ -755,7 +806,30 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: false,
+			attribution:'(c) Kadaster'
+		},
+		WEGGEGEVENS_RIJBANEN: {
+			layertype: 'WMS',
+			name: 'Weggegevens - aantal rijbanen',
+			url: 'http://geodata.nationaalgeoregister.nl/weggeg/wms',
+			layers: 'weggegaantalrijbanen',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		WEGGEGEVENS_MAXSNELHEID: {
+			layertype: 'WMS',
+			name: 'Weggegevens - maximum snelheid',
+			url: 'http://geodata.nationaalgeoregister.nl/weggeg/wms',
+			layers: 'weggegmaximumsnelheden',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
 		}
     }
 
@@ -1274,7 +1348,8 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
             layername: '',
             type: 'png',
             visibility: true,
-            isBaseLayer: false
+            isBaseLayer: false,
+			attribution:''
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1285,7 +1360,8 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
         {   layername: layerConfigObj.layername, 
             type:layerConfigObj.type, 
             visibility: layerConfigObj.visibility, 
-            isBaseLayer: layerConfigObj.isBaseLayer
+            isBaseLayer: layerConfigObj.isBaseLayer,
+			attribution:layerConfigObj.attribution
         }
     );
 
@@ -1327,7 +1403,8 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
             matrixIds: matrixIds,
             visibility: true,
             isBaseLayer: false,
-            format: 'image/png8'
+            format: 'image/png8',
+            attribution:''
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1350,7 +1427,8 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
             matrixIds: layerConfigObj.matrixIds,
             format: layerConfigObj.format,
             visibility: layerConfigObj.visibility,
-            isBaseLayer: layerConfigObj.isBaseLayer
+            isBaseLayer: layerConfigObj.isBaseLayer,
+            attribution: layerConfigObj.attribution
         }
     );
     return layer;
@@ -1388,7 +1466,8 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
             visibility: true,
             isBaseLayer: false,
             format: 'image/png',
-            singleTile: true
+            singleTile: true,
+			attribution:''
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1404,7 +1483,8 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
             {
                 visibility: layerConfigObj.visibility, 
                 isBaseLayer: layerConfigObj.isBaseLayer, 
-                singleTile: layerConfigObj.singleTile 
+                singleTile: layerConfigObj.singleTile,
+				attribution:layerConfigObj.attribution 
             }
     );
 
