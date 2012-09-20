@@ -10,12 +10,12 @@
  * 
  *  <iframe width="400" height="300" frameborder="0" 
  *    scrolling="no" marginheight="0" marginwidth="0" 
- *    src="/api/api.html?mloc=136260,456394&loc=136260,456394&zl=8"
+ *    src="api/api.html?mloc=136260,456394&loc=136260,456394&zl=8"
  *    style="border: 0">
  * OR
  *  <iframe width="400" height="300" frameborder="0" 
  *    scrolling="no" marginheight="0" marginwidth="0" 
- *    src="/api/api.html?mloc=136260,456394&mt=1&bbox=130000,450000,150000,470000"
+ *    src="api/api.html?mloc=136260,456394&mt=1&bbox=130000,450000,150000,470000"
  *    style="border: 0">
  */
 
@@ -1523,7 +1523,7 @@ Pdok.Api.prototype.enableLocationTool = function(){
 
             }
             if (!alerted){
-                alerted = true;
+                //alerted = true;
                 if(confirm(msg)){
                    apiObject.map.zoomTo(zoom);
                 }
@@ -1783,10 +1783,10 @@ Pdok.Api.prototype.createObjectTags = function(){
     return objectTags;
 }
 Pdok.Api.prototype.createMapLink = function(){
-    return 'http://'+window.location.host+'/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
+    return 'http://'+window.location.host+window.location.pathname+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
 }
 Pdok.Api.prototype.createMailLink = function(){
-    return 'mailto:UwMailAdres@provider.nl?Subject=PDOKKaart%20URL&BODY=URL%3A%20' + encodeURIComponent('http://'+window.location.host+'/pdok/api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig()));
+    return 'mailto:UwMailAdres@provider.nl?Subject=PDOKKaart%20URL&BODY=URL%3A%20' + encodeURIComponent('http://'+window.location.host+window.location.pathname+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig()));
 }
 
 Pdok.Api.prototype.createHtmlBody = function(){
@@ -1796,14 +1796,15 @@ Pdok.Api.prototype.createHtmlBody = function(){
     return html;
 }
 Pdok.Api.prototype.createHtmlHead = function(){
-    var host = window.location.host; // TODO make this a baseuri config?
+    var base = window.location.host+window.location.pathname; // TODO make this a baseuri config?
 
-    var head = '\n<script src="http://'+host+'/pdok/js/jquery.js"></script>'+
-    '\n<script src="http://'+host+'/pdok/api/javascripts/OpenLayers.js"></script>'+
-    '\n<script src="http://'+host+'/pdok/api/javascripts/proj4js-compressed.js"></script>'+
-    '\n<script src="http://'+host+'/pdok/api/javascripts/pdok-api.js"></script>'+
-    '\n<link rel="stylesheet" href="http://'+host+'/pdok/api/styles/default/style.css" type="text/css">'+
-    '\n<link rel="stylesheet" href="http://'+host+'/pdok/api/styles/style.css" type="text/css">'+
+
+    var head = '\n<script src="http://'+base+'./js/jquery.js"></script>'+
+    '\n<script src="http://'+base+'.api/javascripts/OpenLayers.js"></script>'+
+    '\n<script src="http://'+base+'./api/javascripts/proj4js-compressed.js"></script>'+
+    '\n<script src="http://'+base+'./api/javascripts/pdok-api.js"></script>'+
+    '\n<link rel="stylesheet" href="http://'+base+'./api/styles/default/style.css" type="text/css">'+
+    '\n<link rel="stylesheet" href="http://'+base+'./api/styles/style.css" type="text/css">'+
     '\n<script>var config = '+this.serialize(this.getConfig(), true)+';\nfunction createPDOKKaart() {  var api = new Pdok.Api(config);return api}\n</script>';
     return head;
 }

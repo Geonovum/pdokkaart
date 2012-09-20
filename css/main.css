@@ -148,14 +148,16 @@ li
 }
 
 #geocodeerresult {
-	display: none;
-	width: 342px;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	height: 392px;
-	overflow-y: auto;
-	z-index: 2000;
+    display: none;
+    background-color: #F6D4B2;
+    height: 450px;
+    width: 324px;
+    border: 0px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    overflow-y: auto;
+    z-index: 2000;
     padding:24px;
 }
 #geocodeerresult li{
@@ -315,7 +317,9 @@ input, select, textarea {
 #searchLocation{
 	width : 180px;
 }
-
+#searchLocation.default{
+    color: #7F8181;
+}
 #mapsize1{
 	width : 20px;
 }	

@@ -77,27 +77,6 @@ function hideEditor() {
 	return false;
 }
 */
-/*
-OVERBODIG??
-//add help functionality to link to correct part of html page 
-function addHelp() {
-	var pageLinks = document.getElementsByTagName("A");
-	var pageLinksLength = pageLinks.length;
-	for (var i = 0; i<pageLinksLength; i ++) {
-		var currentLink = pageLinks[i];
-		var currentClass = currentLink.className;
-		if (currentClass !== "") {
-			if (currentClass === "help") {
-				currentLink.onclick = function () {
-					var helpWin = window.open('mapbuilderhelp.html#help' + this.href.replace(/^.*?\#(\d+)$/, '$1'),'helpwin','menubar=1,toolbar=1,scrollbars=1,resizable=1,width=640,height=480');
-					helpWin.focus();
-					return false;
-				}
-			}
-		}
-	}
-}
-*/
 
 function MeerMinderOpties() {
 
@@ -122,13 +101,6 @@ function SearchArray(arr, obj) {
         if (arr[i][0] == obj) return arr[i][1];
     }
 }
-
-/*
-OVERBODIG??
-function ZoomIn(x,y){
-	mapPDOKKaart.setCenter(new OpenLayers.LonLat(x,y), 7);
-};
-*/
 
 // init is called after loading the settings page and initilizes the map and some GUI components, like the PDOK map layer selector and the "popin" windows
 $(document).ready(function() {
@@ -155,20 +127,7 @@ $(document).ready(function() {
     pdok_api_map_resize(550,440);
     api.map.zoomToExtent([-15000,300000,300000,640000], true);
 
-    $('#geocodeerresult').delegate('li a','click', function (evt) {
-        var x = $("span.x", this).text();
-        var y = $("span.y", this).text();
-        var z = $("span.z", this).text();
-        var ft_id = $("span.ft_id", this).text();
-        if(x && y){
-            mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
-        }
-        else {
-            alert("fout met coordinaten");
-        }
-        return false;
-    });
-
+    createSearchLogic();
     createStyleSelector();
     createEditAttributes ();
     createPdokLayers();
@@ -177,10 +136,55 @@ $(document).ready(function() {
 
     $('#step3 input:text').val('');
     createApiLinksAndCode();
+
     // not sure if we want this here
     api.map.events.register("moveend", this, createApiLinksAndCode );
 });
 
+
+
+function autoPopulateInputs() {
+    // AUTOMATISCH OMZETTEN VAN TITLE ATTRIBUUT SITE NAAR PREFILLED TEXT
+    if(!document.getElementById||!document.createTextNode){return;}
+    var arrInputs=$('input.autopopulate');
+    var iInputs=arrInputs.length;
+    var oInput;
+    for(var i=0;i<iInputs;i++){
+        oInput=arrInputs[i];
+        if(oInput.type!='text'){continue;}
+        if((oInput.value=='')&&(oInput.title!='')){oInput.value=oInput.title;$(oInput).addClass('default');}
+        if(oInput.value==oInput.title){$(oInput).addClass('default');}
+        $('input.autopopulate').focus(
+            function(){
+                if(this.value==this.title){this.value='';this.select();$(this).val('').removeClass('default');}
+        });
+        $('input.autopopulate').blur(
+            function(){
+                if(!this.value.length){this.value=this.title;$(this).addClass('default');} else {if(this.value!=this.title){$(this).removeClass('default');}}
+        });
+    }
+}
+
+function createSearchLogic() {
+
+    $('#geocodeerresult').delegate('li a','click', function (evt) {
+        var x = $("span.x", this).text();
+        var y = $("span.y", this).text();
+        var z = $("span.z", this).text();
+        var ft_id = $("span.ft_id", this).text();
+        if(x && y){
+            mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
+            $('#geocodeerresult').hide();
+        }
+        else {
+            alert("fout met coordinaten");
+        }
+        return false;
+    });
+
+   //
+   autoPopulateInputs();
+}
 
 function createMarkersLogic() {
     $('#editmarkers input[type=radio]').change(function(){ 
@@ -562,7 +566,7 @@ function handleGeocodeResponse(req, returnCoords){
         // > 0 hit show suggestions        
         if(hits>0){
             //$('#searchResults').html('<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten</h3><ul class="geozetSuggestions"></ul>');
-            $('#geocodeerresult').html('<span id="closedrawlocation" onclick="$(\'#geocodeerresult\').fadeOut(\'fast\')" class="closeWindow"><a onclick="return false;"><img src="api/styles/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>' +
+            $('#geocodeerresult').html('<span id="closedrawlocation" onclick="$(\'#geocodeerresult\').fadeOut(\'fast\')" class="closeWindow"><a onclick="return false;"><img style="display:none" src="api/styles/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>' +
                 '<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten</h3><ul class="geozetSuggestions"></ul>');
         }
         for (i=0;i<hits;i++){
