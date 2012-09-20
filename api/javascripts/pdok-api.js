@@ -560,153 +560,203 @@ Pdok.Api.prototype.defaultStyles=[
     ]
 
 Pdok.Api.prototype.defaultLayers = {
-        BRT: {
-            layertype: 'WMTS',
-            name: 'BRT Achtergrondkaart (wmts)',
-            url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-            layer: 'brtachtergrondkaart',
-            style: null,
-            matrixSet: 'EPSG:28992',
-            visibility: true, 
-            isBaseLayer: true
-        },
-        BRT2: {
-            layertype: 'TMS',
-            name: 'BRT Achtergrondkaart (tms)',
-            url: 'http://geodata.nationaalgeoregister.nl/tms/',
-            layername: 'brtachtergrondkaart',
-            type:'png8',
-            visibility: true,
-            isBaseLayer:true
-        },
-        TOP10NL: {
-            layertype: 'WMTS',
-            name: 'Top10NL (wmts)',
-            url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-            layer: 'top10nl',
-            style: '_null',
-            matrixSet: 'EPSG:28992',
-            visibility: true, 
-            isBaseLayer: false
-        },
-        TOP10NL2: {
-            layertype: 'TMS',
-            name: 'Top10NL (tms)',
-            url: 'http://geodata.nationaalgeoregister.nl/tms/',
-            layername: 'top10nl',
-            type:'png8',
-            visibility: true,
-            isBaseLayer: false
-        },
-        AAN: {
-            layertype: 'WMS',
-            name: 'Agrarisch Areaal Nederland WMS',
-            url: 'http://geodata.nationaalgeoregister.nl/aan/wms',
-            layers: 'aan',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        ADRESSEN: {
-            layertype: 'WMS',
-            name: 'Inspire Adressen',
-            url: 'http://geodata.nationaalgeoregister.nl/inspireadressen/wms',
-            layers: 'inspireadressen',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        AHN25M: {
-            layertype: 'WMS',
-            name: 'AHN 25 meter',
-            url: 'http://geodata.nationaalgeoregister.nl/ahn25m/wms',
-            layers: 'ahn25m',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        BBG2008: {
-            layertype: 'WMS',
-            name: 'BBG 2008',
-            url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms',
-            layers: 'bbg2008',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        BESCHERMDENATUURMONUMENTEN:{
-            layertype: 'WMS',
-            name: 'Beschermde Natuurmonumenten',
-            url: 'http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms',
-            layers: 'beschermdenatuurmonumenten',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        GEMEENTEGRENZEN: {
-            layertype: 'WMS',
-            name: 'Gemeentegrenzen',
-            url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_grijs_gestippeld.sld',
-            layers: 'gemeenten_2012',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        GEMEENTEGRENZEN_LABEL: {
-            layertype: 'WMS',
-            name: 'Gemeentegrenzen met labels (sld)',
-            url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld',
-            layers: 'gemeenten_2012',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        NATIONALE_PARKEN: {
-            layertype: 'WMS',
-            name: 'Nationale parken',
-            url: 'http://geodata.nationaalgeoregister.nl/nationaleparken/wms',
-            layers: 'nationaleparken',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        NATURA2000: {
-            layertype: 'TMS',
-            name: 'Natura2000 gebieden',
-            url: 'http://geodata.nationaalgeoregister.nl/tms/',
-            layername: 'natura2000',
-            type:'png8',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        NOK2011: {
-            layertype: 'WMS',
-            name: 'NOK2011',
-            url: 'http://geodata.nationaalgeoregister.nl/nok2011/wms',
-            layers: 'begrenzing,planologischeehs,verwervinginrichting',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        }
+		AAN: {
+			layertype: 'WMS',
+			name: 'AAN - Agrarisch Areaal Nederland (WMS)',
+			url: 'http://geodata.nationaalgeoregister.nl/aan/wms',
+			layers: 'aan',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		AAN2: {
+			layertype: 'WMTS',
+			name: 'AAN - Agrarisch Areaal Nederland (WMTS)',
+			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+			layer: 'aan',
+			style: null,
+			matrixSet: 'EPSG:28992',
+			visibility: true, 
+			isBaseLayer: true
+		},
+		ADRESSEN: {
+			layertype: 'WMS',
+			name: 'Adressen',
+			url: 'http://geodata.nationaalgeoregister.nl/inspireadressen/wms',
+			layers: 'inspireadressen',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		AHN25M: {
+			layertype: 'WMS',
+			name: 'AHN 25 meter',
+			url: 'http://geodata.nationaalgeoregister.nl/ahn25m/wms',
+			layers: 'ahn25m',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		BBG2008: {
+			layertype: 'WMS',
+			name: 'BBG 2008',
+			url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms',
+			layers: 'bbg2008',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		BESCHERMDENATUURMONUMENTEN:{
+			layertype: 'WMS',
+			name: 'Beschermde Natuurmonumenten',
+			url: 'http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms',
+			layers: 'beschermdenatuurmonumenten',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		BRT: {
+			layertype: 'TMS',
+			name: 'BRT Achtergrondkaart (TMS)',
+			url: 'http://geodata.nationaalgeoregister.nl/tms/',
+			layername: 'brtachtergrondkaart',
+			type:'png8',
+			visibility: true,
+			isBaseLayer:true
+		},
+		BRT2: {
+			layertype: 'WMTS',
+			name: 'BRT Achtergrondkaart (WMTS)',
+			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+			layer: 'brtachtergrondkaart',
+			style: null,
+			matrixSet: 'EPSG:28992',
+			visibility: true, 
+			isBaseLayer: true
+		},
+		GEMEENTEGRENZEN: {
+			layertype: 'WMS',
+			name: 'Gemeentegrenzen',
+			url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
+			layers: 'gemeenten_2012',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		GEMEENTEGRENZEN_LABEL: {
+			layertype: 'WMS',
+			name: 'Gemeentegrenzen met labels',
+			url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld',
+			layers: 'gemeenten_2012',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		NATURA2000: {
+			layertype: 'WMTS',
+			name: 'Natura 2000 (WMTS)',
+			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+			layer: 'natura2000',
+			style: null,
+			matrixSet: 'EPSG:28992',
+			visibility: true, 
+			isBaseLayer: true
+		},
+		NATIONALE_PARKEN: {
+			layertype: 'WMS',
+			name: 'Nationale parken',
+			url: 'http://geodata.nationaalgeoregister.nl/nationaleparken/wms',
+			layers: 'nationaleparken',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		NOK2011: {
+			layertype: 'WMS',
+			name: 'NOK2011 (WMS)',
+			url: 'http://geodata.nationaalgeoregister.nl/nok2011/wms',
+			layers: 'begrenzing,planologischeehs,verwervinginrichting',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		NOK2011_2: {
+			layertype: 'WMTS',
+			name: 'NOK2011 (WMTS)',
+			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+			layer: 'nok2011',
+			style: null,
+			matrixSet: 'EPSG:28992',
+			visibility: true, 
+			isBaseLayer: true
+		},
+		TOP10NL: {
+			layertype: 'TMS',
+			name: 'TOP10 NL (TMS)',
+			url: 'http://geodata.nationaalgeoregister.nl/tms/',
+			layername: 'top10nl',
+			type:'png8',
+			visibility: true,
+			isBaseLayer: false
+		},
+		TOP10NL2: {
+			layertype: 'WMTS',
+			name: 'TOP10 NL (WMTS)',
+			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+			layer: 'top10nl',
+			style: null,
+			matrixSet: 'EPSG:28992',
+			visibility: true, 
+			isBaseLayer: true
+		},
+		TOP250RASTER: {
+			layertype: 'WMTS',
+			name: 'TOP250 Raster (WMTS)',
+			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+			layer: 'top250raster',
+			style: null,
+			matrixSet: 'EPSG:28992',
+			visibility: true, 
+			isBaseLayer: true
+		},
+		TOP50RASTER: {
+			layertype: 'WMTS',
+			name: 'TOP50 Raster (WMTS)',
+			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+			layer: 'top50raster',
+			style: null,
+			matrixSet: 'EPSG:28992',
+			visibility: true, 
+			isBaseLayer: true
+		},
+		TOP50VECTOR: {
+			layertype: 'WMTS',
+			name: 'TOP50 Vector (WMTS)',
+			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+			layer: 'top50vector',
+			style: null,
+			matrixSet: 'EPSG:28992',
+			visibility: true, 
+			isBaseLayer: true
+		}
     }
 
 
@@ -801,7 +851,7 @@ Pdok.Api.prototype.createOlMap = function() {
     if (this.pdoklayers != null) {
         // if there is just one layer (without comma's), OL returns a String:
         if (typeof this.pdoklayers == 'string') {
-            this.pdoklayers=[this.pdoklayers];
+            this.pdoklayers=this.pdoklayers.split(',');
         }
         this.addLayers(this.pdoklayers, olMap);
         // if the map does NOT have a baseLayer, always add BRT layer
