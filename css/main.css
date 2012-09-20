@@ -251,6 +251,7 @@ ul.geozetSuggestions{
     height: 30px;
     font-size: 1em;
     cursor: pointer;
+    background-image: none;
 }
 
 #styleselector img{
@@ -274,7 +275,7 @@ ul.geozetSuggestions{
     letter-spacing:1px;*/
 }
 
-input, select, textarea {
+form input, form select, form textarea {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size:12px;
     width: 298px;
