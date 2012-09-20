@@ -1812,8 +1812,10 @@ Pdok.Api.prototype.getConfig = function() {
 
     // zoom
     config.zoom = this.map.getZoom();
-    // show the LayerSwitcher or not
-    config.showLayerSwitcher = this.showLayerSwitcher;
+    // only add the LayerSwitcher parameter if false (default value is true)
+    if (!this.showLayerSwitcher){
+	    config.showLayerSwitcher = this.showLayerSwitcher;
+	}
     // bbox
     // config.bbox = this.map.getExtent().toArray();
     // or better ? loc
