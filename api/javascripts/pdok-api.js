@@ -632,7 +632,8 @@ Pdok.Api.prototype.defaultLayers = {
 			layername: 'brtachtergrondkaart',
 			type:'png8',
 			visibility: true,
-			isBaseLayer:true
+			isBaseLayer:true,
+			attribution:'(c) OSM & Kadaster'
 		},
 		BRT2: {
 			layertype: 'WMTS',
@@ -642,7 +643,8 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: true,
+			attribution:'(c) OSM & Kadaster'
 		},
 		CBS_KERNEN_NAMEN: {
 			layertype: 'WMS',
@@ -759,7 +761,8 @@ Pdok.Api.prototype.defaultLayers = {
 			layername: 'top10nl',
 			type:'png8',
 			visibility: true,
-			isBaseLayer: false
+			isBaseLayer: false,
+			attribution:'(c) Kadaster'
 		},
 		TOP10NL2: {
 			layertype: 'WMTS',
@@ -769,7 +772,8 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: true,
+			attribution:'(c) Kadaster'
 		},
 		TOP250RASTER: {
 			layertype: 'WMTS',
@@ -779,7 +783,8 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: true,
+			attribution:'(c) Kadaster'
 		},
 		TOP50RASTER: {
 			layertype: 'WMTS',
@@ -789,7 +794,8 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: true,
+			attribution:'(c) Kadaster'
 		},
 		TOP50VECTOR: {
 			layertype: 'WMTS',
@@ -799,7 +805,8 @@ Pdok.Api.prototype.defaultLayers = {
 			style: null,
 			matrixSet: 'EPSG:28992',
 			visibility: true, 
-			isBaseLayer: true
+			isBaseLayer: true,
+			attribution:'(c) Kadaster'
 		}
     }
 
@@ -1316,7 +1323,8 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
             layername: '',
             type: 'png',
             visibility: true,
-            isBaseLayer: false
+            isBaseLayer: false,
+			attribution:''
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1327,7 +1335,8 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
         {   layername: layerConfigObj.layername, 
             type:layerConfigObj.type, 
             visibility: layerConfigObj.visibility, 
-            isBaseLayer: layerConfigObj.isBaseLayer
+            isBaseLayer: layerConfigObj.isBaseLayer,
+			attribution:layerConfigObj.attribution
         }
     );
 
@@ -1369,7 +1378,8 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
             matrixIds: matrixIds,
             visibility: true,
             isBaseLayer: false,
-            format: 'image/png8'
+            format: 'image/png8',
+            attribution:''
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1392,7 +1402,8 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
             matrixIds: layerConfigObj.matrixIds,
             format: layerConfigObj.format,
             visibility: layerConfigObj.visibility,
-            isBaseLayer: layerConfigObj.isBaseLayer
+            isBaseLayer: layerConfigObj.isBaseLayer,
+            attribution: layerConfigObj.attribution
         }
     );
     return layer;
@@ -1430,7 +1441,8 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
             visibility: true,
             isBaseLayer: false,
             format: 'image/png',
-            singleTile: true
+            singleTile: true,
+			attribution:''
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1446,7 +1458,8 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
             {
                 visibility: layerConfigObj.visibility, 
                 isBaseLayer: layerConfigObj.isBaseLayer, 
-                singleTile: layerConfigObj.singleTile 
+                singleTile: layerConfigObj.singleTile,
+				attribution:layerConfigObj.attribution 
             }
     );
 
