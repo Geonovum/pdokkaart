@@ -260,7 +260,7 @@ function enableStyleSelector(){
     //default style selected
     featureCreatedCallback = function(feature){
         // you get a handle here to the feature last modified
-        // console.log(feature);
+        //console.log(feature);
         //ActiveFeature.fid = feature.fid;
         activeFeature = feature;
         $('#edit2a').appendTo($('#addviamap2'));

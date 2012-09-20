@@ -1235,16 +1235,18 @@ Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
         currentDrawControl.handler.style = apiStyles[styletype];
         currentDrawControl.handler.style.externalGraphic = null;
     }
-    currentDrawControl.activate();
     currentDrawControl.featureAdded = function(feature){
             feature.style = apiStyles[styletype];
             // also set an attribute 'styletype' to be able to export features with styletype
             feature.attributes['styletype'] = styletype;
+            // we add a name attribute to be able to write to KML (the KML format uses that attribute as name)
+            feature.attributes['name'] = '&nbsp;';  // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
             apiFeaturesLayer.redraw();
             if (featureAddedCallback){
                 featureAddedCallback(feature);
             }
     }
+    currentDrawControl.activate();
     return true;
 }
 
@@ -2001,7 +2003,7 @@ Pdok.Api.prototype.getConfig = function() {
         var kmlformat = new OpenLayers.Format.KML({
             foldersDesc: null,
             foldersName: null,
-            placemarksDesc: '-',
+            placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
             internalProjection: this.map.baseLayer.projection,
             externalProjection: new OpenLayers.Projection("EPSG:4326")
         });
