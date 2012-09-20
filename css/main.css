@@ -329,15 +329,16 @@ button, x:-moz-any-link {
 .stepwrapper{
 	border: 1px solid #F6D4B2;
 	background-color:rgb(246,212,178);
-	margin-bottom: 10px;
+	margin: 10px 0px;
     width: 370px;
 }
 
 h2 {
-	background-color:rgb(225,112,0);
-	font-size: 1.3em;
-	padding: 8px 8px 10px 14px;
-	position: relative;
+    background-color:rgb(225,112,0);
+    font-size: 1.3em;
+    padding: 8px 8px 10px 14px;
+    position: relative;
+    margin: 10px 0px;
 }
 
 

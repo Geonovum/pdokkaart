@@ -132,7 +132,7 @@ Pdok.Api = function(config) {
     /**
      * Reference to the OpenLayers LayerSwitcher object
      */
-    this.showLayerSwitcher = true;
+    this.showlayerswitcher = true;
 
     /**
      * Reference to the DIV-id the map should be rendered in.
@@ -841,7 +841,7 @@ Pdok.Api.prototype.defaultLayers = {
  */
 Pdok.Api.prototype.createOlMap = function() {
     var controls = []
-    if (!this.showLayerSwitcher){
+    if (!this.showlayerswitcher){
     	controls = [
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
@@ -849,7 +849,7 @@ Pdok.Api.prototype.createOlMap = function() {
 			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
         ]
     }
-    else if (this.showLayerSwitcher == true || this.showLayerSwitcher.toLowerCase() == "true"){
+    else if (this.showlayerswitcher == true || this.showlayerswitcher.toLowerCase() == "true"){
     	controls = [
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
@@ -1948,8 +1948,8 @@ Pdok.Api.prototype.getConfig = function() {
     // zoom
     config.zoom = this.map.getZoom();
     // only add the LayerSwitcher parameter if false (default value is true)
-    if (!this.showLayerSwitcher){
-	    config.showLayerSwitcher = this.showLayerSwitcher;
+    if (!this.showlayerswitcher){
+	    config.showlayerswitcher = this.showlayerswitcher;
 	}
     // bbox
     // config.bbox = this.map.getExtent().toArray();
@@ -2067,9 +2067,9 @@ Pdok.Api.prototype.serialize = function(obj, stringQuotes){
 //Function to toggle visibility of the OpenLayers.LayerSwitcher
 Pdok.Api.prototype.setLayerSwitcherVisible = function(isVisible){
 	if (isVisible){
-		this.showLayerSwitcher = true;
+		this.showlayerswitcher = true;
 	}
 	else{
-		this.showLayerSwitcher = false;
+		this.showlayerswitcher = false;
 	}
 }
