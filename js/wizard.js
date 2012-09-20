@@ -535,10 +535,9 @@ function handleGeocodeResponse(req, returnCoords){
                 if(!zoom){zoom='provincie'}
             }
             if(!zoom){zoom='standaard'}
-
-            if(hits>0){
-                // Thijs: added calculation for bbox
-                // only calulate if a geom is provided
+            
+            // one hit? zoom to it. Otherwize show resultlist
+            if(hits>1){
                 // hack to be able to handle results without geom
                 var x = geom?geom.x:150000;
                 var y = geom?geom.y:450000;
@@ -556,13 +555,9 @@ function handleGeocodeResponse(req, returnCoords){
                     newId = newFt.id;
                     features.push(newFt);
                 }
-                //var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">('+(i+1) + ") " + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
                 var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">' + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
                 $("ul.geozetSuggestions").append(gazHtml);
-
-                // set (calculated) height for the result div
-                /* var height = Math.max(Ext.get('geozetAside').getHeight(), Ext.get('geozetArticle').getHeight());
-                Ext.get(this.contentWrapperId).setHeight(height); */
+                $('#geocodeerresult').show()
             }
             else{
                 // hack to be able to handle results without geom
@@ -582,18 +577,6 @@ function handleGeocodeResponse(req, returnCoords){
                 }
             }
         }
-        //$("ul.geozetSuggestions").show();
-        $('#geocodeerresult').show()
-        // calculate the new bbox, if hits > 0
-        if (hits > 0) {
-	        // first calculate the center of the new bbox	        
-	        var newBounds = new OpenLayers.Bounds([minx, miny, maxx, maxy]);
-			// compare the zoomlevels of the extent and the calulated zoomlevel, to make sure all results are fetched.
-			var minzoom = Math.min(mapPDOKKaart.getZoomForExtent(newBounds), minzoom);
-	        // now use the lowest zoomlevel for all results, to make sure that not so fine locations (like provinces) are contained as well
-	        mapPDOKKaart.setCenter(newBounds.getCenterLonLat(), minzoom);
-        }
-		//markers.addFeatures(features);
     }
     return false;
 }
