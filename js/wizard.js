@@ -739,5 +739,11 @@ function pdok_api_map_resize(w,h) {
 }
 
 function setLayerSwitcherVisible(isVisible){
+	if (isVisible){
+		$('.olControlLayerSwitcher').show();
+	}
+	else{
+		$('.olControlLayerSwitcher').hide();
+	}
 	api.setLayerSwitcherVisible(isVisible);
 }
