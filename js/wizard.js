@@ -263,7 +263,7 @@ function enableStyleSelector(){
         //console.log(feature);
         //ActiveFeature.fid = feature.fid;
         activeFeature = feature;
-        $('#edit2a').appendTo($('#addviamap2'));
+        $('#edit2a').prependTo($('#addviamap2'));
         $('#edit2a').show();
     }
     // no popup during editing
@@ -321,7 +321,7 @@ function createStyleSelector(){
             // console.log(feature);
             activeFeature = feature;
             //console.log('editviamap2??')
-            $('#edit2a').appendTo($('#editviamap2'));
+            $('#edit2a').prependTo($('#editviamap2'));
             $('#edit2a').show();
         }
         api.enableDrawingTool(styleId, featureCreatedCallback);
