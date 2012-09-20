@@ -644,6 +644,50 @@ Pdok.Api.prototype.defaultLayers = {
 			visibility: true, 
 			isBaseLayer: true
 		},
+		CBS_KERNEN_NAMEN: {
+			layertype: 'WMS',
+			name: 'CBS Bevolkingskern namen (2008)',
+			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+			layers: 'naamgeving_kernen_40k_plus,naamgeving_kernen_alles',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		CBS_KERNEN: {
+			layertype: 'WMS',
+			name: 'CBS Bevolkingskernen (2008)',
+			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+			layers: 'cbsbevolkingskernen2008',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		CBS_GEMEENTEN: {
+			layertype: 'WMS',
+			name: 'CBS Gemeentegrenzen (2008)',
+			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+			layers: 'gemeentegrens_generalisatie_2008',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
+		CBS_PROVINCIES: {
+			layertype: 'WMS',
+			name: 'CBS Provinciegrenzen (2008)',
+			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+			layers: 'provgrens_generalisatie_2008',
+			transparent: 'true',
+			format: 'image/png',
+			visibility: true,
+			isBaseLayer: false,
+			singleTile: true
+		},
 		GEMEENTEGRENZEN: {
 			layertype: 'WMS',
 			name: 'Gemeentegrenzen',
