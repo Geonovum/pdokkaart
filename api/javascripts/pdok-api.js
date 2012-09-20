@@ -23,6 +23,10 @@ OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
 OpenLayers.Feature.Vector.style['default'].pointRadius = 5;
 OpenLayers.Feature.Vector.style['default'].fillOpacity = 0.8;
+// small point otherwise we see circle
+OpenLayers.Feature.Vector.style['temporary'].pointRadius = 0;
+OpenLayers.Feature.Vector.style['temporary'].strokeColor = 'red';
+OpenLayers.Feature.Vector.style['temporary'].fillColor = 'red';
 
 // The proxyhost is needed for the geocoder
 OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
@@ -1045,7 +1049,8 @@ Pdok.Api.prototype.createStyles = function(){
             externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/default.png",
             graphicHeight: 37,
             graphicWidth: 32,
-            graphicYOffset: -37
+            graphicYOffset: -37,
+            pointRadius: 1
         }, {});
 
     this.styles.mt0 = pdokDefaultPoint;
@@ -1085,7 +1090,7 @@ Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
             this.map.addControl(this.drawFeaturePointControl);
         }
         currentDrawControl = this.drawFeaturePointControl;
-        currentDrawControl.handler.style = apiStyles[styletype];
+        //currentDrawControl.handler.style = apiStyles[styletype];
     }
     else if (styletype[0]=='l'){
         if (this.drawFeatureLineControl==null){
@@ -1556,7 +1561,7 @@ Pdok.Api.prototype.startLocationTool = function(){
             this.map.addControl(this.drawLocationPointControl);
         }
         currentDrawControl = this.drawLocationPointControl;
-        currentDrawControl.handler.style = this.styles[this.locationtoolstyle];
+        //currentDrawControl.handler.style = this.styles[this.locationtoolstyle];
     }
     else if (this.locationtoolstyle[0]=='l'){
         if (this.drawLocationLineControl==null){
