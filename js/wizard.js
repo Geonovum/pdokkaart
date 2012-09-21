@@ -10,20 +10,10 @@ var currentStep = 1;
 // The proxyhost is needed for the geocoder
 OpenLayers.ImgPath = 'api/img/';
 
-//++
+
 function goTo(step) {
 
-    // cleanup of edit controls
-    // to always start with a clean sheet
-    $('#addfeatures').attr('checked', false)
-    $('#editfeatures').attr('checked', false)
-    $('#externalfeatures').attr('checked', false)
-    $('#addviamap').hide();
-    $('#editviamap').hide();
-    $('#addviaurltxt').hide();
-    api.disableDrawingTool();
-    api.disableEditingTool();
-
+    disableEditTools();
     // if the step is allready open, close the step
     if ($('#step'+step).hasClass('active')){
         $('#step'+step).removeClass('active');
@@ -37,12 +27,24 @@ function goTo(step) {
     return false;
 }
 
+function disableEditTools(){
+    // cleanup of edit controls
+    // to always start with a clean sheet
+    $('#addfeatures').attr('checked', false)
+    $('#editfeatures').attr('checked', false)
+    $('#externalfeatures').attr('checked', false)
+    $('#addviamap').hide();
+    $('#editviamap').hide();
+    $('#addviaurltxt').hide();
+    api.disableDrawingTool();
+    api.disableEditingTool();
+}
 
 //select output code at Step 4
 function selectCode() {
-	document.getElementById("codeoutput").select();
-	return false;
-}
+    document.getElementById("codeoutput").select();
+    return false;
+a}
 
 function MeerMinderOpties() {
 
@@ -153,27 +155,51 @@ function createSearchLogic() {
 }
 
 function createMarkersLogic() {
-    $('#editmarkers input[type=radio]').change(function(){
-        //console.log('change of editing tools radio');
+    $('#editmarkers input[type=radio]').click(function(){
         if (this.id == 'addfeatures') {
-            $('#addviamap').show();
-            $('#editviamap').hide();
-            $('#addviaurltxt').hide();
-            enableStyleSelector();
+            if ($('#addviamap').is(':visible')) {
+                $('#addviamap').hide();
+                $(this).attr('checked', false);
+                api.disableDrawingTool();
+            }
+            else {
+                $('#addviamap').show();
+                $('#editviamap').hide();
+                $('#addviaurltxt').hide();
+                enableStyleSelector();
+            }
         }
         else if (this.id == 'editfeatures') {
-            $('#addviamap').hide();
-            $('#editviamap').show();
-            $('#addviaurltxt').hide();
-            startEditingPoint();
+            if ($('#editviamap').is(':visible')) {
+                api.disableEditingTool();
+                $('#editviamap').hide();
+                $('#edit2a').hide();
+            }
+            else {
+                disableEditTools();
+                $('#addviamap').hide();
+                $('#editviamap').show();
+                $('#addviaurltxt').hide();
+                startEditingPoint();
+            }
         }
         else if (this.id == 'externalfeatures') {
-            $('#addviamap').hide();
-            $('#editviamap').hide();
-            $('#addviaurltxt').show();
+            if ($('#addviaurltxt').is(':visible')) {
+                $('#addviaurltxt').hide();
+            }
+            else {
+                $('#addviamap').hide();
+                $('#editviamap').hide();
+                $('#addviaurltxt').show();
+            }
         }
     });
-
+    /*
+    $('#editmarkers input[type=radio]').click(function(){
+        console.log(1, $(this).val());
+        console.log(2, $("#editmarkers input:checked").val())
+    });
+    */
     $('#getfeaturesfromurl').click(function(){
         var format = $('#addviaurltxt input[name=urltype]:checked').val();
         api.addFeaturesFromUrl($('#urltext').val(), format.toUpperCase(), true);
