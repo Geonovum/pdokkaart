@@ -172,11 +172,14 @@ function createMarkersLogic() {
         else if (this.id == 'editfeatures') {
             if ($('#editviamap').is(':visible')) {
                 api.disableEditingTool();
+                $(this).attr('checked', false);
                 $('#editviamap').hide();
                 $('#edit2a').hide();
             }
             else {
                 disableEditTools();
+                // disableEditTools() also unchecks the radio, check it here
+                $(this).attr('checked', true);
                 $('#addviamap').hide();
                 $('#editviamap').show();
                 $('#addviaurltxt').hide();
@@ -186,6 +189,7 @@ function createMarkersLogic() {
         else if (this.id == 'externalfeatures') {
             if ($('#addviaurltxt').is(':visible')) {
                 $('#addviaurltxt').hide();
+                $(this).attr('checked', false);
             }
             else {
                 $('#addviamap').hide();
