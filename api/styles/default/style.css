@@ -344,7 +344,10 @@ div.olControlSaveFeaturesItemInactive {
     padding-left: 10px;
     padding-bottom: 5px;
     padding-right: 10px;
-    background-color: rgba(39, 51, 151, 0.8);
+    background-color: rgb(39, 51, 151);
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
 }
 
 .olControlLayerSwitcher .layersDiv .baseLbl,
@@ -458,7 +461,10 @@ div.olControlZoom {
     top: 8px;
     left: 8px;
     #273397
-    background: rgba(39, 51, 151, 0.2);
+    background: rgb(39, 51, 151);
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
     border-radius: 4px;
     padding: 2px;
 }
@@ -479,13 +485,17 @@ div.olControlZoom a {
     filter: alpha(opacity=60);
 }
 div.olControlZoom a:hover {
-    background: #273397; /* fallback for IE */
-    background: rgba(39, 51, 151, 0.8);
+    background: rgb(39, 51, 151);
+    opacity: 0.8;
     filter: alpha(opacity=80);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
 }
 @media only screen and (max-width: 600px) {
     div.olControlZoom a:hover {
-        background: rgba(0, 0, 0, 0.5);
+        background: rgb(0,0,0);
+        opacity: 0.5;
+        filter: alpha(opacity=50);
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     }
 }
 a.olControlZoomIn {
