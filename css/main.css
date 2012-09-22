@@ -249,7 +249,7 @@ ul.geozetSuggestions{
     letter-spacing:1px;*/
 }
 
-form input, form select, form textarea, form select {
+form input[type=text], form select, form textarea, form select {
     background: #fff; 
     padding: 0.3em 0.3em;
     color: #000; 
