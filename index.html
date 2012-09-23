@@ -54,7 +54,7 @@
                                 Hier komen de resultaten van de geocodeerservice
                             </div>
             <div id="search" class="stepwrapper">
-            <form style="display:block" id="searchForm" name="searchForm">
+            <form action="#" style="display:block" id="searchForm" name="searchForm">
                 Zoek een locatie:
                 <input id="searchLocation" type="text" value="" name="searchLocation" class="autopopulate default" title="adres, postcode of plaatsnaam" />
                 <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
@@ -142,7 +142,7 @@
                     <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
                     <label><input type="radio" name="txttype" value="kml" class="lefting" />KML</label>
                     <label><input type="radio" checked="checked" name="txttype" value="txt" class="lefting" />TXT</label>
-                    <textarea id="copypaste">Copy/Paste:</textarea>
+                    <textarea id="copypaste" rows="10" cols="10">Copy/Paste:</textarea>
                     <button id="getfeaturesfromtxt" class="filterbutton">Opslaan</button>
                   </div>
                 </div>
@@ -181,7 +181,7 @@
                   <a href="help.html#help4" target="_blank">Help</a>
                 </span>
               </h2>
-              <form id="locationtoolform">
+              <form id="locationtoolform" action="#">
                 <div class="row">
                   Selecteer een tekenobject en vul de veldnaam in waar de waarde ingezet moet worden
                 </div>
@@ -215,13 +215,13 @@
                   <div class="row">
                     <label>
                         Kaartprikker mogelijk vanaf zoom niveau:
-                        <select id="zmin"><option value="1" selected="true">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option></select> 
+                        <select id="zmin"><option value="1" selected="selected">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option></select> 
                     </label>
                   </div>
                   <div class="row">
                     <label>
                         Kaartprikker mogelijk tot en met zoom niveau:
-                        <select id="zmax"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14" selected="true">14</option></select> 
+                        <select id="zmax"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14" selected="selected">14</option></select> 
                     </label>
                   </div>
                 </div>
@@ -246,9 +246,9 @@
                     <input type="text" value="" id="embedhtmlobject" />
                     <p><strong>Als broncode</strong></p>
                     In de HTML Head-sectie plaatsen:
-                    <textarea id="scriptcodeHead" rows="12"></textarea>
+                    <textarea id="scriptcodeHead" rows="12" rows="10"></textarea>
                     <br/>In de HTML Body-sectie plaatsen:
-                    <textarea id="scriptcodeBody" rows="4"></textarea>
+                    <textarea id="scriptcodeBody" rows="4" rows="10"></textarea>
                 </div>
               </form>
             </div>
