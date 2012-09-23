@@ -1,4 +1,3 @@
-pdok_wizzard
-============
+# PDOK wizard
 
-Wizzard to create pdok map....
+Wizard to create a PDOK map....
