@@ -297,7 +297,16 @@ button, x:-moz-any-link {
 #searchLocation{
 	width : 170px;
 }
-#searchLocation.default{
+/* class for autopopulate fields */
+#searchLocation.default, 
+#description.default, 
+#attr_name.default,
+#wmsUrl.default,
+#wmsLayer.default,
+#WmtsUrl.default,
+#WmtsLayer.default,
+#WmtsMatrix.default
+{
     color: #7F8181;
 }
 #mapsize1{

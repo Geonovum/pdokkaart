@@ -105,30 +105,43 @@ $(document).ready(function() {
     $('#step3 input:text').val('');
     createApiLinksAndCode();
 
+   autoPopulateInputs();
+
     // not sure if we want this here
     api.map.events.register("moveend", this, createApiLinksAndCode );
 });
 
 
-
+// function to automatically creat a hint text based on a title attribute
 function autoPopulateInputs() {
-    // AUTOMATISCH OMZETTEN VAN TITLE ATTRIBUUT SITE NAAR PREFILLED TEXT
     if(!document.getElementById||!document.createTextNode){return;}
-    var arrInputs=$('input.autopopulate');
+    var arrInputs=$('input.autopopulate, textarea.autopopulate');
     var iInputs=arrInputs.length;
     var oInput;
     for(var i=0;i<iInputs;i++){
         oInput=arrInputs[i];
-        if(oInput.type!='text'){continue;}
+        if((oInput.type=='text' || oInput.type=='textarea')==false){continue;}
         if((oInput.value=='')&&(oInput.title!='')){oInput.value=oInput.title;$(oInput).addClass('default');}
         if(oInput.value==oInput.title){$(oInput).addClass('default');}
-        $('input.autopopulate').focus(
+        $('input.autopopulate, textarea.autopopulate').focus(
             function(){
-                if(this.value==this.title){this.value='';this.select();$(this).val('').removeClass('default');}
+                // we put &nbsp; as fake value, this is actually a ''
+                if(this.value==this.title || this.value=='&nbsp;'){
+                    this.value='';this.select();
+                    $(this).val('').removeClass('default');
+                }
         });
-        $('input.autopopulate').blur(
+        $('input.autopopulate, textarea.autopopulate').blur(
             function(){
-                if(!this.value.length){this.value=this.title;$(this).addClass('default');} else {if(this.value!=this.title){$(this).removeClass('default');}}
+                if(!this.value.length){
+                    this.value=this.title;
+                    $(this).addClass('default');
+                } 
+                else {
+                    if(this.value!=this.title){
+                        $(this).removeClass('default');
+                    }
+                }
         });
     }
 }
@@ -150,8 +163,6 @@ function createSearchLogic() {
         return false;
     });
 
-   //
-   autoPopulateInputs();
 }
 
 function createMarkersLogic() {
@@ -350,8 +361,7 @@ function createStyleSelector(){
             // you get a handle here to the feature last modified
             // console.log(feature);
             activeFeature = feature;
-            //console.log('editviamap2??')
-            $('#edit2a').prependTo($('#editviamap2'));
+            $('#edit2a').prependTo($('#addviamap2'));
             $('#edit2a').show();
         }
         api.enableDrawingTool(styleId, featureCreatedCallback);
@@ -371,8 +381,8 @@ function createPdokLayers(){
 
 function createEditAttributes () {
 
-    var html = '<input id="attr_name" type="text" value="Voer een titel in :" name="searchLocation" title="Vul een titel in voor de popup" />';
-    html += '<textarea id="description" title="Vul een omschrijving in voor de popup">Voer een omschrijving in : </textarea>';
+    var html = '<input id="attr_name" type="text" name="searchLocation" class="autopopulate default" title="een titel voor in de popup" />';
+    html += '<textarea id="description" class="autopopulate default" title="en optioneel een omschrijving"></textarea>';
     html += '<button class="filterbutton" onclick="saveAttributes();return false;">Opslaan tekst</button>';
     html += '<button class="filterbutton" onclick="deleteFeature();return false;">Verwijderen marker</button>';
 
@@ -407,21 +417,36 @@ function createFieldnameInput(radiobutton) {
 
 
 function saveAttributes() {
-    //console.log(activeFeature);
-    activeFeature.attributes.name = $('#attr_name').val();
-    activeFeature.attributes.description = $('#description').val();
+    var nameDefault = $('#attr_name').attr('title');
+    var descDefault = $('#description').attr('title');
+
     $('#edit2a').hide();
+    if ($('#attr_name').val()==nameDefault || $('#attr_name').val()=='') {
+        $('#attr_name').val('&nbsp;');  // we default to &nbsp;
+    }
+    activeFeature.attributes.name = $('#attr_name').val();
+    if ($('#description').val()==descDefault || $('#description').val()=='') {
+        $('#description').val('&nbsp;');  // we default to &nbsp;
+    }
+    activeFeature.attributes.description = $('#description').val();
 }
 
 function featureModifiedCallback(domevent){
-            // you get a handle here to the feature last modified
-            // console.log(feature);
-            activeFeature = domevent.feature;
-            $('#edit2a').appendTo($('#editviamap'));
-            $('#edit2a').show();
-            $('#attr_name').val(domevent.feature.attributes.name);
-            $('#description').val(domevent.feature.attributes.description);
-        }
+    // you get a handle here to the feature last modified
+    // console.log(feature);
+    activeFeature = domevent.feature;
+    $('#edit2a').appendTo($('#editviamap'));
+    if(domevent.feature.attributes.name == '&nbsp;'){
+        domevent.feature.attributes.name = '';
+    }
+    $('#attr_name').val(domevent.feature.attributes.name);
+    if(domevent.feature.attributes.description == '&nbsp;'){
+        domevent.feature.attributes.description = '';
+    }
+    $('#description').val(domevent.feature.attributes.description);
+    autoPopulateInputs();
+    $('#edit2a').show();
+}
 
 function deleteFeature() {
 

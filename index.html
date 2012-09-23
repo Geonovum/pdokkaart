@@ -54,12 +54,12 @@
                                 Hier komen de resultaten van de geocodeerservice
                             </div>
             <div id="search" class="stepwrapper">
-              <form style="display:block" id="searchForm" name="searchForm">
-                                    Zoek een locatie:
-                                    <input id="searchLocation" type="text" value="" name="searchLocation" class="autopopulate default" title="adres, postcode of plaatsnaam" />
-                                    <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
-                                        Zoek</button>
-                                </form>
+            <form style="display:block" id="searchForm" name="searchForm">
+                Zoek een locatie:
+                <input id="searchLocation" type="text" value="" name="searchLocation" class="autopopulate default" title="adres, postcode of plaatsnaam" />
+                <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
+                    Zoek</button>
+            </form>
             </div>
 <!-- Step 1 - Your map -->
             <div id="step1" class="stepwrapper active">
@@ -158,17 +158,17 @@
               </h2>
               <form action="#" name="addroutes" id="addroutes"><h4>Voeg een standaard kaartlaag toe</h4><div id="divpdoklayerselector"> </div><button class="filterbutton" onclick="addPdokLayer();return false;">Voeg toe aan kaart</button><h4>Voeg een WMS kaartlaag toe</h4>
                     URL van de WMS:<br />
-                    <input type="text" id="wmsUrl" size="30" /><br />
+                    <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
                     Lagen van de WMS:<br />
-                    <input type="text" id="wmsLayer" size="30" /><br />
+                    <input type="text" id="wmsLayer" class="autopopulate default" title="bijv: provgrens_generalisatie_2008" size="30" /><br />
                     <button class="filterbutton" onclick="addWmsLayer();return false;">Voeg toe aan kaart</button>
                     <h4>Voeg een WMTS kaartlaag toe</h4>
                     URL van de WMTS:<br />
-                    <input type="text" id="WmtsUrl" size="30" /><br />
+                    <input type="text" id="WmtsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/wmts/" size="30" /><br />
                     Laagnaam van de WMTS:<br />
-                    <input type="text" id="WmtsLayer" size="30" /><br />
+                    <input type="text" id="WmtsLayer" class="autopopulate default" title="bijv: natura2000" size="30" /><br />
                     Matrixset van de WMTS:<br />
-                    <input type="text" id="WmtsMatrix" size="30" /><br />
+                    <input type="text" id="WmtsMatrix" class="autopopulate default" title="bijv: EPSG:28992" size="30" /><br />
                     <button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>
                     <button id="deletelayers" class="filterbutton" onclick=" api.deleteLayers();return false;"><span>Verwijder alle lagen</span></button>
                 </form>
