@@ -301,6 +301,8 @@ button, x:-moz-any-link {
 #searchLocation.default, 
 #description.default, 
 #attr_name.default,
+#urltext.default,
+#copypaste.default,
 #wmsUrl.default,
 #wmsLayer.default,
 #WmtsUrl.default,

@@ -136,13 +136,17 @@
                     <p><strong>Via URL</strong> Kies datatype, en geef de URL waar het bestand met markerdefinities zich bevindt klik dan "Haal op ":</p>
                     <label><input type="radio" checked="checked" name="urltype" value="kml" class="lefting" />KML</label>
                     <label><input type="radio" name="urltype" value="txt" class="lefting" />TXT</label>
-                    <input type="text" title="Postcode of plaatsnaam" name="searchLocation" value="Voer een URL in :" id="urltext" />
+                    <input type="text" id="urltext" class="autopopulate default" title="Voer een volledige url in (startend met http://)"/>
                     <button id="getfeaturesfromurl" class="filterbutton">Haal op</button>
                     <br />
                     <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
                     <label><input type="radio" name="txttype" value="kml" class="lefting" />KML</label>
                     <label><input type="radio" checked="checked" name="txttype" value="txt" class="lefting" />TXT</label>
-                    <textarea id="copypaste" rows="10" cols="10">Copy/Paste:</textarea>
+                    <textarea id="copypaste" class="autopopulate default"rows="10" cols="10" title="TXT voorbeeld:
+
+lan lon title   description
+#eerst Y dan X!!
+517000  17960   naam    en omschrijving"></textarea>
                     <button id="getfeaturesfromtxt" class="filterbutton">Opslaan</button>
                   </div>
                 </div>
@@ -156,7 +160,7 @@
                   <a href="help.html#help3" target="_blank">Help</a>
                 </span>
               </h2>
-              <form action="#" name="addroutes" id="addroutes"><h4>Voeg een standaard kaartlaag toe</h4><div id="divpdoklayerselector"> </div><button class="filterbutton" onclick="addPdokLayer();return false;">Voeg toe aan kaart</button><h4>Voeg een WMS kaartlaag toe</h4>
+              <form action="#"><h4>Voeg een standaard kaartlaag toe</h4><div id="divpdoklayerselector"> </div><button class="filterbutton" onclick="addPdokLayer();return false;">Voeg toe aan kaart</button><h4>Voeg een WMS kaartlaag toe</h4>
                     URL van de WMS:<br />
                     <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
                     Lagen van de WMS:<br />

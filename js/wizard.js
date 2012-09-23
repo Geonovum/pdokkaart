@@ -223,7 +223,8 @@ function createMarkersLogic() {
 
     $('#getfeaturesfromtxt').click(function(){
         var format = $('#addviaurltxt input[name=txttype]:checked').val();
-        api.addFeaturesFromString($('#copypaste').val(), format.toUpperCase(), true);
+        // always adding a newline (for TXT format)
+        api.addFeaturesFromString($('#copypaste').val()+'\n', format.toUpperCase(), true);
         return false;
     });
     // Select input field contents

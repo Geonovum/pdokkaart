@@ -1823,6 +1823,12 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
             }
         }
     }
+    
+    if (features.length==0) {
+        // mmm, no featues
+        alert('Geen features aangemaakt. Is het formaat wel ok?\nRaadpleeg eventueel de help pagina\'s voor de juiste formaten.');
+        return true;
+    }
     this.featuresLayer.addFeatures(features);
     if (zoomToFeatures && this.featuresLayer.features.length>0) {
         // zoom to dataextent
