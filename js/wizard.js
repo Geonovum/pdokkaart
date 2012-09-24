@@ -290,7 +290,8 @@ function createLocationToolLogic() {
     }
     // attaching above logic to diffent inputs of the locationtool form
     $('#locationtoolform input[type=radio], #locationtoolform select').change(locationToolPropertyChange);
-    $('#locationtoolfield input[type=text]').keyup(locationToolPropertyChange);
+    //$('#locationtoolfield input[type=text]').keyup(locationToolPropertyChange);  // IE7 problem
+    $('#locationtoolfield input[type=text]').change(locationToolPropertyChange);
 
 }
 
