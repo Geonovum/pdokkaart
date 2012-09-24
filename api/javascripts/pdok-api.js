@@ -228,6 +228,7 @@ Pdok.Api.prototype.defaultStyles=[
             id: 'mt0',
             name: 'Standaard marker',
             externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/star-3.png",
+            //externalGraphic: "api/markertypes/star-3.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -236,6 +237,7 @@ Pdok.Api.prototype.defaultStyles=[
             id: 'mt1',
             name: 'Informatie blauw',
             externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/information_blue.png",
+            //externalGraphic: "api/markertypes/information_blue.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37

@@ -331,15 +331,22 @@ function createStyleSelector(){
         // for now only point markers!
         if (styleId[0]=='m'){
             var style = apiStyles[styleId];
-            pointStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div><img src="'+style.externalGraphic+'"><div class="listyletext">'+style.name+'</div></div></li>';
+            pointStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div><img src="'+style.externalGraphic+
+                '"><div class="listyletext">'+style.name+'</div></div></li>';
         }
         else if (styleId[0]=='l'){
             var style = apiStyles[styleId];
-            lineStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+'; border-top: '+style.strokeWidth+'px '+style.strokeColor+' solid;border-left: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
+            lineStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+
+            '; border-top: '+style.strokeWidth+'px '+style.strokeColor+' solid;border-left: '+style.strokeWidth+'px '+
+            style.strokeColor+' solid;float:left;"><div>&nbsp;&nbsp;&nbsp;&nbsp;</div></div><div class="listyletext"> '+
+            style.name+'</div></li>';
         }
         else if (styleId[0]=='p'){
             var style = apiStyles[styleId];
-            polygonStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span style="opacity:'+style.fillOpacity+';background-color:'+style.fillColor+';">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
+            polygonStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+
+                ';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><div style="width:16px; opacity:'+
+                style.fillOpacity+';background-color:'+style.fillColor+';">&nbsp;&nbsp;&nbsp;&nbsp;</div></div><div class="listyletext"> '+
+                style.name+'</div></li>';
         }
     }
     var pointSeparator = '<li><div class="stylehead">Puntsymbolen<div></li>';
