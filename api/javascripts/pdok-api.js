@@ -1950,13 +1950,12 @@ Pdok.Api.prototype.createHtmlBody = function(){
 }
 Pdok.Api.prototype.createHtmlHead = function(){
     var base = window.location.host+window.location.pathname; // TODO make this a baseuri config?
-    var head = '<script src="http://'+base+'js/jquery.js"></script>'+
-    '\n<script src="http://'+base+'api/javascripts/OpenLayers.js"></script>'+
+    var head = '<script src="http://'+base+'api/javascripts/OpenLayers.js"></script>'+
     '\n<script src="http://'+base+'api/javascripts/proj4js-compressed.js"></script>'+
     '\n<script src="http://'+base+'api/javascripts/pdok-api.js"></script>'+
     '\n<link rel="stylesheet" href="http://'+base+'api/styles/default/style.css" type="text/css">'+
     '\n<link rel="stylesheet" href="http://'+base+'api/styles/style.css" type="text/css">'+
-    '\n<script>var config = '+this.serialize(this.getConfig(), true)+';\nfunction createPDOKKaart() {  var api = new Pdok.Api(config);return api}\n</script>';
+    '\n<script>var config = '+this.serialize(this.getConfig(), true)+';\nfunction createPDOKKaart() {var api = new Pdok.Api(config);return api;}\n</script>';
     return head;
 }
 Pdok.Api.prototype.getConfig = function() {
