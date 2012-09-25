@@ -54,7 +54,7 @@
                                 Hier komen de resultaten van de geocodeerservice
                             </div>
             <div id="search" class="stepwrapper">
-            <form action="#" style="display:block" id="searchForm" name="searchForm">
+            <form action="#" style="display:block" id="searchForm" name="searchForm" onsubmit="searchLocationChanged();return false;">
                 Zoek een locatie:
                 <input id="searchLocation" type="text" value="" name="searchLocation" class="autopopulate default" title="adres, postcode of plaatsnaam" />
                 <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
