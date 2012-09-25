@@ -964,7 +964,8 @@ Pdok.Api.prototype.createOlMap = function() {
     // apply TXTURL if applicable
     if (this.txturl != null) {
         var lyrTextLayer = new OpenLayers.Layer.Text( "Textlayer", {location: this.txturl} );
-        olMap.addLayer(lyrTextLayer);
+        //olMap.addLayer(lyrTextLayer);
+        this.addTxt(this.txturl);
     }
 
     // apply BBOX or zoomlevel and location
@@ -1377,6 +1378,7 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
     this.wmtslayer = wmtslayer;
     this.wmtsmatrixset = wmtsmatrixset;
     var lyrWMTS = this.createWMTSLayer({
+            name: wmtslayer,
             url: wmtsurl,
             layer: wmtslayer,
             matrixSet: wmtsmatrixset,
@@ -1399,7 +1401,7 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
     // default WMTS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
-            layername: 'wmts layer',
+            name: 'wmts layer',
             url: '',
             layer: '',
             style: 'default',
@@ -1902,6 +1904,11 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
 
 Pdok.Api.prototype.addKML = function(url){
     this.addFeaturesFromUrl(url, 'KML', true);
+}
+
+//Wellicht moet dit een andere call worden omdat nu een combinatie van txturl en mloc niet goed gaat
+Pdok.Api.prototype.addTxt = function(url){
+    this.addFeaturesFromUrl(url, 'TXT', true);
 }
 
 Pdok.Api.prototype.createIframeTags = function(){
