@@ -1949,7 +1949,12 @@ Pdok.Api.prototype.createHtmlBody = function(){
     return html;
 }
 Pdok.Api.prototype.createHtmlHead = function(){
-    var base = window.location.host+window.location.pathname; // TODO make this a baseuri config?
+    var pathname = window.location.pathname;
+    if (pathname.toLowerCase().search("index.html") > -1){
+    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
+    }
+    // TODO make this a baseuri config?
+    base = window.location.host + pathname;
     var head = '<script src="http://'+base+'api/javascripts/OpenLayers.js"></script>'+
     '\n<script src="http://'+base+'api/javascripts/proj4js-compressed.js"></script>'+
     '\n<script src="http://'+base+'api/javascripts/pdok-api.js"></script>'+
