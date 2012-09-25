@@ -1937,10 +1937,20 @@ Pdok.Api.prototype.createObjectTags = function(){
     return objectTags;
 }
 Pdok.Api.prototype.createMapLink = function(){
-    return 'http://'+window.location.host+window.location.pathname+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
+	pathname = window.location.pathname;
+    if (pathname.toLowerCase().search("index.html") > -1){
+    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
+    }
+    base = window.location.host + pathname;
+    return 'http://'+base+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
 }
 Pdok.Api.prototype.createMailLink = function(){
-    return 'mailto:UwMailAdres@provider.nl?Subject=PDOKKaart%20URL&BODY=URL%3A%20' + encodeURIComponent('http://'+window.location.host+window.location.pathname+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig()));
+	pathname = window.location.pathname;
+    if (pathname.toLowerCase().search("index.html") > -1){
+    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
+    }
+    base = window.location.host + pathname;
+    return 'mailto:UwMailAdres@provider.nl?Subject=PDOKKaart%20URL&BODY=URL%3A%20' + encodeURIComponent('http://'+base+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig()));
 }
 
 Pdok.Api.prototype.createHtmlBody = function(){
