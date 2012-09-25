@@ -304,9 +304,12 @@ function enableStyleSelector(){
     featureCreatedCallback = function(feature){
         // you get a handle here to the feature last modified
         //console.log(feature);
-        //ActiveFeature.fid = feature.fid;
         activeFeature = feature;
         $('#edit2a').prependTo($('#addviamap2'));
+        // clean up cruft
+        $('#attr_name').val('');
+        $('#description').val('');
+        autoPopulateInputs();
         $('#edit2a').show();
     }
     // no popup during editing
@@ -371,6 +374,9 @@ function createStyleSelector(){
             // console.log(feature);
             activeFeature = feature;
             $('#edit2a').prependTo($('#addviamap2'));
+            $('#attr_name').val('');
+            $('#description').val('');
+            autoPopulateInputs();
             $('#edit2a').show();
         }
         api.enableDrawingTool(styleId, featureCreatedCallback);
@@ -438,6 +444,13 @@ function saveAttributes() {
         $('#description').val('&nbsp;');  // we default to &nbsp;
     }
     activeFeature.attributes.description = $('#description').val();
+
+    for (var f in api.featuresLayer.selectedFeatures) {
+        // attributes dialog will be closed now:
+        // unselect all features to be able to click on the same feature again to edit it again
+        api.editFeatureControl.unselectFeature(api.featuresLayer.selectedFeatures[f]);
+        api.featuresLayer.selectedFeatures = [];
+    }
 }
 
 function featureModifiedCallback(domevent){
