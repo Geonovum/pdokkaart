@@ -8,7 +8,7 @@
 		<script src="http://pdokkaart.pdokloket.nl/api/javascripts/proj4js-compressed.js"></script>
 		<script src="http://pdokkaart.pdokloket.nl/api/javascripts/pdok-api.js"></script>
 		<link rel="stylesheet" href="http://pdokkaart.pdokloket.nl/api/styles/default/style.css" type="text/css">
-		<link rel="stylesheet" href="http://pdokkaart.pdokloket.nl/api/styles/style.css" type="text/css">
+<link rel="stylesheet" href="http://pdokkaart.pdokloket.nl/api/styles/api.css" type="text/css">
 		<script>
 		var config = {
 			"zoom":5,
@@ -19,6 +19,7 @@
 			var api = new Pdok.Api(config);
 			return api;
 		}		
+		OpenLayers.ImgPath="http://pdokkaart.pdokloket.nl/api/img/";
 		</script>
 	</head>
 	<body>
