@@ -989,7 +989,7 @@ Pdok.Api.prototype.createOlMap = function() {
     });
     olMap.addLayer(this.locationLayer);
 
-    if (typeof this.features == 'object') {
+    if (typeof this.features == 'object' || typeof this.features == 'string') {
         // meaning we received a features string (kml) from the outside
         // features string handled, this.features now used as feature array
         if (this.features.toString().length>0) {
@@ -1954,7 +1954,7 @@ Pdok.Api.prototype.createHtmlHead = function(){
     '\n<script src="http://'+base+'api/javascripts/proj4js-compressed.js"></script>'+
     '\n<script src="http://'+base+'api/javascripts/pdok-api.js"></script>'+
     '\n<link rel="stylesheet" href="http://'+base+'api/styles/default/style.css" type="text/css">'+
-    '\n<link rel="stylesheet" href="http://'+base+'api/styles/style.css" type="text/css">'+
+    '\n<link rel="stylesheet" href="http://'+base+'api/styles/api.css" type="text/css">'+
     '\n<script>var config = '+this.serialize(this.getConfig(), true)+';\nfunction createPDOKKaart() {var api = new Pdok.Api(config);return api;}\n</script>';
     return head;
 }
