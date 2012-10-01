@@ -32,6 +32,28 @@ OpenLayers.Feature.Vector.style['temporary'].fillColor = 'red';
 OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 //OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
 OpenLayers.ImgPath = './img/';
+OpenLayers.Lang["nl"] = OpenLayers.Util.applyDefaults({
+    'unhandledRequest': "Het verzoek is niet afgehandeld met de volgende melding: ${statusText}",
+    'Permalink': "Permanente verwijzing",
+    'Overlays': "Kaartlagen",
+    'Base Layer': "Ondergrond",
+    'noFID': "Een optie die geen FID heeft kan niet bijgewerkt worden.",
+    'browserNotSupported': "Uw browser ondersteunt het weergeven van vectoren niet.\nMomenteel ondersteunde weergavemogelijkheden:\n${renderers}",
+    'minZoomLevelError': "De eigenschap minZoomLevel is alleen bedoeld voor gebruik lagen met die afstammen van FixedZoomLevels-lagen.\nDat deze WFS-laag minZoomLevel controleert, is een overblijfsel uit het verleden.\nWe kunnen deze controle echter niet verwijderen zonder op OL gebaseerde applicaties die hervan afhankelijk zijn stuk te maken.\nDaarom heeft deze functionaliteit de eigenschap \'deprecated\' gekregen - de minZoomLevel wordt verwijderd in versie 3.0.\nGebruik in plaats van deze functie de mogelijkheid om min/max voor resolutie in te stellen zoals op de volgende pagina wordt beschreven:\nhttp://trac.openlayers.org/wiki/SettingZoomLevels",
+    'commitSuccess': "WFS-transactie: succesvol ${response}",
+    'commitFailed': "WFS-transactie: mislukt ${response}",
+    'googleWarning': "De Google-Layer kon niet correct geladen worden.\x3cbr /\x3e\x3cbr /\x3e\nOm deze melding niet meer te krijgen, moet u een andere achtergrondkaart kiezen in de laagwisselaar in de rechterbovenhoek.\x3cbr /\x3e\x3cbr /\x3e\nDit komt waarschijnlijk doordat de bibliotheek ${layerLib} niet correct ingevoegd is.\x3cbr /\x3e\x3cbr /\x3e\nOntwikkelaars: \x3ca href=\'http://trac.openlayers.org/wiki/${layerLib}\' target=\'_blank\'\x3eklik hier\x3c/a\x3e om dit werkend te krijgen.",
+    'getLayerWarning': "De laag ${layerType} kon niet goed geladen worden.\x3cbr /\x3e\x3cbr /\x3e\nOm deze melding niet meer te krijgen, moet u een andere achtergrondkaart kiezen in de laagwisselaar in de rechterbovenhoek.\x3cbr /\x3e\x3cbr /\x3e\nDit komt waarschijnlijk doordat de bibliotheek ${layerLib} niet correct is ingevoegd.\x3cbr /\x3e\x3cbr /\x3e\nOntwikkelaars: \x3ca href=\'http://trac.openlayers.org/wiki/${layerLib}\' target=\'_blank\'\x3eklik hier\x3c/a\x3e om dit werkend te krijgen.",
+    'Scale = 1 : ${scaleDenom}': "Schaal = 1 : ${scaleDenom}",
+    'W': "W",
+    'E': "O",
+    'N': "N",
+    'S': "Z",
+    'reprojectDeprecated': "U gebruikt de optie \'reproject\' op de laag ${layerName}.\nDeze optie is vervallen: deze optie was ontwikkeld om gegevens over commerciële basiskaarten weer te geven, maar deze functionaliteit wordt nu bereikt door ondersteuning van Spherical Mercator.\nMeer informatie is beschikbaar op http://trac.openlayers.org/wiki/SphericalMercator.",
+    'methodDeprecated': "Deze methode is verouderd en wordt verwijderd in versie 3.0.\nGebruik ${newMethod}."
+});
+OpenLayers.Lang.setCode('nl'); 
+
 
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
 
@@ -157,7 +179,6 @@ Pdok.Api = function(config) {
     this.styles = null;
 
     this.FEATURESLAYER_NAME = "Markers";
-    this.MAXNUMBEROFFEATURES = 5;
     // this.features can come as KML string from config/params
     // after handling this, it contains an array of features
     this.features = [];
@@ -563,60 +584,6 @@ Pdok.Api.prototype.defaultStyles=[
     ]
 
 Pdok.Api.prototype.defaultLayers = {
-		AAN: {
-			layertype: 'WMTS',
-			name: 'AAN - Agrarisch Areaal Nederland (WMTS)',
-			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-			layer: 'aan',
-			style: null,
-			matrixSet: 'EPSG:28992',
-			visibility: true, 
-			isBaseLayer: false
-		},
-		ADRESSEN: {
-			layertype: 'WMS',
-			name: 'Adressen',
-			url: 'http://geodata.nationaalgeoregister.nl/inspireadressen/wms',
-			layers: 'inspireadressen',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		AHN25M: {
-			layertype: 'WMS',
-			name: 'AHN 25 meter',
-			url: 'http://geodata.nationaalgeoregister.nl/ahn25m/wms',
-			layers: 'ahn25m',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		BBG2008: {
-			layertype: 'WMS',
-			name: 'BBG 2008',
-			url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms',
-			layers: 'bbg2008',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		BESCHERMDENATUURMONUMENTEN:{
-			layertype: 'WMS',
-			name: 'Beschermde Natuurmonumenten',
-			url: 'http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms',
-			layers: 'beschermdenatuurmonumenten',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
         BRT: {
             layertype: 'WMTS',
             name: 'BRT Achtergrondkaart (wmts)',
@@ -628,214 +595,29 @@ Pdok.Api.prototype.defaultLayers = {
             isBaseLayer: true,
             attribution: '(c) OSM & Kadaster'
         },
-		CBS_KERNEN_NAMEN: {
-			layertype: 'WMS',
-			name: 'CBS Bevolkingskern namen (2008)',
-			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
-			layers: 'naamgeving_kernen_40k_plus,naamgeving_kernen_alles',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		CBS_KERNEN: {
-			layertype: 'WMS',
-			name: 'CBS Bevolkingskernen (2008)',
-			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
-			layers: 'cbsbevolkingskernen2008',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		CBS_GEMEENTEN: {
-			layertype: 'WMS',
-			name: 'CBS Gemeentegrenzen (2008)',
-			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
-			layers: 'gemeentegrens_generalisatie_2008',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		CBS_PROVINCIES: {
-			layertype: 'WMS',
-			name: 'CBS Provinciegrenzen (2008)',
-			url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
-			layers: 'provgrens_generalisatie_2008',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		GEMEENTEGRENZEN: {
-			layertype: 'WMS',
-			name: 'Gemeentegrenzen',
-			url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
-			layers: 'gemeenten_2012',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		GEMEENTEGRENZEN_LABEL: {
-			layertype: 'WMS',
-			name: 'Gemeentegrenzen met labels',
-			url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld',
-			layers: 'gemeenten_2012',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		NATURA2000: {
-			layertype: 'WMTS',
-			name: 'Natura 2000 (WMTS)',
-			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-			layer: 'natura2000',
-			style: null,
-			matrixSet: 'EPSG:28992',
-			visibility: true, 
-			isBaseLayer: false
-		},
-		NATIONALE_PARKEN: {
-			layertype: 'WMS',
-			name: 'Nationale parken',
-			url: 'http://geodata.nationaalgeoregister.nl/nationaleparken/wms',
-			layers: 'nationaleparken',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		NOK2011: {
-			layertype: 'WMTS',
-			name: 'NOK2011 (WMTS)',
-			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-			layer: 'nok2011',
-			style: null,
-			matrixSet: 'EPSG:28992',
-			visibility: true, 
-			isBaseLayer: false
-		},
-		NWB_SPOORWEGEN: {
-			layertype: 'WMS',
-			name: 'NWB Vaarwegen',
-			url: 'http://geodata.nationaalgeoregister.nl/nwbspoorwegen/wms',
-			layers: 'hectopunten,overgangen,oversteken,spoorvakken,treinstations',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		NWB_VAARWEGEN: {
-			layertype: 'WMS',
-			name: 'NWB Vaarwegen',
-			url: 'http://geodata.nationaalgeoregister.nl/nwbvaarwegen/wms',
-			layers: 'vaarwegvakken,kmmarkeringen',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		NWB_WEGEN: {
-			layertype: 'WMS',
-			name: 'NWB Wegen',
-			url: 'http://geodata.nationaalgeoregister.nl/nwbwegen/wms',
-			layers: 'wegvakken,hectopunten',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		TOP10NL: {
-			layertype: 'TMS',
-			name: 'TOP10 NL (TMS)',
-			url: 'http://geodata.nationaalgeoregister.nl/tms/',
-			layername: 'top10nl',
-			type:'png8',
-			visibility: true,
-			isBaseLayer: false,
-			attribution:'(c) Kadaster'
-		},
-		TOP10NL2: {
-			layertype: 'WMTS',
-			name: 'TOP10 NL Baselayer (WMTS)',
-			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-			layer: 'top10nl',
-			style: null,
-			matrixSet: 'EPSG:28992',
-			visibility: true, 
-			isBaseLayer: true,
-			attribution:'(c) Kadaster'
-		},
-		TOP250RASTER: {
-			layertype: 'WMTS',
-			name: 'TOP250 Raster (WMTS)',
-			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-			layer: 'top250raster',
-			style: null,
-			matrixSet: 'EPSG:28992',
-			visibility: true, 
-			isBaseLayer: false,
-			attribution:'(c) Kadaster'
-		},
-		TOP50RASTER: {
-			layertype: 'WMTS',
-			name: 'TOP50 Raster (WMTS)',
-			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-			layer: 'top50raster',
-			style: null,
-			matrixSet: 'EPSG:28992',
-			visibility: true, 
-			isBaseLayer: false,
-			attribution:'(c) Kadaster'
-		},
-		TOP50VECTOR: {
-			layertype: 'WMTS',
-			name: 'TOP50 Vector (WMTS)',
-			url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-			layer: 'top50vector',
-			style: null,
-			matrixSet: 'EPSG:28992',
-			visibility: true, 
-			isBaseLayer: false,
-			attribution:'(c) Kadaster'
-		},
-		WEGGEGEVENS_RIJBANEN: {
-			layertype: 'WMS',
-			name: 'Weggegevens - aantal rijbanen',
-			url: 'http://geodata.nationaalgeoregister.nl/weggeg/wms',
-			layers: 'weggegaantalrijbanen',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		},
-		WEGGEGEVENS_MAXSNELHEID: {
-			layertype: 'WMS',
-			name: 'Weggegevens - maximum snelheid',
-			url: 'http://geodata.nationaalgeoregister.nl/weggeg/wms',
-			layers: 'weggegmaximumsnelheden',
-			transparent: 'true',
-			format: 'image/png',
-			visibility: true,
-			isBaseLayer: false,
-			singleTile: true
-		}
+        CBS_GEMEENTEN: {
+            layertype: 'WMS',
+            name: 'CBS Gemeentegrenzen (2008)',
+            url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+            layers: 'gemeentegrens_generalisatie_2008',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+        },
+        CBS_PROVINCIES: {
+            layertype: 'WMS',
+            name: 'CBS Provinciegrenzen (2008)',
+            url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+            layers: 'provgrens_generalisatie_2008',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: false,
+            singleTile: true
+            }
     }
-
 
 /**
  * @private
@@ -1041,16 +823,6 @@ Pdok.Api.prototype.createOlMap = function() {
         this.selectControl.activate();
     }
 
-    for (var i = 1; i<=this.MAXNUMBEROFFEATURES; i++){
-        if(this['fgeom'+i]) {
-            var ft = this.createFeature(this['fgeom'+i], this['ftype'+i], this['fname'+i], this['fdesc'+i]);
-            this.features.push(ft);
-        }
-        else{
-            break;
-        }
-    }
-
     this.featuresLayer.addFeatures(this.features);
 
     // enable Locationtool IF this.locationtool is set via config
@@ -1131,10 +903,6 @@ Pdok.Api.prototype.getMapObject = function() {
 }
 
 
-// fgeom1  wkt
-// fname1  name or title for popup
-// fdesc1  description for popup
-// ftype1  styletype as defined for point/markers, lines or polygons (like mt1, pt3 etc)
 Pdok.Api.prototype.createFeature = function(wkt, typestyle, name, description){
     var wktFormat = new OpenLayers.Format.WKT();
     // OpenLayers.Util.getParameters() splits paramaters with comma's into an array
@@ -1790,6 +1558,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
             internalProjection: this.map.baseLayer.projection
         };
         format = new OpenLayers.Format.Text(options);
+        format.defaultStyle.externalGraphic = null;
         features = format.read(data);
         // default OpenLayers.Text format uses 'title' as 'name' attribute
         // we add a 'name' attribute here
@@ -1805,6 +1574,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     // add styling to features
     for (f in features){
         var feature = features[f];
+        //console.log(feature);
         if (feature.attributes['styletype']) {
             var styletype = feature.attributes['styletype'];
             // some formats (KML) return attr as objects instead of strings
@@ -1816,7 +1586,14 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
         else if (type=='KML' && this.kmlstyles){
             // ok a KML layer containing styles
         }
+        else if (type=='TXT' && feature.style.externalGraphic != undefined) {
+            //console.log('TXT feature WITH style:', feature.style);
+            // this is a TXT feature with some style information
+            // this is possible via the txturl paramater
+            // in combination with OpenLayers.Format.Txt
+        }
         else {
+            //console.log("feature WITHOUT style, adding some");
             if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Point'){
                 feature.style = this.styles['mt0'];
             }
@@ -2108,3 +1885,5 @@ Pdok.Api.prototype.setLayerSwitcherVisible = function(isVisible){
 		this.showlayerswitcher = false;
 	}
 }
+
+
