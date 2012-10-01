@@ -11,16 +11,31 @@
     <script src="http://pdokkaart.pdokloket.nl/api/javascripts/proj4js-compressed.js"></script>
 	<script src="http://pdokkaart.pdokloket.nl/api/javascripts/pdok-api.js"></script>
     <script>
+		OpenLayers.ImgPath="http://pdokkaart.pdokloket.nl/api/img/";
+		var configmap1 = {
+			"wmsurl":'http://gdsc.nlr.nl/wms/lufo2005',
+			"wmslayers":"lufo2005-1m"
+		};
+		var configmap2 = {
+			"wmsurl":'http://gdsc.nlr.nl/wms/dkln2006',
+			"wmslayers":"dkln2006-1m",
+			"div":"map2"
+		};
+
         function init() {
-            api = new Pdok.Api();
+            api = new Pdok.Api(configmap1);
             
-            api2 = new Pdok.Api({div:'map2'});
+            api2 = new Pdok.Api(configmap2);
         }
+        //ToDo:
+        // wijziging in de ene kaart wijzigt de andere kaart
     </script>
 
   </head>
     <body onload="init()">
     <div id="map" style="width:400px;height:400px;float:left;"></div>
-    <div id="map2" style="width:400px;height:400px;"></div>
+    <div id="map2" style="width:400px;height:400px;float:left;"></div><br/>
+    <div id="maptitle1" style="position:fixed;top:420px;width:400px;height:100px;float:left;text-align:center;">2005</div>
+    <div id="maptitle2" style="position:fixed;top:420px;left:400px;width:400px;height:100px;float:left;text-align: center">2006</div>
   </body>
 </html>
