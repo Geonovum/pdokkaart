@@ -179,7 +179,6 @@ Pdok.Api = function(config) {
     this.styles = null;
 
     this.FEATURESLAYER_NAME = "Markers";
-    this.MAXNUMBEROFFEATURES = 5;
     // this.features can come as KML string from config/params
     // after handling this, it contains an array of features
     this.features = [];
@@ -824,16 +823,6 @@ Pdok.Api.prototype.createOlMap = function() {
         this.selectControl.activate();
     }
 
-    for (var i = 1; i<=this.MAXNUMBEROFFEATURES; i++){
-        if(this['fgeom'+i]) {
-            var ft = this.createFeature(this['fgeom'+i], this['ftype'+i], this['fname'+i], this['fdesc'+i]);
-            this.features.push(ft);
-        }
-        else{
-            break;
-        }
-    }
-
     this.featuresLayer.addFeatures(this.features);
 
     // enable Locationtool IF this.locationtool is set via config
@@ -914,10 +903,6 @@ Pdok.Api.prototype.getMapObject = function() {
 }
 
 
-// fgeom1  wkt
-// fname1  name or title for popup
-// fdesc1  description for popup
-// ftype1  styletype as defined for point/markers, lines or polygons (like mt1, pt3 etc)
 Pdok.Api.prototype.createFeature = function(wkt, typestyle, name, description){
     var wktFormat = new OpenLayers.Format.WKT();
     // OpenLayers.Util.getParameters() splits paramaters with comma's into an array
