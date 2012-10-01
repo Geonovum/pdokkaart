@@ -1584,6 +1584,11 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
         else if (type=='KML' && this.kmlstyles){
             // ok a KML layer containing styles
         }
+        else if (type=='TXT'&& feature.style) {
+            // this is a TXT feature with some style information
+            // this is possible via the txturl paramater
+            // in combination with OpenLayers.Format.Txt
+        }
         else {
             if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Point'){
                 feature.style = this.styles['mt0'];
