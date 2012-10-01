@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>PDOK API</title>
+    <title>PDOK API - vergelijk twee kaartlagen</title>
 
     <link rel="stylesheet" href="http://pdokkaart.pdokloket.nl/api/styles/default/style.css" type="text/css">
 
@@ -26,9 +26,20 @@
             api = new Pdok.Api(configmap1);
             
             api2 = new Pdok.Api(configmap2);
+
+			// wijziging in de ene kaart wijzigt de andere kaart
+			api.map.events.register( "zoomend", api.map, map1Changed );
+			api2.map.events.register( "zoomend", api2.map, map2Changed );
+			api.map.events.register( "moveend", api.map, map1Changed );
+			api2.map.events.register( "moveend", api2.map, map2Changed );
         }
-        //ToDo:
-        // wijziging in de ene kaart wijzigt de andere kaart
+        
+		function map1Changed ( ) {
+		    api2.map.setCenter(api.map.getCenter(),api.map.getZoom());
+		} 
+		function map2Changed ( ) {
+		   api.map.setCenter(api2.map.getCenter(),api2.map.getZoom());
+		} 
     </script>
 
   </head>
