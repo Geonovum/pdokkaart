@@ -1,0 +1,114 @@
+html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+}
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+#map {
+    width: 100%;
+    height: 100%;
+}
+.olControlAttribution {
+    bottom: 3px!important;
+    /*background-color: #eee;*/
+}
+
+.olImageLoadError {
+  background-color: transparent; /* may likely be omitted */
+  opacity: 0.0;
+  filter: alpha(opacity=0); /* IE */
+  visibility: hidden;
+}
+
+ .olFramedCloudPopupContent {
+    padding: 5px;
+    overflow: auto;
+    font-size: 12px;
+    max-width:300px!important;
+ }
+
+.olControlLayerSwitcher {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    width: 24em;
+    font-weight: 400;
+    margin-top: 3px;
+    font-size:1.2em;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    font-size: smaller;
+    color: white;
+    background-color: transparent;
+}
+
+.olControlLayerSwitcher .layersDiv {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    background-color: rgb(39, 51, 151);
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+}
+
+.olControlLayerSwitcher .maximizeDiv,
+.olControlLayerSwitcher .minimizeDiv {
+    width: 18px;
+    height: 18px;
+    top: 5px;
+    right: 0;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+div.olControlZoom {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    #273397
+    background: rgb(39, 51, 151);
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    border-radius: 4px;
+    padding: 2px;
+}
+
+div.olControlZoom a {
+    display: block;
+    margin: 1px;
+    padding: 0;
+    color: white;
+    font-size: 18px;
+    font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    height: 22px;
+    width:22px;
+    line-height: 19px;
+    background: #273397; /* fallback for IE - IE6 requires background shorthand*/
+    filter: alpha(opacity=60);
+}
+
+div.olControlZoom a:hover {
+    background: rgb(39, 51, 151);
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+}
+
+@media only screen and (max-width: 600px) {
+    div.olControlZoom a:hover {
+        background: rgb(0,0,0);
+        opacity: 0.5;
+        filter: alpha(opacity=50);
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    }
+}

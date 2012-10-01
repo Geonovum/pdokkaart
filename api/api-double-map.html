@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>PDOK API</title>
+
+    <link rel="stylesheet" href="./styles/default/style.css" type="text/css">
+
+    <script src="./javascripts/OpenLayers.js"></script>
+    <script src="./javascripts/proj4js-compressed.js"></script>
+	<script src="./javascripts/pdok-api.js"></script>
+    <script>
+        function init() {
+            api = new Pdok.Api();
+            
+            api2 = new Pdok.Api({div:'map2'});
+        }
+    </script>
+
+  </head>
+    <body onload="init()">
+    <div id="map" style="width:400px;height:400px;float:left;"></div>
+    <div id="map2" style="width:400px;height:400px;"></div>
+  </body>
+</html>

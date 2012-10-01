@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<script src="http://pdokkaart.pdokloket.nl/js/jquery.js"></script>
+		<script src="http://pdokkaart.pdokloket.nl/api/javascripts/OpenLayers.js"></script>
+		<script src="http://pdokkaart.pdokloket.nl/api/javascripts/proj4js-compressed.js"></script>
+		<script src="http://pdokkaart.pdokloket.nl/api/javascripts/pdok-api.js"></script>
+		<link rel="stylesheet" href="http://pdokkaart.pdokloket.nl/api/styles/default/style.css" type="text/css">
+<link rel="stylesheet" href="http://pdokkaart.pdokloket.nl/api/styles/api.css" type="text/css">
+		<script>var config = {
+		"zoom":8,
+		"loc":['142500','470000'],
+		"pdoklayers":'BRT',
+		"locationtool":true,
+		"locationtoolstyle":'mt5',
+		"locationtoolxfield":'x',
+		"locationtoolyfield":'y',
+		"locationtoolzmin":8,
+		"locationtoolzmax":14
+		};
+		function createPDOKKaart() {
+			var api = new Pdok.Api(config);
+			return api;
+		}
+		OpenLayers.ImgPath="http://pdokkaart.pdokloket.nl/api/img/";
+		</script>
+	</head>
+	<body>
+		<form>
+			Klik in de kaart om een locatie op te slaan.<BR>
+			X-coordinaat in RD: <input id="x" name="x" type="text" /> , Y-coordinaat in RD: <input id="y" name="y" type="text" />
+		</form>
+		<div id="map"></div>
+		<script>
+			var api = createPDOKKaart();
+		</script>
+	</body>
+</html>
