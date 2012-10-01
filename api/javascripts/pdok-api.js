@@ -1558,6 +1558,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
             internalProjection: this.map.baseLayer.projection
         };
         format = new OpenLayers.Format.Text(options);
+        format.defaultStyle.externalGraphic = null;
         features = format.read(data);
         // default OpenLayers.Text format uses 'title' as 'name' attribute
         // we add a 'name' attribute here
@@ -1573,6 +1574,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     // add styling to features
     for (f in features){
         var feature = features[f];
+        //console.log(feature);
         if (feature.attributes['styletype']) {
             var styletype = feature.attributes['styletype'];
             // some formats (KML) return attr as objects instead of strings
@@ -1584,12 +1586,14 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
         else if (type=='KML' && this.kmlstyles){
             // ok a KML layer containing styles
         }
-        else if (type=='TXT'&& feature.style) {
+        else if (type=='TXT' && feature.style.externalGraphic != undefined) {
+            //console.log('TXT feature WITH style:', feature.style);
             // this is a TXT feature with some style information
             // this is possible via the txturl paramater
             // in combination with OpenLayers.Format.Txt
         }
         else {
+            //console.log("feature WITHOUT style, adding some");
             if (feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Point'){
                 feature.style = this.styles['mt0'];
             }
