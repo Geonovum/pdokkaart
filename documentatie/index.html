@@ -7,8 +7,11 @@
     <body>Hier komt documentatie over de API en het gebruik van de API...<br/>
     De documentatie maakt onderscheid tussen documentatie over de API en documentatie over het gebruik van de API<br/>
     <h2>De API</h2>
+    De PDOKKaart API is een manier waarop PDOK kaartmateriaal op een betrekkelijk eenvoudige wijze te gebruiken is in eigen websites. Hierbij is het enerszijds mogelijk via url-parameters een kaart te maken welke in een website is op te nemen. Anderszijds is het mogelijk de API op te nemen in een eigen HTML pagina en middels JavaScript de API te besturen en te gebruiken. Als derde mogelijkheid is de Wizard gemaakt waarmee een URL met parameters te maken is of een aanzet te maken is voor een eigen HTML pagina.
     - mogelijkheden<br/>
     - onmogelijkheden<br/>
+    	+ omdat JavaScript gebruikt wordt en er geen alternatief bestaat zonder JavaScript is het niet rijkswebrichtlijn compliant.
+    	+ vanwege in-browser veiligheidsrestricties is het niet mogelijk data welke op een externe server rechtstreeks te benaderen, om deze onmogelijkheid te omzeilen is een proxy script op de server gezet welke slechts bekende URL's accepteert (bijvoorbeeld maps.google.nl). Deze lijst met bekende URL's kan uitgebreidt worden. Wendt U hiervoor tot Geonovum.
     <br/>
     <h2>Gebruik van de API</h2>
     - uitleg over de verschillende mogelijkheden van URL parameters en JavaScript coding
