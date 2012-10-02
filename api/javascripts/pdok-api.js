@@ -1608,7 +1608,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     
     if (features.length==0) {
         // mmm, no featues
-        alert('Geen features aangemaakt. Is het formaat wel ok?\nRaadpleeg eventueel de help pagina\'s voor de juiste formaten.');
+        alert('Geen features aangemaakt. Is het formaat wel ok?\nU had gekozen voor het formaat: "'+type+'".\nRaadpleeg eventueel de help pagina\'s voor de juiste formaten.');
         return true;
     }
     this.featuresLayer.addFeatures(features);
@@ -1654,6 +1654,7 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
 
     if (type.toUpperCase() == "KML"){
         // kml
+        this.kmlurl = url;
     }
     else if(type.toUpperCase() == "TXT"){
         // tab separated txt file (in EPSG:28992)
@@ -1666,6 +1667,7 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
         //
         // lat  lon title   description
         // 150000   350000    foo omschrijving foo
+        this.txturl = url;
     }
     else{
         alert('addFeaturesFromUrl aanroep met een niet ondersteund type: '+type);
@@ -1701,6 +1703,7 @@ Pdok.Api.prototype.createIframeTags = function(){
         //'<br /><small>PDOK Kaart: <a href="'+this.createMapLink()+'" style="color:#0000FF;text-align:left">Grotere kaart weergeven</a></small>';
     return iframeTags;
 }
+
 Pdok.Api.prototype.createObjectTags = function(){
     // map div size
     var mapSize = this.map.getSize();
@@ -1713,6 +1716,7 @@ Pdok.Api.prototype.createObjectTags = function(){
         //'<br /><small>PDOK Kaart: <a href="'+this.createMapLink()+'" style="color:#0000FF;text-align:left">Grotere kaart weergeven</a></small>';
     return objectTags;
 }
+
 Pdok.Api.prototype.createMapLink = function(){
 	pathname = window.location.pathname;
     if (pathname.toLowerCase().search("index.html") > -1){
@@ -1721,6 +1725,7 @@ Pdok.Api.prototype.createMapLink = function(){
     base = window.location.host + pathname;
     return 'http://'+base+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
 }
+
 Pdok.Api.prototype.createMailLink = function(){
 	pathname = window.location.pathname;
     if (pathname.toLowerCase().search("index.html") > -1){
@@ -1736,6 +1741,7 @@ Pdok.Api.prototype.createHtmlBody = function(){
                '</script>';
     return html;
 }
+
 Pdok.Api.prototype.createHtmlHead = function(){
     var pathname = window.location.pathname;
     if (pathname.toLowerCase().search("index.html") > -1){
@@ -1754,6 +1760,7 @@ Pdok.Api.prototype.createHtmlHead = function(){
     '\nfunction createPDOKKaart() {var api = new Pdok.Api(config);return api;}\n</script>';
     return head;
 }
+
 Pdok.Api.prototype.getConfig = function() {
     var config = {};
 
@@ -1808,16 +1815,33 @@ Pdok.Api.prototype.getConfig = function() {
         config.locationtoolzmin = this.locationtoolzmin;
         config.locationtoolzmax = this.locationtoolzmax;
     }
-    // features
+    // kmlurl OR txturl OR features
+    // at this moment NOT a combination of these two
+    // all features from KML or TXT are added to 'featureslayer'
+    // so if the user added even more markers/features
+    // we should try to make a diff, to know which features to add in the features-kmlstring-parameter
+    // but if the user has made changes by hand in wizard, it is getting even more comples
+    // so for now: there is either a kmlurl and/or a txturl OR only features as parameter
     if (this.featuresLayer.features.length>0) {
-        var kmlformat = new OpenLayers.Format.KML({
-            foldersDesc: null,
-            foldersName: null,
-            placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
-            internalProjection: this.map.baseLayer.projection,
-            externalProjection: new OpenLayers.Projection("EPSG:4326")
-        });
-        config.features=kmlformat.write(this.featuresLayer.features);
+        var doFeatures = true;
+        if (this.kmlurl) {
+            config.kmlurl = this.kmlurl;
+            doFeatures = false;
+        }
+        if (this.txturl) {
+            config.txturl = this.txturl;
+            doFeatures = false;
+        }
+        if (doFeatures) {
+            var kmlformat = new OpenLayers.Format.KML({
+                foldersDesc: null,
+                foldersName: null,
+                placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
+                internalProjection: this.map.baseLayer.projection,
+                externalProjection: new OpenLayers.Projection("EPSG:4326")
+            });
+            config.features=kmlformat.write(this.featuresLayer.features);
+        }
     }
     return config;
 }
