@@ -59,6 +59,13 @@ Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.387
 
 Pdok = {};
 
+// it is possible to override the markerdefinitions with a request paramater markerdef
+// if so, add a js script line and let browser load it
+if( OpenLayers.Util.getParameters()['markerdef'] != null ){
+    Pdok.markerdef = OpenLayers.Util.getParameters()['markerdef'];
+    document.write('<script type="text/javascript" src="'+Pdok.markerdef+'"></script>');
+}
+
 Pdok.Api = function(config) {
 
     /**
@@ -221,6 +228,8 @@ Pdok.Api = function(config) {
     this.locationtoolzmin = '0';
     this.locationtoolzmax = '30';
 
+    this.markerdef = null;
+
 
     /**
      * @private
@@ -236,6 +245,7 @@ Pdok.Api = function(config) {
     if (config) {
         OpenLayers.Util.extend( this, config );
     }
+
     this.createOlMap();
 
 
@@ -1814,6 +1824,10 @@ Pdok.Api.prototype.getConfig = function() {
         }
         config.locationtoolzmin = this.locationtoolzmin;
         config.locationtoolzmax = this.locationtoolzmax;
+    }
+    // markerdef
+    if(this.markerdef) {
+        config.markerdef = this.markerdef;
     }
     // kmlurl OR txturl OR features
     // at this moment NOT a combination of these two
