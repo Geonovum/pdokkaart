@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="../css/rijkshuisstijl/print.css" type="text/css" media="print" />
     <link rel="stylesheet" href="../css/rijkshuisstijl/toevoeging.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="../css/rijkshuisstijl/iconids.css" type="text/css" media="screen" />
+    <!-- To show the default markers these js-files are needed -->
+    <script type="text/javascript" src="../api/js/OpenLayers.js"></script>
+    <script type="text/javascript" src="../api/js/proj4js-compressed.js"></script>
+	<script type="text/javascript" src="../api/js/pdok-api.js"></script>
     <style>
         #content{
             padding:20px;
@@ -88,8 +92,42 @@ this.locationtoolyfield = 'y'
 this.locationtoolwktfield = 'wkt'
 this.locationtoolzmin = '0'
 this.locationtoolzmax = '30'
+<br/>
+De defaultmarkers<br/>
+<div id="divpdokmarkertypes"></div>
+<script>
+	var o = OpenLayers.Util.getParameters();
+	api = new Pdok.Api(o);
+    document.getElementById("divpdokmarkertypes").innerHTML='<div id="styleselector"></div>';
+    var apiStyles = api.styles;
+    pointStylesHtml = '';
+    polygonStylesHtml = '';
+    lineStylesHtml = '';
 
-De defaultmarkers (punten, lijnen en vlakken)
+    for (styleId in apiStyles){
+        // for now only point markers!
+        if (styleId[0]=='m'){
+            var style = apiStyles[styleId];
+            //pointStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div><img src="'+style.externalGraphic+'"><div class="listyletext">'+styleId+'&nbsp;-&nbsp;'+style.name+'</div></div></li>';
+            pointStylesHtml += '\n<dt><img src="'+style.externalGraphic+'"></dt><dd>'+styleId+'&nbsp;-&nbsp;'+style.name+'</dd><br/>';
+        }
+        else if (styleId[0]=='l'){
+            var style = apiStyles[styleId];
+            //lineStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+'; border-top: '+style.strokeWidth+'px '+style.strokeColor+' solid;border-left: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
+            lineStylesHtml += '\n<dt><div style="opacity:'+style.strokeOpacity+'; border-top: '+style.strokeWidth+'px '+style.strokeColor+' solid;border-left: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span></div></dt><dd><div class="listyletext">&nbsp;'+styleId+'&nbsp;-&nbsp;'+style.name+'</div></dd><br/>';
+        }
+        else if (styleId[0]=='p'){
+            var style = apiStyles[styleId];
+            //polygonStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span style="opacity:'+style.fillOpacity+';background-color:'+style.fillColor+';">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="listyletext"> '+style.name+'</div></li>';
+            polygonStylesHtml += '\n<dt><div style="opacity:'+style.strokeOpacity+';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span style="opacity:'+style.fillOpacity+';background-color:'+style.fillColor+';">&nbsp;&nbsp;&nbsp;&nbsp;</span></div></dt><dd><div class="listyletext">&nbsp;'+styleId+'&nbsp;-&nbsp;'+style.name+'</div></dd><br/>';
+        }
+    }
+    var pointSeparator = '<h3><div class="stylehead">Puntsymbolen<div></h3><dl>';
+    var lineSeparator = '<h3><div class="stylehead">Lijnstijlen<div></h3><dl>';
+    var polygonSeparator = '<h3><div class="stylehead">Vlakstijlen<div></h3><dl>';
+    document.getElementById("styleselector").innerHTML = document.getElementById("styleselector").innerHTML + '<UL>'+ pointSeparator+pointStylesHtml + "</dl>" + lineSeparator+lineStylesHtml  + "</dl>" +  polygonSeparator+polygonStylesHtml + "</dl>";
+</script>
+<br/>
 De default kaartlagen in de API
 De uitgebreide lijst met kaartlagen via JS-bestand
 
