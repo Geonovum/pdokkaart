@@ -1,21 +1,116 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html><head>
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=ISO Latin 1">
 	<title>PDOKKaart documentatie</title>
     <head>
+    <link rel="stylesheet" href="../css/rijkshuisstijl/screen.css" type="text/css" media="screen" />
+<!--[if IE 8]><link rel="stylesheet" href="../css/rijkshuisstijl/ie/ie8.css" type="text/css" media="screen" /><![endif]-->
+<!--[if lte IE 7]><link rel="stylesheet" href="../css/rijkshuisstijl/ie/ie7.css" type="text/css" media="screen" /><![endif]-->
+<!--[if lte IE 6]><link rel="stylesheet" href="../css/rijkshuisstijl/ie/ie6.css" type="text/css" media="screen" /><![endif]-->
+    <link rel="stylesheet" href="../css/rijkshuisstijl/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../css/rijkshuisstijl/toevoeging.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/rijkshuisstijl/iconids.css" type="text/css" media="screen" />
+    <style>
+        #content{
+            padding:20px;
+        }
+
+        .header .branding img {
+            float: left;
+            margin-bottom: 15px;
+            margin-left: 24px;
+            margin-right: 0;
+            margin-top: 26px;
+        }
+    </style>
     </head>
-    <body>Hier komt documentatie over de API en het gebruik van de API...<br/>
-    De documentatie maakt onderscheid tussen documentatie over de API en documentatie over het gebruik van de API<br/>
-    <h2>De API</h2>
-    De PDOKKaart API is een manier waarop PDOK kaartmateriaal op een betrekkelijk eenvoudige wijze te gebruiken is in eigen websites. Hierbij is het enerszijds mogelijk via url-parameters een kaart te maken welke in een website is op te nemen. Anderszijds is het mogelijk de API op te nemen in een eigen HTML pagina en middels JavaScript de API te besturen en te gebruiken. Als derde mogelijkheid is de Wizard gemaakt waarmee een URL met parameters te maken is of een aanzet te maken is voor een eigen HTML pagina.
-    - mogelijkheden<br/>
-    - onmogelijkheden<br/>
-    	+ omdat JavaScript gebruikt wordt en er geen alternatief bestaat zonder JavaScript is het niet rijkswebrichtlijn compliant.
+    <body>
+    <div class="container equalize page orange default">
+      <div class="header">
+        <span></span>
+        <div class="branding">
+          <img alt="PDOK" src="../img/PDOK-logo.png" />
+          <h1 class="invisible">PDOK Kaart Wizard</h1>
+        </div>
+        <div class="nav_bar">
+          <ul class="nav_main">
+            <li>
+              <a href="http://drupal.pdokloket.nl">Home</a>
+            </li>
+            <li>
+              <a href="../"€>PDOK Wizard</a>
+            </li>
+            <li>
+              <a href="../help.html"€>Help</a>
+            </li>
+            <li class="sel ">
+              <a class="active" href="#">Documentatie</a>
+            </li>
+            <li>
+              <a href="../examples">Voorbeelden</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="content_wrapper1">
+        <div class="content_wrapper2">
+          <div id="content">
+De documentatie maakt onderscheid tussen documentatie over de API zelf en documentatie over het gebruik van de API<br/>
+<h2>De API</h2>
+De PDOKKaart API is een manier waarop PDOK kaartmateriaal op een betrekkelijk eenvoudige wijze te gebruiken is in eigen websites, eventueel aangevuld met eigen of andere data. Hierbij is het enerzijds mogelijk via url-parameters een kaart te maken welke in een website is op te nemen als link of iFrame. Anderzijds is het mogelijk de API op te nemen in een eigen HTML pagina en deze middels JavaScript calls te besturen en te gebruiken. De `PDOKKaart Wizard` is een voorbeeld van de tweede mogelijkheid.<br/>
+De API.
+De API bevat voor alle mogelijkheden standaard instellingen welke op verschillende manieren te overschrijven zijn.
+
+OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
+OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
+OpenLayers.Feature.Vector.style['default'].pointRadius = 5;
+OpenLayers.Feature.Vector.style['default'].fillOpacity = 0.8;
+// small point otherwise we see circle
+OpenLayers.Feature.Vector.style['temporary'].pointRadius = 0;
+OpenLayers.Feature.Vector.style['temporary'].strokeColor = 'red';
+OpenLayers.Feature.Vector.style['temporary'].fillColor = 'red';
+OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
+OpenLayers.ImgPath = './img/';
+OpenLayers.Lang["nl"] = OpenLayers.Util.applyDefaults({
+OpenLayers.Lang.setCode('nl'); 
+Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
+showPopup = true
+hoverPopup = false
+tnstype = png
+kmlstyles = false
+showlayerswitcher = true
+div = 'map'
+FEATURESLAYER_NAME = "Markers"
+locationtoolstyle = 'mt0'
+this.locationtoolxfield = 'x'
+this.locationtoolyfield = 'y'
+this.locationtoolwktfield = 'wkt'
+this.locationtoolzmin = '0'
+this.locationtoolzmax = '30'
+
+De defaultmarkers (punten, lijnen en vlakken)
+De default kaartlagen in de API
+De uitgebreide lijst met kaartlagen via JS-bestand
+
+
+
+- mogelijkheden<br/>
+- onmogelijkheden<br/>
+	+ omdat JavaScript gebruikt wordt en er geen alternatief bestaat zonder JavaScript is het niet rijkswebrichtlijn compliant.
     	+ vanwege in-browser veiligheidsrestricties is het niet mogelijk data welke op een externe server rechtstreeks te benaderen, om deze onmogelijkheid te omzeilen is een proxy script op de server gezet welke slechts bekende URL's accepteert (bijvoorbeeld maps.google.nl). Deze lijst met bekende URL's kan uitgebreidt worden. Wendt U hiervoor tot Geonovum.
-    <br/>
-    <h2>Gebruik van de API</h2>
-    - uitleg over de verschillende mogelijkheden van URL parameters en JavaScript coding
-    - via de URL
-    - vanuit een HTML pagina
+<br/>
+<h2>Gebruik van de API</h2>
+- uitleg over de verschillende mogelijkheden van URL parameters en JavaScript coding
+- via de URL
+- vanuit een HTML pagina
+
+tmsurl & tmslayer
+http://localhost/~giscc/pdokkaart/index.html?tmsurl=http://geodata.sohosted-vps.nl/geoserver/gwc/service/tms/1.0.0/gdsc@rd@jpeg&tmslayer=gsdc
+
+          </div>
+        </div>
+      </div>
+    </div>
     </body>
 </html>
