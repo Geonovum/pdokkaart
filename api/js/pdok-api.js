@@ -28,7 +28,7 @@ OpenLayers.Feature.Vector.style['temporary'].pointRadius = 0;
 OpenLayers.Feature.Vector.style['temporary'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['temporary'].fillColor = 'red';
 
-// The proxyhost is needed for the geocoder
+// The proxyhost is needed for the geocoder, wfs and txt- or kmlurl
 OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 //OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
 OpenLayers.ImgPath = './img/';
@@ -905,7 +905,7 @@ Pdok.Api.prototype.getMapObject = function() {
 
 Pdok.Api.prototype.createFeature = function(wkt, typestyle, name, description){
     var wktFormat = new OpenLayers.Format.WKT();
-    // OpenLayers.Util.getParameters() splits paramaters with comma's into an array
+    // OpenLayers.Util.getParameters() cuts paramaters with comma's into an array
     // because a LINESTRING wkt contains comma we have to concat them back
     if (wkt instanceof Array) {
         wkt = wkt.join();
