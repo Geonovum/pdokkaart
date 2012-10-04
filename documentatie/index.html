@@ -14,6 +14,7 @@
     <script type="text/javascript" src="../api/js/OpenLayers.js"></script>
     <script type="text/javascript" src="../api/js/proj4js-compressed.js"></script>
 	<script type="text/javascript" src="../api/js/pdok-api.js"></script>
+	<!-- Extra layers which can be used to override the default layers -->
     <style>
         #content{
             padding:20px;
@@ -122,14 +123,37 @@ De defaultmarkers<br/>
             polygonStylesHtml += '\n<dt><div style="opacity:'+style.strokeOpacity+';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><span style="opacity:'+style.fillOpacity+';background-color:'+style.fillColor+';">&nbsp;&nbsp;&nbsp;&nbsp;</span></div></dt><dd><div class="listyletext">&nbsp;'+styleId+'&nbsp;-&nbsp;'+style.name+'</div></dd><br/>';
         }
     }
-    var pointSeparator = '<h3><div class="stylehead">Puntsymbolen<div></h3><dl>';
-    var lineSeparator = '<h3><div class="stylehead">Lijnstijlen<div></h3><dl>';
-    var polygonSeparator = '<h3><div class="stylehead">Vlakstijlen<div></h3><dl>';
+    var pointSeparator = '<h3><div class="stylehead">Puntsymbolen:<div></h3><dl>';
+    var lineSeparator = '<h3><div class="stylehead">Lijnstijlen:<div></h3><dl>';
+    var polygonSeparator = '<h3><div class="stylehead">Vlakstijlen:<div></h3><dl>';
     document.getElementById("styleselector").innerHTML = document.getElementById("styleselector").innerHTML + '<UL>'+ pointSeparator+pointStylesHtml + "</dl>" + lineSeparator+lineStylesHtml  + "</dl>" +  polygonSeparator+polygonStylesHtml + "</dl>";
 </script>
 <br/>
-De default kaartlagen in de API
-De uitgebreide lijst met kaartlagen via JS-bestand
+<h3><div class="stylehead">De default kaartlagen in de API:</div></h3>
+<div id="divpdoklayers"></div>
+<script>
+	var o = OpenLayers.Util.getParameters();
+	api = new Pdok.Api(o);
+    var html2 = '<dl>';
+    for (layer in api.defaultLayers){
+        html2 = html2 + '<dt>' + layer + "</dt><dd>&nbsp;-&nbsp;" + api.defaultLayers[layer].name + '</dd>'
+    }
+    html2 += '</dl>';
+    document.getElementById("divpdoklayers").innerHTML=html2;
+</script>
+De uitgebreide lijst met kaartlagen via JS-bestand<br/>
+<script type="text/javascript" src="../api/js/pdok-layers.js"></script>
+<div id="divextendedpdoklayers"></div>
+<script>
+	var o = OpenLayers.Util.getParameters();
+	api = new Pdok.Api(o);
+    var html2 = '<dl>';
+    for (layer in api.defaultLayers){
+        html2 = html2 + '<dt>' + layer + "</dt><dd>&nbsp;-&nbsp;" + api.defaultLayers[layer].name + '</dd>'
+    }
+    html2 += '</dl>';
+    document.getElementById("divextendedpdoklayers").innerHTML=html2;
+</script>
 
 
 
@@ -140,6 +164,11 @@ De uitgebreide lijst met kaartlagen via JS-bestand
 <br/>
 <h2>Gebruik van de API</h2>
 - uitleg over de verschillende mogelijkheden van URL parameters en JavaScript coding
+--> WGS84 omzetten naar RD:
+api.reprojectWGS84toRD(lat,lon) --> pointRD(x,y)
+--> toevoegen van een marker op de kaart:
+api.addFeaturesFromString("point\ttitle\tdescription\n450000,150000\tMiddelpunt\tDit is ongeveer het middelpunt van Nederland\n","TXT")
+----> Let op, de laatste regel moet ook met een return afgesloten worden!
 - via de URL
 - vanuit een HTML pagina
 
