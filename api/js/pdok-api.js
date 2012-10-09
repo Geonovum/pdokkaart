@@ -1284,7 +1284,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     };
     if (type.toUpperCase() == 'KML') {
         format = new OpenLayers.Format.KML(options);
-        features = format.read(data);
+        features = format.read(data.split("</description>")[0].replace(/\n/g," ") + "</description>" + data.split("</description>")[1]);
     }
     else if(type.toUpperCase() == "TXT"){
         // TXT files will default to epsg:28992 / RD coordinates
