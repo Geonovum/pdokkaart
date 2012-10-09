@@ -74,7 +74,7 @@ if( OpenLayers.Util.getParameters()['markersdef'] != null){
 }
 else {
     // we use the markersdef from the api
-    Pdok.markersdef = Pdok.createBaseUri()+'api/javascripts/pdok-markers.js';
+    Pdok.markersdef = Pdok.createBaseUri()+'api/js/pdok-markers.js';
 }
 // inject a script include for the markersdef, being either an external or the api included one
 document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
@@ -1462,9 +1462,9 @@ Pdok.Api.prototype.createHtmlHead = function(){
     if (this.markersdef) {
         stylesAndLayers += '\n<script src="'+this.markersdef+'"></script>';
     }
-    var head = '<script src="'+base+'api/javascripts/OpenLayers.js"></script>'+
-    '\n<script src="'+base+'api/javascripts/proj4js-compressed.js"></script>'+
-    '\n<script src="'+base+'api/javascripts/pdok-api.js"></script>'+
+    var head = '<script src="'+base+'api/js/OpenLayers.js"></script>'+
+    '\n<script src="'+base+'api/js/proj4js-compressed.js"></script>'+
+    '\n<script src="'+base+'api/js/pdok-api.js"></script>'+
     stylesAndLayers +
     '\n<link rel="stylesheet" href="'+base+'api/styles/default/style.css" type="text/css">'+
     '\n<link rel="stylesheet" href="'+base+'api/styles/api.css" type="text/css">'+
