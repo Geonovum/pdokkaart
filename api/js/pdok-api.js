@@ -19,6 +19,19 @@
  *  >
  */
 
+
+Pdok = {};
+
+// The apiurl is the base url for api.js, markertypes etc
+//Pdok.ApiUrl = 'http://pdokkaart.pdokloket.nl/api';
+Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
+
+// The proxyhost is needed for the geocoder
+OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
+OpenLayers.ImgPath = './img/';
+
+
 OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
 OpenLayers.Feature.Vector.style['default'].pointRadius = 5;
@@ -28,10 +41,6 @@ OpenLayers.Feature.Vector.style['temporary'].pointRadius = 0;
 OpenLayers.Feature.Vector.style['temporary'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['temporary'].fillColor = 'red';
 
-// The proxyhost is needed for the geocoder
-OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
-OpenLayers.ImgPath = './img/';
 OpenLayers.Lang["nl"] = OpenLayers.Util.applyDefaults({
     'unhandledRequest': "Het verzoek is niet afgehandeld met de volgende melding: ${statusText}",
     'Permalink': "Permanente verwijzing",
@@ -57,17 +66,16 @@ OpenLayers.Lang.setCode('nl');
 
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
 
-Pdok = {};
-
 Pdok.createBaseUri = function(){
     var pathname = window.location.pathname;
-    if (pathname.toLowerCase().search("index.html") > -1){
-    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
+    var path = pathname;
+    if (pathname.search(/\.html|\.php|.jsp/)>0){
+        pathparts = pathname.substr(0,pathname.search(/\.html|\.php|.jsp/)).split('/');
+        path = pathparts.slice(0, pathparts.length-1);
+        path = path.join('/');
+        path +='/';
     }
-    else if (pathname.toLowerCase().search("api/api.html") > -1){
-    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("api/api.html"));
-    }
-    base = window.location.protocol+'//'+window.location.host + pathname;
+    base = window.location.protocol+'//'+window.location.host + path;
     return base;
 }
 
@@ -77,7 +85,7 @@ if( OpenLayers.Util.getParameters()['markersdef'] != null){
 }
 else {
     // we use the markersdef from the api
-    Pdok.markersdef = Pdok.createBaseUri()+'api/js/pdok-markers.js';
+    Pdok.markersdef = Pdok.ApiUrl+'/js/pdok-markers.js';
 }
 // inject a script include for the markersdef, being either an external or the api included one
 document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
@@ -88,7 +96,7 @@ if( OpenLayers.Util.getParameters()['layersdef'] != null){
 }
 else {
     // we use the layersdef from the api
-    Pdok.layersdef = Pdok.createBaseUri()+'api/js/pdok-layers.js';
+    Pdok.layersdef = Pdok.ApiUrl+'/js/pdok-layers.js';
 }
 // inject a script include for the layersdef, being either an external or the api included one
 document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script>');
@@ -658,7 +666,7 @@ Pdok.Api.prototype.createStyles = function(){
         {
             id: 'mt0',
             name: 'Standaard marker',
-            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/star-3.png",
+            externalGraphic: Pdok.ApiUrl+"/markertypes/star-3.png",
             graphicHeight: 37,
             graphicWidth: 32,
             graphicYOffset: -37
@@ -686,7 +694,7 @@ Pdok.Api.prototype.createStyles = function(){
 
     var pdokDefaultStyle = OpenLayers.Util.applyDefaults(
     {
-        externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/default.png",
+        externalGraphic: Pdok.ApiUrl+"/markertypes/default.png",
         graphicHeight: 37,
         graphicWidth: 32,
         graphicYOffset: -37,
@@ -1484,7 +1492,7 @@ Pdok.Api.prototype.createHtmlHead = function(){
     '\n<link rel="stylesheet" href="'+base+'api/styles/default/style.css" type="text/css">'+
     '\n<link rel="stylesheet" href="'+base+'api/styles/api.css" type="text/css">'+
     '\n<script>'+
-    '\nOpenLayers.ImgPath="http://pdokkaart.pdokloket.nl/api/img/";'+
+    '\nOpenLayers.ImgPath="'+Pdok.ApiUrl+'/img/";'+
     '\nvar config = '+this.serialize(this.getConfig(), true)+';\n'+
     '\nfunction createPDOKKaart() {var api = new Pdok.Api(config);return api;}\n</script>';
     return head;
