@@ -11,12 +11,12 @@
  *  <iframe width="400" height="300" frameborder="0" 
  *    scrolling="no" marginheight="0" marginwidth="0" 
  *    src="api/api.html?mloc=136260,456394&loc=136260,456394&zl=8"
- *    style="border: 0">
+ *  >
  * OR
  *  <iframe width="400" height="300" frameborder="0" 
  *    scrolling="no" marginheight="0" marginwidth="0" 
  *    src="api/api.html?mloc=136260,456394&mt=1&bbox=130000,450000,150000,470000"
- *    style="border: 0">
+ *  >
  */
 
 OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
@@ -1428,26 +1428,14 @@ Pdok.Api.prototype.addTxt = function(url){
 Pdok.Api.prototype.createIframeTags = function(){
     // map div size
     var mapSize = this.map.getSize();
-    // <iframe width='650' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></iframe><br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
-    /* 
-        <iframe width='650' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></iframe>
-        <br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
-    */
     var iframeTags = '<iframe width="'+mapSize.w+'" height="'+mapSize.h+'" frameborder="0" scrolling=no marginheight="0" marginwidth="0" src="'+this.createMapLink()+'" title="PDOK Kaart"></iframe>';
-        //'<br /><small>PDOK Kaart: <a href="'+this.createMapLink()+'" style="color:#0000FF;text-align:left">Grotere kaart weergeven</a></small>';
     return iframeTags;
 }
 
 Pdok.Api.prototype.createObjectTags = function(){
     // map div size
     var mapSize = this.map.getSize();
-    // <object width='650' height='450' codetype='text/html' data='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></object><br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
-    /* 
-        <object width='650' height='450' codetype='text/html' data='http://nieuwsinkaart.nl/pdok/kaart/api/api.html?&loc=155000,463000&zl=2' title='PDOK Kaart'></object>
-        <br /><small>PDOK Kaart: <a href='http://nieuwsinkaart.nl/pdok/kaart/?&loc=155000,463000&zl=2' style='color:#0000FF;text-align:left'>Grotere kaart weergeven</a></small>
-    */
     var objectTags = '<object width="'+mapSize.w+'" height="'+mapSize.h+'" codetype="text/html" data="'+this.createMapLink()+'" title="PDOK Kaart"></object>';
-        //'<br /><small>PDOK Kaart: <a href="'+this.createMapLink()+'" style="color:#0000FF;text-align:left">Grotere kaart weergeven</a></small>';
     return objectTags;
 }
 
