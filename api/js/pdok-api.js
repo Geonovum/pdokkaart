@@ -82,10 +82,18 @@ else {
 // inject a script include for the markersdef, being either an external or the api included one
 document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
 
-
+// it is possible to override the layerdefinitions with a request paramater layersdef
+if( OpenLayers.Util.getParameters()['layersdef'] != null){
+    Pdok.layersdef = OpenLayers.Util.getParameters()['layersdef'];
+}
+else {
+    // we use the layersdef from the api
+    Pdok.layersdef = Pdok.createBaseUri()+'api/js/pdok-layers.js';
+}
+// inject a script include for the layersdef, being either an external or the api included one
+document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script>');
 
 Pdok.Api = function(config) {
-
 
     /**
      * Reference to the zoomlevel object
@@ -248,10 +256,20 @@ Pdok.Api = function(config) {
     this.locationtoolzmax = '30';
 
     this.markersdef = null;
+    // an external markersdef is temporarily parked in Pdok.markersdef
     if (Pdok.markersdef) {
-        this.markersdef = Pdok.markersdef;
+        this.markersdef = ''+Pdok.markersdef;
     }
 
+    // an external layersdef is temporarily parked in Pdok.layersdef
+    this.layersdef = null;
+    if (Pdok.layersdef) {
+        this.layersdef = ''+Pdok.layersdef;
+    }
+
+    this.defaultLayers = OpenLayers.Util.applyDefaults(
+        this.defaultPdokLayers, this.defaultLayers);
+    //this.defaultLayers = this.defaultPdokLayers;
 
     /**
      * @private
@@ -274,7 +292,7 @@ Pdok.Api = function(config) {
 
 Pdok.Api.prototype.defaultStyles=[];
 
-Pdok.Api.prototype.defaultLayers = {
+Pdok.Api.prototype.defaultPdokLayers = {
         BRT: {
             layertype: 'WMTS',
             name: 'BRT Achtergrondkaart (wmts)',
@@ -1465,6 +1483,9 @@ Pdok.Api.prototype.createHtmlHead = function(){
     if (this.markersdef) {
         stylesAndLayers += '\n<script src="'+this.markersdef+'"></script>';
     }
+    if (this.layersdef) {
+        stylesAndLayers += '\n<script src="'+this.layersdef+'"></script>';
+    }
     var head = '<script src="'+base+'api/js/OpenLayers.js"></script>'+
     '\n<script src="'+base+'api/js/proj4js-compressed.js"></script>'+
     '\n<script src="'+base+'api/js/pdok-api.js"></script>'+
@@ -1535,6 +1556,10 @@ Pdok.Api.prototype.getConfig = function() {
     // markersdef
     if(this.markersdef) {
         config.markersdef = this.markersdef;
+    }
+    // layersdef
+    if(this.layersdef) {
+        config.layersdef = this.layersdef;
     }
     // kmlurl OR txturl OR features
     // at this moment NOT a combination of these two
