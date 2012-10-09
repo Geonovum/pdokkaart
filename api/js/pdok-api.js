@@ -1177,7 +1177,7 @@ Pdok.Api.prototype.enableLocationTool = function(){
                 zoom = apiObject.locationtoolzmin;
             }
             else{
-                msg += "\nKlik op OK om "+(mapiObject.ap.getZoom()-apiObject.locationtoolzmax)+" zoomnivo's uit te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
+                msg += "\nKlik op OK om "+(apiObject.map.getZoom()-apiObject.locationtoolzmax)+" zoomnivo's uit te zoomen \n(of Annuleren/Cancel om het zelf te doen)";
                 zoom = apiObject.locationtoolzmax;
 
             }
