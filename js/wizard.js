@@ -130,9 +130,6 @@ function createOnClickEvents() {
     $('#addwmslayerbutton').click( function() { addWmsLayer();return false; } );
     $('#addwmtslayerbutton').click( function() { addWmtsLayer();return false; } );
     $('#deletelayers').click( function() { api.deleteLayers();return false; } );
-    $('#').click( function() {  } );
-
-
 }
 
 // function to automatically creat a hint text based on a title attribute
@@ -170,7 +167,6 @@ function autoPopulateInputs() {
 }
 
 function createSearchLogic() {
-
     $('#geocodeerresult').delegate('li a','click', function (evt) {
         var x = $("span.x", this).text();
         var y = $("span.y", this).text();
@@ -185,7 +181,6 @@ function createSearchLogic() {
         }
         return false;
     });
-
 }
 
 function createMarkersLogic() {
@@ -250,13 +245,13 @@ function createMarkersLogic() {
         api.addFeaturesFromString($('#copypaste').val()+'\n', format.toUpperCase(), true);
         return false;
     });
-    // Select input field contents
+    // automatic selection of the inputs on select
+    /*
     $('.row_right input:text').click(function(){ this.select(); });
     $('.row_right textarea').click(function(){ this.select(); });
-    // Select input field contents
     $("#urltext").click(function(){ this.select(); });
     $("#copypaste").click(function(){ this.select(); });
-
+    */
 }
 
 function createLocationToolLogic() {
@@ -450,7 +445,6 @@ function createFieldnameInput(radiobutton) {
         html = '';
     };
     $('#divveldnaam').html(html);
-
 };
 
 
@@ -494,7 +488,6 @@ function featureModifiedCallback(domevent){
 }
 
 function deleteFeature() {
-
     var ok = confirm ("Deze marker verwijderen?")
     if (ok) {
         markers.removeFeatures([activeFeature]);

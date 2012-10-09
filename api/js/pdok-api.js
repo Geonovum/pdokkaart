@@ -1647,12 +1647,10 @@ Pdok.Api.prototype.serialize = function(obj, stringQuotes){
 
 //Function to toggle visibility of the OpenLayers.LayerSwitcher
 Pdok.Api.prototype.setLayerSwitcherVisible = function(isVisible){
-	if (isVisible){
-		this.showlayerswitcher = true;
-	}
-	else{
-		this.showlayerswitcher = false;
-	}
+    if (isVisible){
+        this.showlayerswitcher = true;
+    }
+    else{
+        this.showlayerswitcher = false;
+    }
 }
-
-
