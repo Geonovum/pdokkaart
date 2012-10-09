@@ -8,15 +8,7 @@
 Pdok.Api.prototype.defaultStyles=[
         // all point marker styles will use mt0 as default
         // so you only have to define the props that are different from mt0
-        // we will use OpenLayers.Util.applyDefault to use this one as default
-        {
-            id: 'mt0',
-            name: 'Standaard marker',
-            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/star-3.png",
-            graphicHeight: 37,
-            graphicWidth: 32,
-            graphicYOffset: -37
-        },
+        // mt0, pt0, lt0 are defined in pdok-api.js, so defining it here will override that one
         {
             id: 'mt1',
             name: 'Informatie blauw',
@@ -235,14 +227,6 @@ Pdok.Api.prototype.defaultStyles=[
 
         },
         {
-            id: 'pt0', 
-            fillColor: '#273397',
-            fillOpacity: 0.3, 
-            strokeColor: '#273397', 
-            strokeWidth: 2, 
-            name: 'default vlak'
-        },
-        {
             id:'pt1', 
             fillColor:'red', 
             strokeColor:'black', 
@@ -287,13 +271,6 @@ Pdok.Api.prototype.defaultStyles=[
             strokeWidth:5, 
             fillOpacity:1, 
             name:'geel blauw'
-        },
-        {
-            id: 'lt0', 
-            strokeColor: '#273397', 
-            strokeWidth: 5,
-            strokeOpacity: 0.5, 
-            name: 'default lijn'
         },
         {
             id:'lt1', 

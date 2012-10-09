@@ -59,12 +59,27 @@ Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.387
 
 Pdok = {};
 
+Pdok.createBaseUri = function(){
+    var pathname = window.location.pathname;
+    if (pathname.toLowerCase().search("index.html") > -1){
+    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
+    }
+    base = window.location.protocol+'//'+window.location.host + pathname;
+    return base;
+}
+
 // it is possible to override the markerdefinitions with a request paramater markersdef
-// if so, add a js script line and let browser load it
 if( OpenLayers.Util.getParameters()['markersdef'] != null){
     Pdok.markersdef = OpenLayers.Util.getParameters()['markersdef'];
-    document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
 }
+else {
+    // we use the markersdef from the api
+    Pdok.markersdef = Pdok.createBaseUri()+'api/javascripts/pdok-markers.js';
+}
+// inject a script include for the markersdef, being either an external or the api included one
+document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
+
+
 
 Pdok.Api = function(config) {
 
@@ -230,6 +245,9 @@ Pdok.Api = function(config) {
     this.locationtoolzmax = '30';
 
     this.markersdef = null;
+    if (Pdok.markersdef) {
+        this.markersdef = Pdok.markersdef;
+    }
 
 
     /**
@@ -608,28 +626,54 @@ Pdok.Api.prototype.createStyles = function(){
     var olDefault = OpenLayers.Feature.Vector.style['default'];
 
     this.styles = {};
- 
-    // create a default Point style
+
+    // create a default styles for point: mt0, line: lt0 and polygon pt0
+    //.these HAVE to be here because there is code depending on the availability of those
+    // you can off course override this
     var pdokDefaultPoint = OpenLayers.Util.applyDefaults(
         {
-            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/default.png",
+            id: 'mt0',
+            name: 'Standaard marker',
+            externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/star-3.png",
             graphicHeight: 37,
             graphicWidth: 32,
-            graphicYOffset: -37,
-            pointRadius: 1
+            graphicYOffset: -37
         }, {});
-
     this.styles.mt0 = pdokDefaultPoint;
+    var pdokDefaultLine = OpenLayers.Util.applyDefaults(
+        {
+            id: 'lt0', 
+            strokeColor: '#273397', 
+            strokeWidth: 5,
+            strokeOpacity: 0.5, 
+            name: 'Standaard lijn'
+        }, {});
+    this.styles.lt0 = pdokDefaultLine;
+    var pdokDefaultPolygon = OpenLayers.Util.applyDefaults(
+        {
+            id: 'pt0', 
+            fillColor: '#273397',
+            fillOpacity: 0.3, 
+            strokeColor: '#273397', 
+            strokeWidth: 2, 
+            name: 'Standaard vlak'
+        }, {});
+    this.styles.pt0 = pdokDefaultPolygon;
 
-    // if the the user added their own styles, they should create a variable 'customStyles'
+    var pdokDefaultStyle = OpenLayers.Util.applyDefaults(
+    {
+        externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/default.png",
+        graphicHeight: 37,
+        graphicWidth: 32,
+        graphicYOffset: -37,
+        pointRadius: 1
+    }, {});
+
+    // if the the user added their own styles, they should create a variable 'defaultStyles'
     // hereby overriding the inbuild defaultStyles
-    // TODO ?? or only extending ?????
-    if (this.customStyles) {
-        this.defaultStyles = customStyles;
-    }
     for (var i = 0; i<this.defaultStyles.length; i++){
         var style = this.defaultStyles[i];
-        this.styles[style.id] = OpenLayers.Util.applyDefaults( style, pdokDefaultPoint);
+        this.styles[style.id] = OpenLayers.Util.applyDefaults( style, pdokDefaultStyle);
     }
 }
 
@@ -1275,7 +1319,6 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
             }
         }
     }
-    
     if (features.length==0) {
         // mmm, no featues
         alert('Geen features aangemaakt. Is het formaat wel ok?\nU had gekozen voor het formaat: "'+type+'".\nRaadpleeg eventueel de help pagina\'s voor de juiste formaten.');
@@ -1413,23 +1456,18 @@ Pdok.Api.prototype.createHtmlBody = function(){
 }
 
 Pdok.Api.prototype.createHtmlHead = function(){
-    var pathname = window.location.pathname;
-    if (pathname.toLowerCase().search("index.html") > -1){
-    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
-    }
-    // TODO make this a baseuri config?
-    base = window.location.host + pathname;
+    var base = Pdok.createBaseUri();
     // styles and layers definitions
     var stylesAndLayers = '';
     if (this.markersdef) {
         stylesAndLayers += '\n<script src="'+this.markersdef+'"></script>';
     }
-    var head = '<script src="http://'+base+'api/javascripts/OpenLayers.js"></script>'+
-    '\n<script src="http://'+base+'api/javascripts/proj4js-compressed.js"></script>'+
-    '\n<script src="http://'+base+'api/javascripts/pdok-api.js"></script>'+
+    var head = '<script src="'+base+'api/javascripts/OpenLayers.js"></script>'+
+    '\n<script src="'+base+'api/javascripts/proj4js-compressed.js"></script>'+
+    '\n<script src="'+base+'api/javascripts/pdok-api.js"></script>'+
     stylesAndLayers +
-    '\n<link rel="stylesheet" href="http://'+base+'api/styles/default/style.css" type="text/css">'+
-    '\n<link rel="stylesheet" href="http://'+base+'api/styles/api.css" type="text/css">'+
+    '\n<link rel="stylesheet" href="'+base+'api/styles/default/style.css" type="text/css">'+
+    '\n<link rel="stylesheet" href="'+base+'api/styles/api.css" type="text/css">'+
     '\n<script>'+
     '\nOpenLayers.ImgPath="http://pdokkaart.pdokloket.nl/api/img/";'+
     '\nvar config = '+this.serialize(this.getConfig(), true)+';\n'+
