@@ -64,6 +64,9 @@ Pdok.createBaseUri = function(){
     if (pathname.toLowerCase().search("index.html") > -1){
     	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
     }
+    else if (pathname.toLowerCase().search("api/api.html") > -1){
+    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("api/api.html"));
+    }
     base = window.location.protocol+'//'+window.location.host + pathname;
     return base;
 }

@@ -30,30 +30,23 @@
     </style>
     
     <script src="./OpenLayers.js"></script>
-    <script src="./js/proj4js-compressed.js"></script>
+    <script src="./javascripts/proj4js-compressed.js"></script>
 	<script src="lusc-api.js"></script>
+	<script src="http://luuks.github.com/API/data/hoofdsteden.js"></script>
     <script>
     var api = null;
     function init() {
-         api = new Lusc.Api({
-		    loc: [153955,462696],
-		    layer: 'AAN',
-		    mloc: [153955,462696],
-		    zl: 5,
-		    titel: '<CENTER>Geonovum</CENTER>',
-		    tekst: '<CENTER>Barchman Wuytierslaan 10<BR>3818, LH Amersfoort<BR><img src="http://geonovum.nl/sites/default/files/geonovum_favicon.ico" width="36" height="36"><BR><a href="http://www.geonovum.nl" target="_blank"><img src="http://www.nationaalgeoregister.nl/geonetwork/images/logos/geonovum.jpg" width="40" height="21"></a></CENTER>',
-		    externalGraphic: 'http://www.nationaalgeoregister.nl/geonetwork/images/logos/geonovum.jpg',
-		    pointRadius: 20
-		});
+         api = new Lusc.Api({});
 		//Beschikbare kaartlagen: alert(api.getLayers());
 		//Het pad naar de markertypes: alert(api.getMarkerPath());
 		//Beschikbare markertypes: alert(api.getMarkers());
 		//Pan naar een andere locatie: api.setLocation([100000,400000]);
 		//Zoom naar een ander zoomnivo: api.setZoomLevel(3);
 		//Op basis van de locatie van de client inzoomen op de kaart
-		navigator.geolocation.getCurrentPosition(showLocation);
-		api.addMarker([81314.835,455082.304],1,"Binnenhof","'s Gravenhage");
-		api.addLayers(["NATIONALE_PARKEN"]);
+		//navigator.geolocation.getCurrentPosition(showLocation);
+		api.setLocation([183023,579910]);
+		api.setZoomLevel(8);
+		api.addGeometries(featurecollection);
 	}
 	function showLocation(position){
 		var lat = position.coords.latitude;
@@ -61,9 +54,9 @@
 		pointRD = api.reprojectWGS84toRD(lat,lon);
 		X = pointRD.lon;
 		Y = pointRD.lat;
+		//alert("X:" + parseInt(X));
+		//alert("Y:"+ parseInt(Y));
 		api.setLocation([parseInt(X),parseInt(Y)]);
-		//Parameters voor addMarker functie: mloc,mt,titel,tekst,externalGraphic,pointRadius
-		api.addMarker([parseInt(X),parseInt(Y)],2,"Uw locatie","X: " + parseInt(X) + "<BR>Y: " + parseInt(Y));
 	}
 
     </script>

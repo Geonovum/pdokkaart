@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+	<script src="http://localhost/~giscc/pdokkaart/api/js/OpenLayers.js"></script>
+	<script src="http://localhost/~giscc/pdokkaart/api/js/proj4js-compressed.js"></script>
+	<script src="http://localhost/~giscc/pdokkaart/api/js/pdok-api.js"></script>
+	<script src="http://localhost/~giscc/pdokkaart/api/js/pdok-markers.js"></script>
+	<link rel="stylesheet" href="http://localhost/~giscc/pdokkaart/api/styles/default/style.css" type="text/css">
+	<link rel="stylesheet" href="http://localhost/~giscc/pdokkaart/api/styles/api.css" type="text/css">
+	<script>
+		OpenLayers.ImgPath="http://pdokkaart.pdokloket.nl/api/img/";
+		var config = {
+		"zoom":2,
+		"loc":'142500, 470000',
+		"pdoklayers":'BRT',
+		"markersdef":'http://localhost/~giscc/pdokkaart/api/js/pdok-markers.js',
+		"features":'<kml xmlns="http://earth.google.com/kml/2.0"><Folder><Placemark><name>1 2 3</name><description>1&lt;br/&gt;2&lt;br/&gt;3&lt;br/&gt;</description><Point><coordinates>4.860480767859334,53.08271472329556</coordinates></Point><ExtendedData><Data name="styletype"><value>mt0</value></Data></ExtendedData></Placemark></Folder></kml>'
+		};
+		
+		function createPDOKKaart() {var api = new Pdok.Api(config);return api;}
+		</script>
+		</head>
+		<body>
+	
+	<div id="map"></div>
+	<script>var  api = createPDOKKaart();
+	</script>
+	</body>
+</html>

@@ -1,8 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html><head>
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-        <title>PDOKKaart voorbeelden</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO Latin 1">
+	<title>PDOKKaart documentatie</title>
+    <head>
+		<link rel="stylesheet" href="../css/rijkshuisstijl/screen.css" type="text/css" media="screen" />
+	<!--[if IE 8]><link rel="stylesheet" href="../css/rijkshuisstijl/ie/ie8.css" type="text/css" media="screen" /><![endif]-->
+	<!--[if lte IE 7]><link rel="stylesheet" href="../css/rijkshuisstijl/ie/ie7.css" type="text/css" media="screen" /><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" href="../css/rijkshuisstijl/ie/ie6.css" type="text/css" media="screen" /><![endif]-->
+		<link rel="stylesheet" href="../css/rijkshuisstijl/print.css" type="text/css" media="print" />
+		<link rel="stylesheet" href="../css/rijkshuisstijl/toevoeging.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../css/rijkshuisstijl/iconids.css" type="text/css" media="screen" />
+		<!-- To show the default markers these js-files are needed -->
+		<script type="text/javascript" src="../api/js/OpenLayers.js"></script>
+		<script type="text/javascript" src="../api/js/proj4js-compressed.js"></script>
+		<script type="text/javascript" src="../api/js/pdok-api.js"></script>
+		<!-- Extra layers which can be used to override the default layers -->
         <style type="text/css">
+			#content{
+				padding:20px;
+			}
+			.header .branding img {
+				float: left;
+				margin-bottom: 15px;
+				margin-left: 24px;
+				margin-right: 0;
+				margin-top: 26px;
+			}
             html, body {
                 height: 100%;
                 overflow: hidden;
@@ -60,22 +83,31 @@
                 color: grey;
                 display: none;
             }
-            #toc {
-                width: 30%;
-                height: 100%;
+            #exwin {
+                position: absolute;
+                top: 0;
+                left: 30%;
+                width: 70%;
+                height: 400px;
+                border: none;
+                border-left: 1px solid #cccccc;
+                margin: 0;
             }
-            #filter {
-                color: #FFFFFF;
-                top: 0px;
-                height: 50px;
-                padding: 10px 1em 10px 1em;
-                background-color: #273397;
+            #toc {
+                position: absolute;
+                top: 0;
+                left: 0%;
+                width: 30%;
+                height: 400px;
+                border: none;
+                border-left: 1px solid #cccccc;
+                margin: 0;
             }
             #examples {
                 border-top: 1px solid #cccccc;
                 position: absolute;
-                width: 30%;
-                top: 70px;
+                width: 100%;
+                top: 0;
                 bottom: 0px;
                 overflow: auto;
                 list-style: none;
@@ -92,34 +124,48 @@
                 margin: 0;
                 padding: 0;
             }
-            #exwin {
-                position: absolute;
-                top: 0;
-                left: 30%;
-                width: 70%;
-                height: 100%;
-                border: none;
-                border-left: 1px solid #cccccc;
-                margin: 0;
-            }
-        </style>
+		</style>
         <script type="text/javascript">
             var template, target;
-
             var timerId;
-            
             window.onload = function() {
                 target = document.getElementById("examples");
                 document.getElementById("exwin").src = "../api/api.html";
             };
         </script>
-    </head><body>
+    </head>
+    <body>
+    <div class="container equalize page orange default">
+      <div class="header">
+        <span></span>
+        <div class="branding">
+          <img alt="PDOK" src="../img/PDOK-logo.png" />
+          <h1 class="invisible">PDOK Kaart</h1>
+        </div>
+        <div class="nav_bar">
+          <ul class="nav_main">
+            <li>
+              <a href="http://drupal.pdokloket.nl">Home</a>
+            </li>
+            <li>
+              <a href="../"€>PDOK Wizard</a>
+            </li>
+            <li>
+              <a href="../help.html"€>Help</a>
+            </li>
+            <li>
+              <a href="../documentatie/">Documentatie</a>
+            </li>
+            <li class="sel ">
+              <a class="active" href="#">Voorbeelden</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="content_wrapper1">
+        <div class="content_wrapper2">
+          <div id="content">
         <div id="toc">
-            <div id="filter">
-                <p>
-                    <label for="keywords"><H1></>PDOKKaart API</H1></label><br>
-                </p>
-            </div>
             <div id="examples"><ul>
                 <li class="ex_container">
                     <a href="../api/api.html" target="exwin">
@@ -305,7 +351,8 @@
                         <div class="ex_description">Demonstreert het meervoudig gebruik van de api op 1 pagina. Een wijziging in de ene kaart leidt tot een wijziging in de andere kaart.</div>
                     </a>
                 </li>
-            </ul></div>
+            </ul>
+            </div>
         </div>
         <iframe src="" id="exwin" name="exwin" frameborder="0"></iframe>        
         <div style="display: none;">
@@ -328,4 +375,9 @@
                 </li>
             </ul>
         </div>
-    </body></html>
+          </div>
+        </div>
+      </div>
+    </div>
+    </body>
+</html>

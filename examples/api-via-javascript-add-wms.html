@@ -3,11 +3,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Lusc API via JavaScript - Toevoegen TextLayer met locaties, popup en marker</title>
+    <title>Lusc API via JavaScript - Lagen (voorgedefinieerd plus WMS) en marker toevoegen via API parameters, inzoomen naar locatie via JavaScript functies</title>
     
     <link rel="stylesheet" href="./styles/default/style.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
-    <link rel="stylesheet" href="api-style.css" type="text/css">
     
     <style type="text/css">
       html {
@@ -28,24 +27,21 @@
           bottom: 3px!important;
           background-color: #eee;
       }
-    .olImageLoadError {
-		background-color: transparent; /* may likely be omitted */
-		opacity: 0.0;
-		filter: alpha(opacity=0); /* IE */
-		visibility: hidden;
-	}
     </style>
     
     <script src="./OpenLayers.js"></script>
-    <script src="./js/proj4js-compressed.js"></script>
+    <script src="./javascripts/proj4js-compressed.js"></script>
 	<script src="lusc-api.js"></script>
     <script>
     var api = null;
     function init() {
          api = new Lusc.Api({
-			txturl: "./data/textfile.txt",
-			layer: "natura2000",
-			ls: true
+		    layer: 'NOK2011',
+		    wmsurl: 'http://geodata.nationaalgeoregister.nl/vin/wms',
+			wmslayers: 'bevaarbaarheid',
+			mloc: [155792,576594],
+			titel: 'Bevaarbaarheid',
+			tekst: 'Legenda:<BR><img src="http://geodata.nationaalgeoregister.nl/vin/wms?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=bevaarbaarheid&FORMAT=image%2Fgif">'
 		});
 		//Beschikbare kaartlagen: alert(api.getLayers());
 		//Het pad naar de markertypes: alert(api.getMarkerPath());
@@ -54,7 +50,7 @@
 		//Zoom naar een ander zoomnivo: api.setZoomLevel(3);
 		//Op basis van de locatie van de client inzoomen op de kaart
 		//navigator.geolocation.getCurrentPosition(showLocation);
-		api.setLocation([150000,455000]);
+		api.setLocation([155792,576594]);
 		api.setZoomLevel(7)
 	}
 	function showLocation(position){

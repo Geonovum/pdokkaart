@@ -443,7 +443,7 @@ function saveAttributes() {
     if ($('#description').val()==descDefault || $('#description').val()=='') {
         $('#description').val('&nbsp;');  // we default to &nbsp;
     }
-    activeFeature.attributes.description = $('#description').val();
+    activeFeature.attributes.description = $('#description').val().replace(/\n/g,"<br/>");
 
     for (var f in api.featuresLayer.selectedFeatures) {
         // attributes dialog will be closed now:

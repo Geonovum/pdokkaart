@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Lusc API via JavaScript - TMS toevoegen via JavaScript functie addTMS()</title>
+    <title>Lusc API via JavaScript - WMS toevoegen via JavaScript functie addWMS()</title>
     
     <link rel="stylesheet" href="./styles/default/style.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
@@ -30,7 +30,7 @@
     </style>
     
     <script src="./OpenLayers.js"></script>
-    <script src="./js/proj4js-compressed.js"></script>
+    <script src="./javascripts/proj4js-compressed.js"></script>
 	<script src="lusc-api.js"></script>
     <script>
 	    var api = null;
@@ -43,9 +43,9 @@
 			//Zoom naar een ander zoomnivo: api.setZoomLevel(3);
 			//Op basis van de locatie van de client inzoomen op de kaart
 			//navigator.geolocation.getCurrentPosition(showLocation);
-			api.setLocation([102277,498895]);
+			api.setLocation([116667,477208]);
 			api.setZoomLevel(8)
-			api.addTMS("http://geodata.nationaalgeoregister.nl/tms/","top10nl","png8")
+			api.addWMS("http://qgiscloud.com/luuk/westwijk_qgiscloud/wms","westwijk_qgiscloud")
 		}
     </script>
     
