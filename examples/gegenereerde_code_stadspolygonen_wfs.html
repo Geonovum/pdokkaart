@@ -3,12 +3,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
-		<script src="http://pdokkaart.pdokloket.nl/js/jquery.js"></script>
-		<script src="http://pdokkaart.pdokloket.nl/api/javascripts/OpenLayers.js"></script>
-		<script src="http://pdokkaart.pdokloket.nl/api/javascripts/proj4js-compressed.js"></script>
-		<script src="http://pdokkaart.pdokloket.nl/api/javascripts/pdok-api.js"></script>
-		<link rel="stylesheet" href="http://pdokkaart.pdokloket.nl/api/styles/default/style.css" type="text/css">
-<link rel="stylesheet" href="http://pdokkaart.pdokloket.nl/api/styles/api.css" type="text/css">
+		<script src="../js/jquery.js"></script>
+		<script src="../api/javascripts/OpenLayers.js"></script>
+		<script src="../api/javascripts/proj4js-compressed.js"></script>
+		<script src="../api/javascripts/pdok-api.js"></script>
+		<link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
+<link rel="stylesheet" href="../api/styles/api.css" type="text/css">
 		<script>
 		var config = {
 			"zoom":7,
@@ -19,7 +19,7 @@
 			var api = new Pdok.Api(config);
 			return api;
 		}		
-		OpenLayers.ImgPath="http://pdokkaart.pdokloket.nl/api/img/";
+		OpenLayers.ImgPath="../api/img/";
 		</script>
 	</head>
 	<body>
