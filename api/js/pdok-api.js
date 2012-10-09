@@ -29,8 +29,8 @@ OpenLayers.Feature.Vector.style['temporary'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['temporary'].fillColor = 'red';
 
 // The proxyhost is needed for the geocoder
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
-OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
+OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
 OpenLayers.ImgPath = './img/';
 OpenLayers.Lang["nl"] = OpenLayers.Util.applyDefaults({
     'unhandledRequest': "Het verzoek is niet afgehandeld met de volgende melding: ${statusText}",
