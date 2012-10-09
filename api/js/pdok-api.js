@@ -1118,10 +1118,11 @@ Pdok.Api.prototype.setLocationToolProps = function(styletype, zmin, zmax, xorwkt
         // default to x y field from api defaults
         this.locationtoolwktfield = null; // NO wkt
     }
-    if(zmin){
+    // be carefull not to use if(zmin) or if(zmax), they can be 0 (which solves to false)
+    if(zmin != undefined){
         this.locationtoolzmin = zmin;
     }
-    if(zmax){
+    if(zmax != undefined){
         this.locationtoolzmax = zmax;
     }
     return true;
