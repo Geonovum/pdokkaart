@@ -657,7 +657,7 @@ Pdok.Api.prototype.createOlMap = function() {
         maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
         theme: null,
 		resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76,
-					26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42],
+					26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21],
         units: 'm',
         projection: new OpenLayers.Projection("EPSG:28992"),
         div: this.div
