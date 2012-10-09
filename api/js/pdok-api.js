@@ -465,6 +465,9 @@ Pdok.Api.prototype.createOlMap = function() {
         olMap.zoomToExtent(OpenLayers.Bounds.fromArray(this.bbox).transform(olMap.displayProjection, olMap.getProjectionObject()));
     }
     else if (this.zoom != null && this.loc != null) {
+        if (typeof this.loc == 'string') {
+            this.loc = this.loc.split(',');
+        }
         olMap.setCenter (new OpenLayers.LonLat(parseInt(this.loc[0]), parseInt(this.loc[1])), parseInt(this.zoom));
     } else {
         //olMap.zoomToMaxExtent();
