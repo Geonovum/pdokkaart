@@ -95,6 +95,7 @@ $(document).ready(function() {
     pdok_api_map_resize(550,440);
     api.map.zoomToExtent([-15000,300000,300000,640000], true);
 
+    createOnClickEvents();
     createSearchLogic();
     createStyleSelector();
     createEditAttributes();
@@ -111,6 +112,28 @@ $(document).ready(function() {
     api.map.events.register("moveend", this, createApiLinksAndCode );
 });
 
+function createOnClickEvents() {
+    $('#opties').click( function(){MeerMinderOpties(); return false;} );
+    $('#closedrawlocation').click( function(){$('#geocodeerresult').fadeOut('fast');} );
+    $('#closedrawlocationhref').click( function(){return false;} );
+    $('#searchlocationbutton').click( function(){searchLocationChanged();return false;} );
+    $('#goto1').click( function() {return goTo(1); } );
+    $('#goto2').click( function() {return goTo(2); } );
+    $('#goto3').click( function() {return goTo(3); } );
+    $('#goto4').click( function() {return goTo(4); } );
+    $('#goto5').click( function() {createApiLinksAndCode();return goTo(5); } );
+    $('#mapsize1').click( function() { pdok_api_map_resize(300,250) } );
+    $('#mapsize2').click( function() { pdok_api_map_resize(400,350) } );
+    $('#mapsize3').click( function() { pdok_api_map_resize(550,440) } );
+    $('#maplayerswitcher').click( function() { setLayerSwitcherVisible(maplayerswitcher.checked); } );
+    $('#addpdoklayerbutton').click( function() { addPdokLayer();return false; } );
+    $('#addwmslayerbutton').click( function() { addWmsLayer();return false; } );
+    $('#addwmtslayerbutton').click( function() { addWmtsLayer();return false; } );
+    $('#deletelayers').click( function() { api.deleteLayers();return false; } );
+    $('#').click( function() {  } );
+
+
+}
 
 // function to automatically creat a hint text based on a title attribute
 function autoPopulateInputs() {

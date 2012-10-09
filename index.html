@@ -57,21 +57,25 @@
         <div class="content_wrapper2">
           <div id="content">
             <div id="map"> </div>
-            <div id="geocodeerresult" class="popInWindow"><span id="closedrawlocation" onclick="$('#geocodeerresult').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="api/styles/default/img/close.gif" alt="Sluiten" title="Sluiten" /></a></span>
+            <div id="geocodeerresult" class="popInWindow">
+                <span id="closedrawlocation" class="closeWindow">
+                <a id="closedrawlocationhref" href="#" >
+                    <img src="api/styles/default/img/close.gif" alt="Sluiten" title="Sluiten" />
+                </a></span>
                                 Hier komen de resultaten van de geocodeerservice
                             </div>
             <div id="search" class="stepwrapper">
             <form action="#" id="searchForm" name="searchForm" onsubmit="searchLocationChanged();return false;">
                 Zoek een locatie:
                 <input id="searchLocation" type="text" value="" name="searchLocation" class="autopopulate default" title="adres, postcode of plaatsnaam" />
-                <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
+                <button type="submit" id="searchlocbutton" class="filterbutton">
                     Zoek</button>
             </form>
             </div>
 <!-- Step 1 - Your map -->
             <div id="step1" class="stepwrapper active">
               <h2>
-                <a onclick="return goTo(1);">Stap 1: De kaart</a>
+                <a id="goto1" >Stap 1: De kaart</a>
                 <span class="help">
                   <a href="help.html#help1" target="help">Help</a>
                 </span>
@@ -80,19 +84,20 @@
                 <div class="row">
                   <p>Selecteer een kaartgrootte:</p>
                   <div class="row">
-                    <input type="radio" name="mapsize" id="mapsize1" value="small" onclick="pdok_api_map_resize(300,250)" />
+                    <input type="radio" name="mapsize" id="mapsize1" value="small" />
                     <label for="mapsize1"> Klein (300x250 pixels)</label>
                   </div>
                   <div class="row">
-                    <input type="radio" name="mapsize" id="mapsize2" value="medium" onclick="pdok_api_map_resize(400,350)" checked="checked" />
+                    <input type="radio" name="mapsize" id="mapsize2" value="medium" checked="checked" />
                     <label for="mapsize2"> Middel (400x350 pixels)</label>
                   </div>
                   <div class="row">
-                    <input type="radio" name="mapsize" id="mapsize3" value="large" onclick="pdok_api_map_resize(550,440)" checked="checked" />
+                    <input type="radio" name="mapsize" id="mapsize3" value="large" checked="checked" />
                     <label for="mapsize3"> Groot (550x440 pixels)</label>
                   </div>
                   <div class="row">
-                  <input type="checkbox" name="maplayerswitcher" id="maplayerswitcher" onclick="setLayerSwitcherVisible(maplayerswitcher.checked);" checked="checked" /><label for="maplayerswitcher"> Toon knop kaartlagen</label>
+                  <input type="checkbox" name="maplayerswitcher" id="maplayerswitcher" checked="checked" />
+                  <label for="maplayerswitcher"> Toon knop kaartlagen</label>
                   </div>
                 </div>
               </form>
@@ -100,7 +105,7 @@
 <!-- Step 2 - Add markers -->
             <div id="step2" class="stepwrapper">
               <h2>
-                <a onclick="return goTo(2);">Stap 2: Markers</a>
+                <a id="goto2">Stap 2: Markers</a>
                 <span class="help">
                   <a href="help.html#help2" target="help">Help</a>
                 </span>
@@ -149,10 +154,11 @@
                     <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
                     <label><input type="radio" name="txttype" value="kml" class="lefting" />KML</label>
                     <label><input type="radio" checked="checked" name="txttype" value="txt" class="lefting" />TXT</label>
-                    <textarea id="copypaste" class="autopopulate default"rows="10" cols="10" title="TXT voorbeeld:
+                    <!--<textarea id="copypaste" class="autopopulate default" rows="10" cols="10" title="TXT voorbeeld:
 # LET OP: eerst Y dan X (latlon!!)
 point title   description
-517000,17960   naam    en omschrijving"></textarea>
+517000,17960   naam    en omschrijving"></textarea>-->
+                    <textarea id="copypaste" class="autopopulate default" rows="10" cols="10" title=""></textarea>
                     <button id="getfeaturesfromtxt" class="filterbutton">Opslaan</button>
                   </div>
                 </div>
@@ -161,17 +167,19 @@ point title   description
 <!-- Step 4  optie -->
             <div id="step3" class="stepwrapper">
               <h2>
-                <a href="#" onclick="return goTo(3);">Optie:  Extra kaartlaag toevoegen</a>
+                <a href="#" id="goto3">Optie:  Extra kaartlaag toevoegen</a>
                 <span class="help">
                   <a href="help.html#help3" target="help">Help</a>
                 </span>
               </h2>
-              <form action="#"><h4>Voeg een standaard kaartlaag toe</h4><div id="divpdoklayerselector"> </div><button class="filterbutton" onclick="addPdokLayer();return false;">Voeg toe aan kaart</button><h4>Voeg een WMS kaartlaag toe</h4>
+              <form action="#">
+                    <h4>Voeg een standaard kaartlaag toe</h4><div id="divpdoklayerselector"> </div>
+                    <button id="addpdoklayerbutton" class="filterbutton" >Voeg toe aan kaart</button><h4>Voeg een WMS kaartlaag toe</h4>
                     URL van de WMS:<br />
                     <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
                     Lagen van de WMS:<br />
                     <input type="text" id="wmsLayer" class="autopopulate default" title="bijv: provgrens_generalisatie_2008" size="30" /><br />
-                    <button class="filterbutton" onclick="addWmsLayer();return false;">Voeg toe aan kaart</button>
+                    <button id="addwmslayerbutton" class="filterbutton" >Voeg toe aan kaart</button>
                     <h4>Voeg een WMTS kaartlaag toe</h4>
                     URL van de WMTS:<br />
                     <input type="text" id="WmtsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/wmts/" size="30" /><br />
@@ -179,14 +187,14 @@ point title   description
                     <input type="text" id="WmtsLayer" class="autopopulate default" title="bijv: natura2000" size="30" /><br />
                     Matrixset van de WMTS:<br />
                     <input type="text" id="WmtsMatrix" class="autopopulate default" title="bijv: EPSG:28992" size="30" /><br />
-                    <button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>
-                    <button id="deletelayers" class="filterbutton" onclick=" api.deleteLayers();return false;"><span>Verwijder alle lagen</span></button>
+                    <button id="addwmtslayerbutton" class="filterbutton" >Voeg toe aan kaart</button>
+                    <button id="deletelayers" class="filterbutton" ><span>Verwijder alle lagen</span></button>
                 </form>
             </div>
 <!-- Step 5 optie -->
             <div id="step4" class="stepwrapper">
               <h2>
-                <a href="#" onclick="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a>
+                <a href="#" id="goto4">Optie: Kaartprikker functionaliteit toevoegen</a>
                 <span class="help">
                   <a href="help.html#help4" target="help">Help</a>
                 </span>
@@ -240,7 +248,7 @@ point title   description
 <!-- Step 6 - Save and download code -->
             <div id="step5" class="stepwrapper">
               <h2>
-                <a onclick="createApiLinksAndCode();return goTo(5);">Stap 3: Genereer
+                <a id="goto5" >Stap 3: Genereer
                                         code</a>
                 <span class="help">
                   <a href="help.html#help5" target="help">Help</a>
@@ -306,7 +314,7 @@ point title   description
                                     </script>  -->
             <div class="stepwrapper">
                 <div class="row">
-                <button id="opties" class="filterbutton" onclick=" MeerMinderOpties(); return false;" value="Meer opties">
+                <button id="opties" class="filterbutton" value="Meer opties">
                     <span>Meer opties</span>
                 </button>
                 </div>
