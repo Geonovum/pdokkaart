@@ -269,6 +269,15 @@ button {
 button, x:-moz-any-link { 
     padding: 0.2em 1em; 
 } /* Firefox only */
+#searchForm {
+    display:block;
+}
+#addviamap, #addviaurltxt, #step3, #step4, #wktfield, #xfield, #yfield, #locationtoolzooms {
+    display:none
+}
+#maplayerswitcher {
+    width:20px;
+}
 
 .lefting{
     width:15px;

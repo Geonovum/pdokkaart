@@ -61,7 +61,7 @@
                                 Hier komen de resultaten van de geocodeerservice
                             </div>
             <div id="search" class="stepwrapper">
-            <form action="#" style="display:block" id="searchForm" name="searchForm" onsubmit="searchLocationChanged();return false;">
+            <form action="#" id="searchForm" name="searchForm" onsubmit="searchLocationChanged();return false;">
                 Zoek een locatie:
                 <input id="searchLocation" type="text" value="" name="searchLocation" class="autopopulate default" title="adres, postcode of plaatsnaam" />
                 <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
@@ -92,7 +92,7 @@
                     <label for="mapsize3"> Groot (550x440 pixels)</label>
                   </div>
                   <div class="row">
-                  <input type="checkbox" name="maplayerswitcher" id="maplayerswitcher" onclick="setLayerSwitcherVisible(maplayerswitcher.checked);" checked="checked" style="width:20px"/><label for="maplayerswitcher"> Toon knop kaartlagen</label>
+                  <input type="checkbox" name="maplayerswitcher" id="maplayerswitcher" onclick="setLayerSwitcherVisible(maplayerswitcher.checked);" checked="checked" /><label for="maplayerswitcher"> Toon knop kaartlagen</label>
                   </div>
                 </div>
               </form>
@@ -114,7 +114,7 @@
                       Voeg een marker toe
                     </label>
                   </div>
-                  <div id="addviamap" style="display:none">
+                  <div id="addviamap">
                     <div id="addviamap2" class="row">Selecteer een symbool uit de lijst en klik op de kaart</div>
                     <div id="edit2" class="row">
 <!-- used for the style selector -->
@@ -130,7 +130,7 @@
                       Wijzig een marker
                     </label>
                   </div>
-                  <div class="row" id="editviamap" style="display:none">Selecteer een marker op de kaart en wijzig, verplaats of verwijder de marker</div>
+                  <div class="row" id="editviamap">Selecteer een marker op de kaart en wijzig de tekst, verplaats of verwijder de marker</div>
 <!-- add markers via url or text string -->
                   <div id="edit4" class="row">
                     <label>
@@ -139,7 +139,7 @@
                     </label>
                     <br />
                   </div>
-                  <div id="addviaurltxt" style="display:none">
+                  <div id="addviaurltxt">
                     <p><strong>Via URL</strong> Kies datatype, en geef de URL waar het bestand met markerdefinities zich bevindt klik dan "Haal op ":</p>
                     <label><input type="radio" checked="checked" name="urltype" value="kml" class="lefting" />KML</label>
                     <label><input type="radio" name="urltype" value="txt" class="lefting" />TXT</label>
@@ -159,7 +159,7 @@ point title   description
               </form>
             </div>
 <!-- Step 4  optie -->
-            <div id="step3" class="stepwrapper" style="display: none;">
+            <div id="step3" class="stepwrapper">
               <h2>
                 <a href="#" onclick="return goTo(3);">Optie:  Extra kaartlaag toevoegen</a>
                 <span class="help">
@@ -184,7 +184,7 @@ point title   description
                 </form>
             </div>
 <!-- Step 5 optie -->
-            <div id="step4" class="stepwrapper" style="display: none;">
+            <div id="step4" class="stepwrapper">
               <h2>
                 <a href="#" onclick="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a>
                 <span class="help">
@@ -214,11 +214,11 @@ point title   description
                                         </label>
                 </div>
                 <div id="locationtoolfield" class="row">
-                  <label id="wktfield" style="display:none">Veldnaam (wkt): <input type="text" value="wkt" /></label>
-                  <label id="xfield" style="display:none">X-coordinaat: <input type="text" value="x" /></label>
-                  <label id="yfield" style="display:none">Y-coordinaat: <input type="text" value="y" /></label>
+                  <label id="wktfield" >Veldnaam (wkt): <input type="text" value="wkt" /></label>
+                  <label id="xfield" >X-coordinaat: <input type="text" value="x" /></label>
+                  <label id="yfield" >Y-coordinaat: <input type="text" value="y" /></label>
                 </div>
-                <div id="locationtoolzooms" style="display:none">
+                <div id="locationtoolzooms" >
                   <div class="row">
                     Geef aan vanaf en tot welk niveau de kaartprikker gebruikt mag worden
                   </div>
