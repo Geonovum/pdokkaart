@@ -24,7 +24,8 @@ Pdok = {};
 
 // The apiurl is the base url for api.js, markertypes etc
 //Pdok.ApiUrl = 'http://pdokkaart.pdokloket.nl/api';
-Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
+//Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
+Pdok.ApiUrl = 'http://www.duif.net/pdok/api';
 
 // The proxyhost is needed for the geocoder
 OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
