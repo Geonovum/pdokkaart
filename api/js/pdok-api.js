@@ -283,6 +283,13 @@ Pdok.Api = function(config) {
     this.createStyles();
 
     if (config) {
+        // hack to make x and y fields null
+        // better fix would be to remove one of the three locationtool fields
+        // so you have either ONE field (wkt) or TWO (x and y)
+        if (config.locationtoolwktfield){
+            config.locationtoolxfield = null;
+            config.locationtoolyfield = null;
+        }
         OpenLayers.Util.extend( this, config );
     }
 
@@ -539,15 +546,15 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // enable Locationtool IF this.locationtool is set via config
     if (this.locationtool){
-        var yorwkt = this.locationtoolwktfield;
+        var xorwkt = this.locationtoolwktfield;
         if(this.locationtoolyfield){
             yorwkt = this.locationtoolyfield;
         }
         this.enableLocationTool( this.locationtoolstyle,
             this.locationtoolzmin,
             this.locationtoolzmax,
-            this.locationtoolxfield,
-            yorwkt
+            xorwkt,
+            this.locationtoolyfield
             );
     }
     return olMap;
@@ -1220,7 +1227,7 @@ Pdok.Api.prototype.startLocationTool = function(){
     }
     else if (this.locationtoolstyle[0]=='p'){
         if (this.drawLocationPolygonControl==null){
-            this.drawlocationPolygonControl = new OpenLayers.Control.DrawFeature(this.locationLayer, OpenLayers.Handler.Polygon);
+            this.drawLocationPolygonControl = new OpenLayers.Control.DrawFeature(this.locationLayer, OpenLayers.Handler.Polygon);
             this.map.addControl(this.drawLocationPolygonControl);
         }
         currentDrawControl = this.drawLocationPolygonControl;
