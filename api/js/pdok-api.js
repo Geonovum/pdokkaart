@@ -1156,6 +1156,7 @@ Pdok.Api.prototype.enableLocationTool = function(){
             // stop all locationtool controls
             if (confirm('Er is al een geldige lokatie. \nKlik OK om verder te gaan,\nof Annuleren/Cancel om opnieuw te klikken.')) {
                 apiObject.map.events.unregister("moveend", apiObject.map, locationToolCheck);
+                apiObject.map.events.unregister("click", apiObject.map, locationToolCheck);
                 apiObject.disableLocationTool();
             }
             else {
@@ -1184,13 +1185,17 @@ Pdok.Api.prototype.enableLocationTool = function(){
             if (!alerted){
                 //alerted = true;
                 if(confirm(msg)){
-                   apiObject.map.zoomTo(zoom);
+                    apiObject.map.zoomTo(zoom);
+                }
+                else{
+                    apiObject.disableLocationTool();
                 }
             }
         }
     }
-    // register above check function to listen to moveend events of the map
+    // register above check function to listen to moveend en click events of the map
     this.map.events.register("moveend", this.map, locationToolCheck);
+    this.map.events.register("click", this.map, locationToolCheck);
     // first check
     locationToolCheck();
     return true;
