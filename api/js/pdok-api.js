@@ -21,6 +21,7 @@
 
 
 Pdok = {};
+Pdok.API_VERSION_NUMBER = '1.0';
 
 // The apiurl is the base url for api.js, markertypes etc
 //Pdok.ApiUrl = 'http://pdokkaart.pdokloket.nl/api';
