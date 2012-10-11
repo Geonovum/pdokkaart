@@ -1297,7 +1297,14 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     };
     if (type.toUpperCase() == 'KML') {
         format = new OpenLayers.Format.KML(options);
-        features = format.read(data.replace(/\n/g," ").slice(0,data.replace(/\n/g," ").lastIndexOf(" ")) +"\n");
+        if (data.search(/\n/) > -1 && data.search(/\n/) < data.length){
+        	//alert("Er zijn returns gevonden in de KML, deze zijn vervangen door een spatie.")
+        	//features = format.read(data.replace(/\n/g," ").slice(0,data.replace(/\n/g," ").lastIndexOf(" ")) +"\n");
+        	features = format.read(data.replace(/\n/g," ") +"\n");
+        }
+        else{
+	        features = format.read(data);
+	    }
     }
     else if(type.toUpperCase() == "TXT"){
         // TXT files will default to epsg:28992 / RD coordinates
