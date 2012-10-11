@@ -304,7 +304,7 @@ Pdok.Api.prototype.defaultStyles=[];
 Pdok.Api.prototype.defaultPdokLayers = {
         BRT: {
             layertype: 'WMTS',
-            name: 'BRT Achtergrondkaart (wmts)',
+            name: 'BRT Achtergrondkaart (WMTS)',
             url: 'http://geodata.nationaalgeoregister.nl/wmts/',
             layer: 'brtachtergrondkaart',
             style: null,
@@ -315,7 +315,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
         },
         CBS_GEMEENTEN: {
             layertype: 'WMS',
-            name: 'CBS Gemeentegrenzen (2008)',
+            name: 'CBS Gemeentegrenzen 2008 (WMS)',
             url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
             layers: 'gemeentegrens_generalisatie_2008',
             transparent: 'true',
@@ -326,7 +326,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
         },
         CBS_PROVINCIES: {
             layertype: 'WMS',
-            name: 'CBS Provinciegrenzen (2008)',
+            name: 'CBS Provinciegrenzen 2008 (WMS)',
             url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
             layers: 'provgrens_generalisatie_2008',
             transparent: 'true',

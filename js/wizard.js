@@ -403,11 +403,25 @@ function createStyleSelector(){
 
 function createPdokLayers(){
 
+    //Sort layernames alphabetically
+    layernames=[];
+    i = 0;
+    for (layer in api.defaultLayers){
+    	layernames[i]= api.defaultLayers[layer].name;
+    	i = i + 1;
+    }
+    layernames = layernames.sort();
+
     var html = '<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">' +
                 '<option value="-">-- Kies een PDOK kaartlaag --</option>'
-    for (layer in api.defaultLayers){
-        html = html + '<option value="'+ layer + '">' + api.defaultLayers[layer].name + '</option>'
-    }
+    for (layernum in layernames){
+		for (layer in api.defaultLayers){
+			// Because the layer 'BRT' is always the defaultlayer it is not necessary to show this layer in the select-list
+			if (api.defaultLayers[layer].name == layernames[layernum] && layer != "BRT"){
+				html = html + '<option value="'+ layer + '">' + api.defaultLayers[layer].name + '</option>'
+			}
+		}
+	}
     html = html + '</select>'
     $('#divpdoklayerselector').html(html);
 }
