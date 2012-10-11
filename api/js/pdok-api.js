@@ -278,15 +278,6 @@ Pdok.Api = function(config) {
 
     this.defaultLayers = OpenLayers.Util.applyDefaults(
         this.defaultPdokLayers, this.defaultLayers);
-    //this.defaultLayers = this.defaultPdokLayers;
-
-    /**
-     * @private
-     * The attribution added to the map
-     */
-    // TODO moet dit?
-    this.attribution = '&copy; <a target="_parent" href="http://www.terrestris.de">terrestris GmbH & Co. KG</a>,</br>' +
-        'Data by <a target="_parent" href="http://www.openstreetmap.org">OpenStreetMap</a> and contributors, <a target="_parent" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
 
     // create this.styles, based on either this.defaultStyles object, OR via a this.customStyles object (TODO)
     this.createStyles();
