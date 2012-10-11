@@ -665,10 +665,10 @@ Pdok.Api.prototype.createStyles = function(){
         {
             id: 'mt0',
             name: 'Standaard marker',
-            externalGraphic: Pdok.ApiUrl+"/markertypes/star-3.png",
-            graphicHeight: 37,
+            externalGraphic: Pdok.ApiUrl+"/markertypes/document-properties.png",
+            graphicHeight: 32,
             graphicWidth: 32,
-            graphicYOffset: -37
+            graphicYOffset: -32
         }, {});
     this.styles.mt0 = pdokDefaultPoint;
     var pdokDefaultLine = OpenLayers.Util.applyDefaults(
