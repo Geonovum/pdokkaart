@@ -1290,7 +1290,12 @@ Pdok.Api.prototype.startLocationTool = function(){
 
 
 Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
-    if (response.status != 200){
+    //  trying to catch proxy errors
+    if (response.status == 502 || response.status == 403){
+        alert('Fout bij het ophalen van de url.\nDit lijkt een proxy probleem.\nKomt de data van een ander domein dan de web applicatie?\nDan moet het data domein opgenomen worden in de proxy-instellingen.');
+        return
+    }
+    else if (response.status != 200){
         alert('Fout bij het ophalen van de url');
         return
     }
