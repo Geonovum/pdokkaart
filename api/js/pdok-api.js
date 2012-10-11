@@ -463,8 +463,6 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // apply TXTURL if applicable
     if (this.txturl != null) {
-        var lyrTextLayer = new OpenLayers.Layer.Text( "Textlayer", {location: this.txturl} );
-        //olMap.addLayer(lyrTextLayer);
         this.addTxt(this.txturl);
     }
 
