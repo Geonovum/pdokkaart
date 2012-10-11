@@ -1,0 +1,13 @@
+point	title	description
+# defaulting to epsg:28992 / RD
+# !!!!!! FIRST Y THEN X
+517000,117960	foo	omschrijving foo
+511800,222000	faa	omschrijving faa
+541611,155111	fii	omschrijving fii
+# alternative epsg:4326 / LatLon
+#52.64,4.84	foo	omschrijving foo
+#52.59,6.38	faa	omschrijving faa
+#51.73,5.39	fii	omschrijving fii
+
+
+

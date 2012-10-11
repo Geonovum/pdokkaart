@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+        <title>PDOKKaart voorbeelden</title>
+        <link rel="stylesheet" href="OpenLayers%20Examples_bestanden/style.css" type="text/css">
+        <style type="text/css">
+            html, body {
+                height: 100%;
+                overflow: hidden;
+                margin: 0;
+                padding: 0;
+                line-height: 1.25em;
+                font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
+            }
+            .ex_container{
+                border-bottom: 1px solid #cccccc;
+                background-color: #F6D4B2;
+            }
+            .ex_container a {
+                text-decoration: none;
+                padding: 5px 1em;
+                display: block;
+            }
+            .ex_container a:hover {
+                background-color: #eeeeee;
+            }
+            .ex_container_simple_advanced{
+                border-bottom: 1px solid #cccccc;
+                background-color: #E17000;
+            }
+            .ex_container_simple_advanced a {
+                text-decoration: none;
+                padding: 5px 1em;
+                display: block;
+            }
+            .ex_container_simple_advanced a:hover {
+                background-color: #eeeeee;
+            }
+            .ex_title{
+                display: inline;
+                font-weight: bold;
+                color: #333;
+            }
+            .ex_tags{
+                display: inline;
+                font-size: smaller;
+                font-style: italic;
+                color: #333;
+            }
+            .ex_filename {
+                font-weight: normal;
+                font-size: 0.8em;
+                color: #000;
+            }
+            .ex_description{
+                color: #222;
+                padding: 3px;
+            }
+            .ex_classes{
+                font-size: .7em;
+                color: grey;
+                display: none;
+            }
+            #toc {
+                width: 30%;
+                height: 100%;
+            }
+            #filter {
+                color: #FFFFFF;
+                top: 0px;
+                height: 50px;
+                padding: 10px 1em 10px 1em;
+                background-color: #273397;
+            }
+            #examples {
+                border-top: 1px solid #cccccc;
+                position: absolute;
+                width: 30%;
+                top: 70px;
+                bottom: 0px;
+                overflow: auto;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            #examples ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            #examples ul li {
+                display: block;
+                margin: 0;
+                padding: 0;
+            }
+            #exwin {
+                position: absolute;
+                top: 0;
+                left: 30%;
+                width: 70%;
+                height: 100%;
+                border: none;
+                border-left: 1px solid #cccccc;
+                margin: 0;
+            }
+        </style>
+        <script type="text/javascript">
+            var template, target;
+
+            var timerId;
+            
+            window.onload = function() {
+                target = document.getElementById("examples");
+                document.getElementById("exwin").src = "../api/api.html";
+            };
+        </script>
+    </head><body>
+        <div id="toc">
+            <div id="filter">
+                <p>
+                    <label for="keywords"><H1></>PDOKKaart API</H1></label><br>
+                </p>
+            </div>
+            <div id="examples"><ul>
+                <li class="ex_container">
+                    <a href="../api/api.html" target="exwin">
+                        <h5 class="ex_title">
+                            Standaard<br>
+                            <span class="ex_filename">(../api/api.html)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API zonder gebruik van parameters.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?zoom=7&loc=119060.64%2C%20570880.64&pdoklayers=BRT%2CTOP50VECTOR&features=%3Ckml%20xmlns%3D%22http%3A%2F%2Fearth.google.com%2Fkml%2F2.0%22%3E%3CFolder%3E%3CPlacemark%3E%3Cname%3EDe%20Slufter%3C%2Fname%3E%3Cdescription%3E%26lt%3Ba%20href%3D%22http%3A%2F%2Fwww.npduinenvantexel.nl%2Fpage%2FNatuur%2FDe-Slufter-en-de-Muy%22%20target%3D%22_blank%22%26gt%3BWebsite%26lt%3B%2Fa%26gt%3B%26lt%3BBR%26gt%3B%0AZo%20zag%20het%20er%20vroeger%20uit%3A%26lt%3BBR%26gt%3B%0A%26lt%3Bimg%20src%3D%22http%3A%2F%2Fmapserver.sara.nl%2Fbonne_vect%2Fcgi-bin%2Fmapserv%3Fmap%3Dbonne_vect.map%26amp%3BLAYERS%3DNEDERLAND_20120908_OUTLINE%26amp%3BTRANSPARENT%3Dtrue%26amp%3BFORMAT%3Dimage%252Fgif%26amp%3BSERVICE%3DWMS%26amp%3BVERSION%3D1.1.1%26amp%3BREQUEST%3DGetMap%26amp%3BSTYLES%3D%26amp%3BSRS%3DEPSG%3A28992%26amp%3BBBOX%3D116083.18%2C572601.66%2C118300.78%2C574819.26%26amp%3BWIDTH%3D400%26amp%3BHEIGHT%3D400%22%26gt%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E4.815576834099498%2C53.14168733521495%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt3%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3C%2FFolder%3E%3C%2Fkml%3E" target="exwin">
+                        <h5 class="ex_title">
+                            features<br>
+                            <span class="ex_filename">(../api/api.html?zoom=7&loc=119060.64%2C%20570880.64&pdoklayers=BRT%2CTOP50VECTOR&features=%3Ckml%20xmlns%3D%22http%3A%2F%2Fearth.google.com%2Fkml%2F2.0%22%3E%3CFolder%3E%3CPlacemark%3E%3Cname%3EDe%20Slufter%3C%2Fname%3E%3Cdescription%3E%26lt%3Ba%20href%3D%22http%3A%2F%2Fwww.npduinenvantexel.nl%2Fpage%2FNatuur%2FDe-Slufter-en-de-Muy%22%20target%3D%22_blank%22%26gt%3BWebsite%26lt%3B%2Fa%26gt%3B%26lt%3BBR%26gt%3B%0AZo%20zag%20het%20er%20vroeger%20uit%3A%26lt%3BBR%26gt%3B%0A%26lt%3Bimg%20src%3D%22http%3A%2F%2Fmapserver.sara.nl%2Fbonne_vect%2Fcgi-bin%2Fmapserv%3Fmap%3Dbonne_vect.map%26amp%3BLAYERS%3DNEDERLAND_20120908_OUTLINE%26amp%3BTRANSPARENT%3Dtrue%26amp%3BFORMAT%3Dimage%252Fgif%26amp%3BSERVICE%3DWMS%26amp%3BVERSION%3D1.1.1%26amp%3BREQUEST%3DGetMap%26amp%3BSTYLES%3D%26amp%3BSRS%3DEPSG%3A28992%26amp%3BBBOX%3D116083.18%2C572601.66%2C118300.78%2C574819.26%26amp%3BWIDTH%3D400%26amp%3BHEIGHT%3D400%22%26gt%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E4.815576834099498%2C53.14168733521495%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt3%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3C%2FFolder%3E%3C%2Fkml%3E)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameter features waarmee een met de wizard ingetekende marker te gebruiken op de kaart.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?kmlurl=../examples/data/provincies.kml&" target="exwin">
+                        <h5 class="ex_title">
+                            kmlurl<br>
+                            <span class="ex_filename">(../api/api.html?kmlurl=../examples/data/provincies.kml)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameter kmlurl waarmee een kmlbestand te gebruiken is als kaartlaag.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?loc=150000,450000&zoom=5" target="exwin">
+                        <h5 class="ex_title">
+                            loc & zoom<br>
+                            <span class="ex_filename">(../api/api.html?loc=150000,450000&zoom=5)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameters loc en zl waarmee een middelpunt en een zoomnivo wordt opgegeven waarop  wordt ingezoomd en waar het middelpunt van de kaart ligt.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?mloc=150000,450000&mt=mt2" target="exwin">
+                        <h5 class="ex_title">
+                            mloc, mt<br>
+                            <span class="ex_filename">(../api/api.html?mloc=150000,450000&mt=mt2)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameter mloc gecombineerd met de parameter mt waarmee een locatie wordt opgegeven waar een andere dan de standaard icoon getoond moet worden.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?zoom=12&loc=120497.88%2C%20566440.4&pdoklayers=TOP10NL2,CBS_PROVINCIES,CBS_GEMEENTEN,AAN,CBS_KERNEN_NAMEN" target="exwin">
+                        <h5 class="ex_title">
+                            pdoklayers<br>
+                            <span class="ex_filename">(../api/api.html?zoom=12&loc=120497,566440.4&pdoklayers=TOP10NL2,CBS_PROVINCIES,CBS_GEMEENTEN,AAN,CBS_KERNEN_NAMEN)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameter layer waarmee de TOP10NL, de CBS Provincie en Gemeentekaart, de AAN en de CBS plaatsnamenkaart wordt toegevoegd aan de kaart. De top10 is vanaf een bepaalde schaal niet meer zichtbaar, daarom zijn de CBS kaartlagen toegevoegd om altijd een kaart te zien van de Provincies en gemeenten. Voor een beter begrip van de locatie zijn de labels van de grotere plaatsen toegevoegd. Om de TOP10NL meteen te tonen wordt ingezoomd op zoomnivo 12. </div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?tmsurl=http://geodata.nationaalgeoregister.nl/tms/&tmslayer=nok2011&tmstype=png" target="exwin">
+                        <h5 class="ex_title">
+                            tmslayer, tmstype, tmsurl<br>
+                            <span class="ex_filename">(../api/api.html?tmsurl=http://geodata.nationaalgeoregister.nl/tms/&tmslayer=nok2011&tmstype=png8)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameter tmsurl gecombineerd met de hieraan verbonden parameters tmslayer en tmstype. De combinatie van tmsurl en tmslayer wordt gebruikt om de URL van de afzonderlijke tiles van de TMS te bepalen en het tmstype geeft aan welke bestandsformaat gebruikt moet worden. De parameter tmstype heeft een standaardwaarde png en is daardoor optioneel.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?txturl=../examples/data/pdok_partners.txt&" target="exwin">
+                        <h5 class="ex_title">
+                            txturl<br>
+                            <span class="ex_filename">(../api/api.html?txturl=../examples/data/pdok_partners.txt)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameter txturl waarmee een tekstbestand te gebruiken is als kaartlaag.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?wmsurl=http://geodata.nationaalgeoregister.nl/nwbwegen/wms&wmslayers=wegvakken,hectopunten" target="exwin">
+                        <h5 class="ex_title">
+                            wmslayers, wmsurl<br>
+                            <span class="ex_filename">(../api/api.html?wmsurl=http://geodata.nationaalgeoregister.nl/nwbwegen/wms&wmslayers=wegvakken,hectopunten)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameters wmsurl en de daaraan gekoppelde parameter wmslayers waarmee een WMS toe te voegen is als kaartlaag.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?wmtsurl=http://geodata.nationaalgeoregister.nl/wmts/&wmtslayer=top50vector&wmtsmatrixset=EPSG:28992&zoom=7&loc=142500,470000" target="exwin">
+                        <h5 class="ex_title">
+                            wmtslayer, wmtsmatrixset, wmtsurl<br>
+                            <span class="ex_filename">(../api/api.html?wmtsurl=http://geodata.nationaalgeoregister.nl/wmts/&wmtslayer=top50vector&wmtsmatrixset=EPSG:28992&zoom=7&loc=142500,470000)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameters wmtsurl en de daaraan gekoppelde parameters wmtslayer en wmtsmatrixset waarmee een WMTS toe te voegen is als kaartlaag.</div>
+                    </a>
+                </li>
+				<li class="ex_container_simple_advanced">
+                    <a href="./gegenereerde_code_standaard.html" target="exwin">
+                        <h5 class="ex_title">
+                            genereer code<br>
+                            <span class="ex_filename">(./gegenereerde_code_standaard.html)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert de gegeneerde code in een html pagina. Hierbij wordt ingezoomd op een locatie en worden de BRT Achtergrondkaart en de Gemeentegrenzen gebruikt in de kaart.</div>
+                    </a>
+                </li>
+				<li class="ex_container_simple_advanced">
+                    <a href="./gegenereerde_code_marker.html" target="exwin">
+                        <h5 class="ex_title">
+                            marker<br>
+                            <span class="ex_filename">(./gegenereerde_code_marker.html)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert de gegeneerde code in een html pagina. Hierbij wordt ingezoomd op een locatie en worden de BRT Achtergrondkaart en de TOP50Vector WMTS gebruikt in de kaart plus wordt een marker getoond in De Slufter op Texel.</div>
+                    </a>
+                </li>
+				<li class="ex_container_simple_advanced">
+                    <a href="./gegenereerde_code_markers_roda.html" target="exwin">
+                        <h5 class="ex_title">
+                            gecombineerde markers<br>
+                            <span class="ex_filename">(./gegenereerde_code_markers_roda.html)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert de gegeneerde code in een html pagina. Hierbij wordt ingezoomd op een locatie en worden de BRT Achtergrondkaart en de TOP50Vector WMTS gebruikt in de kaart plus worden gecombineerde markers getoond van een voetbalvereniging.</div>
+                    </a>
+                </li>
+				<li class="ex_container_simple_advanced">
+                    <a href="./gegenereerde_code_stadspolygonen_wfs.html" target="exwin">
+                        <h5 class="ex_title">
+                            ahn25m:stadspolygonen wfs<br>
+                            <span class="ex_filename">(./
+                        gegenereerde_code_stadspolygonen_wfs.html)</span>
+                        </h5>
+                        <div class="ex_description">Deze pagina is gemaakt met de door de Wizard gegenereerde HTML code. Nadat de pagina geopend is en ingezoomd is op een opgegeven locatie worden de stadspolygonen uit de AHN WFS opgehaald van het gebied dat getoond wordt in de kaart.</div>
+                    </a>
+                </li>
+				<li class="ex_container_simple_advanced">
+                    <a href="./gegenereerde_code_utrecht_kml.html" target="exwin">
+                        <h5 class="ex_title">
+                            kml van de provicie Utrecht<br>
+                            <span class="ex_filename">(./
+                        gegenereerde_code_utrecht_kml.html)</span>
+                        </h5>
+                        <div class="ex_description">Deze pagina is gemaakt met de door de Wizard gegenereerde HTML code. Nadat de pagina geopend is wordt de provinciepolygoon van Utrecht als KML ingelezen.</div>
+                    </a>
+                </li>
+				<li class="ex_container_simple_advanced">
+                    <a href="./gegenereerde_code_edit_x_y.html" target="exwin">
+                        <h5 class="ex_title">
+                            Coordinaat van een punt opslaan<br>
+                            <span class="ex_filename">(./
+                        gegenereerde_code_edit_x_y.html)</span>
+                        </h5>
+                        <div class="ex_description">Punt intekenen en locatie opslaan in x en y veld.</div>
+                    </a>
+                </li>
+				<li class="ex_container_simple_advanced">
+                    <a href="./gegenereerde_code_edit_wkt.html" target="exwin">
+                        <h5 class="ex_title">
+                            Coordinaten van een lijn opslaan<br>
+                            <span class="ex_filename">(./
+                        gegenereerde_code_edit_wkt.html)</span>
+                        </h5>
+                        <div class="ex_description">Lijn intekenen en locatie opslaan in wkt veld.</div>
+                    </a>
+                </li>
+				<li class="ex_container_simple_advanced">
+                    <a href="./api-double-map.html" target="exwin">
+                        <h5 class="ex_title">
+                            dubbel<br>
+                            <span class="ex_filename">(./api-double-map.html)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert het meervoudig gebruik van de api op 1 pagina.</div>
+                    </a>
+                </li>
+            </ul></div>
+        </div>
+        <iframe src="" id="exwin" name="exwin" frameborder="0"></iframe>        
+        <div style="display: none;">
+            <ul id="template">
+                <li class="ex_container" jugl:repeat="example examples">
+                    <a jugl:attributes="href example.link" target="exwin">
+                        <h5 class="ex_title">
+                            <span jugl:replace="example.title">title</span><br>
+                            <span class="ex_filename" jugl:content="'(' + example.example + ')'">filename</span>
+                        </h5>
+                        <div class="ex_description" jugl:content="example.shortdesc">
+                            Short Description goes here
+                        </div>
+                        <p class="ex_classes" jugl:content="example.classes">
+                            Related Classes go here
+                        </p>
+                        <div class="ex_tags" jugl:content="'...tagged with ' + example.tags">                            
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </body></html>

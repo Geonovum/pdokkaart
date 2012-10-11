@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>PDOK API - vergelijk twee kaartlagen</title>
+
+    <link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
+
+    <script src="../api/js/OpenLayers.js"></script>
+    <script src="../api/js/proj4js-compressed.js"></script>
+	<script src="../api/js/pdok-api.js"></script>
+    <script>
+		OpenLayers.ImgPath="../api/img/";
+		var configmap1 = {
+			"wmsurl":'http://gdsc.nlr.nl/wms/lufo2005',
+			"wmslayers":"lufo2005-1m",
+			"showlayerswitcher":"false"
+		};
+		var configmap2 = {
+			"wmsurl":'http://gdsc.nlr.nl/wms/dkln2006',
+			"wmslayers":"dkln2006-1m",
+			"div":"map2",
+			"showlayerswitcher":"false"
+		};
+
+        function init() {
+            api = new Pdok.Api(configmap1);
+            
+            api2 = new Pdok.Api(configmap2);
+
+			// wijziging in de ene kaart wijzigt de andere kaart
+			api.map.events.register( "zoomend", api.map, map1Changed );
+			api2.map.events.register( "zoomend", api2.map, map2Changed );
+			api.map.events.register( "moveend", api.map, map1Changed );
+			api2.map.events.register( "moveend", api2.map, map2Changed );
+        }
+        
+		function map1Changed ( ) {
+		    api2.map.setCenter(api.map.getCenter(),api.map.getZoom());
+		} 
+		function map2Changed ( ) {
+		   api.map.setCenter(api2.map.getCenter(),api2.map.getZoom());
+		} 
+    </script>
+
+  </head>
+    <body onload="init()">
+    <div id="map" style="width:300px;height:300px;float:left;"></div>
+    <div id="map2" style="width:300px;height:300px;float:left;"></div><br/>
+    <div id="maptitle1" style="position:fixed;top:320px;width:300px;height:100px;float:left;text-align:center;">2005</div>
+    <div id="maptitle2" style="position:fixed;top:320px;left:300px;width:300px;height:100px;float:left;text-align: center">2006</div>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+  <Folder>
+    <name>OpenLayers export</name>
+    <description>Exported on Wed Sep 05 2012 14:34:59 GMT+0200 (CEST)</description>
+    <Placemark>
+      <name>OpenLayers.Feature.Vector_112</name>
+      <description>No description available</description>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>5.0405248627034, 52.772466726602 4.9965795502034, 51.827642507852 5.3701147064534, 51.520025320352 5.8315404877034, 51.476080007852 6.2929662689534, 51.827642507852 6.2929662689534, 52.728521414102 5.0405248627034, 52.772466726602</coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>OpenLayers.Feature.Vector_154</name>
+      <description>No description available</description>
+      <LineString>
+        <coordinates>4.7109350189534, 52.442876882852 6.5786108002034, 52.376958914102</coordinates>
+      </LineString>
+    </Placemark>
+    <Placemark>
+      <name>OpenLayers.Feature.Vector_178</name>
+      <description>No description available</description>
+      <Point>
+        <coordinates>5.3481420502034, 52.157232351602</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>OpenLayers.Feature.Vector_221</name>
+      <description>No description available</description>
+      <Point>
+        <coordinates>5.9414037689534, 52.135259695352</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>OpenLayers.Feature.Vector_280</name>
+      <description>No description available</description>
+      <LineString>
+        <coordinates>5.4140600189534, 51.783697195352 5.8974584564534, 51.761724539102</coordinates>
+      </LineString>
+    </Placemark>
+  </Folder>
+</kml>

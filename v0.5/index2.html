@@ -1,0 +1,301 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>PDOK Kaartwizard</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" href="css/rijkshuisstijl/screen.css" type="text/css" media="screen" />
+<!--[if IE 8]><link rel="stylesheet" href="css/rijkshuisstijl/ie/ie8.css" type="text/css" media="screen" /><![endif]-->
+<!--[if lte IE 7]><link rel="stylesheet" href="css/rijkshuisstijl/ie/ie7.css" type="text/css" media="screen" /><![endif]-->
+<!--[if lte IE 6]><link rel="stylesheet" href="css/rijkshuisstijl/ie/ie6.css" type="text/css" media="screen" /><![endif]-->
+    <link rel="stylesheet" href="css/rijkshuisstijl/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="css/rijkshuisstijl/toevoeging.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/rijkshuisstijl/iconids.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="api/styles/default/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/main2.css" type="text/css" />
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="api/javascripts/OpenLayers.js"></script>
+    <script type="text/javascript" src="api/javascripts/proj4js-compressed.js"></script>
+    <script type="text/javascript" src="api/javascripts/pdok-api.js"></script>
+    <script type="text/javascript" src="js/wizard.js"></script>
+    <script type="text/javascript" src="js/geozetlib.js"></script>
+    <!--<script type="text/javascript" src="js/Geozet.js"></script>
+    <script type="text/javascript" src="js/Geozet/Format/XLSLUS.js"></script>
+    <script type="text/javascript" src="js/Geozet/Format/XLSAddress.js"></script>
+    <script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1.js"></script>
+    <script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1_1_0.js"></script>-->
+  </head>
+  <body>
+    <div class="container equalize page orange default">
+      <div class="header">
+        <span></span>
+        <div class="branding">
+          <img alt="PDOK" src="img/PDOK-logo.png" />
+          <h1 class="invisible">PDOK Kaart Wizard</h1>
+        </div>
+        <div class="nav_bar">
+          <ul class="nav_main">
+            <li>
+              <a href="http://drupal.pdokloket.nl">Home</a>
+            </li>
+            <li class="sel">
+              <a class="active" href="#">PDOK Wizard</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="content_wrapper1">
+        <div class="content_wrapper2">
+          <div id="content">
+            <div id="map">
+                        </div>
+<!--<div id="leftcolumn">-->
+            <div id="geocodeerresult" class="popInWindow"><span id="closedrawlocation" onclick="$('#geocodeerresult').fadeOut('fast')" class="closeWindow"><a href="#" onclick="return false;"><img src="api/styles/default/img/close.gif" alt="Sluiten" title="Sluiten" /></a></span>
+                                Hier komen de resultaten van de geocodeerservice
+                            </div>
+            <div id="search" class="stepwrapper">
+              <form style="display:block" id="searchForm" name="searchForm">
+                                    Zoek een locatie:
+                                    <input id="searchLocation" type="text" value="" name="searchLocation" class="autopopulate default" title="adres, postcode of plaatsnaam" />
+                                    <button type="submit" class="filterbutton" onclick="searchLocationChanged();return false;">
+                                        Zoek</button>
+                                </form>
+            </div>
+<!-- Step 1 - Your map -->
+            <div id="step1" class="stepwrapper active">
+              <h2>
+                <a onclick="return goTo(1);">Stap 1: De kaart</a>
+                <div class="help">
+                  <a href="help.html#help1" target="_blank">Help</a>
+                </div>
+              </h2>
+              <form action="#">
+                <div class="row">
+                  <p>Selecteer een kaartgrootte:</p>
+                  <div class="row">
+                    <input type="radio" name="mapsize" id="mapsize1" value="small" onclick="pdok_api_map_resize(300,250)" />
+                    <label for="mapsize1"> Klein (300x250 pixels)</label>
+                  </div>
+                  <div class="row">
+                    <input type="radio" name="mapsize" id="mapsize2" value="medium" onclick="pdok_api_map_resize(400,350)" checked="checked" />
+                    <label for="mapsize2"> Middel (400x350 pixels)</label>
+                  </div>
+                  <div class="row">
+                    <input type="radio" name="mapsize" id="mapsize3" value="large" onclick="pdok_api_map_resize(550,440)" checked="checked" />
+                    <label for="mapsize3"> Groot (550x440 pixels)</label>
+                  </div>
+                  <div class="row">
+                  <input type="checkbox" name="maplayerswitcher" id="maplayerswitcher" onclick="setLayerSwitcherVisible(maplayerswitcher.checked);" checked="checked" style="width:20px"/><label for="maplayerswitcher"> Toon knop kaartlagen</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+<!-- Step 2 - Add markers -->
+            <div id="step2" class="stepwrapper">
+              <h2>
+                <a onclick="return goTo(2);">Stap 2: Markers</a>
+                <div class="help">
+                  <a href="help.html#help2" target="_blank">Help</a>
+                </div>
+              </h2>
+              <form action="#" name="editmarkers" id="editmarkers">
+                <div>
+<!-- add markers via map -->
+                  <div class="row">
+                    <label>
+                      <input type="radio" name="editmarkers" id="addfeatures" value="addfeatures" class="lefting" />
+                      Voeg een marker toe
+                    </label>
+                  </div>
+                  <div id="addviamap" style="display:none">
+                    <div id="addviamap2" class="row">Selecteer een symbool uit de lijst en klik op de kaart</div>
+                    <div id="edit2" class="row">
+<!-- used for the style selector -->
+                    </div>
+                    <div id="edit2a" class="row">
+<!-- used for editing of description and title -->
+                    </div>
+                  </div>
+<!-- edit markers via map -->
+                  <div id="edit3">
+                    <label>
+                      <input type="radio" name="editmarkers" id="editfeatures" value="editfeatures" class="lefting" />
+                      Wijzig een marker
+                    </label>
+                  </div>
+                  <div class="row" id="editviamap" style="display:none">Selecteer een marker op de kaart en wijzig, verplaats of verwijder de marker</div>
+<!-- add markers via url or text string -->
+                  <div id="edit4" class="row">
+                    <label>
+                      <input type="radio" name="editmarkers" id="externalfeatures" value="externalfeatures" class="lefting" />
+                      Markers uit url, bestand of tekst
+                    </label>
+                    <br />
+                  </div>
+                  <div id="addviaurltxt" style="display:none">
+                    <p><strong>Via URL</strong> Kies datatype, en geef de URL waar het bestand met markerdefinities zich bevindt klik dan "Haal op ":</p>
+                    <label><input type="radio" checked="true" name="urltype" value="kml" class="lefting" />KML</label>
+                    <label><input type="radio" name="urltype" value="txt" class="lefting" />TXT</label>
+                    <input type="text" title="Postcode of plaatsnaam" name="searchLocation" value="Voer een URL in :" id="urltext" />
+                    <button id="getfeaturesfromurl" class="filterbutton">Haal op</button>
+                    <br />
+                    <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
+                    <label><input type="radio" name="txttype" value="kml" class="lefting" />KML</label>
+                    <label><input type="radio" checked="true" name="txttype" value="txt" class="lefting" />TXT</label>
+                    <textarea id="copypaste">Copy/Paste:</textarea>
+                    <button id="getfeaturesfromtxt" class="filterbutton">Opslaan</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+<!-- Step 4  optie -->
+            <div id="step3" class="stepwrapper" style="display: none;">
+              <h2>
+                <a href="#" onclick="return goTo(3);">Optie:  Extra kaartlaag toevoegen</a>
+                <div class="help">
+                  <a href="help.html#help3" target="_blank">Help</a>
+                </div>
+              </h2>
+              <form action="#" name="addroutes" id="addroutes"><h4>Voeg een standaard kaartlaag toe</h4><div id="divpdoklayerselector"> </div><button class="filterbutton" onclick="addPdokLayer();return false;">Voeg toe aan kaart</button><h4>Voeg een WMS kaartlaag toe</h4>
+                    URL van de WMS:<br />
+                    <input type="text" id="wmsUrl" size="30" /><br />
+                    Lagen van de WMS:<br />
+                    <input type="text" id="wmsLayer" size="30" /><br />
+                    <button class="filterbutton" onclick="addWmsLayer();return false;">Voeg toe aan kaart</button>
+                    <h4>Voeg een WMTS kaartlaag toe</h4>
+                    URL van de WMTS:<br />
+                    <input type="text" id="WmtsUrl" size="30" /><br />
+                    Laagnaam van de WMTS:<br />
+                    <input type="text" id="WmtsLayer" size="30" /><br />
+                    Matrixset van de WMTS:<br />
+                    <input type="text" id="WmtsMatrix" size="30" /><br />
+                    <button class="filterbutton" onclick="addWmtsLayer();return false;">Voeg toe aan kaart</button>
+                    <button id="deletelayers" class="filterbutton" onclick=" api.deleteLayers();return false;"><span>Verwijder alle lagen</span></button>
+                </form>
+            </div>
+<!-- Step 5 optie -->
+            <div id="step4" class="stepwrapper" style="display: none;">
+              <h2>
+                <a href="#" onclick="return goTo(4);">Optie: Kaartprikker functionaliteit toevoegen</a>
+                <div class="help">
+                  <a href="help.html#help4" target="_blank">Help</a>
+                </div>
+              </h2>
+              <form id="locationtoolform">
+                <div class="row">
+                  Selecteer een tekenobject en vul de veldnaam in waar de waarde ingezet moet worden
+                </div>
+                <div class="row">
+                  <label><input type="radio" name="locationtoolstyle" id="none" value="mt0" class="lefting" checked="true" />
+                                            geen
+                                        </label>
+                  <br />
+                  <label><input type="radio" name="locationtoolstyle" id="pointxy" value="mt0" class="lefting" />
+                                            punt (xy)
+                                        </label>
+                  <label><input type="radio" name="locationtoolstyle" id="point" value="mt0" class="lefting" />
+                                            punt (wkt)
+                                        </label>
+                  <label><input type="radio" name="locationtoolstyle" id="line" value="lt0" class="lefting" />
+                                            lijn (wkt)
+                                        </label>
+                  <label><input type="radio" name="locationtoolstyle" id="polygon" value="pt0" class="lefting" />
+                                            vlak (wkt)
+                                        </label>
+                </div>
+                <div id="locationtoolfield" class="row">
+                  <label id="wktfield" style="display:none">Veldnaam (wkt): <input type="text" value="wkt" /></label>
+                  <label id="xfield" style="display:none">X-coordinaat: <input type="text" value="x" /></label>
+                  <label id="yfield" style="display:none">Y-coordinaat: <input type="text" value="y" /></label>
+                </div>
+                <div id="locationtoolzooms" style="display:none">
+                  <div class="row">
+                    Geef aan vanaf en tot welk niveau de kaartprikker gebruikt mag worden
+                  </div>
+                  <div class="row">
+                    <label>
+                        Kaartprikker mogelijk vanaf zoom niveau:
+                        <select id="zmin"><option value="1" selected="true">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option></select> 
+                    </label>
+                  </div>
+                  <div class="row">
+                    <label>
+                        Kaartprikker mogelijk tot en met zoom niveau:
+                        <select id="zmax"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14" selected="true">14</option></select> 
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+<!-- Step 6 - Save and download code -->
+            <div id="step5" class="stepwrapper">
+              <h2>
+                <a onclick="createApiLinksAndCode();return goTo(5);">Stap 3: Genereer
+                                        code</a>
+                <div class="help">
+                  <a href="help.html#help5" target="_blank">Help</a>
+                </div>
+              </h2>
+              <form action="#" name="savecode" id="savecode">
+                <div class="row_right"><p><strong>Als URL</strong></p><a href="#" id="apilink1" target="apiexample">Link</a> losse kaart:
+                    <input type="text" value="" id="apilink2" />
+                    <a href="#" id="apilink3"><img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a>
+                    <br/>Embed HTML iframe:
+                    <input type="text" value="" id="embedhtmliframe" />
+                    <br/>Embed HTML Object tag:<br />
+                    <input type="text" value="" id="embedhtmlobject" />
+                    <p><strong>Als broncode</strong></p>
+                    In de HTML Head-sectie plaatsen:
+                    <textarea id="scriptcodeHead" rows="12"></textarea>
+                    <br/>In de HTML Body-sectie plaatsen:
+                    <textarea id="scriptcodeBody" rows="4"></textarea>
+                </div>
+              </form>
+            </div>
+<!--<h3 id="importfile"><input type="file" id="files" name="files[]" /><output id="list"></output></h3>
+                            <script>
+                                function handleFileSelect(evt) {
+                                    var files = evt.target.files; // FileList object
+
+                                    // Loop through the FileList and render image files as thumbnails.
+                                    for (var i = 0, f; f = files[i]; i++) {
+
+                                        // Only process image files.
+                                        //if (!f.type.match('image.*')) {
+                                            //  continue;
+                                            //}
+
+                                        var reader = new FileReader();
+
+                                        // Closure to capture the file information.
+                                        reader.onload = (function(theFile) {
+                                        return function(e) {
+                                        // Render thumbnail.
+                                        //var span = document.createElement('span');
+                                        //span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                                        //                  '" title="', escape(theFile.name), '"/>'].join('');
+                                        //document.getElementById('list').insertBefore(span, null);
+                                        //alert(e.target.result);
+                                        ZetMarkersOpKaart(e.target.result);
+                                        };
+                                        })(f);
+
+                                        // Read in the image file as a data URL.
+                                        reader.readAsText(f);
+                                        }
+                                        }
+
+                                        document.getElementById('files').addEventListener('change', handleFileSelect, false);
+                                    </script>  -->
+            <div class="stepwrapper">
+                <div class="row">
+                <button id="opties" class="filterbutton" onclick=" MeerMinderOpties(); return false;" value="Meer opties">
+                    <span>Meer opties</span>
+                </button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

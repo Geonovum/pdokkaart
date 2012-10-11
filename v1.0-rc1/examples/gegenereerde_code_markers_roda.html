@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<script src="../js/jquery.js"></script>
+		<script src="../api/js/OpenLayers.js"></script>
+		<script src="../api/js/proj4js-compressed.js"></script>
+		<script src="../api/js/pdok-api.js"></script>
+		<link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
+<link rel="stylesheet" href="../api/styles/api.css" type="text/css">
+		<script>
+		var config = {
+			"zoom":12,
+			"loc":['117310.48','478021.84'],
+			"features":'<kml xmlns="http://earth.google.com/kml/2.0"><Folder><Placemark><name>Veld 1</name><description>Kunstgras</description><Polygon><outerBoundaryIs><LinearRing><coordinates>4.832158918037519,52.289198752647465 4.833604297454259,52.28880538750718 4.83321702413708,52.288267535670336 4.8317961863987335,52.28866856118072 4.832158918037519,52.289198752647465</coordinates></LinearRing></outerBoundaryIs></Polygon><ExtendedData><Data name="styletype"><value>pt5</value></Data></ExtendedData></Placemark><Placemark><name>Veld 2</name><description>Kunstgras</description><Polygon><outerBoundaryIs><LinearRing><coordinates>4.83370334917628,52.28876055222833 4.834988284472295,52.28839661838783 4.834613027202369,52.28788147673822 4.83334050861941,52.28823791482712 4.83370334917628,52.28876055222833</coordinates></LinearRing></outerBoundaryIs></Polygon><ExtendedData><Data name="styletype"><value>pt5</value></Data></ExtendedData></Placemark><Placemark><name>Veld 3</name><description>Gras</description><Polygon><outerBoundaryIs><LinearRing><coordinates>4.835050213818429,52.2883667082711 4.83633512674572,52.288002759731576 4.835984291235147,52.28750283587499 4.834699389915331,52.287866780651896 4.835050213818429,52.2883667082711</coordinates></LinearRing></outerBoundaryIs></Polygon><ExtendedData><Data name="styletype"><value>pt5</value></Data></ExtendedData></Placemark><Placemark><name>Oefenveld</name><description>Leemgrond</description><Polygon><outerBoundaryIs><LinearRing><coordinates>4.832656799453639,52.289752226315464 4.8337439479171715,52.289455326661475 4.833490396210264,52.28905399859664 4.832390756354692,52.28936593696613 4.832656799453639,52.289752226315464</coordinates></LinearRing></outerBoundaryIs></Polygon><ExtendedData><Data name="styletype"><value>pt5</value></Data></ExtendedData></Placemark><Placemark><name>Veld 4</name><description>Gras</description><Polygon><outerBoundaryIs><LinearRing><coordinates>4.834248048457809,52.28951053390999 4.833885007510901,52.28900299701928 4.83513292179059,52.28864643818935 4.83549578675874,52.28916907008237 4.834248048457809,52.28951053390999</coordinates></LinearRing></outerBoundaryIs></Polygon><ExtendedData><Data name="styletype"><value>pt5</value></Data></ExtendedData></Placemark><Placemark><name>Veld 5</name><description>Gras</description><Polygon><outerBoundaryIs><LinearRing><coordinates>4.835631770615655,52.2891244055084 4.836916981019351,52.28873780254075 4.836565946212252,52.28825297925307 4.8352810279250145,52.28861693027675 4.835631770615655,52.2891244055084</coordinates></LinearRing></outerBoundaryIs></Polygon><ExtendedData><Data name="styletype"><value>pt5</value></Data></ExtendedData></Placemark><Placemark><name>1A</name><description>&amp;nbsp;</description><Point><coordinates>4.832255869383488,52.288829270055494</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>1B</name><description>&amp;nbsp;</description><Point><coordinates>4.833021314794686,52.288659213908446</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>2A</name><description>&amp;nbsp;</description><Point><coordinates>4.833775289133154,52.28842115064746</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>2B</name><description>&amp;nbsp;</description><Point><coordinates>4.834541003230846,52.28822843645261</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>3A</name><description>&amp;nbsp;</description><Point><coordinates>4.835047996988898,52.288049609106224</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>3B</name><description>&amp;nbsp;</description><Point><coordinates>4.835936806439181,52.28785746065328</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>4A</name><description>&amp;nbsp;</description><Point><coordinates>4.8342464006316,52.289148138461194</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>4B</name><description>&amp;nbsp;</description><Point><coordinates>4.835061369342126,52.2889556512135</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>5A</name><description>&amp;nbsp;</description><Point><coordinates>4.835617519584729,52.2887846007872</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark><Placemark><name>5B</name><description>&amp;nbsp;</description><Point><coordinates>4.836346486272761,52.28857660382915</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark></Folder></kml>',
+			"pdoklayers":'TOP10NL2',
+			"wmsurl":'http://gdsc.nlr.nl/wms/dkln2006',
+			"wmslayers":"dkln2006-1m"
+		};
+		function createPDOKKaart() {
+			var api = new Pdok.Api(config);
+			return api;
+		}		
+		OpenLayers.ImgPath="../api/img/";
+		</script>
+	</head>
+	<body>
+		<div id="map"></div>
+		<script>
+			var api = createPDOKKaart();
+		</script>
+	</body>
+</html>
