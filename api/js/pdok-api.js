@@ -1279,14 +1279,14 @@ Pdok.Api.prototype.startLocationTool = function(){
 }
 
 
-Pdok.Api.prototype.handleGetResponse = function(response){
+Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
     if (response.status != 200){
         alert('Fout bij het ophalen van de url');
         return
     }
     var data = response.responseText;
     // we have data now: add to map
-    this.addFeaturesFromString(data, this.dataType, this.zoomToFeatures);
+    api.addFeaturesFromString(data, this.dataType, this.zoomToFeatures);
 }
 
 Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
@@ -1404,9 +1404,10 @@ Pdok.Api.prototype.deleteLayers = function(nonVectorLayers, vectorLayers) {
 Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
 
     var apiObject = this;
+    var context = {};
     // little dirty way to pass type and zoomToFeatures:
-    apiObject.dataType = type;
-    apiObject.zoomToFeatures = zoomToFeatures;
+    context.dataType = type;
+    context.zoomToFeatures = zoomToFeatures;
 
     if (type.toUpperCase() == "KML"){
         // kml
@@ -1431,8 +1432,8 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
     }
     OpenLayers.Request.GET({
             url: url,
-            callback: apiObject.handleGetResponse,
-            scope: apiObject
+            callback: apiObject.handleGetFeaturesResponse,
+            scope: context
     });
 
     return true;
