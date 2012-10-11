@@ -229,7 +229,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt27', 
 		name: 'Afvalbak', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictographs-keep_tidy_inside_01.png', 
+		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictographs-keep_tidy_inside.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
