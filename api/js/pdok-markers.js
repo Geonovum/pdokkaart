@@ -396,30 +396,35 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt15', 
+        fillOpacity: 0.0, 
         strokeColor: '#273397', 
         strokeWidth: 2, 
         name: 'Blauw'
     },
     {
         id: 'pt16', 
+        fillOpacity: 0.0, 
         strokeColor: 'green', 
         strokeWidth: 2, 
         name: 'Groen'
     },
     {
         id: 'pt17', 
+        fillOpacity: 0.0, 
         strokeColor: 'red', 
         strokeWidth: 2, 
         name: 'Rood'
     },
     {
         id: 'pt18', 
+        fillOpacity: 0.0, 
         strokeColor: 'orange', 
         strokeWidth: 2, 
         name: 'Oranje'
     },
     {
         id: 'pt19', 
+        fillOpacity: 0.0, 
         strokeColor: 'yellow', 
         strokeWidth: 2, 
         name: 'Geel'
