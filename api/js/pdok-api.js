@@ -1551,7 +1551,7 @@ Pdok.Api.prototype.getConfig = function() {
     if(this.locationtool) {
         config.locationtool = true;
         config.locationtoolstyle = this.locationtoolstyle;
-        if (this.locationwktfield) {
+        if (this.locationtoolwktfield) {
             config.locationtoolwktfield = this.locationtoolwktfield;
         }
         else {
