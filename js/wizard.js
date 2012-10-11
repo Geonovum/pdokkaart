@@ -432,7 +432,6 @@ function createEditAttributes () {
     html += '<textarea id="description" class="autopopulate default" title="en optioneel een omschrijving"></textarea>';
     html += '<button class="filterbutton" onclick="saveAttributes();return false;">Opslaan tekst</button>';
     html += '<button class="filterbutton" onclick="deleteFeature();return false;">Verwijderen marker</button>';
-
     $('#edit2a').html(html);
     $("#attr_name").click(function(){
         // Select input field contents
@@ -485,11 +484,14 @@ function saveAttributes() {
 }
 
 function featureModifiedCallback(domevent){
-    // you get a handle here to the feature last modified
-    // console.log(feature);
     activeFeature = domevent.feature;
     $('#edit2a').appendTo($('#editviamap'));
-    $('#description').val(domevent.feature.attributes.description);
+    var desc = activeFeature.attributes.description;
+    var name = activeFeature.attributes.name;
+    if (desc == '&nbsp;'){ desc = '';}
+    if (name == '&nbsp;'){ name = '';}
+    $('#attr_name').val(name);
+    $('#description').val(desc);
     autoPopulateInputs();
     $('#edit2a').show();
 }
