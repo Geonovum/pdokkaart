@@ -690,7 +690,7 @@ function addPdokLayer() {
 function createApiLinksAndCode() {
 	var strGeneratedUrlToLongMessage = "";
     var apiLink = api.createMapLink();
-    if (apiLink.length > 2000){
+    if (apiLink.length > 2100){
     	strGeneratedUrlToLongMessage = "De gemaakte URL is langer dan 2000 tekens!\nDe totale lengte is " + apiLink.length + " tekens.\nOmdat hierdoor sommige browsers een foutmelding geven, worden de URL's niet getoond.";
     	$("#generated_url_to_long_message").val(strGeneratedUrlToLongMessage);
 		$("#generated_url_to_long_message").show();
