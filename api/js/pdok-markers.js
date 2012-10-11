@@ -287,97 +287,194 @@ Pdok.Api.prototype.defaultStyles=[
 		graphicYOffset: -16 
 	
 	},	
-	{ 
-		id:'pt1',  
-		fillColor:'red',  
-		strokeColor:'black',  
-		strokeWidth:1,  
-		name:'rood zwart' 
-	}, 
-	{ 
-		id:'pt2',  
-		fillColor:'red',  
-		strokeColor:'black',  
-		strokeWidth:3,  
-		name:'rood zwart 3 pxiel lijn' 
-	}, 
-	{ 
-		id:'pt3',  
-		fillColor:'red',  
-		fillOpacity:1,  
-		strokeColor:'black',  
-		strokeWidth:5,  
-		strokeOpacity:0.5,  
-		name:'rood, zwart, 5px transp. lijn' 
-	}, 
-	{ 
-		id:'pt4',  
-		fillColor:'green',  
-		strokeColor:'blue',  
-		strokeWidth:1,  
-		name:'groen blauw' 
-	}, 
-	{ 
-		id:'pt5',  
-		fillColor:'green',  
-		strokeColor:'blue',  
-		strokeWidth:3,  
-		fillOpacity:0.5,  
-		name:'groen transparante vulling blauwe lijn' 
-	}, 
-	{ 
-		id:'pt6',  
-		fillColor:'#ffff00',  
-		strokeColor:'blue',  
-		strokeWidth:5,  
-		fillOpacity:1,  
-		name:'geel blauw' 
-	}, 
-	{ 
-		id:'lt1',  
-		strokeColor:'red',  
-		strokeWidth:1,  
-		name:'lijn 2' 
-	}, 
+    {
+        id: 'pt1', 
+        fillColor: 'green',
+        fillOpacity: 0.3, 
+        strokeColor: 'green', 
+        strokeWidth: 2, 
+        name: 'Groen transparant'
+    },
+    {
+        id: 'pt2', 
+        fillColor: 'red',
+        fillOpacity: 0.3, 
+        strokeColor: 'red', 
+        strokeWidth: 2, 
+        name: 'Rood transparant'
+    },
+    {
+        id: 'pt3', 
+        fillColor: 'orange',
+        fillOpacity: 0.3, 
+        strokeColor: 'orange', 
+        strokeWidth: 2, 
+        name: 'Oranje transparant'
+    },
+    {
+        id: 'pt4', 
+        fillColor: 'yellow',
+        fillOpacity: 0.3, 
+        strokeColor: 'yellow', 
+        strokeWidth: 2, 
+        name: 'Geel transparant'
+    },
+    {
+        id: 'pt5', 
+        fillColor: '#273397',
+        fillOpacity: 0.3, 
+        strokeColor: 'black', 
+        strokeWidth: 2, 
+        name: 'Blauw transparant'
+    },
+    {
+        id: 'pt6', 
+        fillColor: 'green',
+        fillOpacity: 0.3, 
+        strokeColor: 'black', 
+        strokeWidth: 2, 
+        name: 'Groen transparant'
+    },
+    {
+        id: 'pt7', 
+        fillColor: 'red',
+        fillOpacity: 0.3, 
+        strokeColor: 'black', 
+        strokeWidth: 2, 
+        name: 'Rood transparant'
+    },
+    {
+        id: 'pt8', 
+        fillColor: 'orange',
+        fillOpacity: 0.3, 
+        strokeColor: 'black', 
+        strokeWidth: 2, 
+        name: 'Oranje transparant'
+    },
+    {
+        id: 'pt9', 
+        fillColor: 'yellow',
+        fillOpacity: 0.3, 
+        strokeColor: 'black', 
+        strokeWidth: 2, 
+        name: 'Geel transparant'
+    },
+    {
+        id: 'pt10', 
+        fillColor: '#273397',
+        strokeColor: '#273397', 
+        strokeWidth: 2, 
+        name: 'Blauw'
+    },
+    {
+        id: 'pt11', 
+        fillColor: 'green',
+        strokeColor: 'green', 
+        strokeWidth: 2, 
+        name: 'Groen'
+    },
+    {
+        id: 'pt12', 
+        fillColor: 'red',
+        strokeColor: 'red', 
+        strokeWidth: 2, 
+        name: 'Rood'
+    },
+    {
+        id: 'pt13', 
+        fillColor: 'orange',
+        strokeColor: 'orange', 
+        strokeWidth: 2, 
+        name: 'Oranje'
+    },
+    {
+        id: 'pt14', 
+        fillColor: 'yellow',
+        strokeColor: 'yellow', 
+        strokeWidth: 2, 
+        name: 'Geel'
+    },
+    {
+        id: 'pt15', 
+        strokeColor: '#273397', 
+        strokeWidth: 2, 
+        name: 'Blauw'
+    },
+    {
+        id: 'pt16', 
+        strokeColor: 'green', 
+        strokeWidth: 2, 
+        name: 'Groen'
+    },
+    {
+        id: 'pt17', 
+        strokeColor: 'red', 
+        strokeWidth: 2, 
+        name: 'Rood'
+    },
+    {
+        id: 'pt18', 
+        strokeColor: 'orange', 
+        strokeWidth: 2, 
+        name: 'Oranje'
+    },
+    {
+        id: 'pt19', 
+        strokeColor: 'yellow', 
+        strokeWidth: 2, 
+        name: 'Geel'
+    },
 	{ 
 		id:'lt2',  
-		strokeColor:'red',  
-		strokeWidth:3,  
-		name:'lijn x' 
+		strokeColor:'blue',  
+		strokeWidth:1,  
+		name:'blauw 1px' 
 	}, 
 	{ 
 		id:'lt3',  
-		strokeColor:'red',  
+		strokeColor:'blue',  
 		strokeWidth:5,  
 		strokeOpacity:0.5,  
-		name:'lijn 27'  
+		name:'blauw 5px transparant'  
 	}, 
 	{ 
 		id:'lt4',  
-		strokeColor:'green',  
+		strokeColor:'red',  
 		strokeWidth:1,  
-		name:'lijn6'  
+		name:'rood 1px' 
 	}, 
 	{ 
 		id:'lt5',  
-		strokeColor:'green',  
+		strokeColor:'red',  
 		strokeWidth:3,  
 		strokeOpacity:0.5,  
-		name:'lijn 4'  
+		name:'rood 3px transparant' 
 	}, 
 	{ 
-		id:'lt5',  
-		strokeColor:'green',  
+		id:'lt6',  
+		strokeColor:'red',  
 		strokeWidth:5,  
 		strokeOpacity:0.5,  
-		name:'lijn 4'  
+		name:'rood 5px transparant'  
 	}, 
 	{ 
 		id:'lt7',  
-		strokeColor:'#ffff00',  
-		strokeWidth:5,  
-		strokeOpacity:1,  
+		strokeColor:'green',  
+		strokeWidth:1,  
+		name:'groen 1px'  
+	}, 
+	{ 
+		id:'lt8',  
+		strokeColor:'green',  
+		strokeWidth:3,  
 		strokeOpacity:0.5,  
-		name:'lijn 3' 
-	} 
+		name:'groen 2px transparant'  
+	}, 
+	{ 
+		id:'lt9',  
+		strokeColor:'green',  
+		strokeWidth:5,  
+		strokeOpacity:0.5,  
+		name:'groen 5px transparant'  
+	}
 ]
