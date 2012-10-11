@@ -489,13 +489,6 @@ function featureModifiedCallback(domevent){
     // console.log(feature);
     activeFeature = domevent.feature;
     $('#edit2a').appendTo($('#editviamap'));
-    if(domevent.feature.attributes.name == '&nbsp;'){
-        domevent.feature.attributes.name = '';
-    }
-    $('#attr_name').val(domevent.feature.attributes.name);
-    if(domevent.feature.attributes.description == '&nbsp;'){
-        domevent.feature.attributes.description = '';
-    }
     $('#description').val(domevent.feature.attributes.description);
     autoPopulateInputs();
     $('#edit2a').show();
