@@ -21,16 +21,26 @@
 
 
 Pdok = {};
-Pdok.API_VERSION_NUMBER = '1.0';
+Pdok.API_VERSION_NUMBER = '1.0-rc1';
 
-// The apiurl is the base url for api.js, markertypes etc
-//Pdok.ApiUrl = 'http://pdokkaart.pdokloket.nl/api';
-//Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
-Pdok.ApiUrl = 'http://www.duif.net/pdok/api';
+// CONFIG
 
+// The api-url is the base-url for api.js, markersdefs, layerdefs etc
 // The proxyhost is needed for the geocoder
-OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
+
+// PDOK LOKET PRODUKTIE
+Pdok.ApiUrl = 'http://pdokkaart.pdokloket.nl/api';
+OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
+
+// TEST
+//Pdok.ApiUrl = 'http://www.duif.net/pdok/api';
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+
+// ONTWIKKEL
+//Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+
+
 OpenLayers.ImgPath = './img/';
 
 
