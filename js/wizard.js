@@ -125,7 +125,7 @@ function createOnClickEvents() {
     $('#mapsize1').click( function() { pdok_api_map_resize(300,250) } );
     $('#mapsize2').click( function() { pdok_api_map_resize(400,350) } );
     $('#mapsize3').click( function() { pdok_api_map_resize(550,440) } );
-    $('#maplayerswitcher').click( function() { setLayerSwitcherVisible(maplayerswitcher.checked); } );
+    $('#maplayerswitcher').click( function() { setLayerSwitcherVisible('checked'==$('#maplayerswitcher').attr('checked')); } );
     $('#addpdoklayerbutton').click( function() { addPdokLayer();return false; } );
     $('#addwmslayerbutton').click( function() { addWmsLayer();return false; } );
     $('#addwmtslayerbutton').click( function() { addWmtsLayer();return false; } );
