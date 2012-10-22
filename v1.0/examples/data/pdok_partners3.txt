@@ -1,0 +1,5 @@
+lat	lon	title	description	iconSize	iconOffset	icon
+450000	140000	Ministerie ELenI	Economische Zaken Landbouw en Innovatie	32,37	16,-37	http://pdokkaart.pdokloket.nl/api/markertypes/flag-nl.png
+460000	160000	Kadaster	Kadaster	32,37	-16,-18	http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
+470000	170000	Rijkswaterstaat	Infrastructuur en Milieu	64,72	-32,-36	http://pdokkaart.pdokloket.nl/api/markertypes/vlc.png
+480000	180000	Ministerie IenM	Infrastructuur en Milieu	40,46	-20,-23	http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png

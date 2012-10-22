@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Api by LuukS</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Api</h1>
+        <p>API voor eenvoudig gebruik PDOK en OGC services in websites</p>
+        <p class="view"><a href="https://github.com/LuukS/API">View the Project on GitHub <small>LuukS/API</small></a></p>
+        <ul>
+          <li><a href="https://github.com/LuukS/API/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/LuukS/API/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/LuukS/API">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>API</h1>
+
+<p>API voor eenvoudig gebruik PDOK en OGC services in websites</p>
+Beschikbare parameters:<BR>
+<big>bbox</big><BR>
+Hiermee kan een rechthoek opgegeven worden waarop ingezoomd moet worden<BR>
+Bijvoorbeeld: bbox=130000,450000,150000,470000<BR>
+<big>loc</big><BR>
+Hiermee kan een loctie opgegeven worden waarop ingezoomd moet worden.<BR>
+Bijvoorbeeld: loc=136260,456394<BR>
+<big>mloc</big><BR>
+Hiermee kan een locatie opgegeven worden waar een marker getoond moet worden op de kaart<BR>
+Bijvoorbeeld: mloc=136260,456394<BR>
+<big>mt</big><BR>
+Hiermee kan een voorgedefinieerde marker opgegeven worden. De volgende markertypes zijn beschikbaar:<BR>
+0 <img src="./markertypes/default.png"> dit is het standaard symbool<BR>
+1 <img src="./markertypes/rijk.png"><BR>
+2 <img src="./markertypes/information_blue.png">,&nbsp;
+3 <img src="./markertypes/information_green.png">,&nbsp;
+4 <img src="./markertypes/information_yellow.png"><BR>
+5 <img src="./markertypes/geonovum_blue.png">,&nbsp;
+6 <img src="./markertypes/geonovum_green.png">,&nbsp;
+7 <img src="./markertypes/geonovum_yellow.png"><BR>
+8 <img src="./markertypes/kadaster_blue.png">,&nbsp;
+9 <img src="./markertypes/kadaster_green.png">,&nbsp;
+10 <img src="./markertypes/kadaster_yellow.png"><BR>
+11 <img src="./markertypes/rijk_blue.png">,&nbsp;
+12 <img src="./markertypes/rijk_green.png">,&nbsp;
+13 <img src="./markertypes/rijk_yellow.png"><BR>
+14 <img src="./markertypes/star-3.png"><BR>
+<big>layer</big><BR>
+Hier kan een komma-gescheiden lijst opgegeven worden met namen van kaartlagen welke in de viewer getoond moeten worden<BR>
+Momenteel worden de volgende kaartlagen gebruikt:<BR>
+- AAN,<BR>
+- ADRESSEN,<BR>
+- AHN25M,<BR>
+- BBG2008,<BR>
+- BESCHERMDENATUURMONUMENTEN<BR>,
+- GEMEENTEGRENZEN (dit is een alternatieve opmaak van de bestuurlijke gemeentegrenzen),<BR>
+- GEMEENTEGRENZEN_LABEL (dit is een alternatieve opmaak van de bestuurlijke gemeentegrenzen),<BR>
+- NATIONALE_PARKEN,<BR>
+- NOK2011,<BR>
+- TEXEL_20120423_OUTLINE (dit is een kaart van Texel met de gevectoriseerde Bonnebladen)<BR>
+- TOP10NL (dit is de TMS met de TOP10NL)
+Bijvoorbeeld: layer=AAN,NATIONALE_PARKEN,TEXEL_20120423_OUTLINE<BR>
+De laag welke vooraan in de lijst staat is de onderste laag. Dat betekent dat in het bovenstaande voorbeeld onderop de AAN laag weergegeven wordt, dan de Nationale Parken en dan de omlijning van de gevectoriseerde Bonnebladen.<BR>
+<big>zl</big><BR>
+Hiermee wordt een zoomnivo voor de BRTAchtergrondkaart opgegeven waarop ingezoomd wordt<BR>
+Bijvoorbeeld: zl=9<BR>
+<big>titel</big><BR>
+Hiermee kan een popup met een titel getoond worden indien een marker op de kaart getoond wordt. Deze parameter bevat de titel van de popup<BR>
+<big>tekst</big><BR>
+Hiermee kan een popup van extra tekst voorzien worden indien een marker op de kaart getoond wordt. De popup wordt geopend als op de marker geklikt wordt<BR>
+<big>wmsurl</big><BR>
+Hiermee kan een URL van een WMS opgegeven worden. Als de parameter wmslayers ook is ingevuld zal de WMS aan de kaart worden toegevoegd<BR>
+<big>wmslayers</big><BR>
+Hiermee kan/kunnen de WMS layer(s) opgegeven worden welke aan de kaart moeten worden toegevoegd<BR>
+<big>tmsurl</big><BR>
+Hiermee kan de URL van een TMS opgegeven worden. Als de parameter tmslayer ook is ingevuld zal de TMS aan de kaart worden toegevoegd<BR>
+<big>tmslayer</big><BR>
+Hiermee kan de TMS layer opgegeven worden welke aan de kaart moet worden toegevoegd<BR>
+<big>tmstype</big><BR>
+Hiermee kan de extensie opgegeven worden van de plaatjes van de TMS (voor PDOK services is dit png8, andere mogelijkheden zijn bijvoorbeeld png, jpg of jpeg)<BR>
+<big>ls</big><BR>
+Hiermee kan aangegeven worden dat op de kaart een layerswitch getoond wordt, hiermee kan gekozen worden om de Luchtfoto's (echter pas als deze beschikbaar zijn), de TOP10NL of de BRT Achtergrondkaart als ondergrond gebruikt worden<BR>
+<h3>Demo URL's:<BR>
+<HR>
+<a HREF="./api.html" target="_blank">Default viewer</a><BR>
+<a HREF="./api.html?ls=true" target="_blank">Default viewer met de layerswitch</a><BR>
+<a HREF="./api.html?mloc=136260,456394" target="_blank">Viewer met een marker op de locatie van het nieuwe DLG kantoor in Utrecht</a><BR>
+<a HREF="./api.html?loc=136260,456394&zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie</a><BR>
+<a HREF="./api.html?loc=136260,456394&zl=12&layer=TOP10NL" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie met de TOP10NL</a><BR>
+<a HREF="./api.html?loc=136260,456394&zl=12&mloc=136260,456394" target="_blank">Bovenstaande viewer met marker op de locatie</a><BR>
+<a HREF="./api.html?loc=195000,530000&zl=9&tmsurl=http://geodata.nationaalgeoregister.nl/tms/&tmslayer=nok2011" target="_blank">Viewer ingezoomd op de Weerribben naar nivo 9 en de NOK2011 als TMS toegevoegd aan de kaart</a><BR>
+<a HREF="./api.html?mloc=116653,565299&loc=116653,565299&zl=10&layer=TEXEL_20120423_OUTLINE" target="_blank">Viewer met een marker op Texel, ingezoomd naar nivo 8 en de outline van de Bonnebladen</a><BR>
+<a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
+<a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
+<a HREF="./api.html?bbox=158536,304712,221940,343719&layer=AHN25M,gemeentegrenzen_label" target="_blank">Viewer ingezoomd op Limburg plus de AHN en de alternatieve opmaak van de gemeentekaart met labels</a><BR>
+<a HREF="./api.html?loc=176212,317748&zl=8&mloc=176212,317748&mt=4&layer=gemeentegrenzen_label&titel=Maastricht&tekst=Vrijthof" target="_blank">Viewer ingezoomd op Maastricht plus de alternatieve opmaak van de gemeentekaart met labels en een popup</a><BR>
+<a HREF="./api.html?loc=176212,317748&zl=8&mloc=176212,317748&mt=4&titel=Maastricht&tekst=Vrijthof%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fwww.wigosite.nl%2FMaastrichtoudeprenten%2FV-10_Maastricht_Vrijthof_01_425_v.jpg%22%3E%3CBR%3ELegenda%20snelwegen%3A%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fgeodata.nationaalgeoregister.nl%2Fnwbwegen%2Fwms%3FTRANSPARENT%3Dtrue%26SERVICE%3DWMS%26VERSION%3D1.1.1%26REQUEST%3DGetLegendGraphic%26EXCEPTIONS%3Dapplication%252Fvnd.ogc.se_xml%26LAYER%3Dwegvakken%26FORMAT%3Dimage%252Fgif%22%3E&wmsurl=http://geodata.nationaalgeoregister.nl/nwbwegen/wms&wmslayers=wegvakken,hectopunten" target="_blank">Viewer ingezoomd op Maastricht plus een popup. Tevens wordt de WMS met de NWB wegen geladen in de kaart</a><BR>
+<a HREF="http://luuks.github.com/API/api.html?bbox=104356,473255,130080,481742&layer=gemeentegrenzen_label&wmsurl=http://qgiscloud.com/luuk/westwijk_qgiscloud/wms&wmslayers=westwijk" target="_blank">Viewer ingezoomd op Amstelveen met een WMS van QGISCloud welke de wijken van Westwijk laat zien</a><BR>
+<h3>Demo html pagina's met JavaScript-include:<BR>
+<a HREF="./api-via-javascript.html" target="_blank">Viewer ingezoomd op coordinaat 150.000,450.000, met een custom-marker en een custom popup met images (dit kan alleen via JavaScript)</a><BR>
+<a HREF="./api-via-javascript-add-wms.html" target="_blank">Viewer welke inzoomt op Harlingen en de NOK2011 en de bevaarbaarheid van de Vaarwegen in Nederland laat zien. De legenda wordt in de popup getoond</a><BR>
+<a HREF="./api-via-javascript-add-wms-via-function.html" target="_blank">Viewer welke inzoomt op Amstelveen en een WMS van QGISCloud via een functie toevoegd aan de kaart</a><BR>
+<a HREF="./api-via-javascript-add-tms-via-function.html" target="_blank">Viewer welke inzoomt op IJmuiden en de TOP10NL toevoegt aan de kaart</a><BR>
+<a HREF="./api-via-javascript-add-textlayer.html" target="_blank">Viewer welke de layerswitch toont, plus de Natura2000 en een yab-gescheiden textbestand (volgens het formaat:point	title	description	icon)</a><BR>
+</H3>
+<HR>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/LuukS">LuukS</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="js/scale.fix.js"></script>
+  </body>
+</html>

@@ -1,0 +1,299 @@
+.welkom {
+	float: right;
+	margin: 60px 60px 0 0;
+	width: 300px;
+	border: 1px solid #FFB610;
+}
+
+.welkom p {
+	padding-right: 8px;
+	float: right;
+}
+
+.welkom_titel {
+	width: 292px;
+	background-color: #FFEBB5;
+	font-size: 1.5em;
+	font-weight: 2.2em;
+	padding: 4px;
+}
+
+.welkom ul {
+	margin: 4px;
+}
+
+.kaartvak {
+	width: 330px;
+	margin: 20px 0 0 40px;
+	color: gray;
+}
+
+.kader_rechts {
+	width: 300px;
+	float: right;
+	margin-right: 60px;
+}
+
+.leader_lijst_kolom {
+	width: 180px;
+	float: left;
+}
+
+.provincie_lijst_voorpagina {
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.banner_voorpagina {
+	margin-bottom: 10px;
+}
+
+#popkaart {
+	border: 1px solid #FFB612;
+	width: 440px; height: 312px; float: left;
+}
+
+#projectnaam {
+	width: 435px;
+	height: 20px;
+	background-color: white;
+	z-index: 1000;
+	float: left;
+	position: absolute;
+	margin-top: 288px;
+	padding: 3px 1px 1px 4px;
+	background-color: #ffffff;
+	filter:alpha(opacity=80); /* IE */
+	opacity:0.8; /* CSS3 */
+}
+
+.samenvatting_titel {
+	font-size: 1.4em;
+	font-weight: 2.2em;
+	background-color: #FFE9B7;
+	/* border-bottom: 1px solid #FFB612; */
+	width: 426px;
+	padding: 1px 0 0 8px;
+	min-height: 20px;
+	
+}
+
+#zoekvak {
+	border-left: 1px solid #FFB612;
+	border-top: 1px solid #FFB612;
+	border-right: 1px solid #FFB612;
+	width: 440px;
+	height: 21px;
+	float: left;
+}
+
+.mededelingenvak {
+	width: 100%;
+	border: 0;
+	margin: 10px 0 10px 0;
+}
+
+.zoekvak_knopsubmit {
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 1px solid #FFB612;
+	background-color: #FFEBB5;
+	height: 21px;
+	float: left;
+	cursor: pointer;
+	width: 70px;
+}
+
+.zoekvak_knopwis {
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 1px solid #FFB612;
+	background-color: #FFEBB5;
+	height: 21px;
+	float: left;
+	cursor: pointer;
+	margin-right: 0;
+	width: 100px;
+}
+
+.zoekvak_invoer_div {
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 0;
+	background-color: white;
+	height: 21px;
+	float: left;
+	width: 270px;
+}
+
+.zoekvak_invoer {
+	border: 0;
+	background-color: white;
+	height: 19px;
+	float: left;
+	width: 240px;
+	padding-top: 3px;
+}
+
+#projectgegevens {
+	width: 430px; height: 312px; border: 1px solid #FFB612; float: right; padding: 0;
+	overflow: hidden;
+}
+
+#projectgegevens_naam {
+	background-color: #FFB610;
+	font-weight: bold;
+	font-size: 1.8em;
+	width: 100%;
+}
+
+.provincie_inleiding {
+	padding: 8px;
+}
+
+.provincie_inleiding img {
+	float: right;
+	border: 0;
+}
+
+.legendavak {
+	width: 428px; float: left;
+}
+
+.legendavak img {
+	margin-right: 8px;
+}
+
+.legendavak p {
+	margin: 0;
+	clear: both;
+}
+
+.legendavak input {
+	cursor: pointer;
+	float: left;
+}
+
+.waarschuwing {
+	color: red;
+	font-weight: bold;
+}
+
+.markering {
+	color: #009933; /* #154273 */
+	font-weight: bold;
+}
+
+/* Beheersysteem */
+
+.formulier_label {
+	font-weight: bold;
+	vertical-align: middle;
+	text-align: right;
+	background-color: #EFEFEF;
+	width: 200px;
+}
+
+.formulier_label_groep {
+	vertical-align: middle;
+	text-align: left;
+	background-color: #EFEFEF;
+	width: 200px;
+}
+
+.formulier_veld_invoer {
+	width: 410px;
+	border: 1px solid #CCCCCC;
+}
+
+
+.formulier_veld {
+	width: 425px;
+}
+
+.popkaart_bewerken {
+	width: 400px;
+	height: 250px;
+	border: 1px solid #CCCCCC;
+	z-index: 1000;
+}
+
+.accordeonKnop {	
+	width: 100%;
+	float: left;
+	background-color: #FFEBB5;
+	/*border-bottom: 1px solid #FFFFFF;*/
+	border-left: 1px solid #FFB612;
+	cursor: pointer;
+	padding: 4px 4px 4px 18px;
+	margin-bottom: 1px;
+	font-size: 1.1em;
+}
+ 
+.accordeonMeer {
+	width: 100%;	
+	float: left;
+	background-color: white;
+	display: none;
+}
+
+.accordeonAlgemeen {
+	width: 100%;	
+	float: left;
+	background-color: white;
+}
+
+.knop_opslaan {
+	float: right;
+	background-color: #C2EFC2;
+	border: 1px solid #29A029;
+	padding: 1px 2px 1px 2px;
+}
+
+.knop_verwijderen {
+	float: right;
+	background-color: #FFE1DF;
+	border: 1px solid #D52B1E;
+	padding: 1px 2px 1px 2px;
+}
+
+.knop_terug {
+	float: left;
+	/* background-color: #FFE1DF; */
+	/* border: 1px solid #D52B1E; */
+	padding: 1px 2px 1px 2px;
+	text-decoration: none;
+	margin-right: 30px;
+}
+
+.knop_zoek_wis {
+	margin-left: 10px;
+	border: 1px solid #cccccc;
+	background-color: white;
+}
+
+.optiebalk {
+	height: 20px;
+	margin: 10px 0 10px 0;
+	text-align: center;
+}
+
+.bewerk_pagina_inleiding {
+	background-color: #FFE9B7;
+	border: 1px solid #FFB612;
+	padding: 8px;
+	margin-bottom: 10px;
+	font-size: 1.1em;
+}
+
+.verplicht_veld {
+	color: red;  
+}
+
+select, .redactie_zoekvak {
+	border: 1px solid #cccccc;
+	background-color: white;
+}

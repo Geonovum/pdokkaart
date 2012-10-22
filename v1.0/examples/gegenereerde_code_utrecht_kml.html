@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<script src="../js/jquery.js"></script>
+		<script src="../api/js/OpenLayers.js"></script>
+		<script src="../api/js/proj4js-compressed.js"></script>
+		<script src="../api/js/pdok-api.js"></script>
+		<link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
+<link rel="stylesheet" href="../api/styles/api.css" type="text/css">
+		<script>
+		var config = {
+			"zoom":5,
+			"loc":['135646','458806'],
+			"pdoklayers":'BRT'
+		};
+		function createPDOKKaart() {
+			var api = new Pdok.Api(config);
+			return api;
+		}		
+		OpenLayers.ImgPath="../api/img/";
+		</script>
+	</head>
+	<body>
+		<div id="map"></div>
+		<script>
+//Het zou mooi zijn als deze URL zou kunnen werken: http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms/kml?layers=provgrens_generalisatie_2008&mode=download&CQL_FILTER=pv_naam EQ 'Utrecht'&format=kml
+			var api = createPDOKKaart();
+			var layer = new OpenLayers.Layer.Vector("KML", {
+				projection: "EPSG:4326",
+				strategies: [new OpenLayers.Strategy.Fixed()],
+				protocol: new OpenLayers.Protocol.HTTP({
+					url: "./data/utrecht.kml",
+					format: new OpenLayers.Format.KML({
+						extractStyles: true,
+						extractAttributes: true
+					})
+				})
+			});
+			// Het zetten van de displayProjection is nodig omdat anders de KML bij Parijs getoond wordt
+			api.map.displayProjection = api.map.getProjection();
+			api.map.addLayer(layer);
+		</script>
+	</body>
+</html>

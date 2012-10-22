@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<script src="../api/js/OpenLayers.js"></script>
+		<script src="../api/js/proj4js-compressed.js"></script>
+		<script src="../api/js/pdok-api.js"></script>
+		<link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
+<link rel="stylesheet" href="../api/styles/api.css" type="text/css">
+		<script>var config = {
+		"zoom":7,
+		"loc":['119060','570880'],
+		"pdoklayers":'BRT,TOP50VECTOR',
+			"features":'<kml xmlns="http://earth.google.com/kml/2.0"><Folder><Placemark><name>De Slufter</name><description>&lt;a href="http://www.npduinenvantexel.nl/page/Natuur/De-Slufter-en-de-Muy" target="_blank"&gt;Website&lt;/a&gt;&lt;BR&gt;Zo zag het er vroeger uit:&lt;BR&gt;&lt;img src="http://mapserver.sara.nl/bonne_vect/cgi-bin/mapserv?map=bonne_vect.map&amp;LAYERS=NEDERLAND_20120908_OUTLINE&amp;TRANSPARENT=true&amp;FORMAT=image%2Fgif&amp;SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;STYLES=&amp;SRS=EPSG:28992&amp;BBOX=116083.18,572601.66,118300.78,574819.26&amp;WIDTH=400&amp;HEIGHT=400"&gt;</description><Point><coordinates>4.815576834099498,53.14168733521495</coordinates></Point><ExtendedData><Data name="styletype"><value>mt3</value></Data></ExtendedData></Placemark></Folder></kml>'
+		};
+		function createPDOKKaart() {var api = new Pdok.Api(config);return api;}
+		OpenLayers.ImgPath="../api/img/";
+		</script>
+	</head>
+	<body>
+		<div id="map"></div>
+		<script>
+			var api = createPDOKKaart();
+		</script>
+	</body>
+</html>

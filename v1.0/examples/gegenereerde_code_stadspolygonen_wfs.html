@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<script src="../js/jquery.js"></script>
+		<script src="../api/js/OpenLayers.js"></script>
+		<script src="../api/js/proj4js-compressed.js"></script>
+		<script src="../api/js/pdok-api.js"></script>
+		<link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
+<link rel="stylesheet" href="../api/styles/api.css" type="text/css">
+		<script>
+		var config = {
+			"zoom":7,
+			"loc":['119974.56','500535.68'],
+			"pdoklayers":'BRT'
+		};
+		function createPDOKKaart() {
+			var api = new Pdok.Api(config);
+			return api;
+		}		
+		OpenLayers.ImgPath="../api/img/";
+		</script>
+	</head>
+	<body>
+		<div id="map"></div>
+		<script>
+			var api = createPDOKKaart();
+			var layer = new OpenLayers.Layer.Vector("WFS", {
+				strategies: [new OpenLayers.Strategy.BBOX()],
+				protocol: new OpenLayers.Protocol.WFS({
+				url:  "http://geodata.nationaalgeoregister.nl/ahn25m/wfs",
+				featureType: "stadspolygonen",
+				featureNS: "http://ahn25m.geonovum.nl",
+				geometryName: "geom"
+				})
+			});
+			api.map.addLayer(layer);
+		</script>
+	</body>
+</html>
+
