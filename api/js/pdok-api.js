@@ -21,7 +21,7 @@
 
 
 Pdok = {};
-Pdok.API_VERSION_NUMBER = '1.0-rc1';
+Pdok.API_VERSION_NUMBER = '1.0.0';
 
 // CONFIG
 
