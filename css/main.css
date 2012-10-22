@@ -83,6 +83,10 @@ li {
     padding: 0px;
 }
 
+.labelSpan, .baseLbl, .dataLbl {
+    font-size: 10px;
+}
+
 .popInWindow {
 	/* background-color: #303030; */
 	background-color: #FFFFFF;
