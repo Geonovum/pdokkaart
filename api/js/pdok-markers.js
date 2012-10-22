@@ -7,6 +7,7 @@
  * a polygon marker 
  */ 
  
+
 Pdok.Api.prototype.defaultStyles=[ 
         // all point marker styles will use mt0 as default 
         // so you only have to define the props that are different from mt0 
@@ -14,7 +15,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt1', 
 		name: 'Informatiebord blauw', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/emblem-notice.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/emblem-notice.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -22,7 +23,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt2', 
 		name: 'Ster', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/bookmark-4.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/bookmark-4.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -30,7 +31,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt3', 
 		name: 'Stip groen', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/circle_green.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/circle_green.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -38,7 +39,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt4', 
 		name: 'Stip rood', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/circle_red.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/circle_red.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -46,7 +47,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt5', 
 		name: 'Stip paars', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/circle_purple.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/circle_purple.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -54,7 +55,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt6', 
 		name: 'Vlag groen', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/flag-2.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/flag-2.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicXOffset: -7,
@@ -63,7 +64,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt7', 
 		name: 'Vlag blauw', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/flag-blue.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicXOffset: -7,
@@ -72,7 +73,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt8', 
 		name: 'Vlag rood', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/flag-red.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/flag-red.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicXOffset: -7,
@@ -81,7 +82,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt9', 
 		name: 'Vlag geel', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/flag-yellow.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/flag-yellow.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicXOffset: -7,
@@ -90,7 +91,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt10', 
 		name: 'Vlag zwart', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/flag-black.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/flag-black.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicXOffset: -7,
@@ -99,7 +100,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt11', 
 		name: 'Smiley', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/amor-3.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/amor-3.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -107,7 +108,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt12', 
 		name: 'Stoplicht', 
-		externalGraphic: "http://pdokkaart.pdokloket.nl/api/markertypes/daemons.png", 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/daemons.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -115,7 +116,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt13', 
 		name: 'Werkzaamheden pion', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/vlc.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/vlc.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -123,7 +124,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt14', 
 		name: 'Werkzaamheden bord', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/happydigger.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/happydigger.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -132,7 +133,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt15', 
 		name: 'Stop', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-road_signs-stop_sign.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/pictograms-road_signs-stop_sign.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -140,7 +141,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt16', 
 		name: 'Verplichte rijrichting', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictographs-ahead_only.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/pictographs-ahead_only.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -149,7 +150,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt17', 
 		name: 'Horeca', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/kteatime-2.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/kteatime-2.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -157,7 +158,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt18', 
 		name: 'Voetgangersgebied', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictograms-protections-10.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/pictograms-protections-10.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -165,7 +166,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt19', 
 		name: 'Electriciteit', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/preferences-web-browser-cache-2.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/preferences-web-browser-cache-2.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -173,7 +174,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt20', 
 		name: 'Rolstoel toegankelijk', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/preferences-desktop-accessibility-6.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/preferences-desktop-accessibility-6.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -181,7 +182,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt21', 
 		name: 'Wifi beschikbaar', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/wifi-radar.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/wifi-radar.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -189,7 +190,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt22', 
 		name: 'Telefoon', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/call-start.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/call-start.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -197,7 +198,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt23', 
 		name: 'Kruis rood', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/dialog-cancel.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/dialog-cancel.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -205,7 +206,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt24', 
 		name: 'Pion', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/im-user.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/im-user.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -213,7 +214,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt25', 
 		name: 'Vlag', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/flag-nl.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/flag-nl.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -221,7 +222,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt26', 
 		name: 'Verzamelplaats', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictogram-din-e011-meeting_point.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/pictogram-din-e011-meeting_point.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -229,7 +230,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt27', 
 		name: 'Afvalbak', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictographs-keep_tidy_inside.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/pictographs-keep_tidy_inside.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -237,7 +238,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt28', 
 		name: 'Waarschuwing', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/emblem-important.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/emblem-important.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -245,7 +246,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt29', 
 		name: 'Voetstappen', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/goto.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/goto.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -254,7 +255,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt30', 
 		name: 'Brandblusser', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictogram-din-f005extinguisher.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/pictogram-din-f005extinguisher.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -263,7 +264,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt31', 
 		name: 'Bagagekluis', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/pictographs-baggage_lockers_inv.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/pictographs-baggage_lockers_inv.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -272,7 +273,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt32', 
 		name: 'Lampje', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/light_bulb.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/light_bulb.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
@@ -281,7 +282,7 @@ Pdok.Api.prototype.defaultStyles=[
 	{ 
 		id: 'mt33', 
 		name: 'Zon', 
-		externalGraphic: 'http://pdokkaart.pdokloket.nl/api/markertypes/gadu.png', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/gadu.png', 
 		graphicHeight: 32, 
 		graphicWidth: 32, 
 		graphicYOffset: -16 
