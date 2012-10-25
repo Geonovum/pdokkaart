@@ -1623,14 +1623,23 @@ Pdok.Api.prototype.getConfig = function() {
             doFeatures = false;
         }
         if (doFeatures) {
-            var kmlformat = new OpenLayers.Format.KML({
-                foldersDesc: null,
-                foldersName: null,
-                placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
-                internalProjection: this.map.baseLayer.projection,
-                externalProjection: new OpenLayers.Projection("EPSG:4326")
-            });
-            config.features=kmlformat.write(this.featuresLayer.features);
+            // If only one feature is added and this is a point then use the parameter mloc
+            if (this.featuresLayer.features.length == 1 && this.featuresLayer.features[0].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
+            	config.mloc = this.featuresLayer.features[0].geometry.x + "," + this.featuresLayer.features[0].geometry.y;
+            	config.titel = this.featuresLayer.features[0].attributes.name;
+            	config.tekst =  this.featuresLayer.features[0].attributes.description;
+            	config.mt = this.featuresLayer.features[0].attributes.styletype;
+            }
+			else{
+				var kmlformat = new OpenLayers.Format.KML({
+					foldersDesc: null,
+					foldersName: null,
+					placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
+					internalProjection: this.map.baseLayer.projection,
+					externalProjection: new OpenLayers.Projection("EPSG:4326")
+				});
+				config.features=kmlformat.write(this.featuresLayer.features);
+			}
         }
     }
     return config;
