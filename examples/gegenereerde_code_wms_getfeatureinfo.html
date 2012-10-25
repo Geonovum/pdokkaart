@@ -48,7 +48,8 @@
 	        });
 	        api.map.addControl(info);
 	        info.activate();
-	        OpenLayers.ProxyHost = "http://localhost/cgi-bin/proxy.cgi?url=";
+	        //OpenLayers.ProxyHost = "http://localhost/cgi-bin/proxy.cgi?url="; // for development purposes
+			OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
 		</script>
 	</body>
 </html>
