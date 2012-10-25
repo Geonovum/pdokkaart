@@ -1169,6 +1169,7 @@ Pdok.Api.prototype.enableLocationTool = function(){
             }
             else {
                 apiObject.locationLayer.removeAllFeatures();
+                apiObject.removeFormCoordinates();
                 apiObject.startLocationTool();
             }
             return false;
@@ -1209,6 +1210,23 @@ Pdok.Api.prototype.enableLocationTool = function(){
     return true;
 }
 
+Pdok.Api.prototype.removeFormCoordinates = function(){
+    var apiObject = this;
+	if (apiObject.locationtoolxfield && apiObject.locationtoolyfield) {
+		apiObject[apiObject.locationtoolxfield] = "";
+		apiObject[apiObject.locationtoolyfield] = "";
+		if (document.getElementById(apiObject.locationtoolxfield) && document.getElementById(apiObject.locationtoolyfield)) {
+			document.getElementById(apiObject.locationtoolxfield).value = ""
+			document.getElementById(apiObject.locationtoolyfield).value = ""
+		}
+	}
+	if (apiObject.locationtoolwktfield) {
+		apiObject[apiObject.locationtoolwktfield] = "";
+		if (document.getElementById(apiObject.locationtoolwktfield)){
+			document.getElementById(apiObject.locationtoolwktfield).value = "";
+		}
+	}
+}
 
 Pdok.Api.prototype.startLocationTool = function(){
     this.disableLocationTool();  // to be sure we do not have two drawfeature controls active at once
@@ -1237,7 +1255,7 @@ Pdok.Api.prototype.startLocationTool = function(){
         }
         currentDrawControl = this.drawLocationLineControl;
         currentDrawControl.handler.style = this.styles[this.locationtoolstyle];
-        currentDrawControl.handler.style.externalGraphic = null;
+        //currentDrawControl.handler.style.externalGraphic = null;
     }
     else if (this.locationtoolstyle[0]=='p'){
         if (this.drawLocationPolygonControl==null){
