@@ -1240,7 +1240,7 @@ Pdok.Api.prototype.startLocationTool = function(){
     if (this.locationtoolstyle == undefined) {
         this.locationtoolstyle = 'mt0';
     }
-    if (this.locationtoolstyle[0]=='m'){
+    if (this.locationtoolstyle.charAt(0)=='m'){
         if (this.drawLocationPointControl==null){
             this.drawLocationPointControl = new OpenLayers.Control.DrawFeature(this.locationLayer, OpenLayers.Handler.Point);
             this.map.addControl(this.drawLocationPointControl);
@@ -1248,7 +1248,7 @@ Pdok.Api.prototype.startLocationTool = function(){
         currentDrawControl = this.drawLocationPointControl;
         //currentDrawControl.handler.style = this.styles[this.locationtoolstyle];
     }
-    else if (this.locationtoolstyle[0]=='l'){
+    else if (this.locationtoolstyle.charAt(0)=='l'){
         if (this.drawLocationLineControl==null){
             this.drawLocationLineControl = new OpenLayers.Control.DrawFeature(this.locationLayer, OpenLayers.Handler.Path);
             this.map.addControl(this.drawLocationLineControl);
@@ -1257,7 +1257,7 @@ Pdok.Api.prototype.startLocationTool = function(){
         currentDrawControl.handler.style = this.styles[this.locationtoolstyle];
         //currentDrawControl.handler.style.externalGraphic = null;
     }
-    else if (this.locationtoolstyle[0]=='p'){
+    else if (this.locationtoolstyle.charAt(0)=='p'){
         if (this.drawLocationPolygonControl==null){
             this.drawLocationPolygonControl = new OpenLayers.Control.DrawFeature(this.locationLayer, OpenLayers.Handler.Polygon);
             this.map.addControl(this.drawLocationPolygonControl);
