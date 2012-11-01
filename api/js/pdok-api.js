@@ -218,9 +218,9 @@ Pdok.Api = function(config) {
     this.div = 'map';
 
     /**
-     * Reference to the graphic URL for the marker
+     * Reference to an image URL for the marker. To be used in combination with mloc
      */
-    this.externalGraphic = null;
+    this.mimg = null;
 
     /**
      * Reference to the graphic radius for the marker
@@ -292,6 +292,8 @@ Pdok.Api = function(config) {
 
     // create this.styles, based on either this.defaultStyles object, OR via a this.customStyles object (TODO)
     this.createStyles();
+
+
 
     if (config) {
         // hack to make x and y fields null
@@ -451,6 +453,11 @@ Pdok.Api.prototype.createOlMap = function() {
         this.addLayers(['BRT'], olMap);
     }
 
+    // possiblitiy to override externalGraphic of mt0
+    if (this.mimg != null){
+        this.styles['mt0'].externalGraphic = this.mimg;
+    }
+
     // apply WMSURL and WMSLAYERS if applicable
     if ((this.wmsurl != null) && (this.wmslayers != null)) {
         this.addWMS(this.wmsurl, this.wmslayers);
@@ -519,7 +526,6 @@ Pdok.Api.prototype.createOlMap = function() {
         }
         this.features.push(this.createFeature(wkt, this.mt, this.titel, this.tekst));
     }
-
 
     // selectControl for popups
     this.selectControl = new OpenLayers.Control.SelectFeature(
@@ -1621,6 +1627,9 @@ Pdok.Api.prototype.getConfig = function() {
         if (this.txturl) {
             config.txturl = this.txturl;
             doFeatures = false;
+        }
+        if (this.mimg != null){
+            config.mimg = this.mimg;
         }
         if (doFeatures) {
             // If only one feature is added and this is a point then use the parameter mloc
