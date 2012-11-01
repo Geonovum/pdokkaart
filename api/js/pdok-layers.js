@@ -137,7 +137,7 @@ Pdok.Api.prototype.defaultLayers = {
     GEMEENTEGRENZEN_LABEL: {
         layertype: 'WMS',
         name: 'Gemeentegrenzen met labels 2012 (WMS)',
-        url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=http://luuks.github.com/API/gemeentegrenzen_label_grijs_gestippeld.sld',
+        url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld='+Pdok.ApiUrl+'/sld/gemeentegrenzen_label_grijs_gestippeld.sld',
         layers: 'gemeenten_2012',
         transparent: 'true',
         format: 'image/png',
