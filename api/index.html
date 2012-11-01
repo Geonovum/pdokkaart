@@ -223,9 +223,9 @@
 	Hiermee kan de URL van een WMTS opgegeven worden.<BR/>
 	Bijvoorbeeld: wmtsurl=http://geodata.nationaalgeoregister.nl/wmts/<BR/>
 	<BR/>
-	<big>zl</big><BR/>
+	<big>zoom</big><BR/>
 	Hiermee wordt een zoomnivo voor de BRTAchtergrondkaart opgegeven waarop ingezoomd wordt<BR/>
-	Bijvoorbeeld: zl=9<BR/>
+	Bijvoorbeeld: zoom=9<BR/>
 	<BR/>
 
 <h3>Demo URL's:<BR>
@@ -235,15 +235,15 @@
 <a HREF="./api.html?mloc=136260,456394&mt=mt0" target="_blank">Viewer met een marker op de locatie van het nieuwe DLG kantoor in Utrecht</a><BR>
 <a HREF="./api.html?loc=136260,456394&zl=12" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie</a><BR>
 <a HREF="./api.html?loc=136260,456394&zl=12&layer=TOP10NL" target="_blank">Viewer ingezoomd naar nivo 12 en de bovenstaande locatie met de TOP10NL</a><BR>
-<a HREF="./api.html?loc=136260,456394&zl=12&mloc=136260,456394" target="_blank">Bovenstaande viewer met marker op de locatie</a><BR>
-<a HREF="./api.html?loc=195000,530000&zl=9&tmsurl=http://geodata.nationaalgeoregister.nl/tms/&tmslayer=nok2011" target="_blank">Viewer ingezoomd op de Weerribben naar nivo 9 en de NOK2011 als TMS toegevoegd aan de kaart</a><BR>
-<a HREF="./api.html?mloc=116653,565299&loc=116653,565299&zl=10&layer=TEXEL_20120423_OUTLINE" target="_blank">Viewer met een marker op Texel, ingezoomd naar nivo 8 en de outline van de Bonnebladen</a><BR>
+<a HREF="./api.html?loc=136260,456394&zoom=12&mloc=136260,456394" target="_blank">Bovenstaande viewer met marker op de locatie</a><BR>
+<a HREF="./api.html?loc=136260,456394&zoom=12&mloc=136260,456394&mimg=http://lorempixel.com/32/32/city&titel=DLG Centraal&tekst=Sint Jacobsstraat 200, Utrecht" target="_blank">Bovenstaande viewer met een gegenereerde marker op de locatie van DLG</a><BR>
+<a HREF="./api.html?loc=195000,530000&zoom=9&tmsurl=http://geodata.nationaalgeoregister.nl/tms/&tmslayer=nok2011" target="_blank">Viewer ingezoomd op de Weerribben naar nivo 9 en de NOK2011 als TMS toegevoegd aan de kaart</a><BR>
 <a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
 <a HREF="./api.html?mloc=136260,456394&bbox=130000,450000,150000,470000&layer=gemeentegrenzen" target="_blank">Viewer ingezoomd op een bounding box plus de alternatieve opmaak van de gemeentekaart</a><BR>
 <a HREF="./api.html?bbox=158536,304712,221940,343719&layer=AHN25M,gemeentegrenzen_label" target="_blank">Viewer ingezoomd op Limburg plus de AHN en de alternatieve opmaak van de gemeentekaart met labels</a><BR>
-<a HREF="./api.html?loc=176212,317748&zl=8&mloc=176212,317748&mt=4&layer=gemeentegrenzen_label&titel=Maastricht&tekst=Vrijthof" target="_blank">Viewer ingezoomd op Maastricht plus de alternatieve opmaak van de gemeentekaart met labels en een popup</a><BR>
-<a HREF="./api.html?loc=176212,317748&zl=8&mloc=176212,317748&mt=4&titel=Maastricht&tekst=Vrijthof%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fwww.wigosite.nl%2FMaastrichtoudeprenten%2FV-10_Maastricht_Vrijthof_01_425_v.jpg%22%3E%3CBR%3ELegenda%20snelwegen%3A%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fgeodata.nationaalgeoregister.nl%2Fnwbwegen%2Fwms%3FTRANSPARENT%3Dtrue%26SERVICE%3DWMS%26VERSION%3D1.1.1%26REQUEST%3DGetLegendGraphic%26EXCEPTIONS%3Dapplication%252Fvnd.ogc.se_xml%26LAYER%3Dwegvakken%26FORMAT%3Dimage%252Fgif%22%3E&wmsurl=http://geodata.nationaalgeoregister.nl/nwbwegen/wms&wmslayers=wegvakken,hectopunten" target="_blank">Viewer ingezoomd op Maastricht plus een popup. Tevens wordt de WMS met de NWB wegen geladen in de kaart</a><BR>
-<a HREF="http://luuks.github.com/API/api.html?bbox=104356,473255,130080,481742&layer=gemeentegrenzen_label&wmsurl=http://qgiscloud.com/luuk/westwijk_qgiscloud/wms&wmslayers=westwijk" target="_blank">Viewer ingezoomd op Amstelveen met een WMS van QGISCloud welke de wijken van Westwijk laat zien</a><BR>
+<a HREF="./api.html?loc=176212,317748&zoom=8&mloc=176212,317748&mt=4&layer=gemeentegrenzen_label&titel=Maastricht&tekst=Vrijthof" target="_blank">Viewer ingezoomd op Maastricht plus de alternatieve opmaak van de gemeentekaart met labels en een popup</a><BR>
+<a HREF="./api.html?loc=176212,317748&zoom=8&mloc=176212,317748&mt=4&titel=Maastricht&tekst=Vrijthof%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fwww.wigosite.nl%2FMaastrichtoudeprenten%2FV-10_Maastricht_Vrijthof_01_425_v.jpg%22%3E%3CBR%3ELegenda%20snelwegen%3A%3CBR%3E%3Cimg%20src%3D%22http%3A%2F%2Fgeodata.nationaalgeoregister.nl%2Fnwbwegen%2Fwms%3FTRANSPARENT%3Dtrue%26SERVICE%3DWMS%26VERSION%3D1.1.1%26REQUEST%3DGetLegendGraphic%26EXCEPTIONS%3Dapplication%252Fvnd.ogc.se_xml%26LAYER%3Dwegvakken%26FORMAT%3Dimage%252Fgif%22%3E&wmsurl=http://geodata.nationaalgeoregister.nl/nwbwegen/wms&wmslayers=wegvakken,hectopunten" target="_blank">Viewer ingezoomd op Maastricht plus een popup. Tevens wordt de WMS met de NWB wegen geladen in de kaart</a><BR>
+<a HREF="./api.html?bbox=104356,473255,130080,481742&layer=gemeentegrenzen_label&wmsurl=http://qgiscloud.com/luuk/westwijk_qgiscloud/wms&wmslayers=westwijk" target="_blank">Viewer ingezoomd op Amstelveen met een WMS van QGISCloud welke de wijken van Westwijk laat zien</a><BR>
 <h3>Demo html pagina's met JavaScript-include:<BR>
 <a HREF="./api-via-javascript.html" target="_blank">Viewer ingezoomd op coordinaat 150.000,450.000, met een custom-marker en een custom popup met images (dit kan alleen via JavaScript)</a><BR>
 <a HREF="./api-via-javascript-add-wms.html" target="_blank">Viewer welke inzoomt op Harlingen en de NOK2011 en de bevaarbaarheid van de Vaarwegen in Nederland laat zien. De legenda wordt in de popup getoond</a><BR>
