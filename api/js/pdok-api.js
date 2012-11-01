@@ -1,5 +1,6 @@
 /**
  * @class Pdok.Api
+ *
  * 
  * Class implements an API for an easy to use embedding of
  * our pre-defined mapservices in any website with an OpenLayers slippy map.
@@ -10,17 +11,22 @@
  * 
  *  <iframe width="400" height="300" frameborder="0" 
  *    scrolling="no" marginheight="0" marginwidth="0" 
- *    src="api/api.html?mloc=136260,456394&loc=136260,456394&zl=8"
+ *    src="api/api.html?mloc=136260,456394&loc=136260,456394&zoom=8"
  *  >
  * OR
  *  <iframe width="400" height="300" frameborder="0" 
  *    scrolling="no" marginheight="0" marginwidth="0" 
- *    src="api/api.html?mloc=136260,456394&mt=1&bbox=130000,450000,150000,470000"
+ *    src="api/api.html?mloc=136260,456394&bbox=130000,450000,150000,470000"
  *  >
  */
 
+/** 
+ * Pdok namespace, will hold Api namespace
+ * @namespace 
+ */
+Pdok = {}; 
 
-Pdok = {};
+// current PdokKaartApi version
 Pdok.API_VERSION_NUMBER = '1.0.0';
 
 // CONFIG
@@ -52,7 +58,7 @@ OpenLayers.Feature.Vector.style['default'].fillOpacity = 0.8;
 OpenLayers.Feature.Vector.style['temporary'].pointRadius = 0;
 OpenLayers.Feature.Vector.style['temporary'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['temporary'].fillColor = 'red';
-
+// some translations
 OpenLayers.Lang["nl"] = OpenLayers.Util.applyDefaults({
     'unhandledRequest': "Het verzoek is niet afgehandeld met de volgende melding: ${statusText}",
     'Permalink': "Permanente verwijzing",
@@ -113,176 +119,373 @@ else {
 // inject a script include for the layersdef, being either an external or the api included one
 document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script>');
 
+/**
+ * Creates an instance of the Pdok Api based on an optional config object <a href="#constructor">more ...</a>
+ * 
+ * <p>If there is not a config object, all properties of the api have a default value.</p>
+ * 
+ * The config object is a hash object like: <pre>{ loc:'150000,380000', div:'map' }</pre>
+ * 
+ * <p>The OpenLayers.Util.getParamaters() function returns such an object.
+ * Giving the possiblitiy to create an Api object which uses url params in just
+ * two lines of code:</p>
+ * <pre>
+ *    var config = OpenLayers.Util.getParameters();
+ *    api = Pdok.Api(config);
+ * </pre>
+ * All properties of the config object are overriding default values of Api
+ *
+ * @constructor
+ * @this {Pdok.Api}
+ * @param {Object} config A hash object with all possible config key/value pairs
+ */
 Pdok.Api = function(config) {
 
     /**
-     * Reference to the zoomlevel object
+     * The zoom level property = the zoom level to start in (between 0 and 14)
+     * 
+     * @type int
      */
     this.zoom = null;
 
 	/**
-     * Reference to the location object
+     * The location (x,y) to zoom to. A x,y commaseparated String (epsg:28992)
+     * @type String
      */
     this.loc = null;
 
     /**
-     * Reference to the BBOX object
+     * A boundingbox (w,s,e,n) to zoom to. A commaseparated String of west,south,east,north
+     * @type String
      */
     this.bbox = null;
 
     /**
-     * Reference to layers
+     * A commaseparated list of pdok id's (defined in pdok-layers.js). Eg: 'brt,top10'
+     * @type String
      */
     this.pdoklayers = null;
 
     /**
-     * Reference to map object
+     * Reference to OpenLayers Map object
+     * @type OpenLayers.Map
      */
     this.map = null;
 
     /**
-     * Reference to markerlocation object
+     * The location to put a marker. mloc = markerlocation
+     *
+     * By giving a mloc param (eg 125000,450000) in the config or querystring, a marker will be placed on that point (using mt0 as style)
+     * @type String
      */
     this.mloc = null;
 
     /**
-     * Reference to markertype object
+     * Reference to an image URL for the marker. To be used in combination with mloc
+     *
+     * It is overriding the mt0 externalGraphic image
+     * @type = URL
+     */
+    this.mimg = null;
+
+
+    /**
+     * Markertype property. You can set a mt (styletype) for your mloc. Eg 'mt3'
+     * @type String
      */
     this.mt = null;
 
     /**
-     * if a popup should be used or not
+     * If a popup should be used or not. Defaults to true
+     * @type boolean
      */
     this.showPopup = true;
 
     /**
-     * if a popup should be used or not
+     * If a popup hover should be used or not Defaults to false
+     * @type boolean
      */
     this.hoverPopup = false;
 
     /**
-     * Reference to popup titel object
+     * Reference to popup titel, only used in case of the use of mloc
+     * @type String
      */
     this.titel = null;
 
     /**
-     * Reference to markertype object
+     * Reference to popup text, only used in case of the use of mloc
+     * @type String
      */
     this.tekst = null;
 
     /**
-     * Reference to Textfile URL object
+     * an URL to a text file, to be used loaded as features
+     *
+     * The text file format is determined by the OpenLayers.Format.Text Class
+     * 
+     * <p>Examples of such txt files:
+     * <pre>
+     * point  title   description
+     * # defaulting to epsg:28992 / RD
+     * # !!!!!! FIRST Y THEN X
+     * 517000,117960  foo omschrijving foo
+     * 511800,222000  faa omschrijving faa
+     * 541611,155111  fii omschrijving fii
+     * # alternative epsg:4326 / LatLon
+     * #52.64,4.84    foo omschrijving foo
+     * #52.59,6.38    faa omschrijving faa
+     * #51.73,5.39    fii omschrijving fii
+     * <pre>
+     * or 
+     * <pre>
+     * * lat  lon title   description
+     * # defaulting to epsg:28992 / RD
+     * # !!!!!! FIRST Y THEN X
+     * 517000 117960  foo omschrijving foo
+     * 511800 222000  faa omschrijving faa
+     * 541611 155111  fii omschrijving fii
+     * # alternative epsg:4326 / LatLon
+     * #52.64 4.84    foo omschrijving foo
+     * #52.59 6.38    faa omschrijving faa
+     * #51.73 5.39    fii omschrijving fii
+     * </pre>
+     * or an example with images and their dimensions
+     * <pre>
+     * lat   lon title   description iconSize    iconOffset  icon
+     * 450000 140000  Ministerie ELenI    Economische Zaken Landbouw en Innovatie 32,37   16,-37  http://pdokkaart.pdokloket.nl/api/markertypes/flag-nl.png
+     * 460000 160000  Kadaster    Kadaster    32,37   -16,-18 http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
+     * 470000 170000  Rijkswaterstaat Infrastructuur en Milieu    64,72   -32,-36 http://pdokkaart.pdokloket.nl/api/markertypes/vlc.png
+     * 480000 180000  Ministerie IenM Infrastructuur en Milieu    40,46   -20,-23 http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
+     * </pre>
+     * @see <a href="../../../documentatie/examples/data/test1.txt">test1.txt</a>
+     * @see <a href="../../../documentatie/examples/data/test2.txt">test2.txt</a>
+     *
+     * @type URL
      */
     this.txturl = null;
 
     /**
-     * Reference to WMTS related properties
+     * Wmts URL to be used as wmts layer. Always together with a wmtslayer and wmtsmatrixset parameter
+     * @type URL
      */
     this.wmtsurl = null;
+
+    /**
+     * The layername of the wmts service. ALways together with a wmtsurl and wmtsmatrixset paramater
+     * @type String
+     */
     this.wmtslayer = null;
+
+    /**
+     * The matrixset of the wmts service. ALways together with a wmtsurl and wmtslayer paramater
+     * @type String
+     */
     this.wmtsmatrixset = null;
 
     /**
-     * Reference to WMS related properties
+     * The WMS url to be used as a wms layer. Always together with a wmslayers parameter
+     * @type URL
      */
     this.wmsurl = null;
+
+    /**
+     * The wms layers paramater, a commaseparated string of layername(s). Always together with a wmsurl paramater
+     * @type String
+     */
     this.wmslayers = null;
 
     /**
-     * Reference to TMS related properties
+     * The TMS url to be loaded as a layer. Always together with tmslayer
+     * @type URL
      */
     this.tmsurl = null;
+    /**
+     * The tms layer paramater, a layer name of the tms service. Always together with a tmsurl paramater
+     * @type String
+     */
     this.tmslayer = null;
+    /**
+     * The tmstype paramater, the image format to use (defaults to .png). Always together with a tmsurl and tmslayer paramater
+     * @type String
+     */
     this.tmstype = 'png';
 
     /**
-     * Reference to KML related property
+     * Url to a KML file, to be used as feature layer (note that in KML coordinates always in wgs84/latlon)
+     * <p>
+     * An example of a minimalistic KML:
+     * <pre>
+     *  &lt;kml xmlns="http://earth.google.com/kml/2.0"&gt;
+     *  &lt;Placemark&gt;
+     *  &lt;name&gt;Naam&lt;/name&gt;
+     *  &lt;description&gt;Omschrijving&lt;/description&gt;
+     *  &lt;Point&gt;&lt;coordinates&gt;4.835397256016842,53.03622449301179&lt;/coordinates&gt;&lt;/Point&gt;
+     *  &lt;/Placemark&gt;
+     *  &lt;/kml&gt;·
+     * <pre>
+     * Or one in which we define one of our styletypes;
+     * <pre>
+     *  &lt;kml xmlns="http://earth.google.com/kml/2.0"&gt;
+     *  &lt;Placemark&gt;
+     *  &lt;name&gt;Naam&lt;/name&gt;
+     *  &lt;description&gt;Omschrijving&lt;/description&gt;
+     *  &lt;Point&gt;&lt;coordinates&gt;4.835397256016842,53.03622449301179&lt;/coordinates&gt;&lt;/Point&gt;
+     *  &lt;ExtendedData&gt;&lt;Data name="styletype"&gt;&lt;value&gt;mt3&lt;/value&gt;&lt;/Data&gt;&lt;/ExtendedData&gt;
+     *  &lt;/Placemark&gt;
+     *  &lt;/kml&gt;·
+     * <pre>
+     * </p>
+     * The Styles in the KML will be used by default. If you do not want that, set the kmlstyles parameter to false
+     * @type URL
      */
     this.kmlurl = null;
-    this.kmlstyles = false; // default to NOT taking internal KML styling into account
 
     /**
-     * Reference to layerswitch object
+     * Property to determine if the internal styles of a KML file should be used for visualisation. 
+     *
+     * Defaults to false. In that case our styletype mt0 will be used. Of which the externalGraphic can be overridden via the mimg (markerimg) parameter
+     * @type Boolean
      */
+    this.kmlstyles = true; // defaults to taking internal KML styling into account
+
+    // Reference to layerswitch object (not to be used at the moment)
     this.ls = false;
-        
+
     /**
-     * Reference to the OpenLayers LayerSwitcher object
+     * To determine if the layer switcher should be shown or not. Defaults to true
+     * @type Boolean
      */
     this.showlayerswitcher = true;
 
     /**
      * Reference to the DIV-id the map should be rendered in.
      * Note that you have to set this one to have two maps in one page!
+     * @type String
      */
     this.div = 'map';
 
-    /**
-     * Reference to an image URL for the marker. To be used in combination with mloc
-     */
-    this.mimg = null;
-
-    /**
-     * Reference to the graphic radius for the marker
-     */
-    this.pointRadius = null;
-
 	/**
-     * Reference to the styles object with all marker, lines and polygon rules
+     * Reference to internal styles Object with all marker, lines and polygon rules.
+     *
+     * This Object is created from the pdok-markers.js file. Which is a json file with marker definitions
+     * @type Object
      */
     this.styles = null;
 
+    // internal name of the features layer
     this.FEATURESLAYER_NAME = "Markers";
+
     // this.features can come as KML string from config/params
     // after handling this, it contains an array of features
     this.features = [];
+
     /**
      * Reference to featuresLayer (= layer where you draw feature on)
+     * @type OpenLayers.Layer.Vector
      */
     this.featuresLayer = null;
-    /**
-     * References to different drawing controls
-     */
+
+    // References to different drawing controls we use for the edit tools
     this.drawFeaturePointControl = null;
     this.drawFeatureLineControl = null;
     this.drawFeaturePolygonControl = null;
     this.editFeatureControl = null;
-	
-    /**
-     * References to select control for features in the featurelayer
-     */
+    // References to select control for features in the featurelayer
     this.selectControl = null;
-
-    /**
-     * Reference to locationLayer (= layer to be used by the locationtool)
-     */
+    // Reference to locationLayer (= layer to be used by the locationtool)
     this.locationLayer = null;
-    /**
-     * References to different drawing controls to be used by the locationtool
-     */
+    // References to different drawing controls to be used by the locationtool
     this.drawLocationPointControl = null;
     this.drawLocationLineControl = null;
     this.drawLocationPolygonControl = null;
     this.editLocationControl = null;
+
     /**
-     * Locationtool defaults
+     * Boolean which determines if the Api started in Locationtool/Lokatieprikker modus or not. Defaults to false
+     * @type Boolean
      */
     this.locationtool = false;
+    /**
+     * Style to be used for the locationtool. Defaults to 'mt0'. NOTE: this also determines the TYPE of the locationtool (point, line or polygon) !!
+     * @type String
+     */ 
     this.locationtoolstyle = 'mt0';
+    /**
+     * Name for X field to be used for the locationtool. Defaults to 'x'.
+     * @type String
+     */ 
     this.locationtoolxfield = 'x';
+    /**
+     * Name for Y field to be used for the locationtool. Defaults to 'y'.
+     * @type String
+     */ 
     this.locationtoolyfield = 'y';
+    /**
+     * Name for wkt field to be used for the locationtool. Defaults to 'wkt'. If this field is set, x and y will be ignored.
+     * @type String
+     */ 
     this.locationtoolwktfield = 'wkt';
+    /**
+     * Minimal zoom to be able to set a point in the locationtool modus
+     * @type int
+     */ 
     this.locationtoolzmin = '0';
+    /**
+     * Maximal zoom to be able to set a point in the locationtool modus
+     * @type int
+     */ 
     this.locationtoolzmax = '30';
 
+    /**
+     * Url to a markersdefinition file.
+     * <p>
+     * This is a simple json file with actual style properies like from 
+     * OpenLayers.Feature.Vector.style.default
+     * An example:
+     * <pre>
+     * Pdok.Api.prototype.defaultStyles=[ 
+     *         // all point marker styles will use mt0 as default 
+     *         // so you only have to define the props that are different from mt0 
+     *         // mt0, pt0, lt0 are defined in pdok-api.js, so defining it here will override that one 
+     *     { 
+     *         id: 'mt1', 
+     *         name: 'Informatiebord blauw', 
+     *         externalGraphic: Pdok.ApiUrl + '/markertypes/emblem-notice.png', 
+     *         graphicHeight: 32, 
+     *         graphicWidth: 32, 
+     *         graphicYOffset: -16 
+     *     }, 
+     *     {
+     *         id: 'pt18', 
+     *         fillOpacity: 0.0, 
+     *         strokeColor: 'orange', 
+     *         strokeWidth: 2, 
+     *         name: 'Oranje'
+     *     },
+     *     {
+     *         id:'lt8',  
+     *         strokeColor:'green',  
+     *         strokeWidth:3,  
+     *         strokeOpacity:0.5,  
+     *         name:'groen 2px transparant'  
+     *     }
+     * ]
+     * </pre>
+     * </p>
+     * @type url
+     */
     this.markersdef = null;
+
     // an external markersdef is temporarily parked in Pdok.markersdef
     if (Pdok.markersdef) {
         this.markersdef = ''+Pdok.markersdef;
     }
 
-    // an external layersdef is temporarily parked in Pdok.layersdef
+
     this.layersdef = null;
+
+    // an external layersdef is temporarily parked in Pdok.layersdef
     if (Pdok.layersdef) {
         this.layersdef = ''+Pdok.layersdef;
     }
@@ -290,10 +493,8 @@ Pdok.Api = function(config) {
     this.defaultLayers = OpenLayers.Util.applyDefaults(
         this.defaultPdokLayers, this.defaultLayers);
 
-    // create this.styles, based on either this.defaultStyles object, OR via a this.customStyles object (TODO)
+    // create this.styles, based on either this.defaultStyles object, OR via a this.customStyles object
     this.createStyles();
-
-
 
     if (config) {
         // hack to make x and y fields null
@@ -1320,7 +1521,7 @@ Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
         return
     }
     else if (response.status != 200){
-        alert('Fout bij het ophalen van de url');
+        alert('Fout bij het ophalen van de url\n(Let op: een externe url moet met \'http://\' beginnen) ');
         return
     }
     var data = response.responseText;
@@ -1623,6 +1824,10 @@ Pdok.Api.prototype.getConfig = function() {
         if (this.kmlurl) {
             config.kmlurl = this.kmlurl;
             doFeatures = false;
+            // if kmlstyles
+            if (this.kmlstyles) {
+                config.kmlstyles = true;
+            }
         }
         if (this.txturl) {
             config.txturl = this.txturl;
