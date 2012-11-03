@@ -97,7 +97,7 @@ Pdok.createBaseUri = function(){
     return base;
 }
 
-// it is possible to override the markerdefinitions with a request paramater markersdef
+// it is possible to override the markerdefinitions with a request parameter markersdef
 if( OpenLayers.Util.getParameters()['markersdef'] != null){
     Pdok.markersdef = OpenLayers.Util.getParameters()['markersdef'];
 }
@@ -108,7 +108,7 @@ else {
 // inject a script include for the markersdef, being either an external or the api included one
 document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
 
-// it is possible to override the layerdefinitions with a request paramater layersdef
+// it is possible to override the layerdefinitions with a request parameter layersdef
 if( OpenLayers.Util.getParameters()['layersdef'] != null){
     Pdok.layersdef = OpenLayers.Util.getParameters()['layersdef'];
 }
@@ -126,7 +126,7 @@ document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script
  * 
  * The config object is a hash object like: <pre>{ loc:'150000,380000', div:'map' }</pre>
  * 
- * <p>The OpenLayers.Util.getParamaters() function returns such an object.
+ * <p>The OpenLayers.Util.getParameters() function returns such an object.
  * Giving the possiblitiy to create an Api object which uses url params in just
  * two lines of code:</p>
  * <pre>
@@ -184,7 +184,7 @@ Pdok.Api = function(config) {
      * Reference to an image URL for the marker. To be used in combination with mloc
      *
      * It is overriding the mt0 externalGraphic image
-     * @type = URL
+     * @type URL
      */
     this.mimg = null;
 
@@ -258,9 +258,9 @@ Pdok.Api = function(config) {
      * 470000 170000  Rijkswaterstaat Infrastructuur en Milieu    64,72   -32,-36 http://pdokkaart.pdokloket.nl/api/markertypes/vlc.png
      * 480000 180000  Ministerie IenM Infrastructuur en Milieu    40,46   -20,-23 http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
      * </pre>
+     * </p>
      * @see <a href="../../../documentatie/examples/data/test1.txt">test1.txt</a>
      * @see <a href="../../../documentatie/examples/data/test2.txt">test2.txt</a>
-     *
      * @type URL
      */
     this.txturl = null;
@@ -272,13 +272,13 @@ Pdok.Api = function(config) {
     this.wmtsurl = null;
 
     /**
-     * The layername of the wmts service. ALways together with a wmtsurl and wmtsmatrixset paramater
+     * The layername of the wmts service. ALways together with a wmtsurl and wmtsmatrixset parameter
      * @type String
      */
     this.wmtslayer = null;
 
     /**
-     * The matrixset of the wmts service. ALways together with a wmtsurl and wmtslayer paramater
+     * The matrixset of the wmts service. ALways together with a wmtsurl and wmtslayer parameter
      * @type String
      */
     this.wmtsmatrixset = null;
@@ -290,7 +290,7 @@ Pdok.Api = function(config) {
     this.wmsurl = null;
 
     /**
-     * The wms layers paramater, a commaseparated string of layername(s). Always together with a wmsurl paramater
+     * The wms layers parameter, a commaseparated string of layername(s). Always together with a wmsurl parameter
      * @type String
      */
     this.wmslayers = null;
@@ -301,12 +301,12 @@ Pdok.Api = function(config) {
      */
     this.tmsurl = null;
     /**
-     * The tms layer paramater, a layer name of the tms service. Always together with a tmsurl paramater
+     * The tms layer parameter, a layer name of the tms service. Always together with a tmsurl parameter
      * @type String
      */
     this.tmslayer = null;
     /**
-     * The tmstype paramater, the image format to use (defaults to .png). Always together with a tmsurl and tmslayer paramater
+     * The tmstype parameter, the image format to use (defaults to .png). Always together with a tmsurl and tmslayer parameter
      * @type String
      */
     this.tmstype = 'png';
@@ -510,9 +510,14 @@ Pdok.Api = function(config) {
     this.createOlMap();
 }
 
-
+// Array will contain OpenLayers.Style Objects
 Pdok.Api.prototype.defaultStyles=[];
 
+/**
+ * Object which holds a Map of an shortname/id to'layer'-configuration objects. All layer objects holds hold an layertype, and other(OpenLayers-option) properties specific for that type of (OpenLayers)-layer.
+ * Be carefull to use the right properties! Eg a OpenLayers-WMS-Layer has a property 'layers' (note the plural form), while the OpenLayers-WMTS-Layer has a property 'layer' (without s!)
+ * @type Object
+ */
 Pdok.Api.prototype.defaultPdokLayers = {
         BRT: {
             layertype: 'WMTS',
@@ -550,9 +555,11 @@ Pdok.Api.prototype.defaultPdokLayers = {
     }
 
 /**
- * @private
  *
- * Creates an OpenLayers Map object due to the given config.
+ * Given all properties of this Api-instance, create an OpenLayers Map object and return it
+ * For internal use only
+ *
+ * @return OpenLayers.Map object
  */
 Pdok.Api.prototype.createOlMap = function() {
     var controls = []
@@ -776,6 +783,11 @@ Pdok.Api.prototype.createOlMap = function() {
     return olMap;
 }
 
+/**
+ * @private
+ * Click handler for a feature to show a popup
+ * Some magic is needed to handle empty popup content
+ */
 Pdok.Api.prototype.onPopupFeatureSelect = function(evt) {
     feature = evt.feature;
     var content = "";
@@ -804,6 +816,11 @@ Pdok.Api.prototype.onPopupFeatureSelect = function(evt) {
     this.map.addPopup(popup, true);
 }
 
+/**
+ * @private
+ * Click handler for a feature to unselect a feature and close the popup
+ * Some magic is needed to handle empty popup content
+ */
 Pdok.Api.prototype.onPopupFeatureUnselect = function(evt) {
     feature = evt.feature;
     if (feature.popup) {
@@ -814,6 +831,10 @@ Pdok.Api.prototype.onPopupFeatureUnselect = function(evt) {
     }
 }
 
+/**
+ * Api method to disable popups in this Api instance
+ * @public
+ */
 Pdok.Api.prototype.disablePopups = function(){
         this.featuresLayer.events.un({
             'featureselected': this.onPopupFeatureSelect,
@@ -821,6 +842,10 @@ Pdok.Api.prototype.disablePopups = function(){
         });
         return true;
 }
+/**
+ * Api method to enable popups in this Api instance
+ * @public
+ */
 Pdok.Api.prototype.enablePopups = function(){
         this.featuresLayer.events.on({
             'featureselected': this.onPopupFeatureSelect,
@@ -832,15 +857,24 @@ Pdok.Api.prototype.enablePopups = function(){
 /**
  * Returns the current map object of this instance.
  * @public
+ * @return OpenLayer.Map object
  */
 Pdok.Api.prototype.getMapObject = function() {
 	return this.map;
 }
 
-
+/**
+ * Method to create a feature based on a wkt string and a typestyle (eg mt3), and giving it a title/name and description.
+ * @depricated only internally used at the moment?
+ * @param {String} wkt a WKT string for the geometry
+ * @param {String} typestyle a style id for a defined style (like mt0, mt3, pt0 or lt0)
+ * @param {String} name a title or name, to be shown as title in the popup
+ * @param {String} wkt a WKT string for the geometry
+ * @returns OpenLayers.Feature
+ */ 
 Pdok.Api.prototype.createFeature = function(wkt, typestyle, name, description){
     var wktFormat = new OpenLayers.Format.WKT();
-    // OpenLayers.Util.getParameters() splits paramaters with comma's into an array
+    // OpenLayers.Util.getParameters() splits parameters with comma's into an array
     // because a LINESTRING wkt contains comma we have to concat them back
     if (wkt instanceof Array) {
         wkt = wkt.join();
@@ -868,6 +902,13 @@ Pdok.Api.prototype.createFeature = function(wkt, typestyle, name, description){
     return feature;
 }
 
+/**
+ * Internal function to create all styles definition into 'this.styles'.
+ *
+ * Every geometry type has a default style: mt0, pt0, lt0. They are based on the OpenLayers.Feature.Vector.style['default']-style.
+ *
+ * By defining an markerdefs url with style definitions more styles will be created.
+ */
 Pdok.Api.prototype.createStyles = function(){
 
     var olDefault = OpenLayers.Feature.Vector.style['default'];
@@ -922,15 +963,17 @@ Pdok.Api.prototype.createStyles = function(){
         var style = this.defaultStyles[i];
         this.styles[style.id] = OpenLayers.Util.applyDefaults( style, pdokDefaultStyle);
     }
+
+    return true;
 }
 
 /**
- *
- * Parameters:
- * styletype - {String} styletype (eg 'mt1' or 'lt1' or 'pt1')
- *       based on the first char of the styletype, the type of feature
- *       is set: m = marker/point, l = linestring, p = polygon
- * featureAddedCallback - {Function{ handler function to be called after feature is added}
+ * Activating/enabling the Api DrawingTool. Important: based on the first char of the styletype, the type of feature geometry is set: m = marker/point, l = linestring, p = polygon
+ * 
+ * It will add a OpenLayers.Control.DrawFeature control to the api, so clicking in the map will generate a feature, to be added in the this.featuresLayer
+ * 
+ * @param {String} styletype (eg 'mt1' or 'lt1' or 'pt1') also determining the geometry type
+ * @param {Function} featureAddedCallback  Function handler to be called after feature is added
  */
 Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback){
     //console.log('enableDrawingTool start');
@@ -983,6 +1026,10 @@ Pdok.Api.prototype.enableDrawingTool = function(styletype, featureAddedCallback)
     return true;
 }
 
+/**
+ * Deactivating/disabling the Api DrawingTool.
+ *
+ */
 Pdok.Api.prototype.disableDrawingTool = function(){
     //console.log('disableDrawingTool');
     if (this.drawFeaturePointControl!=null){
@@ -997,6 +1044,10 @@ Pdok.Api.prototype.disableDrawingTool = function(){
     return true;
 }
 
+/**
+ * Deactivating/disabling the Api EditingTool.
+ *
+ */
 Pdok.Api.prototype.disableEditingTool = function(){
     if (this.editFeatureControl) {
         this.editFeatureControl.deactivate();
@@ -1004,6 +1055,13 @@ Pdok.Api.prototype.disableEditingTool = function(){
     return true;
 }
 
+/**
+ * Api method for ctivating/enabling the Api EditingTool.
+ * 
+ * It will add a OpenLayers.Control.ModifyFeature control to the api, so clicking on a feature in the map will select it and make it editable, and when finished call the featureModifiedFunction
+ * 
+ * @param {Function} featureModifiedFunction  Function handler to be called when you are ready with changing the geometry
+ */
 Pdok.Api.prototype.enableEditingTool = function(featureModifiedFunction){
     if (this.editFeatureControl == null) {
         this.editFeatureControl = new OpenLayers.Control.ModifyFeature(this.featuresLayer);
@@ -1024,6 +1082,11 @@ Pdok.Api.prototype.enableEditingTool = function(featureModifiedFunction){
     return true;
 }
 
+/**
+ * Api method to set the current center of the map.
+ * 
+ * @param {Array or Atring} loc An array of two coordinates: like [x,y] OR a commaseparated String with the two coordinates
+ */
 Pdok.Api.prototype.setLocation = function(loc) {
     // if loc is a string like '150000,450000', split
     if( typeof(loc) == 'string'){
@@ -1033,11 +1096,25 @@ Pdok.Api.prototype.setLocation = function(loc) {
     return true;
 }
 
-Pdok.Api.prototype.setZoomLevel = function(zl) {
-    this.map.zoomTo (zl);
+/**
+ * Api method to set the current zoom level of this Api map
+ * 
+ * @param {integer} zoomlevel the zoomlevel (0 is full map, 14 is fully zoomed in)
+ */
+Pdok.Api.prototype.setZoomLevel = function(zoomlevel) {
+    this.map.zoomTo (zoomlevel);
     return true;
 }
 
+/**
+ * Api helper method to reproject a lat,lon coordinate (epsg:4326/latlon) into an Rijksdriehoekstelsel coordinate (epsg:28992)
+ * NOTE: x = lon and y = lat !!
+ * returning what is called an OpenLayersLonLat-object, but what is actually a coordinate in RD
+ * 
+ * @param {double} lat The latitude value (== the y value in epsg:4326)
+ * @param {double} lon The longitude value (== the x value in epsg:4326)
+ * @returns {OpenLayers.LonLat} the reprojected latlon coordinate actually a RD coordinate
+ */
 Pdok.Api.prototype.reprojectWGS84toRD = function(lat,lon){
 	pointRD = new OpenLayers.LonLat(lon,lat)
         .transform(
@@ -1048,17 +1125,25 @@ Pdok.Api.prototype.reprojectWGS84toRD = function(lat,lon){
 }
 
 /**
- *  Generic api method to add an already constructed OpenLayers layer 
- *  to our map. 
- *  The use of this method guarantees you that locationLayer and featureLayer 
- *  are always on top
+ * Generic api method to add an already constructed OpenLayers layer 
+ * to our map. 
+ * The use of this method guarantees you that locationLayer and featureLayer 
+ * are always on top
  * Can be used to add an external layer to the map.
+ * @param {OpenLayer.Layer} a valid OpenLayers.Layer layer
  */
 Pdok.Api.prototype.addOLLayer = function(openLayersLayer) {
     this.map.addLayer(openLayersLayer);
     this.moveVectorLayersToTop();
 }
 
+/**
+ * Api method to add a TMS layer to the map, based on three strings
+ * 
+ * @param {String} tmsurl a valid URL string
+ * @param {String} tmslayer a valid layername of the above tmsurl service
+ * @param {String} tmstype Optional tmstype, defaulting to 'png'
+ */
 Pdok.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
     if (tmstype == null){
         tmstype="png";
@@ -1072,6 +1157,10 @@ Pdok.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
     return true;
 }
 
+/**
+ * Method to create a TMS layer and add it to the map based on a layer configuration object. Normally you'll use the addTMS method, but you can also use this way.
+ * @param {Object} layerConfigObj a layer configuration object as described in markersdef
+ */
 Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
 
     // default TMS layer object to set defaults:
@@ -1103,6 +1192,15 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
     return layer;
 }
 
+/**
+ * Api method to add a WMTS layer to the map, based on five strings
+ * 
+ * @param {String} wmtsurl a valid URL string
+ * @param {String} wmtslayer a valid layername of the above tmsurl service
+ * @param {String} wmtsmatrixset a valid matrixset id
+ * @param {String} wmtsstyle a valid style (defaults to 'default')
+ * @param {String} wmtsmatrixids (optional) will be created
+ */
 Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtsstyle, wmtsmatrixids) {
     this.wmtsurl = wmtsurl;
     this.wmtslayer = wmtslayer;
@@ -1119,6 +1217,10 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
     return true;
 }
 
+/**
+ * Method to create a WMTS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMTS method, but you can also use this way.
+ * @param {Object} layerConfigObj a layer configuration object as described in markersdef
+ */
 Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
     // From WMTS openlayers example:
     // If tile matrix identifiers differ from zoom levels (0, 1, 2, ...)
@@ -1171,8 +1273,10 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
 }
 
 /**
- * Api Interface
- *
+ * Api method to add a WMS layer to the map, based on two strings
+ * 
+ * @param {String} wmsurl a valid URL string
+ * @param {String} wmslayers a valid layername of the above url service
  */
 Pdok.Api.prototype.addWMS = function(wmsurl,wmslayers) {
     this.wmsurl = wmsurl;
@@ -1186,9 +1290,10 @@ Pdok.Api.prototype.addWMS = function(wmsurl,wmslayers) {
     return true;
 }
 
+
 /**
- * Internal Interface
- *
+ * Method to create a WMS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMS method, but you can also use this way.
+ * @param {Object} layerConfigObj a layer configuration object as described in markersdef
  */
 Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
 
@@ -1228,10 +1333,9 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
 }
 
 /**
- * Api Interface
- * 
- * addLayers to the map, based on their layerkey-names 
- * see Pdok.api.defaultLayers object
+ * Api Interface addLayers to add layers the map, based on their layerkey-names Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'
+ * @param {array} An javascript array of layer names
+ * @param {OpenLayers.Map} the Pdok.Api-map to add the layers to
  */
 Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
 
@@ -1278,7 +1382,9 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     return true;
 }
 
-
+/**
+ * Move the featuresLayer and the locationLayer (layer used by the locationTool) to the top after adding other layers.
+ */
 Pdok.Api.prototype.moveVectorLayersToTop = function(){
     // TODO ??take all vector layers into account??
     if(this.featuresLayer) {
@@ -1290,6 +1396,9 @@ Pdok.Api.prototype.moveVectorLayersToTop = function(){
 }
 
 
+/**
+ * Api method to disable the locationTool (actually deactivate all needed OpenLayers controls)
+ */
 Pdok.Api.prototype.disableLocationTool = function(){
 
     if (this.drawLocationPointControl!=null){
@@ -1306,8 +1415,12 @@ Pdok.Api.prototype.disableLocationTool = function(){
 
 /**
  * Api method to set the api location properties, detached from starting of the
- * locationtool to be able to only configure the tool within a wizard
- *
+ * locationtool to be able to only configure the tool within the wizard
+ * @param {String} styletype a styletype string like mt0 
+ * @param {int} zmin the minimal zoom level the user can click
+ * @param {int} zmaxt the maximal zoom level the user can click
+ * @param {String} xorwkt the name of the field to be used as X-field OR WKT-field (in this case you should not define y)
+ * @param {String} y the name of the field to be used as Y-field (without setting this one the tool will only set WKT field)
  */
 
 Pdok.Api.prototype.setLocationToolProps = function(styletype, zmin, zmax, xorwkt, y){
@@ -1362,6 +1475,9 @@ Pdok.Api.prototype.removeLocationToolProps = function(){
     return true;
 }
 
+/**
+ * Enable the location tool. Either use all locationtool defaults, OR set them via setLocationToolProps method.
+ */
 Pdok.Api.prototype.enableLocationTool = function(){
     var apiObject = this;
 
@@ -1417,6 +1533,9 @@ Pdok.Api.prototype.enableLocationTool = function(){
     return true;
 }
 
+/**
+ * Clean up the locationtool form inputs
+ */
 Pdok.Api.prototype.removeFormCoordinates = function(){
     var apiObject = this;
 	if (apiObject.locationtoolxfield && apiObject.locationtoolyfield) {
@@ -1435,6 +1554,9 @@ Pdok.Api.prototype.removeFormCoordinates = function(){
 	}
 }
 
+/**
+ * Start the locationtool
+ */
 Pdok.Api.prototype.startLocationTool = function(){
     this.disableLocationTool();  // to be sure we do not have two drawfeature controls active at once
 
@@ -1513,7 +1635,10 @@ Pdok.Api.prototype.startLocationTool = function(){
     return true;
 }
 
-
+/**
+ * @private
+ * handle the response to retrieve external features via an ajax request (kml etc)
+ */
 Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
     //  trying to catch proxy errors
     if (response.status == 502 || response.status == 403){
@@ -1529,6 +1654,12 @@ Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
     api.addFeaturesFromString(data, this.dataType, this.zoomToFeatures);
 }
 
+/**
+ * Add features via a String. Either KML or TXT format
+ * @param {String} data actual string of data
+ * @param {String} type String one of 'KML' or 'TXT'
+ * @param {Boolean} zoomToFeatures boolean to determine if we should zoom to the extent of the just added features
+ */
 Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     var format;
     var features;
@@ -1586,7 +1717,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
         else if (type=='TXT' && feature.style.externalGraphic != undefined) {
             //console.log('TXT feature WITH style:', feature.style);
             // this is a TXT feature with some style information
-            // this is possible via the txturl paramater
+            // this is possible via the txturl parameter
             // in combination with OpenLayers.Format.Txt
         }
         else {
@@ -1617,8 +1748,10 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
 }
 
 /**
- *  Deleting layers, visible baseLayer and both internal vector layers
- *  featureLayer and LocationsLayer will never be deleted
+ * Deleting all layers, visible baseLayer and both internal vector layers
+ * featureLayer and LocationsLayer will never be deleted
+ * @param {Boolean} nonVectorLayers delete all non-vector layers
+ * @param {Boolean} VectorLayers delete all vector layers
  */
 Pdok.Api.prototype.deleteLayers = function(nonVectorLayers, vectorLayers) {
     // defaulting to always the nonVectorLayers and NOT the vectorLayer
@@ -1641,6 +1774,12 @@ Pdok.Api.prototype.deleteLayers = function(nonVectorLayers, vectorLayers) {
     }
 }
 
+/**
+ * Add features to the this.featuresLayer of the map via an URL and type
+ * @param url {String} URL of either a text or a kml file to load
+ * @param type {String} type, one of 'KML' or 'TXT'
+ * @param {Boolean} zoomToFeatures boolean to determine if we should zoom to the extent of the just added features
+ */
 Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
 
     var apiObject = this;
@@ -1679,15 +1818,24 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
     return true;
 }
 
+/**
+ * Shorthand to add KML features via a KML url (always zooming to the extent of the KML)
+ */
 Pdok.Api.prototype.addKML = function(url){
     this.addFeaturesFromUrl(url, 'KML', true);
 }
 
 //Wellicht moet dit een andere call worden omdat nu een combinatie van txturl en mloc niet goed gaat
+/**
+ * Shorthand to add TXT features via a TXT url (always zooming to the extent of the TXT)
+ */
 Pdok.Api.prototype.addTxt = function(url){
     this.addFeaturesFromUrl(url, 'TXT', true);
 }
 
+/**
+ * Create the iframe tags string for this instance
+ */
 Pdok.Api.prototype.createIframeTags = function(){
     // map div size
     var mapSize = this.map.getSize();
@@ -1695,6 +1843,9 @@ Pdok.Api.prototype.createIframeTags = function(){
     return iframeTags;
 }
 
+/**
+ * Create the object tags string for this instance
+ */
 Pdok.Api.prototype.createObjectTags = function(){
     // map div size
     var mapSize = this.map.getSize();
@@ -1702,6 +1853,9 @@ Pdok.Api.prototype.createObjectTags = function(){
     return objectTags;
 }
 
+/**
+ * Create the link string for this instance
+ */
 Pdok.Api.prototype.createMapLink = function(){
 	pathname = window.location.pathname;
     if (pathname.toLowerCase().search("index.html") > -1){
@@ -1711,6 +1865,9 @@ Pdok.Api.prototype.createMapLink = function(){
     return 'http://'+base+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
 }
 
+/**
+ * Create the email link string for this instance
+ */
 Pdok.Api.prototype.createMailLink = function(){
 	pathname = window.location.pathname;
     if (pathname.toLowerCase().search("index.html") > -1){
@@ -1720,6 +1877,9 @@ Pdok.Api.prototype.createMailLink = function(){
     return 'mailto:UwMailAdres@provider.nl?Subject=PDOKKaart%20URL&BODY=URL%3A%20' + encodeURIComponent('http://'+base+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig()));
 }
 
+/**
+ * Create the html body string for this instance
+ */
 Pdok.Api.prototype.createHtmlBody = function(){
     var html = '<div id="map"></div>\n'+
                '<script>var  api = createPDOKKaart();\n'+
@@ -1727,6 +1887,9 @@ Pdok.Api.prototype.createHtmlBody = function(){
     return html;
 }
 
+/**
+ * Create the html head string for this instance
+ */
 Pdok.Api.prototype.createHtmlHead = function(){
     var base = Pdok.createBaseUri();
     // styles and layers definitions
@@ -1750,6 +1913,9 @@ Pdok.Api.prototype.createHtmlHead = function(){
     return head;
 }
 
+/**
+ * Api call to get a config object which can be used to start an Api instance in current state
+ */
 Pdok.Api.prototype.getConfig = function() {
     var config = {};
 
@@ -1859,6 +2025,10 @@ Pdok.Api.prototype.getConfig = function() {
     return config;
 }
 
+/**
+ * Method do serialize the config object to a json string
+ * @private
+ */
 Pdok.Api.prototype.serialize = function(obj, stringQuotes){
   var returnVal;
   if(stringQuotes){}else{stringQuotes = false;}
@@ -1913,7 +2083,10 @@ Pdok.Api.prototype.serialize = function(obj, stringQuotes){
   return null;
 }
 
-//Function to toggle visibility of the OpenLayers.LayerSwitcher
+/**
+ * Function to toggle visibility of the OpenLayers.LayerSwitcher
+ * @param {Boolean} isVisible to show the layer or not
+ */
 Pdok.Api.prototype.setLayerSwitcherVisible = function(isVisible){
     if (isVisible){
         this.showlayerswitcher = true;

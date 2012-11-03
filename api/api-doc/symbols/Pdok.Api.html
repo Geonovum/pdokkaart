@@ -271,6 +271,16 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
+								<b><a href="../symbols/Pdok.Api.html#defaultPdokLayers">defaultPdokLayers</a></b>
+								</div>
+								<div class="description">Object which holds a Map of an shortname/id to'layer'-configuration objects.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
 								<b><a href="../symbols/Pdok.Api.html#div">div</a></b>
 								</div>
 								<div class="description">Reference to the DIV-id the map should be rendered in.</div>
@@ -337,7 +347,7 @@ Or one in which we define one of our styletypes;
  &lt;/kml&gt;·
 <pre>
 </p>
-The Styles in the KML will NOT be used by default.</div>
+The Styles in the KML will be used by default.</div>
 							</td>
 						</tr>
 					
@@ -537,7 +547,7 @@ The Styles in the KML will NOT be used by default.</div>
 								<div class="fixedFont">
 								<b><a href="../symbols/Pdok.Api.html#tmslayer">tmslayer</a></b>
 								</div>
-								<div class="description">The tms layer paramater, a layer name of the tms service.</div>
+								<div class="description">The tms layer parameter, a layer name of the tms service.</div>
 							</td>
 						</tr>
 					
@@ -547,7 +557,7 @@ The Styles in the KML will NOT be used by default.</div>
 								<div class="fixedFont">
 								<b><a href="../symbols/Pdok.Api.html#tmstype">tmstype</a></b>
 								</div>
-								<div class="description">The tmstype paramater, the image format to use (defaults to .png).</div>
+								<div class="description">The tmstype parameter, the image format to use (defaults to .png).</div>
 							</td>
 						</tr>
 					
@@ -604,7 +614,8 @@ lat   lon title   description iconSize    iconOffset  icon
 460000 160000  Kadaster    Kadaster    32,37   -16,-18 http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
 470000 170000  Rijkswaterstaat Infrastructuur en Milieu    64,72   -32,-36 http://pdokkaart.pdokloket.nl/api/markertypes/vlc.png
 480000 180000  Ministerie IenM Infrastructuur en Milieu    40,46   -20,-23 http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
-</pre></div>
+</pre>
+</p></div>
 							</td>
 						</tr>
 					
@@ -614,7 +625,7 @@ lat   lon title   description iconSize    iconOffset  icon
 								<div class="fixedFont">
 								<b><a href="../symbols/Pdok.Api.html#wmslayers">wmslayers</a></b>
 								</div>
-								<div class="description">The wms layers paramater, a commaseparated string of layername(s).</div>
+								<div class="description">The wms layers parameter, a commaseparated string of layername(s).</div>
 							</td>
 						</tr>
 					
@@ -692,22 +703,64 @@ lat   lon title   description iconSize    iconOffset  icon
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addLayers">addLayers</a></b>(arrLayerNames, map)
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addFeaturesFromString">addFeaturesFromString</a></b>(data, type, zoomToFeatures)
 								</div>
-								<div class="description">Api Interface
-
-addLayers to the map, based on their layerkey-names 
-see Pdok.api.defaultLayers object</div>
+								<div class="description">Add features via a String.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addOLLayer">addOLLayer</a></b>(openLayersLayer)
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addFeaturesFromUrl">addFeaturesFromUrl</a></b>(url, type, zoomToFeatures)
+								</div>
+								<div class="description">Add features to the this.featuresLayer of the map via an URL and type</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addKML">addKML</a></b>(url)
+								</div>
+								<div class="description">Shorthand to add KML features via a KML url (always zooming to the extent of the KML)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addLayers">addLayers</a></b>(An, the)
+								</div>
+								<div class="description">Api Interface addLayers to add layers the map, based on their layerkey-names Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addOLLayer">addOLLayer</a></b>(a)
 								</div>
 								<div class="description">Generic api method to add an already constructed OpenLayers layer 
- to our map.</div>
+to our map.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addTMS">addTMS</a></b>(tmsurl, tmslayer, tmstype)
+								</div>
+								<div class="description">Api method to add a TMS layer to the map, based on three strings</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addTxt">addTxt</a></b>(url)
+								</div>
+								<div class="description">Shorthand to add TXT features via a TXT url (always zooming to the extent of the TXT)</div>
 							</td>
 						</tr>
 					
@@ -716,7 +769,107 @@ see Pdok.api.defaultLayers object</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addWMS">addWMS</a></b>(wmsurl, wmslayers)
 								</div>
-								<div class="description">Api Interface</div>
+								<div class="description">Api method to add a WMS layer to the map, based on two strings</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#addWMTS">addWMTS</a></b>(wmtsurl, wmtslayer, wmtsmatrixset, wmtsstyle, wmtsmatrixids)
+								</div>
+								<div class="description">Api method to add a WMTS layer to the map, based on five strings</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createFeature">createFeature</a></b>(wkt, typestyle, name, wkt)
+								</div>
+								<div class="description">Method to create a feature based on a wkt string and a typestyle (eg mt3), and giving it a title/name and description.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createHtmlBody">createHtmlBody</a></b>()
+								</div>
+								<div class="description">Create the html body string for this instance</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createHtmlHead">createHtmlHead</a></b>()
+								</div>
+								<div class="description">Create the html head string for this instance</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createIframeTags">createIframeTags</a></b>()
+								</div>
+								<div class="description">Create the iframe tags string for this instance</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createMailLink">createMailLink</a></b>()
+								</div>
+								<div class="description">Create the email link string for this instance</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createMapLink">createMapLink</a></b>()
+								</div>
+								<div class="description">Create the link string for this instance</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createObjectTags">createObjectTags</a></b>()
+								</div>
+								<div class="description">Create the object tags string for this instance</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createOlMap">createOlMap</a></b>()
+								</div>
+								<div class="description">Given all properties of this Api-instance, create an OpenLayers Map object and return it
+For internal use only</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createStyles">createStyles</a></b>()
+								</div>
+								<div class="description">Internal function to create all styles definition into 'this.styles'.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createTMSLayer">createTMSLayer</a></b>(layerConfigObj)
+								</div>
+								<div class="description">Method to create a TMS layer and add it to the map based on a layer configuration object.</div>
 							</td>
 						</tr>
 					
@@ -725,17 +878,62 @@ see Pdok.api.defaultLayers object</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createWMSLayer">createWMSLayer</a></b>(layerConfigObj)
 								</div>
-								<div class="description">Internal Interface</div>
+								<div class="description">Method to create a WMS layer and add it to the map based on a layer configuration object.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#deleteLayers">deleteLayers</a></b>(nonVectorLayers, vectorLayers)
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#createWMTSLayer">createWMTSLayer</a></b>(layerConfigObj)
 								</div>
-								<div class="description">Deleting layers, visible baseLayer and both internal vector layers
- featureLayer and LocationsLayer will never be deleted</div>
+								<div class="description">Method to create a WMTS layer and add it to the map based on a layer configuration object.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#deleteLayers">deleteLayers</a></b>(nonVectorLayers, VectorLayers)
+								</div>
+								<div class="description">Deleting all layers, visible baseLayer and both internal vector layers
+featureLayer and LocationsLayer will never be deleted</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#disableDrawingTool">disableDrawingTool</a></b>()
+								</div>
+								<div class="description">Deactivating/disabling the Api DrawingTool.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#disableEditingTool">disableEditingTool</a></b>()
+								</div>
+								<div class="description">Deactivating/disabling the Api EditingTool.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#disableLocationTool">disableLocationTool</a></b>()
+								</div>
+								<div class="description">Api method to disable the locationTool (actually deactivate all needed OpenLayers controls)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#disablePopups">disablePopups</a></b>()
+								</div>
+								<div class="description">Api method to disable popups in this Api instance</div>
 							</td>
 						</tr>
 					
@@ -744,11 +942,43 @@ see Pdok.api.defaultLayers object</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#enableDrawingTool">enableDrawingTool</a></b>(styletype, featureAddedCallback)
 								</div>
-								<div class="description">Parameters:
-styletype - {String} styletype (eg 'mt1' or 'lt1' or 'pt1')
-      based on the first char of the styletype, the type of feature
-      is set: m = marker/point, l = linestring, p = polygon
-featureAddedCallback - {Function{ handler function to be called after feature is added}</div>
+								<div class="description">Activating/enabling the Api DrawingTool.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#enableEditingTool">enableEditingTool</a></b>(featureModifiedFunction)
+								</div>
+								<div class="description">Api method for ctivating/enabling the Api EditingTool.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#enableLocationTool">enableLocationTool</a></b>()
+								</div>
+								<div class="description">Enable the location tool.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#enablePopups">enablePopups</a></b>()
+								</div>
+								<div class="description">Api method to enable popups in this Api instance</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#getConfig">getConfig</a></b>()
+								</div>
+								<div class="description">Api call to get a config object which can be used to start an Api instance in current state</div>
 							</td>
 						</tr>
 					
@@ -758,6 +988,24 @@ featureAddedCallback - {Function{ handler function to be called after feature is
 								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#getMapObject">getMapObject</a></b>()
 								</div>
 								<div class="description">Returns the current map object of this instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#moveVectorLayersToTop">moveVectorLayersToTop</a></b>()
+								</div>
+								<div class="description">Move the featuresLayer and the locationLayer (layer used by the locationTool) to the top after adding other layers.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#removeFormCoordinates">removeFormCoordinates</a></b>()
+								</div>
+								<div class="description">Clean up the locationtool form inputs</div>
 							</td>
 						</tr>
 					
@@ -774,10 +1022,57 @@ this is necceary to be able to create code and a map link with or without the lo
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#setLocationToolProps">setLocationToolProps</a></b>(styletype, zmin, zmax, xorwkt, y)
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#reprojectWGS84toRD">reprojectWGS84toRD</a></b>(lat, lon)
+								</div>
+								<div class="description">Api helper method to reproject a lat,lon coordinate (epsg:4326/latlon) into an Rijksdriehoekstelsel coordinate (epsg:28992)
+NOTE: x = lon and y = lat !!
+returning what is called an OpenLayersLonLat-object, but what is actually a coordinate in RD</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#setLayerSwitcherVisible">setLayerSwitcherVisible</a></b>(isVisible)
+								</div>
+								<div class="description">Function to toggle visibility of the OpenLayers.LayerSwitcher</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#setLocation">setLocation</a></b>(loc)
+								</div>
+								<div class="description">Api method to set the current center of the map.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#setLocationToolProps">setLocationToolProps</a></b>(styletype, zmin, zmaxt, xorwkt, y)
 								</div>
 								<div class="description">Api method to set the api location properties, detached from starting of the
-locationtool to be able to only configure the tool within a wizard</div>
+locationtool to be able to only configure the tool within the wizard</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#setZoomLevel">setZoomLevel</a></b>(zoomlevel)
+								</div>
+								<div class="description">Api method to set the current zoom level of this Api map</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pdok.Api.html#startLocationTool">startLocationTool</a></b>()
+								</div>
+								<div class="description">Start the locationtool</div>
 							</td>
 						</tr>
 					
@@ -808,7 +1103,7 @@ locationtool to be able to only configure the tool within a wizard</div>
 
 The config object is a hash object like: <pre>{ loc:'150000,380000', div:'map' }</pre>
 
-<p>The OpenLayers.Util.getParamaters() function returns such an object.
+<p>The OpenLayers.Util.getParameters() function returns such an object.
 Giving the possiblitiy to create an Api object which uses url params in just
 two lines of code:</p>
 <pre>
@@ -859,6 +1154,29 @@ All properties of the config object are overriding default values of Api
 					</div>
 					<div class="description">
 						A boundingbox (w,s,e,n) to zoom to. A commaseparated String of west,south,east,north
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="defaultPdokLayers"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Object}</span>
+					<b>defaultPdokLayers</b>
+					
+					</div>
+					<div class="description">
+						Object which holds a Map of an shortname/id to'layer'-configuration objects. All layer objects holds hold an layertype, and other(OpenLayers-option) properties specific for that type of (OpenLayers)-layer.
+Be carefull to use the right properties! Eg a OpenLayers-WMS-Layer has a property 'layers' (note the plural form), while the OpenLayers-WMTS-Layer has a property 'layer' (without s!)
 						
 						
 					</div>
@@ -995,7 +1313,7 @@ Or one in which we define one of our styletypes;
  &lt;/kml&gt;·
 <pre>
 </p>
-The Styles in the KML will NOT be used by default. If you want that, set the kmlstyles parameter to true
+The Styles in the KML will be used by default. If you do not want that, set the kmlstyles parameter to false
 						
 						
 					</div>
@@ -1266,7 +1584,7 @@ Pdok.Api.prototype.defaultStyles=[
 					<a name="mimg"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{= URL}</span>
+					<span class="light">{URL}</span>
 					<b>mimg</b>
 					
 					</div>
@@ -1475,7 +1793,7 @@ This Object is created from the pdok-markers.js file. Which is a json file with 
 					
 					</div>
 					<div class="description">
-						The tms layer paramater, a layer name of the tms service. Always together with a tmsurl paramater
+						The tms layer parameter, a layer name of the tms service. Always together with a tmsurl parameter
 						
 						
 					</div>
@@ -1497,7 +1815,7 @@ This Object is created from the pdok-markers.js file. Which is a json file with 
 					
 					</div>
 					<div class="description">
-						The tmstype paramater, the image format to use (defaults to .png). Always together with a tmsurl and tmslayer paramater
+						The tmstype parameter, the image format to use (defaults to .png). Always together with a tmsurl and tmslayer parameter
 						
 						
 					</div>
@@ -1579,6 +1897,7 @@ lat   lon title   description iconSize    iconOffset  icon
 470000 170000  Rijkswaterstaat Infrastructuur en Milieu    64,72   -32,-36 http://pdokkaart.pdokloket.nl/api/markertypes/vlc.png
 480000 180000  Ministerie IenM Infrastructuur en Milieu    40,46   -20,-23 http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
 </pre>
+</p>
 						
 						
 					</div>
@@ -1609,7 +1928,7 @@ lat   lon title   description iconSize    iconOffset  icon
 					
 					</div>
 					<div class="description">
-						The wms layers paramater, a commaseparated string of layername(s). Always together with a wmsurl paramater
+						The wms layers parameter, a commaseparated string of layername(s). Always together with a wmsurl parameter
 						
 						
 					</div>
@@ -1653,7 +1972,7 @@ lat   lon title   description iconSize    iconOffset  icon
 					
 					</div>
 					<div class="description">
-						The layername of the wmts service. ALways together with a wmtsurl and wmtsmatrixset paramater
+						The layername of the wmts service. ALways together with a wmtsurl and wmtsmatrixset parameter
 						
 						
 					</div>
@@ -1675,7 +1994,7 @@ lat   lon title   description iconSize    iconOffset  icon
 					
 					</div>
 					<div class="description">
-						The matrixset of the wmts service. ALways together with a wmtsurl and wmtslayer paramater
+						The matrixset of the wmts service. ALways together with a wmtsurl and wmtslayer parameter
 						
 						
 					</div>
@@ -1741,18 +2060,15 @@ lat   lon title   description iconSize    iconOffset  icon
 					Method Detail
 				</div>
 				
-					<a name="addLayers"> </a>
+					<a name="addFeaturesFromString"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>addLayers</b>(arrLayerNames, map)
+					<b>addFeaturesFromString</b>(data, type, zoomToFeatures)
 					
 					</div>
 					<div class="description">
-						Api Interface
-
-addLayers to the map, based on their layerkey-names 
-see Pdok.api.defaultLayers object
+						Add features via a String. Either KML or TXT format
 						
 						
 					</div>
@@ -1764,16 +2080,148 @@ see Pdok.api.defaultLayers object
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>arrLayerNames</b>
+									<span class="light fixedFont">{String}</span> <b>data</b>
+									
+								</dt>
+								<dd>actual string of data</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>type</b>
+									
+								</dt>
+								<dd>String one of 'KML' or 'TXT'</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Boolean}</span> <b>zoomToFeatures</b>
+									
+								</dt>
+								<dd>boolean to determine if we should zoom to the extent of the just added features</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="addFeaturesFromUrl"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addFeaturesFromUrl</b>(url, type, zoomToFeatures)
+					
+					</div>
+					<div class="description">
+						Add features to the this.featuresLayer of the map via an URL and type
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>url</b>
+									
+								</dt>
+								<dd>{String} URL of either a text or a kml file to load</dd>
+							
+								<dt>
+									<b>type</b>
+									
+								</dt>
+								<dd>{String} type, one of 'KML' or 'TXT'</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Boolean}</span> <b>zoomToFeatures</b>
+									
+								</dt>
+								<dd>boolean to determine if we should zoom to the extent of the just added features</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="addKML"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addKML</b>(url)
+					
+					</div>
+					<div class="description">
+						Shorthand to add KML features via a KML url (always zooming to the extent of the KML)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>url</b>
 									
 								</dt>
 								<dd></dd>
 							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="addLayers"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addLayers</b>(An, the)
+					
+					</div>
+					<div class="description">
+						Api Interface addLayers to add layers the map, based on their layerkey-names Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
 								<dt>
-									<b>map</b>
+									<span class="light fixedFont">{array}</span> <b>An</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>javascript array of layer names</dd>
+							
+								<dt>
+									<span class="light fixedFont">{OpenLayers.Map}</span> <b>the</b>
+									
+								</dt>
+								<dd>Pdok.Api-map to add the layers to</dd>
 							
 							</dl>
 						
@@ -1790,14 +2238,14 @@ see Pdok.api.defaultLayers object
 					<div class="fixedFont">
 					
 					
-					<b>addOLLayer</b>(openLayersLayer)
+					<b>addOLLayer</b>(a)
 					
 					</div>
 					<div class="description">
 						Generic api method to add an already constructed OpenLayers layer 
- to our map. 
- The use of this method guarantees you that locationLayer and featureLayer 
- are always on top
+to our map. 
+The use of this method guarantees you that locationLayer and featureLayer 
+are always on top
 Can be used to add an external layer to the map.
 						
 						
@@ -1810,7 +2258,91 @@ Can be used to add an external layer to the map.
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>openLayersLayer</b>
+									<span class="light fixedFont">{OpenLayer.Layer}</span> <b>a</b>
+									
+								</dt>
+								<dd>valid OpenLayers.Layer layer</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="addTMS"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addTMS</b>(tmsurl, tmslayer, tmstype)
+					
+					</div>
+					<div class="description">
+						Api method to add a TMS layer to the map, based on three strings
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>tmsurl</b>
+									
+								</dt>
+								<dd>a valid URL string</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>tmslayer</b>
+									
+								</dt>
+								<dd>a valid layername of the above tmsurl service</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>tmstype</b>
+									
+								</dt>
+								<dd>Optional tmstype, defaulting to 'png'</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="addTxt"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addTxt</b>(url)
+					
+					</div>
+					<div class="description">
+						Shorthand to add TXT features via a TXT url (always zooming to the extent of the TXT)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>url</b>
 									
 								</dt>
 								<dd></dd>
@@ -1834,7 +2366,7 @@ Can be used to add an external layer to the map.
 					
 					</div>
 					<div class="description">
-						Api Interface
+						Api method to add a WMS layer to the map, based on two strings
 						
 						
 					</div>
@@ -1846,16 +2378,385 @@ Can be used to add an external layer to the map.
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>wmsurl</b>
+									<span class="light fixedFont">{String}</span> <b>wmsurl</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>a valid URL string</dd>
 							
 								<dt>
-									<b>wmslayers</b>
+									<span class="light fixedFont">{String}</span> <b>wmslayers</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>a valid layername of the above url service</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="addWMTS"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addWMTS</b>(wmtsurl, wmtslayer, wmtsmatrixset, wmtsstyle, wmtsmatrixids)
+					
+					</div>
+					<div class="description">
+						Api method to add a WMTS layer to the map, based on five strings
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>wmtsurl</b>
+									
+								</dt>
+								<dd>a valid URL string</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>wmtslayer</b>
+									
+								</dt>
+								<dd>a valid layername of the above tmsurl service</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>wmtsmatrixset</b>
+									
+								</dt>
+								<dd>a valid matrixset id</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>wmtsstyle</b>
+									
+								</dt>
+								<dd>a valid style (defaults to 'default')</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>wmtsmatrixids</b>
+									
+								</dt>
+								<dd>(optional) will be created</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createFeature"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createFeature</b>(wkt, typestyle, name, wkt)
+					
+					</div>
+					<div class="description">
+						Method to create a feature based on a wkt string and a typestyle (eg mt3), and giving it a title/name and description.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>wkt</b>
+									
+								</dt>
+								<dd>a WKT string for the geometry</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>typestyle</b>
+									
+								</dt>
+								<dd>a style id for a defined style (like mt0, mt3, pt0 or lt0)</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>name</b>
+									
+								</dt>
+								<dd>a title or name, to be shown as title in the popup</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>wkt</b>
+									
+								</dt>
+								<dd>a WKT string for the geometry</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>OpenLayers.Feature</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="createHtmlBody"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createHtmlBody</b>()
+					
+					</div>
+					<div class="description">
+						Create the html body string for this instance
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createHtmlHead"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createHtmlHead</b>()
+					
+					</div>
+					<div class="description">
+						Create the html head string for this instance
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createIframeTags"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createIframeTags</b>()
+					
+					</div>
+					<div class="description">
+						Create the iframe tags string for this instance
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createMailLink"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createMailLink</b>()
+					
+					</div>
+					<div class="description">
+						Create the email link string for this instance
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createMapLink"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createMapLink</b>()
+					
+					</div>
+					<div class="description">
+						Create the link string for this instance
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createObjectTags"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createObjectTags</b>()
+					
+					</div>
+					<div class="description">
+						Create the object tags string for this instance
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createOlMap"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createOlMap</b>()
+					
+					</div>
+					<div class="description">
+						Given all properties of this Api-instance, create an OpenLayers Map object and return it
+For internal use only
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>OpenLayers.Map object</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="createStyles"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createStyles</b>()
+					
+					</div>
+					<div class="description">
+						Internal function to create all styles definition into 'this.styles'.
+
+Every geometry type has a default style: mt0, pt0, lt0. They are based on the OpenLayers.Feature.Vector.style['default']-style.
+
+By defining an markerdefs url with style definitions more styles will be created.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createTMSLayer"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createTMSLayer</b>(layerConfigObj)
+					
+					</div>
+					<div class="description">
+						Method to create a TMS layer and add it to the map based on a layer configuration object. Normally you'll use the addTMS method, but you can also use this way.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>layerConfigObj</b>
+									
+								</dt>
+								<dd>a layer configuration object as described in markersdef</dd>
 							
 							</dl>
 						
@@ -1876,7 +2777,7 @@ Can be used to add an external layer to the map.
 					
 					</div>
 					<div class="description">
-						Internal Interface
+						Method to create a WMS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMS method, but you can also use this way.
 						
 						
 					</div>
@@ -1888,10 +2789,46 @@ Can be used to add an external layer to the map.
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>layerConfigObj</b>
+									<span class="light fixedFont">{Object}</span> <b>layerConfigObj</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>a layer configuration object as described in markersdef</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createWMTSLayer"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>createWMTSLayer</b>(layerConfigObj)
+					
+					</div>
+					<div class="description">
+						Method to create a WMTS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMTS method, but you can also use this way.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>layerConfigObj</b>
+									
+								</dt>
+								<dd>a layer configuration object as described in markersdef</dd>
 							
 							</dl>
 						
@@ -1908,12 +2845,12 @@ Can be used to add an external layer to the map.
 					<div class="fixedFont">
 					
 					
-					<b>deleteLayers</b>(nonVectorLayers, vectorLayers)
+					<b>deleteLayers</b>(nonVectorLayers, VectorLayers)
 					
 					</div>
 					<div class="description">
-						Deleting layers, visible baseLayer and both internal vector layers
- featureLayer and LocationsLayer will never be deleted
+						Deleting all layers, visible baseLayer and both internal vector layers
+featureLayer and LocationsLayer will never be deleted
 						
 						
 					</div>
@@ -1925,18 +2862,118 @@ Can be used to add an external layer to the map.
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>nonVectorLayers</b>
+									<span class="light fixedFont">{Boolean}</span> <b>nonVectorLayers</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>delete all non-vector layers</dd>
 							
 								<dt>
-									<b>vectorLayers</b>
+									<span class="light fixedFont">{Boolean}</span> <b>VectorLayers</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>delete all vector layers</dd>
 							
 							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="disableDrawingTool"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>disableDrawingTool</b>()
+					
+					</div>
+					<div class="description">
+						Deactivating/disabling the Api DrawingTool.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="disableEditingTool"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>disableEditingTool</b>()
+					
+					</div>
+					<div class="description">
+						Deactivating/disabling the Api EditingTool.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="disableLocationTool"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>disableLocationTool</b>()
+					
+					</div>
+					<div class="description">
+						Api method to disable the locationTool (actually deactivate all needed OpenLayers controls)
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="disablePopups"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>disablePopups</b>()
+					
+					</div>
+					<div class="description">
+						Api method to disable popups in this Api instance
+						
+						
+					</div>
+					
+					
+					
 						
 						
 						
@@ -1955,11 +2992,9 @@ Can be used to add an external layer to the map.
 					
 					</div>
 					<div class="description">
-						Parameters:
-styletype - {String} styletype (eg 'mt1' or 'lt1' or 'pt1')
-      based on the first char of the styletype, the type of feature
-      is set: m = marker/point, l = linestring, p = polygon
-featureAddedCallback - {Function{ handler function to be called after feature is added}
+						Activating/enabling the Api DrawingTool. Important: based on the first char of the styletype, the type of feature geometry is set: m = marker/point, l = linestring, p = polygon
+
+It will add a OpenLayers.Control.DrawFeature control to the api, so clicking in the map will generate a feature, to be added in the this.featuresLayer
 						
 						
 					</div>
@@ -1971,18 +3006,131 @@ featureAddedCallback - {Function{ handler function to be called after feature is
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>styletype</b>
+									<span class="light fixedFont">{String}</span> <b>styletype</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>(eg 'mt1' or 'lt1' or 'pt1') also determining the geometry type</dd>
 							
 								<dt>
-									<b>featureAddedCallback</b>
+									<span class="light fixedFont">{Function}</span> <b>featureAddedCallback</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>Function handler to be called after feature is added</dd>
 							
 							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="enableEditingTool"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>enableEditingTool</b>(featureModifiedFunction)
+					
+					</div>
+					<div class="description">
+						Api method for ctivating/enabling the Api EditingTool.
+
+It will add a OpenLayers.Control.ModifyFeature control to the api, so clicking on a feature in the map will select it and make it editable, and when finished call the featureModifiedFunction
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Function}</span> <b>featureModifiedFunction</b>
+									
+								</dt>
+								<dd>Function handler to be called when you are ready with changing the geometry</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="enableLocationTool"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>enableLocationTool</b>()
+					
+					</div>
+					<div class="description">
+						Enable the location tool. Either use all locationtool defaults, OR set them via setLocationToolProps method.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="enablePopups"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>enablePopups</b>()
+					
+					</div>
+					<div class="description">
+						Api method to enable popups in this Api instance
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="getConfig"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>getConfig</b>()
+					
+					</div>
+					<div class="description">
+						Api call to get a config object which can be used to start an Api instance in current state
+						
+						
+					</div>
+					
+					
+					
 						
 						
 						
@@ -2002,6 +3150,63 @@ featureAddedCallback - {Function{ handler function to be called after feature is
 					</div>
 					<div class="description">
 						Returns the current map object of this instance.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>OpenLayer.Map object</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="moveVectorLayersToTop"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>moveVectorLayersToTop</b>()
+					
+					</div>
+					<div class="description">
+						Move the featuresLayer and the locationLayer (layer used by the locationTool) to the top after adding other layers.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="removeFormCoordinates"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removeFormCoordinates</b>()
+					
+					</div>
+					<div class="description">
+						Clean up the locationtool form inputs
 						
 						
 					</div>
@@ -2044,16 +3249,17 @@ this is necceary to be able to create code and a map link with or without the lo
 
 					<hr />
 				
-					<a name="setLocationToolProps"> </a>
+					<a name="reprojectWGS84toRD"> </a>
 					<div class="fixedFont">
 					
-					
-					<b>setLocationToolProps</b>(styletype, zmin, zmax, xorwkt, y)
+					<span class="light">{OpenLayers.LonLat}</span>
+					<b>reprojectWGS84toRD</b>(lat, lon)
 					
 					</div>
 					<div class="description">
-						Api method to set the api location properties, detached from starting of the
-locationtool to be able to only configure the tool within a wizard
+						Api helper method to reproject a lat,lon coordinate (epsg:4326/latlon) into an Rijksdriehoekstelsel coordinate (epsg:28992)
+NOTE: x = lon and y = lat !!
+returning what is called an OpenLayersLonLat-object, but what is actually a coordinate in RD
 						
 						
 					</div>
@@ -2065,36 +3271,219 @@ locationtool to be able to only configure the tool within a wizard
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>styletype</b>
+									<span class="light fixedFont">{double}</span> <b>lat</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The latitude value (== the y value in epsg:4326)</dd>
 							
 								<dt>
-									<b>zmin</b>
+									<span class="light fixedFont">{double}</span> <b>lon</b>
 									
 								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>zmax</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>xorwkt</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>y</b>
-									
-								</dt>
-								<dd></dd>
+								<dd>The longitude value (== the x value in epsg:4326)</dd>
 							
 							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{OpenLayers.LonLat}</span> the reprojected latlon coordinate actually a RD coordinate</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="setLayerSwitcherVisible"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setLayerSwitcherVisible</b>(isVisible)
+					
+					</div>
+					<div class="description">
+						Function to toggle visibility of the OpenLayers.LayerSwitcher
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Boolean}</span> <b>isVisible</b>
+									
+								</dt>
+								<dd>to show the layer or not</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setLocation"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setLocation</b>(loc)
+					
+					</div>
+					<div class="description">
+						Api method to set the current center of the map.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Array or Atring}</span> <b>loc</b>
+									
+								</dt>
+								<dd>An array of two coordinates: like [x,y] OR a commaseparated String with the two coordinates</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setLocationToolProps"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setLocationToolProps</b>(styletype, zmin, zmaxt, xorwkt, y)
+					
+					</div>
+					<div class="description">
+						Api method to set the api location properties, detached from starting of the
+locationtool to be able to only configure the tool within the wizard
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>styletype</b>
+									
+								</dt>
+								<dd>a styletype string like mt0</dd>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>zmin</b>
+									
+								</dt>
+								<dd>the minimal zoom level the user can click</dd>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>zmaxt</b>
+									
+								</dt>
+								<dd>the maximal zoom level the user can click</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>xorwkt</b>
+									
+								</dt>
+								<dd>the name of the field to be used as X-field OR WKT-field (in this case you should not define y)</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>y</b>
+									
+								</dt>
+								<dd>the name of the field to be used as Y-field (without setting this one the tool will only set WKT field)</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setZoomLevel"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setZoomLevel</b>(zoomlevel)
+					
+					</div>
+					<div class="description">
+						Api method to set the current zoom level of this Api map
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{integer}</span> <b>zoomlevel</b>
+									
+								</dt>
+								<dd>the zoomlevel (0 is full map, 14 is fully zoomed in)</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="startLocationTool"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>startLocationTool</b>()
+					
+					</div>
+					<div class="description">
+						Start the locationtool
+						
+						
+					</div>
+					
+					
+					
 						
 						
 						
@@ -2117,7 +3506,7 @@ locationtool to be able to only configure the tool within a wizard
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Nov 01 2012 15:24:49 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Nov 03 2012 16:03:43 GMT+0100 (CET)
 		</div>
 	</body>
 </html>
