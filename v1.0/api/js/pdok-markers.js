@@ -287,7 +287,23 @@ Pdok.Api.prototype.defaultStyles=[
 		graphicWidth: 32, 
 		graphicYOffset: -16 
 	
-	},	
+	},
+    {
+        id: 'mt34',
+        name: 'Standaard marker',
+        externalGraphic: Pdok.ApiUrl+"/markertypes/document-properties.png",
+        graphicHeight: 32,
+        graphicWidth: 32,
+        graphicYOffset: -32
+    },
+    {
+        id: 'mt35',
+        name: 'Parkeren',
+        externalGraphic: Pdok.ApiUrl+"/markertypes/parkeren.jpg",
+        graphicHeight: 32,
+        graphicWidth: 32,
+        graphicYOffset: -32
+    },
     {
         id: 'pt1', 
         fillColor: 'green',

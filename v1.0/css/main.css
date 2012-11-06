@@ -281,7 +281,7 @@ button, x:-moz-any-link {
 #searchForm {
     display:block;
 }
-#addviamap, #addviaurltxt, #step3, #step4, #wktfield, #xfield, #yfield, #locationtoolzooms {
+#addviamap, #addviaurltxt, #step3, #step4, #wktfield, #urlfield, #xfield, #yfield, #locationtoolzooms {
     display:none
 }
 #maplayerswitcher {
