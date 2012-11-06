@@ -427,6 +427,11 @@ Pdok.Api = function(config) {
      */ 
     this.locationtoolwktfield = 'wkt';
     /**
+     * Name for url field to be used for the locationtool. Defaults to 'url'.
+     * @type String
+     */ 
+    this.locationtoolurlfield = 'url';
+    /**
      * Minimal zoom to be able to set a point in the locationtool modus
      * @type int
      */ 
@@ -768,7 +773,7 @@ Pdok.Api.prototype.createOlMap = function() {
     this.featuresLayer.addFeatures(this.features);
 
     // enable Locationtool IF this.locationtool is set via config
-    if (this.locationtool){
+    if (this.locationtool == true || this.locationtool == 'true'){
         var xorwkt = this.locationtoolwktfield;
         if(this.locationtoolyfield){
             yorwkt = this.locationtoolyfield;
@@ -776,6 +781,7 @@ Pdok.Api.prototype.createOlMap = function() {
         this.enableLocationTool( this.locationtoolstyle,
             this.locationtoolzmin,
             this.locationtoolzmax,
+            this.locationtoolurl,
             xorwkt,
             this.locationtoolyfield
             );
@@ -1419,11 +1425,12 @@ Pdok.Api.prototype.disableLocationTool = function(){
  * @param {String} styletype a styletype string like mt0 
  * @param {int} zmin the minimal zoom level the user can click
  * @param {int} zmaxt the maximal zoom level the user can click
+ * @param {String} url the name of the field to be filled with the url to current state of the map
  * @param {String} xorwkt the name of the field to be used as X-field OR WKT-field (in this case you should not define y)
  * @param {String} y the name of the field to be used as Y-field (without setting this one the tool will only set WKT field)
  */
 
-Pdok.Api.prototype.setLocationToolProps = function(styletype, zmin, zmax, xorwkt, y){
+Pdok.Api.prototype.setLocationToolProps = function(styletype, zmin, zmax, url, xorwkt, y){
 
     //console.log('setting locationtoolprops: '+styletype+' '+zmin+' '+ zmax+' '+ xorwkt+' '+y);
     this.locationtool = true;
@@ -1445,6 +1452,9 @@ Pdok.Api.prototype.setLocationToolProps = function(styletype, zmin, zmax, xorwkt
     else {
         // default to x y field from api defaults
         this.locationtoolwktfield = null; // NO wkt
+    }
+    if(url){
+        this.locationtoolurlfield = url;
     }
     // be carefull not to use if(zmin) or if(zmax), they can be 0 (which solves to false)
     if(zmin != undefined){
@@ -1469,6 +1479,7 @@ Pdok.Api.prototype.removeLocationToolProps = function(){
     this.locationtoolstyle = 'mt0';
     this.locationtoolxfield = 'x';
     this.locationtoolyfield = 'y';
+    this.locationtoolurlfield = 'url';
     this.locationtoolwktfield = 'wkt';
     this.locationtoolzmin = '0';
     this.locationtoolzmax = '30';
@@ -1491,6 +1502,11 @@ Pdok.Api.prototype.enableLocationTool = function(){
                 apiObject.disableLocationTool();
             }
             else {
+                // features from api.locationLayer are already copied to the api.featuresLayer
+                // we have to remove those (and ONLY those) from the api.featuresLayer
+                var locationtoolFeatures = apiObject.locationLayer.features;
+                apiObject.featuresLayer.removeFeatures(locationtoolFeatures);
+                // now remove them from locationLayer also
                 apiObject.locationLayer.removeAllFeatures();
                 apiObject.removeFormCoordinates();
                 apiObject.startLocationTool();
@@ -1538,20 +1554,26 @@ Pdok.Api.prototype.enableLocationTool = function(){
  */
 Pdok.Api.prototype.removeFormCoordinates = function(){
     var apiObject = this;
-	if (apiObject.locationtoolxfield && apiObject.locationtoolyfield) {
-		apiObject[apiObject.locationtoolxfield] = "";
-		apiObject[apiObject.locationtoolyfield] = "";
-		if (document.getElementById(apiObject.locationtoolxfield) && document.getElementById(apiObject.locationtoolyfield)) {
-			document.getElementById(apiObject.locationtoolxfield).value = ""
-			document.getElementById(apiObject.locationtoolyfield).value = ""
-		}
-	}
-	if (apiObject.locationtoolwktfield) {
-		apiObject[apiObject.locationtoolwktfield] = "";
-		if (document.getElementById(apiObject.locationtoolwktfield)){
-			document.getElementById(apiObject.locationtoolwktfield).value = "";
-		}
-	}
+    if (apiObject.locationtoolxfield && apiObject.locationtoolyfield) {
+        apiObject[apiObject.locationtoolxfield] = "";
+        apiObject[apiObject.locationtoolyfield] = "";
+        if (document.getElementById(apiObject.locationtoolxfield) && document.getElementById(apiObject.locationtoolyfield)) {
+            document.getElementById(apiObject.locationtoolxfield).value = ""
+            document.getElementById(apiObject.locationtoolyfield).value = ""
+        }
+    }
+    if (apiObject.locationtoolwktfield) {
+        apiObject[apiObject.locationtoolwktfield] = "";
+        if (document.getElementById(apiObject.locationtoolwktfield)){
+            document.getElementById(apiObject.locationtoolwktfield).value = "";
+        }
+    }
+    if (apiObject.locationtoolurlfield) {
+        apiObject[apiObject.locationtoolurlfield] = "";
+        if (document.getElementById(apiObject.locationtoolurlfield)){
+            document.getElementById(apiObject.locationtoolurlfield).value = "";
+        }
+    }
 }
 
 /**
@@ -1624,6 +1646,12 @@ Pdok.Api.prototype.startLocationTool = function(){
             apiObject[apiObject.locationtoolwktfield] = wktFormat.write(feature);
             if (document.getElementById(apiObject.locationtoolwktfield)){
                 document.getElementById(apiObject.locationtoolwktfield).value = wktFormat.write(feature);
+            }
+        }
+        if (apiObject.locationtoolurlfield) {
+            apiObject[apiObject.locationtoolurlfield] = apiObject.createMapLink();
+            if (document.getElementById(apiObject.locationtoolurlfield)){
+                document.getElementById(apiObject.locationtoolurlfield).value = apiObject.createMapLink();
             }
         }
         currentDrawControl.deactivate();
@@ -1857,24 +1885,28 @@ Pdok.Api.prototype.createObjectTags = function(){
  * Create the link string for this instance
  */
 Pdok.Api.prototype.createMapLink = function(){
-	pathname = window.location.pathname;
-    if (pathname.toLowerCase().search("index.html") > -1){
-    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
+    var uri = Pdok.createBaseUri();
+    var pathname = window.location.pathname;
+    if (pathname.toLowerCase().search("api.html") > -1){
+        uri += 'api.html';
+    } // little hack to make our own examples work
+    else if (pathname.toLowerCase().search("examples") > -1){
+        uri = uri.replace('examples/','');
+        uri += 'api/api.html';
     }
-    base = window.location.host + pathname;
-    return 'http://'+base+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig());
+    else {
+        uri += 'api/api.html';
+    }
+    var config = this.getConfig();
+    config.locationtool = false;
+    return uri + '?'+OpenLayers.Util.getParameterString(config);
 }
 
 /**
  * Create the email link string for this instance
  */
 Pdok.Api.prototype.createMailLink = function(){
-	pathname = window.location.pathname;
-    if (pathname.toLowerCase().search("index.html") > -1){
-    	pathname = window.location.pathname.substr(0,window.location.pathname.toLowerCase().search("index.html"));
-    }
-    base = window.location.host + pathname;
-    return 'mailto:UwMailAdres@provider.nl?Subject=PDOKKaart%20URL&BODY=URL%3A%20' + encodeURIComponent('http://'+base+'api/api.html?'+OpenLayers.Util.getParameterString(this.getConfig()));
+    return 'mailto:UwMailAdres@provider.nl?Subject=PDOKKaart%20URL&BODY=URL%3A%20' + encodeURIComponent( this.createMapLink() );
 }
 
 /**
@@ -1967,6 +1999,7 @@ Pdok.Api.prototype.getConfig = function() {
             config.locationtoolxfield = this.locationtoolxfield;
             config.locationtoolyfield = this.locationtoolyfield;
         }
+        config.locationtoolurlfield = this.locationtoolurlfield;
         config.locationtoolzmin = this.locationtoolzmin;
         config.locationtoolzmax = this.locationtoolzmax;
     }
@@ -1978,6 +2011,12 @@ Pdok.Api.prototype.getConfig = function() {
     if(this.layersdef) {
         config.layersdef = this.layersdef;
     }
+
+    if (this.locationLayer.features.length==1) {
+        var locationtoolFeature = this.locationLayer.features[0];
+        this.featuresLayer.addFeatures([locationtoolFeature]);
+    }
+
     // kmlurl OR txturl OR features
     // at this moment NOT a combination of these two
     // all features from KML or TXT are added to 'featureslayer'
@@ -1987,6 +2026,8 @@ Pdok.Api.prototype.getConfig = function() {
     // so for now: there is either a kmlurl and/or a txturl OR only features as parameter
     if (this.featuresLayer.features.length>0) {
         var doFeatures = true;
+        // if features came from a kml/txt-url, do NOT write features yourself, only use kmlurl
+        // NOTE: so at this moment it is NOT possible to use kmlurl PLUS wizard features!!
         if (this.kmlurl) {
             config.kmlurl = this.kmlurl;
             doFeatures = false;

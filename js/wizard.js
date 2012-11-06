@@ -261,13 +261,14 @@ function createLocationToolLogic() {
         if (this.id=='none'){
             api.removeLocationToolProps();
             // hide all field inputs
-            $('#yfield,#xfield,#wktfield').hide();
+            $('#urlfield,#yfield,#xfield,#wktfield').hide();
             $('#locationtoolzooms').hide();
         }
         else {
             $('#locationtoolzooms').show();
             var xorwkt = $('#wktfield input').val();
             var y = $('#yfield input').val();
+            var url = $('#urlfield input').val();
             var zmin = parseInt($('#zmin').val());
             var zmax = parseInt($('#zmax').val());
             var locationtype = $("input[name=locationtoolstyle]:checked").attr('id');
@@ -303,7 +304,7 @@ function createLocationToolLogic() {
                 }
             }
             // setting props with current values
-            api.setLocationToolProps(styletype, zmin, zmax, xorwkt, y);
+            api.setLocationToolProps(styletype, zmin, zmax, url, xorwkt, y);
         }
     }
     // attaching above logic to diffent inputs of the locationtool form
