@@ -288,6 +288,7 @@ function createLocationToolLogic() {
                 if(xorwkt==''){xorwkt='wkt'} // no prefilling, but defaulting for prop setting
                 y = null;
             }
+            $('#urlfield').show();
             // preview of zoom borders, and some checking that min<max and max>min
             if(this.id=='zmin') {
                 api.map.zoomTo(zmin); // preview
