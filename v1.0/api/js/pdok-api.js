@@ -1649,10 +1649,13 @@ Pdok.Api.prototype.startLocationTool = function(){
             }
         }
         if (apiObject.locationtoolurlfield) {
+            // set locationTool to false for the maplink
+            apiObject.locationtool = false;
             apiObject[apiObject.locationtoolurlfield] = apiObject.createMapLink();
             if (document.getElementById(apiObject.locationtoolurlfield)){
                 document.getElementById(apiObject.locationtoolurlfield).value = apiObject.createMapLink();
             }
+            apiObject.locationtool = true; // not sure if we need to do this
         }
         currentDrawControl.deactivate();
     }
@@ -1898,7 +1901,6 @@ Pdok.Api.prototype.createMapLink = function(){
         uri += 'api/api.html';
     }
     var config = this.getConfig();
-    config.locationtool = false;
     return uri + '?'+OpenLayers.Util.getParameterString(config);
 }
 

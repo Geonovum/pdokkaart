@@ -26,6 +26,11 @@
     <script type="text/javascript" src="js/Geozet/Format/XLSAddress.js"></script>
     <script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1.js"></script>
     <script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1_1_0.js"></script>-->
+    <script>
+		if (document.all && !document.querySelector) { // IE7 or lower
+			alert('U gebruikt Internet Explorer 7.\nDeze browser ondersteunt niet alle functionaliteit van de PDOK Wizard.\nWij raden U aan een nieuwere versie van Internet Explorer of een andere browser zoals Google Chrome, Mozilla FireFox of Apple Safari te gebruiken.');
+		}
+    </script>
   </head>
   <body>
     <div class="container equalize page orange default">
@@ -46,13 +51,15 @@
             <li>
               <a href="help.html">Help</a>
             </li>
-            <!-- Moet dit er nog in blijven? Voorlopig alleen uitgecommentarieerd -->
             <!--<li>
-              <a href="./documentatie">Documentatie</a>
+              <a href="./examples">Voorbeelden</a>
             </li>
             <li>
-              <a href="./examples">Voorbeelden</a>
-            </li> -->
+              <a href="./faq.html">FAQ's</a>
+            </li>
+            <li>
+              <a href="./documentatie">Documentatie</a>
+            </li>-->
           </ul>
         </div>
       </div>
@@ -228,6 +235,7 @@ point title   description
                   <label id="wktfield" >Veldnaam (wkt): <input type="text" value="wkt" /></label>
                   <label id="xfield" >X-coordinaat: <input type="text" value="x" /></label></br>
                   <label id="yfield" >Y-coordinaat: <input type="text" value="y" /></label></br>
+                  <label id="urlfield" >Url veldnaam: <input type="text" value="url" /></label></br>
                 </div>
                 <div id="locationtoolzooms" >
                   <div class="row">
