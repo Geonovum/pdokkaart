@@ -781,7 +781,7 @@ Pdok.Api.prototype.createOlMap = function() {
         this.enableLocationTool( this.locationtoolstyle,
             this.locationtoolzmin,
             this.locationtoolzmax,
-            this.locationtoolurl,
+            this.locationtoolurlfield,
             xorwkt,
             this.locationtoolyfield
             );
@@ -1543,7 +1543,10 @@ Pdok.Api.prototype.enableLocationTool = function(){
     }
     // register above check function to listen to moveend en click events of the map
     this.map.events.register("moveend", this.map, locationToolCheck);
-    this.map.events.register("click", this.map, locationToolCheck);
+    // sorry IE you fire to early: dirty fix for this
+    if ('msie' != OpenLayers.Util.getBrowserName()){
+        this.map.events.register("click", this.map, locationToolCheck);
+    }
     // first check
     locationToolCheck();
     return true;
@@ -1651,15 +1654,16 @@ Pdok.Api.prototype.startLocationTool = function(){
         if (apiObject.locationtoolurlfield) {
             // set locationTool to false for the maplink
             apiObject.locationtool = false;
-            apiObject[apiObject.locationtoolurlfield] = apiObject.createMapLink();
+            var link = apiObject.createMapLink();
+            apiObject[apiObject.locationtoolurlfield] = link;
             if (document.getElementById(apiObject.locationtoolurlfield)){
-                document.getElementById(apiObject.locationtoolurlfield).value = apiObject.createMapLink();
+                document.getElementById(apiObject.locationtoolurlfield).value = link;
             }
             apiObject.locationtool = true; // not sure if we need to do this
         }
         currentDrawControl.deactivate();
+        return false;
     }
-
     currentDrawControl.featureAdded = locationtoolfeatureadded;
     currentDrawControl.activate();
 
@@ -2014,9 +2018,17 @@ Pdok.Api.prototype.getConfig = function() {
         config.layersdef = this.layersdef;
     }
 
-    if (this.locationLayer.features.length==1) {
+    /*if (this.locationLayer.features.length==1) {
         var locationtoolFeature = this.locationLayer.features[0];
+        // IE8 bug:
         this.featuresLayer.addFeatures([locationtoolFeature]);
+    }*/
+    // if we use features from featuresLayer to write out config, IE is in trouble
+    // that's why we use a clone of this layer
+    var tempLayer = this.featuresLayer.clone();
+    var allFeatures = tempLayer.features;
+    if (this.locationLayer.features.length==1) {
+        allFeatures.push(this.locationLayer.features[0]);
     }
 
     // kmlurl OR txturl OR features
@@ -2026,7 +2038,8 @@ Pdok.Api.prototype.getConfig = function() {
     // we should try to make a diff, to know which features to add in the features-kmlstring-parameter
     // but if the user has made changes by hand in wizard, it is getting even more comples
     // so for now: there is either a kmlurl and/or a txturl OR only features as parameter
-    if (this.featuresLayer.features.length>0) {
+    if (allFeatures.length>0) {
+    //if (this.featuresLayer.features.length>0) {
         var doFeatures = true;
         // if features came from a kml/txt-url, do NOT write features yourself, only use kmlurl
         // NOTE: so at this moment it is NOT possible to use kmlurl PLUS wizard features!!
@@ -2047,11 +2060,17 @@ Pdok.Api.prototype.getConfig = function() {
         }
         if (doFeatures) {
             // If only one feature is added and this is a point then use the parameter mloc
-            if (this.featuresLayer.features.length == 1 && this.featuresLayer.features[0].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
+            /*if (this.featuresLayer.features.length == 1 && this.featuresLayer.features[0].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
             	config.mloc = this.featuresLayer.features[0].geometry.x + "," + this.featuresLayer.features[0].geometry.y;
             	config.titel = this.featuresLayer.features[0].attributes.name;
             	config.tekst =  this.featuresLayer.features[0].attributes.description;
             	config.mt = this.featuresLayer.features[0].attributes.styletype;
+            }*/
+            if (allFeatures.length == 1 && allFeatures[0].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
+            	config.mloc = allFeatures[0].geometry.x + "," + allFeatures[0].geometry.y;
+            	config.titel = allFeatures[0].attributes.name;
+            	config.tekst =  allFeatures[0].attributes.description;
+            	config.mt = allFeatures[0].attributes.styletype;
             }
 			else{
 				var kmlformat = new OpenLayers.Format.KML({
@@ -2061,7 +2080,7 @@ Pdok.Api.prototype.getConfig = function() {
 					internalProjection: this.map.baseLayer.projection,
 					externalProjection: new OpenLayers.Projection("EPSG:4326")
 				});
-				config.features=kmlformat.write(this.featuresLayer.features);
+				config.features=kmlformat.write(allFeatures);
 			}
         }
     }
