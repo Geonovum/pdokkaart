@@ -322,9 +322,9 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt3', 
-        fillColor: 'orange',
+        fillColor: '#FF6600',
         fillOpacity: 0.3, 
-        strokeColor: 'orange', 
+        strokeColor: '#FF6600', 
         strokeWidth: 2, 
         name: 'Oranje transparant'
     },
@@ -399,8 +399,8 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt13', 
-        fillColor: '#FF6601',
-        strokeColor: '#FF6601', 
+        fillColor: '#FF6600',
+        strokeColor: '#FF6600', 
         strokeWidth: 2, 
         name: 'Oranje'
     },
@@ -435,7 +435,7 @@ Pdok.Api.prototype.defaultStyles=[
     {
         id: 'pt18', 
         fillOpacity: 0.0, 
-        strokeColor: 'orange', 
+        strokeColor: '#FF6600', 
         strokeWidth: 2, 
         name: 'Oranje'
     },
