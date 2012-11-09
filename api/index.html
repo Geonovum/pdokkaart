@@ -52,7 +52,7 @@
 	Worden popups getoond: showPopup = true<BR/>
 	Worden popups getoond als er met de muis over gegaan wordt: hoverPopup = false<BR/>
 	Standaard bestandstype voor een TMS: tnstype = png<BR/>
-	Gebruikt KML zijn eigen styles: kmlstyles = false<BR/>
+	Gebruikt KML zijn eigen styles: kmlstyles = true<BR/>
 	Toon de LayerSwitcher in de kaart: showlayerswitcher = true<BR/>
 	Standaard id van de DIV waarin de kaart komt: div = 'map'<BR/>
 	Standaardnaam van de laag waarin de markers getoond worden: FEATURESLAYER_NAME = "Markers"<BR/>
@@ -80,9 +80,9 @@
 	Hiermee kan een KML-string meegegeven worden welke op de kaart getekend wordt. Let op dat de tekst encoded is, anders kapt de browser dit af op sommige karakters.<BR/>
 	Bijvoorbeeld: features=<kml xmlns%3D"http%3A%2F%2Fearth.google.com%2Fkml%2F2.0"><Folder><Placemark><name>%26amp%3Bnbsp%3B<%2Fname><description>%26amp%3Bnbsp%3B<%2Fdescription><Point><coordinates>6.232927367346888%2C52.00464300995527<%2Fcoordinates><%2FPoint><ExtendedData><Data name%3D"styletype"><value>mt8<%2Fvalue><%2FData><%2FExtendedData><%2FPlacemark><%2FFolder><%2Fkml><BR/>
 	<BR/>
-	<big>kmlurl</big><BR/>
-	Hiermee kan aangegeven worden dat de KML styling gebruikt moet worden.<BR/>
-    kmlstyles = true<BR/>
+	<big>kmlstyles</big><BR/>
+	Hiermee kan aangegeven worden dat de KML styling niet gebruikt moet worden (standaard wordt de KML styling gebruikt).<BR/>
+    kmlstyles = false<BR/>
     <BR/>
 	<big>kmlurl</big><BR/>
 	Hiermee kan een KML-url meegegeven worden welke op de kaart getekend wordt.<BR/>
@@ -136,6 +136,10 @@
 	<big>markersdef</big><BR/>
 	Hiermee kan een locatie opgegeven worden waar een marker definitie bestand staat welke gebruikt moet worden<BR/>
 	Bijvoorbeeld: markersdef=http://<server>/pdokkaartdef/markers.js<BR/>
+	<BR/>
+	<big>mimg</big><BR/>
+	Hiermee kan een locatie op het internet opgegeven worden waar een externe marker vandaan gehaald moet worden getoond<BR/>
+	Bijvoorbeeld: mimg=http://lorempixel.com/400/200/technics/1/MIMG%20Parameter/<BR/>
 	<BR/>
 	<big>mloc</big><BR/>
 	Hiermee kan een locatie opgegeven worden waar een marker getoond moet worden op de kaart<BR/>

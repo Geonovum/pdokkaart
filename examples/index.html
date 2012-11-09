@@ -44,12 +44,15 @@
             <li>
               <a href="../help.html">Help</a>
             </li>
-            <li>
-              <a href="../documentatie/">Documentatie</a>
-            </li>
-            <li class="sel ">
+            <!--<li class="sel ">
               <a class="active" href="#">Voorbeelden</a>
             </li>
+            <li> 
+              <a href="../faq.html">FAQ's</a>
+            </li>
+            <li>
+              <a href="../documentatie/">Documentatie</a>
+            </li>-->
           </ul>
         </div>
       </div>
@@ -58,6 +61,14 @@
           <div id="content">
         <div id="toc">
             <div id="examples"><ul>
+                <li class="ex_container">
+                    <a>
+						<h5 class="ex_title">
+							Parameters vs JavaScript<br>
+						</h5>
+						<div class="ex_description">De achtergrondkleur van de tekst geeft aan of een URL met parameters wordt aangeroepen of dat een html-pagina met JavaScript code wordt aangeroepen. Indien de achtergrondkleur licht is (zoals bij deze tekst) dan wordt de URL van de API aangeroepen met parameters. Indien de achtergrondkleur donker is dan wordt een html-pagina aangeroepen waarin met JavaScript variabelen worden gevuld en functies worden aangeroepen.</div>
+                    </a>
+                </li>
                 <li class="ex_container">
                     <a href="../api/api.html" target="exwin">
                         <h5 class="ex_title">
@@ -92,6 +103,15 @@
                             <span class="ex_filename">(../api/api.html?loc=150000,450000&zoom=5)</span>
                         </h5>
                         <div class="ex_description">Demonstreert API met gebruik van de parameters loc en zl waarmee een middelpunt en een zoomnivo wordt opgegeven waarop  wordt ingezoomd en waar het middelpunt van de kaart ligt.</div>
+                    </a>
+                </li>
+                <li class="ex_container">
+                    <a href="../api/api.html?mloc=150000,450000&mimg=http://lorempixel.com/64/64/nature/&titel=Met dank aan Lorempixel&tekst=http://lorempixel.com" target="exwin">
+                        <h5 class="ex_title">
+                            mloc, mimg - Toon een externe marker op de kaart<br>
+                            <span class="ex_filename">(../api/api.html?mloc=150000,450000&mimg=http://lorempixel.com/64/64/nature/&titel=Met dank aan Lorempixel&tekst=http://lorempixel.com)</span>
+                        </h5>
+                        <div class="ex_description">Demonstreert API met gebruik van de parameter mloc gecombineerd met de parameter mimg waarmee een locatie wordt opgegeven naar de te gebruiken icoon voor de locatie.</div>
                     </a>
                 </li>
                 <li class="ex_container">
@@ -210,7 +230,7 @@
                             <span class="ex_filename">(./
                         gegenereerde_code_utrecht_kml.html)</span>
                         </h5>
-                        <div class="ex_description">Deze pagina is gemaakt op basis van de door de Wizard gegenereerde HTML code. Nadat de pagina geopend is wordt de provinciepolygoon van Utrecht als KML ingelezen als OpenLayers Vector Layer. Dit in tegenstelling tot het gebruik van de parameter kmlurl. Dan wordt namelijk niet de opmaak uit de kml gebruikt, zie het bovenstaande voorbeeld waarbij de URL-parameter kmlurl gebruikt wordt om de KML met de provincies van Nederland te tonen.</div>
+                        <div class="ex_description">Deze pagina is gemaakt op basis van de door de Wizard gegenereerde HTML code. Nadat de pagina geopend is wordt de KML met de provinciepolygoon van Utrecht ingelezen als OpenLayers Vector Layer.</div>
                     </a>
                 </li>
 				<li class="ex_container_simple_advanced">
