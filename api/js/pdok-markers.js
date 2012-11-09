@@ -362,7 +362,7 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt8', 
-        fillColor: 'orange',
+        fillColor: #FF6600,
         fillOpacity: 0.3, 
         strokeColor: 'black', 
         strokeWidth: 2, 
