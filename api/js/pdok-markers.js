@@ -399,8 +399,8 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt13', 
-        fillColor: '#FF6600',
-        strokeColor: '#FF6600', 
+        fillColor: '#FF6601',
+        strokeColor: '#FF6601', 
         strokeWidth: 2, 
         name: 'Oranje'
     },
