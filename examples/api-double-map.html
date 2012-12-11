@@ -12,17 +12,18 @@
 	<script src="../api/js/pdok-api.js"></script>
     <script>
 		OpenLayers.ImgPath="../api/img/";
-		var configmap1 = {
-			"wmsurl":'http://gdsc.nlr.nl/wms/lufo2005',
-			"wmslayers":"lufo2005-1m",
-			"showlayerswitcher":"false"
-		};
-		var configmap2 = {
-			"wmsurl":'http://gdsc.nlr.nl/wms/dkln2006',
-			"wmslayers":"dkln2006-1m",
-			"div":"map2",
-			"showlayerswitcher":"false"
-		};
+
+        var configmap1 = {
+            "wmsurl":'http://geodata.nationaalgeoregister.nl/lfroutes/wms',
+            "wmslayers":"lfroutes",
+            "showlayerswitcher":"false"
+        };
+        var configmap2 = {
+            "wmsurl":'http://geodata.nationaalgeoregister.nl/lawroutes/wms',
+            "wmslayers":"lawroutes",
+            "div":"map2",
+            "showlayerswitcher":"false"
+        };
 
         function init() {
             api = new Pdok.Api(configmap1);
@@ -48,16 +49,11 @@
     <body onload="init()">
     <div id="mapdiv" style="padding:1px;width:300px;height:300px;float:left;">
 		<div id="map" style="width:300px;height:300px;float:left;"></div>
-		<div id="maptitle1" style="position:fixed;top:320px;width:300px;height:100px;float:left;text-align:center;">2005</div>
+		<div id="maptitle1" style="position:fixed;top:320px;width:300px;height:100px;float:left;text-align:center;">Lange-afstand Fietsroutes (LF-routes)</div>
     </div>
     <div id="mapdiv" style="padding:1px;width:300px;height:300px;float:left;">
 		<div id="map2" style="width:300px;height:300px;float:left;"></div><br/>
-		<div id="maptitle2" style="position:fixed;top:320px;left:300px;width:300px;height:100px;float:left;text-align: center">2006</div>
+		<div id="maptitle2" style="position:fixed;top:320px;left:300px;width:300px;height:100px;float:left;text-align: center">Lange-afstand Wandelpaden (LAW's)</div>
     </div>
-    <p style="clear:both; padding-top:30px;">
-    WMS services via het <a href="http://gdsc.nlr.nl/gdsc/services/wms" target="_blank">NLR</a><br/>
-    © <a href="http://www.dkln.com/" target="_blank">2006 Eurosense DKLN</a> en <a href="http://gdsc.nlr.nl/gdsc/sites/default/files/GebruiksrechtovereenkomstDKLN2006.pdf" target-"_blank">gebruiksovereenkomst</a></br>
-    © <a href="http://www.aerodata-surveys.com/" target="_blank">2005 Aerodata International Surveys</a> <!-- en <a href="" target-"_blank">gebruiksovereenkomst</a> -->
-    </p>
   </body>
 </html>
