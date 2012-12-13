@@ -134,11 +134,44 @@ Pdok.Api.prototype.defaultLayers = {
         isBaseLayer: false,
         singleTile: true
     },
+    KNOOPPUNTEN: {
+        layertype: 'WMS',
+        name: 'Fietsknooppuntnetwerken (WMS)',
+        url: 'http://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/wms',
+        layers: 'netwerken,knooppunten',
+        transparent: 'true',
+        format: 'image/png',
+        visibility: true,
+        isBaseLayer: false,
+        singleTile: true
+    },
     GEMEENTEGRENZEN_LABEL: {
         layertype: 'WMS',
         name: 'Gemeentegrenzen met labels 2012 (WMS)',
         url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld='+Pdok.ApiUrl+'/sld/gemeentegrenzen_label_grijs_gestippeld.sld',
         layers: 'gemeenten_2012',
+        transparent: 'true',
+        format: 'image/png',
+        visibility: true,
+        isBaseLayer: false,
+        singleTile: true
+    },
+    LAWROUTES: {
+        layertype: 'WMS',
+        name: 'Lange-afstandswandelroutes (WMS)',
+        url: 'http://geodata.nationaalgeoregister.nl/lawroutes/wms',
+        layers: 'lawroutes',
+        transparent: 'true',
+        format: 'image/png',
+        visibility: true,
+        isBaseLayer: false,
+        singleTile: true
+    },
+    LFROUTES: {
+        layertype: 'WMS',
+        name: 'Landelijke Fietsroutes (WMS)',
+        url: 'http://geodata.nationaalgeoregister.nl/lfroutes/wms',
+        layers: 'lfroutes',
         transparent: 'true',
         format: 'image/png',
         visibility: true,
@@ -203,6 +236,17 @@ Pdok.Api.prototype.defaultLayers = {
         name: 'NWB Wegen (WMS)',
         url: 'http://geodata.nationaalgeoregister.nl/nwbwegen/wms',
         layers: 'wegvakken,hectopunten',
+        transparent: 'true',
+        format: 'image/png',
+        visibility: true,
+        isBaseLayer: false,
+        singleTile: true
+    },
+    STREEKPADEN: {
+        layertype: 'WMS',
+        name: 'Nationale Streekpaden (WMS)',
+        url: 'http://geodata.nationaalgeoregister.nl/streekpaden/wms',
+        layers: 'streekpaden',
         transparent: 'true',
         format: 'image/png',
         visibility: true,
