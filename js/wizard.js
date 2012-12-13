@@ -719,6 +719,7 @@ function createApiLinksAndCode() {
     $("#embedhtmlobject").val(api.createObjectTags());
     $("#scriptcodeHead").val(api.createHtmlHead());
     $("#scriptcodeBody").val(api.createHtmlBody());
+    $("#featuresKML").val(api.createKML());
 }
 
 function removeFeature (ft_id) {

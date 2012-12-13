@@ -2089,6 +2089,28 @@ Pdok.Api.prototype.getConfig = function() {
 }
 
 /**
+ * Get KML from all features
+ * @public
+ * @returns {String} KML including style information
+ */
+Pdok.Api.prototype.createKML = function(){
+    var tempLayer = this.featuresLayer.clone();
+    var allFeatures = tempLayer.features;
+    if (this.locationLayer.features.length==1) {
+        allFeatures.push(this.locationLayer.features[0]);
+    }
+    var kmlformat = new OpenLayers.Format.KML({
+        foldersDesc: null,
+        foldersName: null,
+        placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
+        internalProjection: this.map.baseLayer.projection,
+        externalProjection: new OpenLayers.Projection("EPSG:4326"),
+        extractStyles: this.kmlstyles
+    });
+    return kmlformat.write(allFeatures);
+}
+
+/**
  * Method do serialize the config object to a json string
  * @private
  */
