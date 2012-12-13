@@ -2078,7 +2078,8 @@ Pdok.Api.prototype.getConfig = function() {
 					foldersName: null,
 					placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
 					internalProjection: this.map.baseLayer.projection,
-					externalProjection: new OpenLayers.Projection("EPSG:4326")
+					externalProjection: new OpenLayers.Projection("EPSG:4326"),
+                    extractStyles: this.kmlstyles
 				});
 				config.features=kmlformat.write(allFeatures);
 			}
