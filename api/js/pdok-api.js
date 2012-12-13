@@ -29,7 +29,7 @@ Pdok.API_VERSION_NUMBER = '1.0.0';
 // The proxyhost is needed for the geocoder
 
 // PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = 'http://pdokkaart.pdokloket.nl/api';
+Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
 OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
 
 // TEST
