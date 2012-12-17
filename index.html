@@ -189,6 +189,12 @@ point title   description
                     <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
                     Lagen van de WMS:<br />
                     <input type="text" id="wmsLayer" class="autopopulate default" title="bijv: provgrens_generalisatie_2008" size="30" /><br />
+                    Featureinfo-formaat van deze WMS (optioneel)<br />
+                    <select id="wmsInfoFormat">
+                        <option value="none" selected="selected">Geen feature info</option>
+                        <option value="text/html">html (text/html)</option>
+                        <option value="text/plain">text (text/plain)</option>
+                    </select>
                     <button id="addwmslayerbutton" class="filterbutton" >Voeg toe aan kaart</button>
                     <h3>Voeg een WMTS kaartlaag toe</h3>
                     URL van de WMTS:<br />

@@ -687,7 +687,7 @@ function handleGeocodeResponse(req, returnCoords){
 
 
  function addWmsLayer() {
-	api.addWMS($("#wmsUrl").val(), $("#wmsLayer").val());
+	api.addWMS($("#wmsUrl").val(), $("#wmsLayer").val(), $("#wmsInfoFormat").val());
 }
 
 function addWmtsLayer() {

@@ -35,16 +35,16 @@ Pdok.API_VERSION_NUMBER = '1.0.0';
 // The proxyhost is needed for the geocoder
 
 // PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
-OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
+//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
 
 // TEST
 //Pdok.ApiUrl = 'http://www.duif.net/pdok/api';
 //OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 // ONTWIKKEL
-//Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
+OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 
 OpenLayers.ImgPath = './img/';
@@ -294,6 +294,16 @@ Pdok.Api = function(config) {
      * @type String
      */
     this.wmslayers = null;
+
+
+    /**
+     * The wmsinfoformat parameter, format of featureinfo
+     *  currently only 'text/html' and 'text/plain' are supported
+     * For the service from the this.wmsurl parameter there will be a featureinfocontrol created
+     *
+     * @type String
+     */
+    this.wmsinfoformat = 'none';
 
     /**
      * The TMS url to be loaded as a layer. Always together with tmslayer
@@ -673,7 +683,7 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // apply WMSURL and WMSLAYERS if applicable
     if ((this.wmsurl != null) && (this.wmslayers != null)) {
-        this.addWMS(this.wmsurl, this.wmslayers);
+        this.addWMS(this.wmsurl, this.wmslayers, this.wmsinfoformat);
     }
 
     // apply WMTSURL and WMTSLAYER and WMTSMATRIXSET if applicable
@@ -1284,13 +1294,15 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
  * @param {String} wmsurl a valid URL string
  * @param {String} wmslayers a valid layername of the above url service
  */
-Pdok.Api.prototype.addWMS = function(wmsurl,wmslayers) {
+Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
     this.wmsurl = wmsurl;
     this.wmslayers = wmslayers;
+    this.wmsinfoformat = wmsinfoformat;
     var lyrWMS = this.createWMSLayer({
             url: wmsurl,
             layers: wmslayers,
-            transparent: true
+            transparent: true,
+            wmsinfoformat: wmsinfoformat
         });
     this.addOLLayer(lyrWMS);
     return true;
@@ -1309,12 +1321,13 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
             name: 'WMS layer',
             url: '',
             layers: '',
+            wmsinfoformat: 'none',  // if this one is filled a featureinfocontrol is added
             styles: '',
             visibility: true,
             isBaseLayer: false,
             format: 'image/png',
             singleTile: true,
-			attribution:''
+            attribution:''
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1331,9 +1344,41 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
                 visibility: layerConfigObj.visibility, 
                 isBaseLayer: layerConfigObj.isBaseLayer, 
                 singleTile: layerConfigObj.singleTile,
-				attribution:layerConfigObj.attribution 
+                attribution:layerConfigObj.attribution 
             }
     );
+    if (layerConfigObj.wmsinfoformat && layerConfigObj.wmsinfoformat != 'none') {
+        var infoformat = layerConfigObj.wmsinfoformat; // text/plain, application/vnd.ogc.gml, application/vnd.ogc.gml/3.1.1, text/html
+        var info = new OpenLayers.Control.WMSGetFeatureInfo({
+            url: layerConfigObj.url,
+            infoFormat: infoformat,
+            title: 'Info voor'+layerConfigObj.name,
+            queryVisible: true,
+            eventListeners: {
+                getfeatureinfo: function(event) {
+                    // removing all popups here first!
+                    while( this.map.popups.length ) {
+                        this.map.removePopup(this.map.popups[0]);
+                    }
+                    popupContent = event.text;
+                    if (infoformat == 'text/plain'){
+                        popupContent = '<pre>'+event.text+'</pre>';
+                    }
+                    var popup = new OpenLayers.Popup.FramedCloud(
+                        "featurePopup", 
+                        this.map.getLonLatFromPixel(event.xy),
+                        null,
+                        popupContent,
+                        null,
+                        true
+                    );
+                    this.map.addPopup(popup);
+                }
+            }
+        });
+        this.map.addControl(info);
+        info.activate();
+    }
 
     return layer;
 }
@@ -1986,6 +2031,9 @@ Pdok.Api.prototype.getConfig = function() {
     if(this.wmsurl && this.wmsurl.length>0 && this.wmslayers && this.wmslayers.length>0) {
         config.wmsurl = this.wmsurl;
         config.wmslayers = this.wmslayers;
+        if (this.wmsinfoformat && this.wmsinfoformat != 'none'){
+            config.wmsinfoformat = this.wmsinfoformat;
+        }
     }
     // wmts
     if (this.wmtsurl != null && this.wmtslayer != null && this.wmtsmatrixset != null && 
