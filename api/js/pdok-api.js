@@ -585,6 +585,11 @@ Pdok.Api.prototype.createOlMap = function() {
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.Zoom(),
+            new OpenLayers.Control.MousePosition({
+				separator: ', ',
+				numDigits: 0,
+				emptyString: 'De muis is niet over de kaart.'
+			}),
 			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
         ]
     }
@@ -593,6 +598,11 @@ Pdok.Api.prototype.createOlMap = function() {
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.Zoom(),
+            new OpenLayers.Control.MousePosition({
+				separator: ', ',
+				numDigits: 0,
+				emptyString: 'De muis is niet over de kaart.'
+			}),
 			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''}),
             new OpenLayers.Control.LayerSwitcher()
         ]
@@ -603,6 +613,11 @@ Pdok.Api.prototype.createOlMap = function() {
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.Zoom(),
+            new OpenLayers.Control.MousePosition({
+				separator: ', ',
+				numDigits: 0,
+				emptyString: 'De muis is niet over de kaart.'
+			}),
 			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
         ]
     }
@@ -780,7 +795,7 @@ Pdok.Api.prototype.createOlMap = function() {
                 */
             });
     olMap.addControl(this.selectControl);
-    if ( (this.showPopup.toLowerCase() == "false") || (this.showpopup.toLowerCase() == "false") ){
+    if ( (this.showPopup.toString().toLowerCase() == "false") || (this.showpopup.toString().toLowerCase() == "false") ){
     	this.showPopup = false;
     }
     if ( (this.showPopup) ){
