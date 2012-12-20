@@ -35,16 +35,16 @@ Pdok.API_VERSION_NUMBER = '1.0.0';
 // The proxyhost is needed for the geocoder
 
 // PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = 'http://geonovum.github.com/pdokkaart/api';
-OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
+//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
 
 // TEST
 //Pdok.ApiUrl = 'http://www.duif.net/pdok/api';
 //OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 // ONTWIKKEL
-//Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+Pdok.ApiUrl = 'http://localhost/~giscc/pdokkaart/api';
+OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 
 OpenLayers.ImgPath = './img/';
@@ -200,12 +200,14 @@ Pdok.Api = function(config) {
      * @type boolean
      */
     this.showPopup = true;
+    this.showpopup = true;
 
     /**
      * If a popup hover should be used or not Defaults to false
      * @type boolean
      */
     this.hoverPopup = false;
+    this.hoverpopup = false;
 
     /**
      * Reference to popup titel, only used in case of the use of mloc
@@ -253,10 +255,10 @@ Pdok.Api = function(config) {
      * or an example with images and their dimensions
      * <pre>
      * lat   lon title   description iconSize    iconOffset  icon
-     * 450000 140000  Ministerie ELenI    Economische Zaken Landbouw en Innovatie 32,37   16,-37  http://pdokkaart.pdokloket.nl/api/markertypes/flag-nl.png
-     * 460000 160000  Kadaster    Kadaster    32,37   -16,-18 http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
-     * 470000 170000  Rijkswaterstaat Infrastructuur en Milieu    64,72   -32,-36 http://pdokkaart.pdokloket.nl/api/markertypes/vlc.png
-     * 480000 180000  Ministerie IenM Infrastructuur en Milieu    40,46   -20,-23 http://pdokkaart.pdokloket.nl/api/markertypes/flag-blue.png
+     * 450000 140000  Ministerie ELenI    Economische Zaken Landbouw en Innovatie 32,37   16,-37  http://kaart.pdok.nl/api/markertypes/flag-nl.png
+     * 460000 160000  Kadaster    Kadaster    32,37   -16,-18 http://kaart.pdok.nl/api/markertypes/flag-blue.png
+     * 470000 170000  Rijkswaterstaat Infrastructuur en Milieu    64,72   -32,-36 http://kaart.pdok.nl/api/markertypes/vlc.png
+     * 480000 180000  Ministerie IenM Infrastructuur en Milieu    40,46   -20,-23 http://kaart.pdok.nl/api/markertypes/flag-blue.png
      * </pre>
      * </p>
      * @see <a href="../../../documentatie/examples/data/test1.txt">test1.txt</a>
@@ -294,6 +296,16 @@ Pdok.Api = function(config) {
      * @type String
      */
     this.wmslayers = null;
+
+
+    /**
+     * The wmsinfoformat parameter, format of featureinfo
+     *  currently only 'text/html' and 'text/plain' are supported
+     * For the service from the this.wmsurl parameter there will be a featureinfocontrol created
+     *
+     * @type String
+     */
+    this.wmsinfoformat = 'none';
 
     /**
      * The TMS url to be loaded as a layer. Always together with tmslayer
@@ -673,7 +685,7 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // apply WMSURL and WMSLAYERS if applicable
     if ((this.wmsurl != null) && (this.wmslayers != null)) {
-        this.addWMS(this.wmsurl, this.wmslayers);
+        this.addWMS(this.wmsurl, this.wmslayers, this.wmsinfoformat);
     }
 
     // apply WMTSURL and WMTSLAYER and WMTSMATRIXSET if applicable
@@ -741,6 +753,9 @@ Pdok.Api.prototype.createOlMap = function() {
     }
 
     // selectControl for popups
+    if ( (this.hoverPopup) || (this.hoverpopup) ){
+    	this.hoverPopup = true;
+    }
     this.selectControl = new OpenLayers.Control.SelectFeature(
             this.featuresLayer, 
             {
@@ -765,7 +780,10 @@ Pdok.Api.prototype.createOlMap = function() {
                 */
             });
     olMap.addControl(this.selectControl);
-    if (this.showPopup){
+    if ( (this.showPopup.toLowerCase() == "false") || (this.showpopup.toLowerCase() == "false") ){
+    	this.showPopup = false;
+    }
+    if ( (this.showPopup) ){
         this.enablePopups();
         this.selectControl.activate();
     }
@@ -1284,13 +1302,15 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
  * @param {String} wmsurl a valid URL string
  * @param {String} wmslayers a valid layername of the above url service
  */
-Pdok.Api.prototype.addWMS = function(wmsurl,wmslayers) {
+Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
     this.wmsurl = wmsurl;
     this.wmslayers = wmslayers;
+    this.wmsinfoformat = wmsinfoformat;
     var lyrWMS = this.createWMSLayer({
             url: wmsurl,
             layers: wmslayers,
-            transparent: true
+            transparent: true,
+            wmsinfoformat: wmsinfoformat
         });
     this.addOLLayer(lyrWMS);
     return true;
@@ -1309,12 +1329,13 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
             name: 'WMS layer',
             url: '',
             layers: '',
+            wmsinfoformat: 'none',  // if this one is filled a featureinfocontrol is added
             styles: '',
             visibility: true,
             isBaseLayer: false,
             format: 'image/png',
             singleTile: true,
-			attribution:''
+            attribution:''
     };
 
     layerConfigObj = OpenLayers.Util.applyDefaults(layerConfigObj, defaults);
@@ -1331,9 +1352,41 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
                 visibility: layerConfigObj.visibility, 
                 isBaseLayer: layerConfigObj.isBaseLayer, 
                 singleTile: layerConfigObj.singleTile,
-				attribution:layerConfigObj.attribution 
+                attribution:layerConfigObj.attribution 
             }
     );
+    if (layerConfigObj.wmsinfoformat && layerConfigObj.wmsinfoformat != 'none') {
+        var infoformat = layerConfigObj.wmsinfoformat; // text/plain, application/vnd.ogc.gml, application/vnd.ogc.gml/3.1.1, text/html
+        var info = new OpenLayers.Control.WMSGetFeatureInfo({
+            url: layerConfigObj.url,
+            infoFormat: infoformat,
+            title: 'Info voor'+layerConfigObj.name,
+            queryVisible: true,
+            eventListeners: {
+                getfeatureinfo: function(event) {
+                    // removing all popups here first!
+                    while( this.map.popups.length ) {
+                        this.map.removePopup(this.map.popups[0]);
+                    }
+                    popupContent = event.text;
+                    if (infoformat == 'text/plain'){
+                        popupContent = '<pre>'+event.text+'</pre>';
+                    }
+                    var popup = new OpenLayers.Popup.FramedCloud(
+                        "featurePopup", 
+                        this.map.getLonLatFromPixel(event.xy),
+                        null,
+                        popupContent,
+                        null,
+                        true
+                    );
+                    this.map.addPopup(popup);
+                }
+            }
+        });
+        this.map.addControl(info);
+        info.activate();
+    }
 
     return layer;
 }
@@ -1986,6 +2039,9 @@ Pdok.Api.prototype.getConfig = function() {
     if(this.wmsurl && this.wmsurl.length>0 && this.wmslayers && this.wmslayers.length>0) {
         config.wmsurl = this.wmsurl;
         config.wmslayers = this.wmslayers;
+        if (this.wmsinfoformat && this.wmsinfoformat != 'none'){
+            config.wmsinfoformat = this.wmsinfoformat;
+        }
     }
     // wmts
     if (this.wmtsurl != null && this.wmtslayer != null && this.wmtsmatrixset != null && 
@@ -2078,13 +2134,36 @@ Pdok.Api.prototype.getConfig = function() {
 					foldersName: null,
 					placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
 					internalProjection: this.map.baseLayer.projection,
-					externalProjection: new OpenLayers.Projection("EPSG:4326")
+					externalProjection: new OpenLayers.Projection("EPSG:4326"),
+                    extractStyles: this.kmlstyles
 				});
 				config.features=kmlformat.write(allFeatures);
 			}
         }
     }
     return config;
+}
+
+/**
+ * Get KML from all features
+ * @public
+ * @returns {String} KML including style information
+ */
+Pdok.Api.prototype.createKML = function(){
+    var tempLayer = this.featuresLayer.clone();
+    var allFeatures = tempLayer.features;
+    if (this.locationLayer.features.length==1) {
+        allFeatures.push(this.locationLayer.features[0]);
+    }
+    var kmlformat = new OpenLayers.Format.KML({
+        foldersDesc: null,
+        foldersName: null,
+        placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
+        internalProjection: this.map.baseLayer.projection,
+        externalProjection: new OpenLayers.Projection("EPSG:4326"),
+        extractStyles: this.kmlstyles
+    });
+    return kmlformat.write(allFeatures);
 }
 
 /**
