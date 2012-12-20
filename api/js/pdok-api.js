@@ -43,7 +43,7 @@ Pdok.API_VERSION_NUMBER = '1.0.0';
 //OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 // ONTWIKKEL
-Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
+Pdok.ApiUrl = 'http://localhost/~giscc/pdokkaart/api';
 OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 
@@ -200,12 +200,14 @@ Pdok.Api = function(config) {
      * @type boolean
      */
     this.showPopup = true;
+    this.showpopup = true;
 
     /**
      * If a popup hover should be used or not Defaults to false
      * @type boolean
      */
     this.hoverPopup = false;
+    this.hoverpopup = false;
 
     /**
      * Reference to popup titel, only used in case of the use of mloc
@@ -751,6 +753,9 @@ Pdok.Api.prototype.createOlMap = function() {
     }
 
     // selectControl for popups
+    if ( (this.hoverPopup) || (this.hoverpopup) ){
+    	this.hoverPopup = true;
+    }
     this.selectControl = new OpenLayers.Control.SelectFeature(
             this.featuresLayer, 
             {
@@ -775,7 +780,10 @@ Pdok.Api.prototype.createOlMap = function() {
                 */
             });
     olMap.addControl(this.selectControl);
-    if (this.showPopup){
+    if ( (this.showPopup.toLowerCase() == "false") || (this.showpopup.toLowerCase() == "false") ){
+    	this.showPopup = false;
+    }
+    if ( (this.showPopup) ){
         this.enablePopups();
         this.selectControl.activate();
     }
