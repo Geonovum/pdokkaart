@@ -687,11 +687,21 @@ function handleGeocodeResponse(req, returnCoords){
 
 
  function addWmsLayer() {
-	api.addWMS($("#wmsUrl").val(), $("#wmsLayer").val(), $("#wmsInfoFormat").val());
+	if ( ($("#wmsUrl").val().slice(0,4) == "bijv") || ($("#wmsLayer").val().slice(0,4) == "bijv") ){
+		alert("U heeft geen URL naar, of een laagnaam van een WMS opgegeven");
+	}
+	else{
+		api.addWMS($("#wmsUrl").val(), $("#wmsLayer").val(), $("#wmsInfoFormat").val());
+	}
 }
 
 function addWmtsLayer() {
-	api.addWMTS($("#WmtsUrl").val(), $("#WmtsLayer").val(), $("#WmtsMatrix").val());
+	if ( ($("#WmtsUrl").val().slice(0,4) == "bijv") || ($("#WmtsLayer").val().slice(0,4) == "bijv") || ($("#WmtsMatrix").val().slice(0,4) == "bijv") ){
+		alert("U heeft geen URL naar, een laagnaam of een projectie van een WMTS opgegeven");
+	}
+	else{
+		api.addWMTS($("#WmtsUrl").val(), $("#WmtsLayer").val(), $("#WmtsMatrix").val());
+	}
 } 
 
 function addPdokLayer() {
