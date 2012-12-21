@@ -43,7 +43,7 @@ Pdok.API_VERSION_NUMBER = '1.0.0';
 //OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 // ONTWIKKEL
-Pdok.ApiUrl = 'http://localhost/~giscc/pdokkaart/api';
+Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
 OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 
