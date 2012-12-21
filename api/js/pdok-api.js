@@ -2152,7 +2152,7 @@ Pdok.Api.prototype.getConfig = function() {
 					externalProjection: new OpenLayers.Projection("EPSG:4326"),
                     extractStyles: this.kmlstyles
 				});
-				config.features=kmlformat.write(allFeatures);
+				config.features='<?xml version="1.0" encoding="UTF-8"?>\n'+kmlformat.write(allFeatures);
 			}
         }
     }
@@ -2178,7 +2178,7 @@ Pdok.Api.prototype.createKML = function(){
         externalProjection: new OpenLayers.Projection("EPSG:4326"),
         extractStyles: this.kmlstyles
     });
-    return kmlformat.write(allFeatures);
+    return '<?xml version="1.0" encoding="UTF-8"?>\n'+kmlformat.write(allFeatures);
 }
 
 /**
