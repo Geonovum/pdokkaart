@@ -35,16 +35,16 @@ Pdok.API_VERSION_NUMBER = '1.0.0';
 // The proxyhost is needed for the geocoder
 
 // PDOK LOKET PRODUKTIE
-//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
+Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
+OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
 
 // TEST
 //Pdok.ApiUrl = 'http://www.duif.net/pdok/api';
 //OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 // ONTWIKKEL
-Pdok.ApiUrl = 'http://localhost/~giscc/pdokkaart/api';
-OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+//Pdok.ApiUrl = 'http://localhost/~giscc/pdokkaart/api';
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 
 OpenLayers.ImgPath = './img/';
