@@ -27,6 +27,10 @@
 				strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
 				strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
 			}
+			else if (strLayer == "CBS_PROV_SHP"){
+				strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=shape-zip&format_options=filename:provgrens_generalisatie_2008_" + extKaart.left + '_' + extKaart.bottom + '_' + extKaart.right + '_' + extKaart.top + ".zip&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
+				strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+			}
 			else{
 				strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
 				strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
@@ -52,11 +56,12 @@
 	</head>
 	<body>
 		<div id="Titel">Exporteer de uitsnede (AHN & CBS Gemeentegrenzen)<HR/>
-		<div id="map" style="width:400px;height:400px;float:left;"></div>
+		<div id="map" style="width:300px;height:300px;float:left;"></div>
 		<div id="Export">
-		<input type="button" value="Actueel Hoogtebestand Nederland (versie 1)" onclick="BUTTON_CLICK('AHN')"><BR/>
-		<input type="button" value="CBS Gemeentegrenzen (2008)" onclick="BUTTON_CLICK('CBS')"><BR/>
-		<input type="button" value="Provincies" onclick="BUTTON_CLICK()"><BR/>
+		<input type="button" value="Actueel Hoogtebestand Nederland (versie 1) - GEOTIFF" onclick="BUTTON_CLICK('AHN')"><BR/>
+		<input type="button" value="CBS Gemeentegrenzen (2008) - KML" onclick="BUTTON_CLICK('CBS')"><BR/>
+		<input type="button" value="CBS Provinciegrenzen (2008) - KML" onclick="BUTTON_CLICK()"><BR/>
+		<input type="button" value="CBS Provinciegrenzen (2008) - Shapefile (ZIP)" onclick="BUTTON_CLICK('CBS_PROV_SHP')"><BR/>
 		</div>
 		<script>
 			var api = createPDOKKaart();
