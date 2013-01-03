@@ -760,6 +760,9 @@ Pdok.Api.prototype.createOlMap = function() {
     // add marker and use markertype if given, otherwise the default marker
     // backward compatibility: mloc is alway point
     if (this.mloc != null) {
+        if(typeof this.mloc == 'string'){
+            this.mloc = this.mloc.replace(' ', '').split(',');
+        }
         var wkt = 'POINT('+this.mloc[0]+' '+this.mloc[1]+')';
         if (this.mt==null){
             this.mt='mt0'; // mt0 is default point symbol
