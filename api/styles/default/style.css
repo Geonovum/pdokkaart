@@ -70,12 +70,11 @@ div.olLayerDiv {
 }
 
 div.olControlMousePosition {
-    left: 0;
+    left: 10px;
     bottom: 0;
     right: 3px;
     display: block;
     position: absolute;
-    font-family: Arial;
     font-size: smaller;
 }
 
