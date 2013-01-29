@@ -130,6 +130,10 @@ function createOnClickEvents() {
     $('#addwmslayerbutton').click( function() { addWmsLayer();return false; } );
     $('#addwmtslayerbutton').click( function() { addWmtsLayer();return false; } );
     $('#deletelayers').click( function() { api.deleteLayers();return false; } );
+
+    $('#kmlservicelink').click( function() { api.kmlToService();return false; } );
+
+
 }
 
 // function to automatically creat a hint text based on a title attribute
@@ -712,7 +716,11 @@ function createApiLinksAndCode() {
 	var strGeneratedUrlToLongMessage = "";
     var apiLink = api.createMapLink();
     if (apiLink.length > 2100){
-    	strGeneratedUrlToLongMessage = "De gemaakte URL is langer dan 2000 tekens!\nDe totale lengte is " + apiLink.length + " tekens.\nOmdat hierdoor sommige browsers een foutmelding geven, worden de URL's niet getoond.";
+        strGeneratedUrlToLongMessage = "De gemaakte URL is langer dan 2000 tekens!\nDe totale lengte is " + apiLink.length + " tekens.\nOmdat hierdoor sommige browsers een foutmelding geven, worden de URL's niet getoond.";
+        if (Pdok.ApiKmlService && Pdok.ApiKmlService.length > 0){
+            strGeneratedUrlToLongMessage += "\nU kunt via de knop 'KML-opslagservice' eventueel de KML vervangen door een KML-url."
+		    $("#kml_url_service").show();
+        }
     	$("#generated_url_to_long_message").val(strGeneratedUrlToLongMessage);
 		$("#generated_url_to_long_message").show();
 		$("#generated_url").hide();
@@ -721,6 +729,7 @@ function createApiLinksAndCode() {
 		$("#generated_url_to_long_message").val(strGeneratedUrlToLongMessage);
 		$("#generated_url_to_long_message").hide();
 		$("#generated_url").show();
+		$("#kml_url_service").hide();
     }
     $("#apilink1").attr('href', apiLink);
     $("#apilink2").val(apiLink);

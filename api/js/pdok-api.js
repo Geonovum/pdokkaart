@@ -30,6 +30,7 @@ Pdok = {};
 Pdok.API_VERSION_NUMBER = '1.0.0';
 
 // CONFIG
+//Pdok.ApiKmlService = 'http://www.duif.net/kml/';
 
 // The api-url is the base-url for api.js, markersdefs, layerdefs etc
 // The proxyhost is needed for the geocoder
@@ -44,6 +45,7 @@ OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // cur
 
 // ONTWIKKEL
 //Pdok.ApiUrl = 'http://localhost/~giscc/pdokkaart/api';
+//Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
 //OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 OpenLayers.ImgPath = './img/';
@@ -1745,6 +1747,11 @@ Pdok.Api.prototype.startLocationTool = function(){
  * handle the response to retrieve external features via an ajax request (kml etc)
  */
 Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
+    if (response.status != 200){
+        // we have to clean up the this.txturl or this.kmlurl
+        if(this.dataType=='KML'){api.kmlurl='';}
+        if(this.dataType=='TXT'){api.txturl='';}
+    }
     //  trying to catch proxy errors
     if (response.status == 502 || response.status == 403){
         alert('Fout bij het ophalen van de url.\nDit lijkt een proxy probleem.\nKomt de data van een ander domein dan de web applicatie?\nDan moet het data domein opgenomen worden in de proxy-instellingen.');
@@ -2252,4 +2259,48 @@ Pdok.Api.prototype.setLayerSwitcherVisible = function(isVisible){
     else{
         this.showlayerswitcher = false;
     }
+}
+
+Pdok.Api.prototype.kmlToService = function(){
+    var email = window.prompt("Geef uw email als identificatie voor de KML-opslagservice","");
+    if (email == undefined){
+        // user clicked cancel
+        return false;
+    }
+    if (email.length<6){
+        alert("Geen email adres gegeven.");
+        return false;
+    }
+    var kml = this.createKML();
+    // POST to Pdok.ApiKmlService
+    var params = {email:email, data:kml}
+    OpenLayers.Request.POST({
+        url: Pdok.ApiKmlService,
+        method: 'POST',
+//        params: params,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data: OpenLayers.Util.getParameterString(params),
+        scope: this,
+        callback: function(req){
+            if (req.status == 200){
+                var kmlurl = req.responseText.trim(); // TODO make json
+                var userurl = kmlurl.split('?')[0];
+                userurl+='?email='+email;
+                if (confirm(
+                    'Gelukt.'+
+                    '\nKlik op OK om de terugontvangen KML-url te laden.'+
+                    '\nU kunt uw KML-bestanden bekijken en beheren via:\n'+userurl )){
+                    // remove all features, and set KML parameter
+                        this.featuresLayer.removeAllFeatures();
+                        this.addKML(kmlurl);
+                    }
+
+            }
+            else{
+                alert('Er ging iets mis. Is de ingestelde service ('+Pdok.ApiKmlService+') aktief?');
+            }
+        }
+    });
 }

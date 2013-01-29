@@ -151,7 +151,7 @@ li {
     margin-top: 5px;
 }
 
-#apilink1 {
+#apilink1, #kmlservicelink {
     color:#273397;
     text-decoration: underline;
 }
@@ -281,7 +281,7 @@ button, x:-moz-any-link {
 #searchForm {
     display:block;
 }
-#addviamap, #addviaurltxt, #step3, #step4, #wktfield, #urlfield, #xfield, #yfield, #locationtoolzooms {
+#kml_url_service, #addviamap, #addviaurltxt, #step3, #step4, #wktfield, #urlfield, #xfield, #yfield, #locationtoolzooms {
     display:none
 }
 #maplayerswitcher {
