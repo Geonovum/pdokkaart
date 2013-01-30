@@ -580,54 +580,27 @@ Pdok.Api.prototype.defaultPdokLayers = {
  * @return OpenLayers.Map object
  */
 Pdok.Api.prototype.createOlMap = function() {
-    var controls = []
-    if (!this.showlayerswitcher){
-    	controls = [
+    var controls = [
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.Zoom(),
             new OpenLayers.Control.MousePosition({
-				separator: ', ',
-				numDigits: 0,
-				emptyString: 'De muis is niet over de kaart.'
-			}),
-			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
-        ]
-    }
-    else if (this.showlayerswitcher == true || this.showlayerswitcher.toLowerCase() == "true"){
-    	controls = [
-            new OpenLayers.Control.Attribution(),
-            new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.Zoom(),
-            new OpenLayers.Control.MousePosition({
-				separator: ', ',
-				numDigits: 0,
-				emptyString: 'De muis is niet over de kaart.'
-			}),
-			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''}),
-            new OpenLayers.Control.LayerSwitcher()
-        ]
-    }
-    else
-    {
-    	controls = [
-            new OpenLayers.Control.Attribution(),
-            new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.Zoom(),
-            new OpenLayers.Control.MousePosition({
-				separator: ', ',
-				numDigits: 0,
-				emptyString: 'De muis is niet over de kaart.'
-			}),
-			new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
-        ]
+                separator: ', ',
+                numDigits: 0,
+                emptyString: 'De muis is niet over de kaart.'
+            }),
+            new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
+    ]
+    if (this.showlayerswitcher && 
+        (this.showlayerswitcher == true || this.showlayerswitcher.toLowerCase() == "true")){
+        controls.push(new OpenLayers.Control.LayerSwitcher());
     }
     var olMap = new OpenLayers.Map ({
         controls: controls,
         maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
         theme: null,
-		resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76,
-					26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21],
+        resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76,
+                        26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21],
         units: 'm',
         projection: new OpenLayers.Projection("EPSG:28992"),
         div: this.div
