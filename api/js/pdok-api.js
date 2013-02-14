@@ -30,7 +30,7 @@ Pdok = {};
 Pdok.API_VERSION_NUMBER = '1.0.0';
 
 // CONFIG
-//Pdok.ApiKmlService = 'http://www.duif.net/kml/';
+Pdok.ApiKmlService = 'http://www.duif.net/kml/';
 
 // The api-url is the base-url for api.js, markersdefs, layerdefs etc
 // The proxyhost is needed for the geocoder
@@ -45,8 +45,8 @@ OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // cur
 
 // ONTWIKKEL
 //Pdok.ApiUrl = 'http://localhost/~giscc/pdokkaart/api';
-//Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
+Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
+OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
 
 OpenLayers.ImgPath = './img/';
 
@@ -590,6 +590,7 @@ Pdok.Api.prototype.createOlMap = function() {
                 emptyString: 'De muis is niet over de kaart.'
             }),
             new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
+            ,new OpenLayers.Control.GeocoderControl()
     ]
     if (this.showlayerswitcher && 
         (this.showlayerswitcher == true || this.showlayerswitcher.toLowerCase() == "true")){

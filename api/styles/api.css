@@ -2,6 +2,7 @@ html {
     width: 100%;
     height: 100%;
     font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+/*    font-size: 10px;*/
 }
 body {
     width: 100%;
@@ -14,7 +15,7 @@ body {
 }
 .olControlAttribution {
     bottom: 3px!important;
-    /*background-color: #eee;*/
+    font-size: 10px;
 }
 
 .olImageLoadError {
@@ -104,6 +105,13 @@ div.olControlZoom a:hover {
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
 }
 
+
+div.olControlMousePosition {
+    left:10px;
+    bottom: 3px !important;
+    font-size:10px;
+}
+
 @media only screen and (max-width: 600px) {
     div.olControlZoom a:hover {
         background: rgb(0,0,0);
@@ -112,3 +120,57 @@ div.olControlZoom a:hover {
         -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     }
 }
+
+/* search form */
+/* class for autopopulate fields */
+#pdoksearchinput.default {
+    color: #7F8181;
+}
+#pdoksearchinput{
+    border: 1px solid #000;
+    margin-right:5px;
+    width: 250px;
+    padding-left: 0.3em;
+}
+#pdoksearchbutton{
+    background-color: #50309F;
+    border: 1px solid #000;
+    color : #FFFFFF;
+}
+.pdokGeocoderDiv {
+    position: absolute;
+    z-index: 1200;
+    right:5px;
+    top:5px;
+}
+#pdoksearchresults{
+    display:none;
+    padding: 10px;
+    background-color:white;
+    border: 1px solid black;
+    font-size: 12px;
+}
+
+ul.geozetSuggestions{
+    padding:0;
+}
+.geozetSuggestions li a span{
+	display: none;
+}
+
+
+.geozetSuggestions li {
+    margin-top: 4px;
+    list-style-type: none;
+    width: 95%;
+}
+.geozetSuggestions li:hover {
+    border-bottom: solid 1px black;
+}
+.closeWindow {
+	float: right;
+	margin: 2px;
+	font-weight: bold;
+	color: black;
+}
+
