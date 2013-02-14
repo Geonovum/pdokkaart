@@ -122,6 +122,7 @@ function createOnClickEvents() {
     $('#goto3').click( function() {return goTo(3); } );
     $('#goto4').click( function() {return goTo(4); } );
     $('#goto5').click( function() {createApiLinksAndCode();return goTo(5); } );
+    $('#getpdokkaarturl').click( function() { reload_wizard_based_on_url();return false; } );
     $('#mapsize1').click( function() { pdok_api_map_resize(300,250) } );
     $('#mapsize2').click( function() { pdok_api_map_resize(400,350) } );
     $('#mapsize3').click( function() { pdok_api_map_resize(550,440) } );
@@ -792,4 +793,16 @@ function setLayerSwitcherVisible(isVisible){
 		$('.olControlLayerSwitcher').hide();
 	}
 	api.setLayerSwitcherVisible(isVisible);
+}
+function reload_wizard_based_on_url(){
+	strUrl = $('#pdokkaartUrl').val()
+	if (strUrl.substr(0,4).toUpperCase() == 'HTTP'){
+		if (strUrl.indexOf('?') > -1){
+			window.location.replace(Pdok.ApiUrl.split('api')[0] + '?' + strUrl.split('?')[1]);
+		}
+	}
+	else{
+		alert('Fout bij het ophalen van de url\n(Let op: een externe url moet met \'http://\' beginnen) ');
+        return
+	}
 }
