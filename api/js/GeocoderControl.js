@@ -46,15 +46,19 @@ OpenLayers.Control.GeocoderControl =
 
         // deferred event delegation:
         // http://davidwalsh.name/event-delegate
+        // we need some IE specific magic here
         var me = this;
-        this.div.addEventListener("click",function(e) {
-            if(e.target && e.target.className == "closeWindow") {
+        var clickFunc = function(e) {
+            var target;
+            // IE8 does not have an event.target
+            e.target?target=e.target:target=e.srcElement;
+            if(target && target.className == "closeWindow") {
                 me.hideResults();
             }
-            else if(e.target && e.target.nodeName == "A") {
-                var x = document.getElementById(e.target.id).attributes['x'].value;
-                var y = document.getElementById(e.target.id).attributes['y'].value;
-                var z = document.getElementById(e.target.id).attributes['z'].value;
+            else if(target && target.nodeName == "A") {
+              var x = document.getElementById(target.id).attributes['x'].value;
+                var y = document.getElementById(target.id).attributes['y'].value;
+                var z = document.getElementById(target.id).attributes['z'].value;
                 if(x && y){
                     me.map.setCenter(new OpenLayers.LonLat(x, y), z);
                     me.hideResults();
@@ -63,9 +67,15 @@ OpenLayers.Control.GeocoderControl =
                     alert("fout met coordinaten");
                 }
                 return false;
-                    }
-                });
-
+            }
+        }
+        if (this.div.addEventListener){
+            this.div.addEventListener("click", clickFunc);
+        }
+        else{
+            // IE8
+            this.div.attachEvent("onclick", clickFunc);
+        }
     },
 
     /** 
