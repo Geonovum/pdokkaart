@@ -590,7 +590,6 @@ Pdok.Api.prototype.createOlMap = function() {
                 emptyString: 'De muis is niet over de kaart.'
             }),
             new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
-            ,new OpenLayers.Control.GeocoderControl()
     ]
     if (this.showlayerswitcher && 
         (this.showlayerswitcher == true || this.showlayerswitcher.toLowerCase() == "true")){
