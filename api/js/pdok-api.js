@@ -27,7 +27,7 @@
 Pdok = {}; 
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.0.0';
+Pdok.API_VERSION_NUMBER = '1.0.1';
 
 // CONFIG
 Pdok.ApiKmlService = 'http://www.duif.net/kml/';
@@ -81,7 +81,6 @@ OpenLayers.Lang["nl"] = OpenLayers.Util.applyDefaults({
     'methodDeprecated': "Deze methode is verouderd en wordt verwijderd in versie 3.0.\nGebruik ${newMethod}."
 });
 OpenLayers.Lang.setCode('nl'); 
-
 
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
 
@@ -141,6 +140,13 @@ document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script
  * @param {Object} config A hash object with all possible config key/value pairs
  */
 Pdok.Api = function(config) {
+
+    /**
+     * The geographic coordinate system specifier property = the projectiondescriptor to start (rd (EPSG:28992),wgs (EPSG:4326),wm (EPSG:3758))
+     * 
+     * @type String
+     */
+    this.g = 'rd';
 
     /**
      * The zoom level property = the zoom level to start in (between 0 and 14)
@@ -572,6 +578,36 @@ Pdok.Api.prototype.defaultPdokLayers = {
             }
     }
 
+Pdok.Api.prototype.defaultWmLayers = {
+        OSM: {
+            layertype: 'OSM',
+            name: 'Stamen Achtergrondkaart (toner)',
+            layer: 'toner',
+            style: null,
+            visibility: true, 
+            isBaseLayer: true,
+            attribution: '(c) Stamen'
+        },
+        STAMEN_TONER: {
+            layertype: 'STAMEN',
+            name: 'Stamen Achtergrondkaart (toner)',
+            layer: 'toner',
+            style: null,
+            visibility: true, 
+            isBaseLayer: true,
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+        },
+        STAMEN_WATERCOLOR: {
+            layertype: 'STAMEN',
+            name: 'Stamen Achtergrondkaart (watercolor)',
+            layer: 'watercolor',
+            style: null,
+            visibility: true, 
+            isBaseLayer: true,
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+        }
+    }
+
 /**
  *
  * Given all properties of this Api-instance, create an OpenLayers Map object and return it
@@ -595,18 +631,56 @@ Pdok.Api.prototype.createOlMap = function() {
         (this.showlayerswitcher == true || this.showlayerswitcher.toLowerCase() == "true")){
         controls.push(new OpenLayers.Control.LayerSwitcher());
     }
-    var olMap = new OpenLayers.Map ({
-        controls: controls,
-        maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
-        theme: null,
-        resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76,
-                        26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21],
-        units: 'm',
-        projection: new OpenLayers.Projection("EPSG:28992"),
-        div: this.div
-    });
+    if (this.g.toUpperCase() == 'RD')
+    {
+		var olMap = new OpenLayers.Map ({
+			controls: controls,
+			maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
+			theme: null,
+			resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76,
+							26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21],
+			units: 'm',
+			projection: new OpenLayers.Projection("EPSG:28992"),
+			div: this.div
+		});
+    }
+    else if (this.g.toUpperCase() == 'WGS')
+    {
+    	alert (this.g.toUpperCase());
+		var olMap = new OpenLayers.Map ({
+			controls: controls,
+			theme: null,
+			projection: new OpenLayers.Projection("EPSG:4326"),
+			div: this.div
+		});
+    }
+    else if (this.g.toUpperCase() == 'WM')
+    {
+    	alert (this.g.toUpperCase());
+		var olMap = new OpenLayers.Map ({
+			controls: controls,
+			theme: null,
+			units: 'm',
+			projection: new OpenLayers.Projection("EPSG:3857"),
+			div: this.div
+		});
+    }
+    else
+    {
+    	this.g = 'rd'
+		var olMap = new OpenLayers.Map ({
+			controls: controls,
+			maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
+			theme: null,
+			resolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76,
+							26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42, 0.21],
+			units: 'm',
+			projection: new OpenLayers.Projection("EPSG:28992"),
+			div: this.div
+		});
+    }
     this.map = olMap;
-	
+
 	function showBRT(){
 		var layers = olMap.getLayersByName("BRT Achtergrondkaart");
 		for(var layerIndex = 0; layerIndex < layers.length; layerIndex++)
@@ -664,7 +738,17 @@ Pdok.Api.prototype.createOlMap = function() {
     }
     else {
         // not layer param, at least load one default layer
-        this.addLayers(['BRT'], olMap);
+		if (this.g.toUpperCase() == 'RD')
+		{
+			this.addLayers(['BRT'], olMap);
+		}
+		else if (this.g.toUpperCase() == 'WGS')
+		{
+		}
+		else if (this.g.toUpperCase() == 'WM')
+		{
+			this.addLayers(['STAMEN_WATERCOLOR'], olMap);
+		}
     }
 
     // possiblitiy to override externalGraphic of mt0
@@ -1384,6 +1468,30 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
 }
 
 /**
+ * Method to create an OSM layer and add it to the map based on a layer configuration object. Normally you'll use the addWMS method, but you can also use this way.
+ * @param {Object} layerConfigObj a layer configuration object as described in markersdef
+ */
+Pdok.Api.prototype.createOSMLayer = function(layerConfigObj) {
+
+	map = new OpenLayers.Map('map');
+	layer = new OpenLayers.Layer.OSM( "Open Street Map");
+
+    return layer;
+}
+
+/**
+ * Method to create a Stamen layer and add it to the map based on a layer configuration object. Normally you'll use the addWMS method, but you can also use this way.
+ * @param {Object} layerConfigObj a layer configuration object as described in markersdef
+ */
+Pdok.Api.prototype.createStamenLayer = function(layerConfigObj) {
+
+	map = new OpenLayers.Map('map');
+	layer = new OpenLayers.Layer.Stamen(layerConfigObj.layer);
+
+    return layer;
+}
+
+/**
  * Api Interface addLayers to add layers the map, based on their layerkey-names Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'
  * @param {array} An javascript array of layer names
  * @param {OpenLayers.Map} the Pdok.Api-map to add the layers to
@@ -1405,28 +1513,56 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     for (l in arrLayerNames)
     {
         var layerId = arrLayerNames[l];
-        if (this.defaultLayers[layerId]){
-            var lyr;
-            if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMS'){
-                lyr = this.createWMSLayer( this.defaultLayers[layerId]);
-            }
-            else if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMTS'){
-                lyr = this.createWMTSLayer( this.defaultLayers[layerId]);
-            }
-            else if (this.defaultLayers[layerId].layertype.toUpperCase()=='TMS'){
-                lyr = this.createTMSLayer( this.defaultLayers[layerId]);
-            }
-            else {
-                alert('layertype not available (wrong config?): ' + this.defaultLayers.l.layertype);
-            }
-            if (lyr){
-                lyr.pdokId = layerId;
-                map.addLayer(lyr);
-            }
-        }
-        else{
-            alert('layerid not available: ' + layerId);
-        }
+		if (this.g.toUpperCase() == 'RD')
+		{
+			if (this.defaultLayers[layerId]){
+				var lyr;
+				if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMS'){
+					lyr = this.createWMSLayer( this.defaultLayers[layerId]);
+				}
+				else if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMTS'){
+					lyr = this.createWMTSLayer( this.defaultLayers[layerId]);
+				}
+				else if (this.defaultLayers[layerId].layertype.toUpperCase()=='TMS'){
+					lyr = this.createTMSLayer( this.defaultLayers[layerId]);
+				}
+				else {
+					alert('layertype not available (wrong config?): ' + this.defaultLayers.l.layertype);
+				}
+				if (lyr){
+					lyr.pdokId = layerId;
+					map.addLayer(lyr);
+				}
+			}
+			else{
+				alert('layerid not available: ' + layerId);
+			}
+		}
+		else if (this.g.toUpperCase() == 'WGS')
+		{
+		}
+		else if (this.g.toUpperCase() == 'WM')
+		{
+			if (this.defaultWmLayers[layerId]){
+				var lyr;
+				if (this.defaultWmLayers[layerId].layertype.toUpperCase()=='OSM'){
+					lyr = this.createOSMLayer( this.defaultWmLayers[layerId]);
+				}
+				else if (this.defaultWmLayers[layerId].layertype.toUpperCase()=='STAMEN'){
+					lyr = this.createStamenLayer( this.defaultWmLayers[layerId]);
+				}
+				else {
+					alert('layertype not available (wrong config?): ' + this.defaultWmLayers.l.layertype);
+				}
+				if (lyr){
+					lyr.pdokId = layerId;
+					map.addLayer(lyr);
+				}
+			}
+			else{
+				alert('layerid not available: ' + layerId);
+			}
+		}
     }
     // to be sure featuresLayer and locationLayer are always on top
     this.moveVectorLayersToTop();
