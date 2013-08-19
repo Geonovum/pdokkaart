@@ -578,7 +578,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
             }
     }
 
-Pdok.Api.prototype.defaultWmLayers = {
+Pdok.Api.prototype.defaultWMLayers = {
         OSM: {
             layertype: 'OSM',
             name: 'Stamen Achtergrondkaart (toner)',
@@ -607,6 +607,29 @@ Pdok.Api.prototype.defaultWmLayers = {
             attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
         }
     }
+
+Pdok.Api.prototype.defaultWGS84Layers = {
+        BLUEMARBLE: {
+            layertype: 'TMS',
+            name: 'Nasa Blue Marble',
+			url: 'http://readymap.org:8080/readymap/tiles/',
+            layername: '1',
+			type:'jpg',
+            visibility: true, 
+            isBaseLayer: true,
+            attribution: '(c) NASA'
+        },
+		OSM: {
+			layertype: 'TMS',
+			name: 'OSM',
+			url: 'http://readymap.org:8080/readymap/tiles/',
+			layername: '35',
+			type:'png',
+			visibility: true,
+			isBaseLayer: true,
+			attribution:'(c) ReadyMap.org'
+		}
+	}
 
 /**
  *
@@ -646,19 +669,16 @@ Pdok.Api.prototype.createOlMap = function() {
     }
     else if (this.g.toUpperCase() == 'WGS')
     {
-    	alert (this.g.toUpperCase());
 		var olMap = new OpenLayers.Map ({
-			controls: controls,
 			theme: null,
+			units: 'm',
 			projection: new OpenLayers.Projection("EPSG:4326"),
 			div: this.div
 		});
     }
     else if (this.g.toUpperCase() == 'WM')
     {
-    	alert (this.g.toUpperCase());
 		var olMap = new OpenLayers.Map ({
-			controls: controls,
 			theme: null,
 			units: 'm',
 			projection: new OpenLayers.Projection("EPSG:3857"),
@@ -744,10 +764,13 @@ Pdok.Api.prototype.createOlMap = function() {
 		}
 		else if (this.g.toUpperCase() == 'WGS')
 		{
+			this.addLayers(['OSM'], olMap);
+			this.map.zoomToMaxExtent();
 		}
 		else if (this.g.toUpperCase() == 'WM')
 		{
 			this.addLayers(['STAMEN_WATERCOLOR'], olMap);
+			this.map.zoomToMaxExtent();
 		}
     }
 
@@ -1473,9 +1496,7 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
  */
 Pdok.Api.prototype.createOSMLayer = function(layerConfigObj) {
 
-	map = new OpenLayers.Map('map');
 	layer = new OpenLayers.Layer.OSM( "Open Street Map");
-
     return layer;
 }
 
@@ -1485,9 +1506,7 @@ Pdok.Api.prototype.createOSMLayer = function(layerConfigObj) {
  */
 Pdok.Api.prototype.createStamenLayer = function(layerConfigObj) {
 
-	map = new OpenLayers.Map('map');
 	layer = new OpenLayers.Layer.Stamen(layerConfigObj.layer);
-
     return layer;
 }
 
@@ -1540,19 +1559,32 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
 		}
 		else if (this.g.toUpperCase() == 'WGS')
 		{
+			if (this.defaultWGS84Layers[layerId]){
+				var lyr;
+				if (this.defaultWGS84Layers[layerId].layertype.toUpperCase()=='TMS'){
+					lyr = this.createTMSLayer( this.defaultWGS84Layers[layerId]);
+				}
+				else {
+					alert('layertype not available (wrong config?): ' + this.defaultWMLayers.l.layertype);
+				}
+				if (lyr){
+					lyr.pdokId = layerId;
+					map.addLayer(lyr);
+				}
+			}
 		}
 		else if (this.g.toUpperCase() == 'WM')
 		{
-			if (this.defaultWmLayers[layerId]){
+			if (this.defaultWMLayers[layerId]){
 				var lyr;
-				if (this.defaultWmLayers[layerId].layertype.toUpperCase()=='OSM'){
-					lyr = this.createOSMLayer( this.defaultWmLayers[layerId]);
+				if (this.defaultWMLayers[layerId].layertype.toUpperCase()=='OSM'){
+					lyr = this.createOSMLayer( this.defaultWMLayers[layerId]);
 				}
-				else if (this.defaultWmLayers[layerId].layertype.toUpperCase()=='STAMEN'){
-					lyr = this.createStamenLayer( this.defaultWmLayers[layerId]);
+				else if (this.defaultWMLayers[layerId].layertype.toUpperCase()=='STAMEN'){
+					lyr = this.createStamenLayer( this.defaultWMLayers[layerId]);
 				}
 				else {
-					alert('layertype not available (wrong config?): ' + this.defaultWmLayers.l.layertype);
+					alert('layertype not available (wrong config?): ' + this.defaultWMLayers.l.layertype);
 				}
 				if (lyr){
 					lyr.pdokId = layerId;
