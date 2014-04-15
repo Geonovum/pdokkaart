@@ -10,8 +10,6 @@
  * eg: for a WMTS the layernames is defined in a 'layer' property
  * while for a WMS it is called 'layers' (mind the s on the end)
  */
-
-
 Pdok.Api.prototype.defaultLayers = {
 
     AAN: {
@@ -178,6 +176,34 @@ Pdok.Api.prototype.defaultLayers = {
         isBaseLayer: false,
         singleTile: true
     },
+	LUFO: {
+		layertype: 'WMTS',
+		name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
+		url: 'http://geodata1.nationaalgeoregister.nl/luchtfoto/wmts?',
+		version: "1.3.0",
+		layer: 'luchtfoto',
+		style: '',
+		matrixSet: 'nltilingschema',
+		matrixIds : [01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16],
+		serverResolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42],
+		visibility: true,
+		isBaseLayer: true,
+		format: 'image/jpeg',
+		attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">(c) CC-BY-NC</a>',
+		zoomOffset: 2
+	},
+    LUFO2: {
+        layertype: 'TMS',
+        name: 'PDOK achtergrond luchtfoto\'s (TMS)',
+        url: 'http://geodata1.nationaalgeoregister.nl/luchtfoto/tms/',
+        layername: 'luchtfoto/EPSG28992',
+        type:'jpeg',
+        visibility: true,
+        isBaseLayer: true,
+        tileSize: new OpenLayers.Size(256, 256),
+		serverResolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42],
+        attribution:'<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">(c) CC-BY-NC</a>'
+	},
     NATURA2000: {
         layertype: 'WMTS',
         name: 'Natura 2000 (WMTS)',
