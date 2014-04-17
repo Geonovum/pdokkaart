@@ -11,7 +11,7 @@
 		<script>var config = {
 			"zoom":8,
 			"loc":['119060','570880'],
-			"pdoklayers":'BRT,BRT,TOP50VECTOR,TOP50VECTOR,TOP10NL2,TOP10NL2'
+			"pdoklayers":'BRT,BRT,TOP50VECTOR,TOP50VECTOR,TOP10NL,TOP10NL'
 		};
 		function createPDOKKaart() {var api = new Pdok.Api(config);return api;}
 		OpenLayers.ImgPath="http://kaart.pdok.nl/api/img/";
@@ -25,16 +25,16 @@
 			api.map.getLayersByName('BRT Achtergrondkaart (WMTS)')[0].setVisibility(false);
 			api.map.getLayersByName('BRT Achtergrondkaart (WMTS)')[1].setVisibility(false);
 			api.map.getLayersByName('BRT Achtergrondkaart (WMTS)')[0].setName('BRT Achtergrondkaart (WMTS) - Zachtere kleuren');
-			api.map.getLayersByName('TOP50 Vector (WMTS)')[0].setVisibility(false);
-			api.map.getLayersByName('TOP50 Vector (WMTS)')[1].setVisibility(false);
-			api.map.getLayersByName('TOP50 Vector (WMTS)')[0].setIsBaseLayer(true);
-			api.map.getLayersByName('TOP50 Vector (WMTS)')[1].setIsBaseLayer(true);
-			api.map.getLayersByName('TOP50 Vector (WMTS)')[0].setOpacity(0.3);
-			api.map.getLayersByName('TOP50 Vector (WMTS)')[0].setName('TOP50 Vector (WMTS) - Zachtere kleuren');
-			api.map.getLayersByName('TOP10 NL Baselayer (WMTS)')[0].setVisibility(false);
-			api.map.getLayersByName('TOP10 NL Baselayer (WMTS)')[1].setVisibility(false);
-			api.map.getLayersByName('TOP10 NL Baselayer (WMTS)')[0].setOpacity(0.3);
-			api.map.getLayersByName('TOP10 NL Baselayer (WMTS)')[0].setName('TOP10 NL Baselayer (WMTS) - Zachtere kleuren');
+			api.map.getLayersByName('TOP50NL Vector (WMTS)')[0].setVisibility(false);
+			api.map.getLayersByName('TOP50NL Vector (WMTS)')[1].setVisibility(false);
+			api.map.getLayersByName('TOP50NL Vector (WMTS)')[0].setIsBaseLayer(true);
+			api.map.getLayersByName('TOP50NL Vector (WMTS)')[1].setIsBaseLayer(true);
+			api.map.getLayersByName('TOP50NL Vector (WMTS)')[0].setOpacity(0.3);
+			api.map.getLayersByName('TOP50NL Vector (WMTS)')[0].setName('TOP50 Vector (WMTS) - Zachtere kleuren');
+			api.map.getLayersByName('TOP10 NL (WMTS)')[0].setVisibility(false);
+			api.map.getLayersByName('TOP10 NL (WMTS)')[1].setVisibility(false);
+			api.map.getLayersByName('TOP10 NL (WMTS)')[0].setOpacity(0.3);
+			api.map.getLayersByName('TOP10 NL (WMTS)')[0].setName('TOP10 NL Baselayer (WMTS) - Zachtere kleuren');
 			var switcherControl = api.map.getControlsByClass("OpenLayers.Control.LayerSwitcher")[0];
 			switcherControl.maximizeControl();
 			api.map.getLayersByName('BRT Achtergrondkaart (WMTS) - Zachtere kleuren')[0].setVisibility(true);

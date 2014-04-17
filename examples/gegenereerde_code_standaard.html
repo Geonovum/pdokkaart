@@ -3,7 +3,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
-		<script src="../js/jquery.js"></script>
 		<script src="../api/js/OpenLayers.js"></script>
 		<script src="../api/js/proj4js-compressed.js"></script>
 		<script src="../api/js/pdok-api.js"></script>
@@ -12,7 +11,7 @@
 		<script>var config = {
 		"zoom":7,
 		"loc":['119974.56','500535.68'],
-		"pdoklayers":'BRT,GEMEENTEGRENZEN'
+		"pdoklayers":'BRT,BG_GEMEENTEGRENZEN'
 		};
 		function createPDOKKaart() {
 			var api = new Pdok.Api(config);
