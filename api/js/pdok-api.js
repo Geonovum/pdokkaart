@@ -1180,6 +1180,20 @@ Pdok.Api.prototype.addOLLayer = function(openLayersLayer) {
 }
 
 /**
+ * Api method to set the size of the map based on a css class
+ * 
+ * @param {String} namedSize Optional size name, defaults to 'big'
+ */
+Pdok.Api.prototype.setSizeByName = function(namedSize) {
+    var sizeString = 'big';
+    if (namedSize){
+        sizeString = namedSize;
+    }
+    document.getElementById('map').className ='olMap ' + sizeString;
+    this.map.updateSize();
+    return true;
+};
+/**
  * Api method to add a TMS layer to the map, based on three strings
  * 
  * @param {String} tmsurl a valid URL string

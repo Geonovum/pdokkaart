@@ -9,8 +9,20 @@ body {
     height: 100%;
     margin: 0px;
 }
-#map {
-    width: 100%;
+div.olMap.small {
+   width: 300px;
+   height: 250px;
+}
+div.olMap.medium {
+   width: 400px;
+   height: 350px;
+}
+div.olMap.big {
+   width: 550px;
+   height: 440px;
+}
+div.olMap.fullscreen {
+     width: 100%;
     height: 100%;
 }
 .olControlAttribution {
@@ -72,7 +84,6 @@ div.olControlZoom {
     position: absolute;
     top: 8px;
     left: 8px;
-    #273397
     background: rgb(39, 51, 151);
     opacity: 0.8;
     filter: alpha(opacity=80);
