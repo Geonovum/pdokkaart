@@ -14,7 +14,7 @@
 	width: 292px;
 	background-color: #FFEBB5;
 	font-size: 1.5em;
-	font-weight: 2.2em;
+	font-weight: bold;
 	padding: 4px;
 }
 
@@ -69,7 +69,7 @@
 
 .samenvatting_titel {
 	font-size: 1.4em;
-	font-weight: 2.2em;
+	font-weight: bold;
 	background-color: #FFE9B7;
 	/* border-bottom: 1px solid #FFB612; */
 	width: 426px;
