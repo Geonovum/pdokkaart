@@ -1,37 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="nl" xml:lang="nl">
-  <head>
-    <title>PDOK Kaartwizard</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" > <!-- force >IE8 -->
-    <link rel="stylesheet" href="css/rijkshuisstijl/screen.css" type="text/css" media="screen" />
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+        <meta name="keywords" content="pdok,kaart,wizard" />
+        <meta name="description" content="" />
+        <title>PDOK Kaartwizard</title>
+        <link rel="stylesheet" href="css/rijkshuisstijl/screen.css" type="text/css" media="screen" />
 <!--[if IE 8]><link rel="stylesheet" href="css/rijkshuisstijl/ie/ie8.css" type="text/css" media="screen" /><![endif]-->
 <!--[if lte IE 7]><link rel="stylesheet" href="css/rijkshuisstijl/ie/ie7.css" type="text/css" media="screen" /><![endif]-->
 <!--[if lte IE 6]><link rel="stylesheet" href="css/rijkshuisstijl/ie/ie6.css" type="text/css" media="screen" /><![endif]-->
-    <link rel="stylesheet" href="css/rijkshuisstijl/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="css/rijkshuisstijl/toevoeging.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="css/rijkshuisstijl/iconids.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="api/styles/default/style.css" type="text/css" />
-    <link rel="stylesheet" href="api/styles/api.css" type="text/css" />
-    <link rel="stylesheet" href="css/main.css" type="text/css" />
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="api/js/OpenLayers.js"></script>
-    <script type="text/javascript" src="api/js/proj4js-compressed.js"></script>
-    <script type="text/javascript" src="api/js/GeocoderControl.js"></script>
-    <script type="text/javascript" src="api/js/pdok-api.js"></script>
-    <script type="text/javascript" src="api/js/geozetlib.js"></script>
-    <script type="text/javascript" src="js/wizard.js"></script>
-    <!--<script type="text/javascript" src="js/Geozet.js"></script>
-    <script type="text/javascript" src="js/Geozet/Format/XLSLUS.js"></script>
-    <script type="text/javascript" src="js/Geozet/Format/XLSAddress.js"></script>
-    <script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1.js"></script>
-    <script type="text/javascript" src="js/Geozet/Format/XLSLUS/v1_1_0.js"></script>-->
-    <script>
-		if (document.all && !document.querySelector) { // IE7 or lower
-			alert('U gebruikt Internet Explorer 7.\nDeze browser ondersteunt niet alle functionaliteit van de PDOK Wizard.\nWij raden U aan een nieuwere versie van Internet Explorer of een andere browser zoals Google Chrome, Mozilla FireFox of Apple Safari te gebruiken.');
-		}
-    </script>
+        <link rel="stylesheet" href="css/rijkshuisstijl/print.css" type="text/css" media="print" />
+        <link rel="stylesheet" href="css/rijkshuisstijl/toevoeging.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="css/rijkshuisstijl/iconids.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="api/styles/default/style.css" type="text/css" />
+        <link rel="stylesheet" href="api/styles/api.css" type="text/css" />
+        <link rel="stylesheet" href="css/main.css" type="text/css" />
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="api/js/OpenLayers.js"></script>
+        <script type="text/javascript" src="api/js/proj4js-compressed.js"></script>
+        <script type="text/javascript" src="api/js/GeocoderControl.js"></script>
+        <script type="text/javascript" src="api/js/pdok-api.js"></script>
+        <script type="text/javascript" src="api/js/geozetlib.js"></script>
+        <script type="text/javascript" src="js/wizard.js"></script>
+        <script type="text/javascript">
+            if (document.all && !document.querySelector) { // IE7 or lower
+                alert('U gebruikt Internet Explorer 7.\nDeze browser ondersteunt niet alle functionaliteit van de PDOK Wizard.\nWij raden U aan een nieuwere versie van Internet Explorer of een andere browser zoals Google Chrome, Mozilla FireFox of Apple Safari te gebruiken.');
+            }
+        </script>
   </head>
   <body>
     <div class="container equalize page orange default">
