@@ -71,7 +71,7 @@ function SearchArray(arr, obj) {
 }
 
 // init is called after loading the settings page and initilizes the map and some GUI components, like the PDOK map layer selector and the "popin" windows
-$(document).ready(function() {
+Pdok.ready(function() {
 
     //setMapSize();
     //addFormEnhancements();
