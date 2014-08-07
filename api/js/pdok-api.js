@@ -1,3 +1,211 @@
+
+OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
+    /**
+     * APIProperty: kmlns
+     * {String} KML Namespace to use. Defaults to 2.0 namespace.
+     */
+    kmlns: "http://earth.google.com/kml/2.2",
+    
+    /**
+     * 
+     * @param {type} features
+     * @returns {string} the KML document
+     */
+    write: function(features) {
+        this.styles = {};
+
+        if(!(features instanceof Array)) {
+            features = [features];
+        }
+        var kml = this.createElementNS(this.kmlns, "kml");
+        var document = this.createDocumentXML();
+        var folder = this.createFolderXML();
+        for(var i=0, len=features.length; i<len; ++i) {
+            var styleId = this.extractStyles ? 
+                this.createStyleNode(document, this.computedStyle(features[i])) :
+                false;
+            folder.appendChild(this.createPlacemarkXML(features[i], styleId));
+        }
+        kml.appendChild(folder);
+        document.appendChild(folder);
+        kml.appendChild(document);
+        return OpenLayers.Format.XML.prototype.write.apply(this, [kml]);
+    },
+        /**
+     * Method: createDocumentXML
+     * Creates and returns a KML document node
+     *
+     * Returns:
+     * {DOMElement}
+     */
+    createDocumentXML: function() {
+        // Document name
+        var documentName = this.createElementNS(this.kmlns, "name");
+        var documentNameText = this.createTextNode(this.foldersName);
+        documentName.appendChild(documentNameText);
+
+        // Document description
+        var documentDesc = this.createElementNS(this.kmlns, "description");
+        var documentDescText = this.createTextNode(this.foldersDesc);
+        documentDesc.appendChild(documentDescText);
+
+        var document = this.createElementNS(this.kmlns, "Document");
+        document.appendChild(documentName);
+        document.appendChild(documentDesc);
+
+        return document;
+    },
+        createPlacemarkXML: function(feature, styleId) {
+        // Placemark name
+        var placemarkName = this.createElementNS(this.kmlns, "name");
+        var name = feature.style && feature.style.label ? feature.style.label :
+                   feature.attributes.name || feature.id;
+        placemarkName.appendChild(this.createTextNode(name));
+
+        // Placemark description
+        var placemarkDesc = this.createElementNS(this.kmlns, "description");
+        var desc = feature.attributes.description || this.placemarksDesc;
+        placemarkDesc.appendChild(this.createTextNode(desc));
+        
+        // Placemark
+        var placemarkNode = this.createElementNS(this.kmlns, "Placemark");
+        if(feature.fid) {
+            placemarkNode.setAttribute("id", feature.fid);
+        }
+        placemarkNode.appendChild(placemarkName);
+        placemarkNode.appendChild(placemarkDesc);
+
+        if (styleId) {
+            var styleNode = this.createElementNS(this.kmlns, "styleUrl");
+            styleNode.appendChild(this.createTextNode(styleId));
+            placemarkNode.appendChild(styleNode);
+        }
+
+        // Geometry node (Point, LineString, etc. nodes)
+        var geometryNode = this.buildGeometryNode(feature.geometry);
+        placemarkNode.appendChild(geometryNode);        
+        
+        // output attributes as extendedData
+        if (feature.attributes) {
+            var edNode = this.buildExtendedData(feature.attributes);
+            if (edNode) {
+                placemarkNode.appendChild(edNode);
+            }
+        }
+        
+        return placemarkNode;
+    },
+    computedStyle: function(feature) {
+        if (feature.style) {
+            return feature.style;
+        } else if (feature.layer) {
+            if (feature.layer.style) {
+                return feature.layer.style;
+            } else {
+                return feature.layer.styleMap.createSymbolizer(feature);
+            }
+        }
+    },
+    createKmlColorNode: function(color, opacity) {
+        var alpha = "ff";
+        if (opacity) {
+            alpha = Math.round(parseFloat(opacity) * 255).toString(16);
+        }
+        // TBD: handle '#ccc', 'red'
+        // only match '#rrggbb'
+        var r = color.slice(1, 3);
+        var g = color.slice(3, 5);
+        var b = color.slice(5, 7);
+        var colorNode = this.createElementNS(this.kmlns, "color");
+        colorNode.appendChild(this.createTextNode(alpha + b + g + r));
+        return colorNode;
+    },
+
+    createStyleNode: function(document, style) {
+        //console.log('pdok-api.js>createStyleNode');
+        if (!style){
+            return false;
+        } else {
+            var styleNode = this.createElementNS(this.kmlns, "Style");
+            var id = OpenLayers.Util.createUniqueID("style_");
+            styleNode.setAttribute("id", id);
+
+            // LineStyle
+            if (style.strokeColor) {
+                var lineNode = this.createElementNS(this.kmlns, "LineStyle");
+                var colorNode = this.createKmlColorNode(style.strokeColor, style.strokeOpacity);
+                lineNode.appendChild(colorNode);
+
+                if (style.strokeWidth) {
+                    var width = this.createElementNS(this.kmlns, "width");
+                    width.appendChild(this.createTextNode(style.strokeWidth));
+                    lineNode.appendChild(width);
+                }
+                styleNode.appendChild(lineNode);
+            }
+
+            // PolyStyle
+            if (style.fillColor) {
+                var polyNode = this.createElementNS(this.kmlns, "PolyStyle");
+                var colorNode = this.createKmlColorNode(style.fillColor, style.fillOpacity);
+                polyNode.appendChild(colorNode);
+                styleNode.appendChild(polyNode);
+            } else /*if (style.fillColor == "none")*/ {
+                var polyNode = this.createElementNS(this.kmlns, "PolyStyle");
+                var fill = this.createElementNS(this.kmlns, "fill");
+                fill.appendChild(this.createTextNode("1"));
+                var colorNode = this.createKmlColorNode("#ffffff", "0.01");
+                polyNode.appendChild(colorNode);
+                polyNode.appendChild(fill);
+                styleNode.appendChild(polyNode);
+            }
+            if (polyNode && style.strokeWidth === "0") {
+                var outline = this.createElementNS(this.kmlns, "outline");
+                outline.appendChild(this.createTextNode("1"));
+                polyNode.appendChild(outline);
+                styleNode.appendChild(polyNode);
+            }
+
+            // IconStyle
+            if (style.externalGraphic) {
+                var iconstyleNode = this.createElementNS(this.kmlns, "IconStyle");
+                var iconNode = this.createElementNS(this.kmlns, "Icon");
+
+                var href = this.createElementNS(this.kmlns, "href");
+                var urlObj = OpenLayers.Util.createUrlObject(
+                    style.externalGraphic,
+                    {ignorePort80: true}
+                );
+                if(urlObj.port && urlObj.port !== "80"){
+                    url = [urlObj.protocol, '//', urlObj.host, ':', urlObj.port, urlObj.pathname].join('');
+                } else {
+                    url = [urlObj.protocol, '//', urlObj.host, urlObj.pathname].join('');
+                }
+                href.appendChild(this.createTextNode(url));
+                iconNode.appendChild(href);
+                iconstyleNode.appendChild(iconNode);
+                var scaleNode = this.createElementNS(this.kmlns, "scale");
+
+                // in KML 2.2, w and h <Icon> attributes are deprecated
+                // this means that we can't modify the width/height ratio of the image
+                var scale = style.graphicWidth || style.graphicHeight || style.pointRadius * 2;
+                scaleNode.appendChild(this.createTextNode(scale/32));
+                iconstyleNode.appendChild(scaleNode);
+                styleNode.appendChild(iconstyleNode);
+            }
+
+            // LabelStyle
+            if (style.fontColor) {
+                var colorNode = this.createKmlColorNode(style.fontColor, style.fontOpacity);
+                var labelStyle = this.createElementNS(this.kmlns, "LabelStyle");
+                labelStyle.appendChild(colorNode);
+                styleNode.appendChild(labelStyle);
+            }
+            document.appendChild(styleNode);
+            return "#" + id;
+        }
+    }
+});
 /**
  * @class Pdok.Api
  *
@@ -1793,8 +2001,8 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
         internalProjection: this.map.baseLayer.projection,
         extractStyles: this.kmlstyles
     };
-    if (type.toUpperCase() == 'KML') {
-        format = new OpenLayers.Format.KML(options);
+    if (type.toUpperCase() === 'KML') {
+        format = new OpenLayers.Format.KMLv2_2(options);
         if (data.search(/\n/) > -1 && data.search(/\n/) < data.length){
         	//alert("Er zijn returns gevonden in de KML, deze zijn vervangen door een spatie.")
         	//features = format.read(data.replace(/\n/g," ").slice(0,data.replace(/\n/g," ").lastIndexOf(" ")) +"\n");
@@ -2192,7 +2400,7 @@ Pdok.Api.prototype.createKML = function(){
     if (this.locationLayer.features.length==1) {
         allFeatures.push(this.locationLayer.features[0]);
     }
-    var kmlformat = new OpenLayers.Format.KML({
+    var kmlformat = new OpenLayers.Format.KMLv2_2({
         foldersDesc: null,
         foldersName: null,
         placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
