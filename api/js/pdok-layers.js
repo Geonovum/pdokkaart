@@ -11,6 +11,8 @@
  * while for a WMS it is called 'layers' (mind the s on the end)
  */
 
+var Pdok = Pdok || {};
+window.Pdok = Pdok;
 
 Pdok.Api.prototype.defaultLayers = {
 
@@ -1539,4 +1541,4 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   }
-}
+};
