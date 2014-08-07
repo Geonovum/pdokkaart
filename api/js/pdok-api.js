@@ -206,6 +206,7 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
         }
     }
 });
+
 /**
  * @class Pdok.Api
  *
@@ -244,21 +245,22 @@ Pdok.ApiKmlService = 'http://www.duif.net/kml/';
 // The api-url is the base-url for api.js, markersdefs, layerdefs etc
 // The proxyhost is needed for the geocoder
 
-// PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
-OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url=";  // current pdokloket proxy
-
-// TEST
-//Pdok.ApiUrl = 'http://www.duif.net/pdok/api';
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
-
-// ONTWIKKEL
-Pdok.ApiUrl = 'http://localhost/pdokkaart/api';
-OpenLayers.ProxyHost = "http://"+window.location.host+"/cgi-bin/proxy.cgi?url=";
-
-OpenLayers.ImgPath = './img/';
-
-
+Pdok.createBaseUri = function(){
+    var pathname = window.location.pathname;
+    var path = pathname;
+    if (pathname.search(/\.html|\.php|.jsp/)>0){
+        pathparts = pathname.substr(0,pathname.search(/\.html|\.php|.jsp/)).split('/');
+        path = pathparts.slice(0, pathparts.length-1);
+        path = path.join('/');
+        path +='/';
+    }
+    base = window.location.protocol+'//'+window.location.host + path;
+    return base;
+};
+Pdok.ApiUrl =  Pdok.createBaseUri() + 'api';
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url=";  // current pdokloket proxy
+OpenLayers.ImgPath = Pdok.ApiUrl + '/img/';
 OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
 OpenLayers.Feature.Vector.style['default'].pointRadius = 5;
@@ -523,40 +525,23 @@ Pdok.ready = (function(){
     return ready;
 })();
 
-Pdok.createBaseUri = function(){
-    var pathname = window.location.pathname;
-    var path = pathname;
-    if (pathname.search(/\.html|\.php|.jsp/)>0){
-        pathparts = pathname.substr(0,pathname.search(/\.html|\.php|.jsp/)).split('/');
-        path = pathparts.slice(0, pathparts.length-1);
-        path = path.join('/');
-        path +='/';
+//http://stackoverflow.com/questions/3922139/add-css-to-head-with-javascript
+Pdok.addcss = function(css){
+    var fileref=document.createElement("link");
+    fileref.setAttribute("rel", "stylesheet");
+    fileref.setAttribute("type", "text/css");
+    fileref.setAttribute("href", css);
+    if (typeof fileref !== "undefined") {
+        document.getElementsByTagName("head")[0].appendChild(fileref);
     }
-    base = window.location.protocol+'//'+window.location.host + path;
-    return base;
-}
-
-// it is possible to override the markerdefinitions with a request parameter markersdef
-if( OpenLayers.Util.getParameters()['markersdef'] != null){
-    Pdok.markersdef = OpenLayers.Util.getParameters()['markersdef'];
-}
-else {
-    // we use the markersdef from the api
-    Pdok.markersdef = Pdok.ApiUrl+'/js/pdok-markers.js';
-}
-// inject a script include for the markersdef, being either an external or the api included one
-document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
-
-// it is possible to override the layerdefinitions with a request parameter layersdef
-if( OpenLayers.Util.getParameters()['layersdef'] != null){
-    Pdok.layersdef = OpenLayers.Util.getParameters()['layersdef'];
-}
-else {
-    // we use the layersdef from the api
-    Pdok.layersdef = Pdok.ApiUrl+'/js/pdok-layers.js';
-}
-// inject a script include for the layersdef, being either an external or the api included one
-document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script>');
+ };
+Pdok.addJs = function(js, callback){
+    var script  = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.setAttribute("src", js);
+    script.addEventListener("load", callback);
+    document.getElementsByTagName("body")[0].appendChild(script);
+ };
 
 /**
  * Creates an instance of the Pdok Api based on an optional config object <a href="#constructor">more ...</a>
@@ -1056,7 +1041,7 @@ Pdok.Api.prototype.createOlMap = function() {
             new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
     ]
     if (this.showlayerswitcher && 
-        (this.showlayerswitcher == true || this.showlayerswitcher.toLowerCase() == "true")){
+        (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")){
         controls.push(new OpenLayers.Control.LayerSwitcher());
     }
     var olMap = new OpenLayers.Map ({
@@ -1070,7 +1055,17 @@ Pdok.Api.prototype.createOlMap = function() {
         div: this.div
     });
     this.map = olMap;
-	
+    if (this.geocoder){
+        var div = 'search';
+        if(this.geocoder.div){
+            div = this.geocoder.div;
+        }
+        Pdok.addJs(Pdok.ApiUrl+'/js/geozetlib.js', function(){
+            olMap.addControl(new OpenLayers.Control.GeocoderControl({
+                div: document.getElementById(div)
+            }));
+        });
+    }		
 	function showBRT(){
 		var layers = olMap.getLayersByName("BRT Achtergrondkaart");
 		for(var layerIndex = 0; layerIndex < layers.length; layerIndex++)
