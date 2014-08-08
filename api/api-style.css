@@ -5,7 +5,7 @@
 	margin: 1px;
 	float: right;
 	top: 5%;
-	left: 5%px;
+	left: 5%;
 	right: 1%;
 }
 .openBRTItemInactive {
@@ -36,7 +36,7 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	height: 40px;
-	left: 12;
+	left: 12px;
 	top: 5%;
 	width: 40px;
 	margin-top: -9px;

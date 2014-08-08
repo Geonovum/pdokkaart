@@ -206,6 +206,284 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
         }
     }
 });
+/**
+ * @requires OpenLayers/Control.js
+ */
+
+/**
+ * Class: OpenLayers.Control.GeocoderControl
+ * The GeocoderControl control adds pdok search functionality. 
+ *
+ * Inherits from:
+ *  - <OpenLayers.Control>
+ */
+OpenLayers.Control.GeocoderControl = 
+  OpenLayers.Class(OpenLayers.Control, {
+
+    // PDOK
+    geocoderUrl: 'http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?',
+    geocoderParameter: 'zoekterm',
+
+    zoomScale : {
+        adres: 13,
+        postcode: 11,
+        plaats: 8,
+        gemeente: 8,
+        provincie: 5,
+        standaard: 9
+    },
+
+    /**
+     * Constructor:
+     * 
+     * Parameters:
+     * @param options - {Object} Options for control.
+     */
+    initialize: function(options) {
+	//console.log('pdok-api.js>OpenLayers.Control.GeocoderControl.initialize()');
+        OpenLayers.Control.prototype.initialize.apply(this, arguments);
+        // we create the div ourselves, to be able to put it outside the map-div
+        // if we let OpenLayers create it, and let it be part of the map-div
+        // then OpenLayers steals the cursor from our input
+        if (!this.div){
+            this.div = document.createElement("div");
+            this.div.className = OpenLayers.Util.createUniqueID("gc_");
+            this.div.id = this.div.className+'_'+this.id;
+        }
+        this.resultdiv_id = OpenLayers.Util.createUniqueID("gcr_");
+        this.formdiv_id = this.resultdiv_id + '_form';
+        this.button_id = this.resultdiv_id + '_button';
+        this.input_id = this.resultdiv_id + '_input';
+        this.geozet_id = this.resultdiv_id + '_geozet';
+        this.allowSelection = true;
+
+        // deferred event delegation:
+        // http://davidwalsh.name/event-delegate
+        var me = this;
+        var clickFunc = function(e) {
+            var target;
+            e.target?target=e.target:target=e.srcElement;
+            if(target && target.className === "closeWindow") {
+                me.hideResults();
+            }
+            else if(target && target.nodeName === "A") {
+              var x = document.getElementById(target.id).attributes['x'].value;
+                var y = document.getElementById(target.id).attributes['y'].value;
+                var z = document.getElementById(target.id).attributes['z'].value;
+                if(x && y){
+                    me.map.setCenter(new OpenLayers.LonLat(x, y), z);
+                } else {
+                    document.getElementById(this.resultdiv_id).innerHTML = "Fout met coordinaten";
+                }
+                return false;
+            }
+        };
+        if (this.div.addEventListener) {
+            this.div.addEventListener("click", clickFunc);
+        } else{
+            // IE8
+            this.div.attachEvent("onclick", clickFunc);
+        }
+	me.draw();
+    },
+
+    /** 
+     * Method: destroy
+     * Destroy control.
+     */
+    destroy: function() {
+        OpenLayers.Control.prototype.destroy.apply(this, arguments);
+    },
+    
+    /**
+     * Method: draw
+     * Initialize control.
+     * 
+     * Returns: 
+     * {DOMElement} A reference to the DIV DOMElement containing the control
+     */    
+    draw: function() {
+        //console.log('pdok-api.js>OpenLayers.Control.GeocoderControl.draw()');
+        OpenLayers.Control.prototype.draw.apply(this, arguments);
+        this.div.innerHTML =
+            '<div>' + 
+                '<form action="#" id="' + this.formdiv_id + '" name="' + this.formdiv_id + '" onsubmit="return false;">' +
+                    '<fieldset>' + 
+                        '<input class="autovalue default" type="text" title="adres, postcode of plaatsnaam" id="' + this.input_id +'" name="'+ this.input_id + '" />' +
+                        '<input type="submit" id="' + this.button_id +'" class="filterbutton" value="Zoek" />' + 
+                    '</fieldset>' +
+                '</form>' + 
+            '</div>' + 
+            '<div id="'+ this.resultdiv_id +'" style="display:none;"></div>';
+        var me = this;
+        document.getElementById(this.button_id).onclick = function(){
+            me.search();
+            if (document.getElementById(me.resultdiv_id).style.display === 'none'){
+                me.showResults();
+            }
+        };
+        return this.div;
+    },
+
+    handleGeocodeResponse: function(req){
+
+        var responseText = req.responseText;
+        if (responseText && (responseText.indexOf('FAILED') !== -1 ||
+            responseText.indexOf('Exception') !== -1 )) {
+            // fail silently
+            return false;
+        }
+        if(req.status === 404){
+            document.getElementById(this.resultdiv_id).innerHTML = "De zoekfunctie is niet actief, neem contact op met systeembeheer (status: 404)";
+            return false;
+        }
+        var xlslusFormat = new Geozet.Format.XLSLUS();
+        var xlslus = xlslusFormat.read(req.responseXML || req.responseText);
+        if (xlslus.length === 0) {
+            hits = 0;
+        } else {
+            var hits=xlslus[0].numberOfGeocodedAddresses;
+        }
+        if (hits === 0) {
+            // zero responses
+            document.getElementById(this.resultdiv_id).innerHTML = "Geen locaties gevonden ...";
+        } else {
+            var maxEx = this.restrictedExtent;
+            // minx,miny,maxx,maxy are used to calcultate a bbox of the geocoding results
+            // initializes these with the max/min values of the extent of the map, so swap the left /right and bottomo/top of the maxExtent
+            // i.e.: the calculate minx will allways be smaller than the right-border of the map;
+            // TODO: for production use the map's restricted Extent, so request a change to Lucs API
+            /// For now: just values
+            maxEx = new OpenLayers.Bounds(-285401.92, 22598.08, 595401.92, 903401.92);
+            var minx = maxEx.right;
+            var miny = maxEx.top;
+            var maxx = maxEx.left;
+            var maxy = maxEx.bottom;
+            var minzoom = 15;
+            var features = [];
+            // > 0 hit show suggestions
+            if(hits > 0){
+                var searchString = document.getElementById(this.input_id).value;
+                document.getElementById(this.resultdiv_id).innerHTML = 
+                    '<span class="closeWindow"><a onclick="return false;"><img class="closeWindow" src="' + Pdok.ApiUrl + 
+                    '/styles/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>' +
+                    '<span class="searchedFor">Gezocht op: "' + searchString + 
+                    '"</span><h3>Zoekresultaten</h3><ul id="' + this.geozet_id + '" class="geozetSuggestions"></ul>';
+            }
+            for (i = 0; i < hits; i++) {
+                var suggestion='';
+                var geom = xlslus[0].features[i].geometry;
+                var address = xlslus[0].features[i].attributes.address;
+                var plaats = address.place.MunicipalitySubdivision; // toont evt provincie afkorting
+                var gemeente = address.place.Municipality;
+                var prov = address.place.CountrySubdivision;
+                var adres = '';
+                var postcode = '';
+                // determine zoom and hash
+                var zoom = null;
+                if (address.street && address.street.length>0) {
+                    adres = address.street + ' - ' ;
+                    if (address.building) {
+                        var toevoeging = '';
+                        if (address.building.subdivision) {
+                            toevoeging = '-'+address.building.subdivision;
+                        }
+                        adres += address.building.number+toevoeging+' - ';
+                    }
+                    if(!zoom){
+                        zoom='adres';
+                    }
+                }
+                if (address.postalCode) {
+                    adres += address.postalCode+' - ';
+                    if(!zoom){
+                        zoom='postcode';
+                    }
+                }
+                if (plaats) {
+                    suggestion=adres+plaats+' (plaats)';
+                    if(!zoom){
+                        zoom='plaats';
+                    }
+                } else if(gemeente) {
+                    suggestion=adres+gemeente+' (gemeente)';
+                    if(!zoom){
+                        zoom='gemeente';
+                    }
+                } else if(prov){
+                    suggestion=prov+' (provincie)';
+                    if(!zoom){
+                        zoom='provincie';
+                    }
+                }
+                if(!zoom){
+                    zoom='standaard';
+                }
+		
+                // hack to be able to handle results without geom
+                var x = geom ? geom.x : 150000;
+                var y = geom ? geom.y : 450000;
+                var z = geom ? this.zoomScale[zoom] : this.zoomScale['provincie'];
+                var newId = -1;
+                if (geom) {
+                    minx = Math.min(minx, x);
+                    miny = Math.min(miny, y);
+                    maxx = Math.max(maxx, x);
+                    maxy = Math.max(maxy, y);
+                    minzoom = Math.min(minzoom, this.zoomScale[zoom]);
+                    var newFt = new OpenLayers.Feature.Vector(
+                        new OpenLayers.Geometry.Point(x, y), {
+                            "title": suggestion, 
+                            "postcode": postcode, 
+                            "adres": adres, 
+                            "plaats": plaats, 
+                            "gemeente": gemeente, 
+                            "provincie": prov
+                        }
+                    );
+                    newId = newFt.id;
+                    features.push(newFt);
+                }
+                var gazHtml = '<li><a href="#" id="result_'+newId.split('.')[2]+'" x="'+x+'" y="'+y+'" z="'+z+'">' + suggestion +'</a></li>';
+                document.getElementById(this.geozet_id).innerHTML += gazHtml;
+            } 
+            if(hits === 1) {
+                var geom = xlslus[0].features[0].geometry;
+                // hack to be able to handle results without geom
+                var x = geom ? geom.x : 150000;
+                var y = geom ? geom.y : 450000;
+                var z = geom ? this.zoomScale[zoom] : this.zoomScale['provincie'];
+                this.map.setCenter(new OpenLayers.LonLat(x, y), z);
+            }
+        }
+        this.showResults();
+        return false;
+    },
+
+    search: function() {
+        document.getElementById(this.resultdiv_id).innerHTML = 'Bezig met zoeken...';
+        var searchString = document.getElementById(this.input_id).value;
+        var params = {}; //{request: 'geocode'};
+        params[this.geocoderParameter] = searchString;
+        if (searchString && searchString.length>0){
+            OpenLayers.Request.GET({
+                url: this.geocoderUrl,
+                params: params,
+                scope: this,
+                callback: this.handleGeocodeResponse
+                // failure: this.handleError
+            });
+        }
+        return false;
+    },
+    hideResults: function() {
+        document.getElementById(this.resultdiv_id).style.display = 'none';
+    },
+    showResults: function() {
+        document.getElementById(this.resultdiv_id).style.display = 'block';
+    },
+    CLASS_NAME: "OpenLayers.Control.GeocoderControl"
+});
 
 /**
  * @class Pdok.Api
@@ -562,34 +840,100 @@ Pdok.addJs = function(js, callback){
  * @constructor
  * @this {Pdok.Api}
  * @param {Object} config A hash object with all possible config key/value pairs
+ * @param {Function} callback the callback function
  */
-Pdok.Api = function(config) {
+Pdok.Api = function(config, callback) {
+    //console.log('pdok-api.js>Pdok.Api');
+    if (config) {
+        OpenLayers.Util.extend(Pdok, config);
+    }
+
+    // it is possible to override the markerdefinitions with a request parameter markersdef
+    if(OpenLayers.Util.getParameters()['markersdef']){
+        Pdok.markersdef = OpenLayers.Util.getParameters()['markersdef'];
+    } else if (!Pdok.markersdef) {
+        // we use the markersdef from the api
+        Pdok.markersdef = Pdok.ApiUrl+'/js/pdok-markers.js';
+    }
+    
+    // it is possible to override the layerdefinitions with a request parameter layersdef
+    if(OpenLayers.Util.getParameters()['layersdef']){
+        Pdok.layersdef = Pdok.ApiUrl + '/js/' + OpenLayers.Util.getParameters()['layersdef'];
+    } else if (!Pdok.layersdef) {
+        // we use the layersdef from the api
+        Pdok.layersdef = Pdok.ApiUrl + '/js/pdok-layers.js';
+    }
+
+    /**
+     * Url to a markersdefinition file.
+     * <p>
+     * This is a simple json file with actual style properies like from 
+     * OpenLayers.Feature.Vector.style.default
+     * An example:
+     * <pre>
+     * Pdok.Api.prototype.defaultStyles=[ 
+     *         // all point marker styles will use mt0 as default 
+     *         // so you only have to define the props that are different from mt0 
+     *         // mt0, pt0, lt0 are defined in pdok-api.js, so defining it here will override that one 
+     *     { 
+     *         id: 'mt1', 
+     *         name: 'Informatiebord blauw', 
+     *         externalGraphic: Pdok.ApiUrl + '/markertypes/emblem-notice.png', 
+     *         graphicHeight: 32, 
+     *         graphicWidth: 32, 
+     *         graphicYOffset: -16 
+     *     }, 
+     *     {
+     *         id: 'pt18', 
+     *         fillOpacity: 0.0, 
+     *         strokeColor: 'orange', 
+     *         strokeWidth: 2, 
+     *         name: 'Oranje'
+     *     },
+     *     {
+     *         id:'lt8',  
+     *         strokeColor:'green',  
+     *         strokeWidth:3,  
+     *         strokeOpacity:0.5,  
+     *         name:'groen 2px transparant'  
+     *     }
+     * ]
+     * </pre>
+     * </p>
+     * @type url
+     */
+    this.markersdef = Pdok.markersdef || null;
+
+    // an external layersdef is temporarily parked in Pdok.layersdef
+    this.layersdef = Pdok.layersdef || null;
+    
 
     /**
      * The zoom level property = the zoom level to start in (between 0 and 14)
      * 
      * @type int
      */
-    this.zoom = null;
+    this.zoom = Pdok.zoom;
 
 	/**
      * The location (x,y) to zoom to. A x,y commaseparated String (epsg:28992)
      * @type String
      */
-    this.loc = null;
+    this.loc = Pdok.loc;
 
     /**
      * A boundingbox (w,s,e,n) to zoom to. A commaseparated String of west,south,east,north
      * @type String
      */
-    this.bbox = null;
+    this.bbox = Pdok.bbox;
 
     /**
      * A commaseparated list of pdok id's (defined in pdok-layers.js). Eg: 'brt,top10'
      * @type String
      */
-    this.pdoklayers = null;
-
+    this.overlays = Pdok.overlays || [];
+    this.baselayers = Pdok.baselayers || [];
+    
     /**
      * Reference to OpenLayers Map object
      * @type OpenLayers.Map
@@ -792,14 +1136,19 @@ Pdok.Api = function(config) {
      * To determine if the layer switcher should be shown or not. Defaults to true
      * @type Boolean
      */
-    this.showlayerswitcher = true;
+    this.showlayerswitcher = Pdok.showlayerswitcher;
+    this.showzoom = Pdok.showzoom;
+    this.shownavigation = Pdok.shownavigation;
+    this.showscaleline = Pdok.showscaleline;
+    this.showmouseposition = Pdok.showmouseposition;
+    this.geocoder = Pdok.geocoder;
 
     /**
      * Reference to the DIV-id the map should be rendered in.
      * Note that you have to set this one to have two maps in one page!
      * @type String
      */
-    this.div = 'map';
+    this.div = Pdok.mapdiv || 'map';
 
 	/**
      * Reference to internal styles Object with all marker, lines and polygon rules.
@@ -807,14 +1156,15 @@ Pdok.Api = function(config) {
      * This Object is created from the pdok-markers.js file. Which is a json file with marker definitions
      * @type Object
      */
-    this.styles = null;
+    this.styles = [];
 
     // internal name of the features layer
     this.FEATURESLAYER_NAME = "Markers";
+    this.LOCATIONSLAYER_NAME = "locationtool";
 
     // this.features can come as KML string from config/params
     // after handling this, it contains an array of features
-    this.features = [];
+    this.features = Pdok.features;
 
     /**
      * Reference to featuresLayer (= layer where you draw feature on)
@@ -877,79 +1227,22 @@ Pdok.Api = function(config) {
      * @type int
      */ 
     this.locationtoolzmax = '30';
+    
+    // inject a script include for the layersdef, being either an external or the api included one
+    var that = this;
+    Pdok.addJs(this.layersdef, function(){
+        Pdok.addJs(that.markersdef, function(){
+            that.defaultLayers = OpenLayers.Util.applyDefaults(
+            that.defaultPdokLayers, that.defaultLayers);
+            that.createStyles();
+            that.createOlMap();
 
-    /**
-     * Url to a markersdefinition file.
-     * <p>
-     * This is a simple json file with actual style properies like from 
-     * OpenLayers.Feature.Vector.style.default
-     * An example:
-     * <pre>
-     * Pdok.Api.prototype.defaultStyles=[ 
-     *         // all point marker styles will use mt0 as default 
-     *         // so you only have to define the props that are different from mt0 
-     *         // mt0, pt0, lt0 are defined in pdok-api.js, so defining it here will override that one 
-     *     { 
-     *         id: 'mt1', 
-     *         name: 'Informatiebord blauw', 
-     *         externalGraphic: Pdok.ApiUrl + '/markertypes/emblem-notice.png', 
-     *         graphicHeight: 32, 
-     *         graphicWidth: 32, 
-     *         graphicYOffset: -16 
-     *     }, 
-     *     {
-     *         id: 'pt18', 
-     *         fillOpacity: 0.0, 
-     *         strokeColor: 'orange', 
-     *         strokeWidth: 2, 
-     *         name: 'Oranje'
-     *     },
-     *     {
-     *         id:'lt8',  
-     *         strokeColor:'green',  
-     *         strokeWidth:3,  
-     *         strokeOpacity:0.5,  
-     *         name:'groen 2px transparant'  
-     *     }
-     * ]
-     * </pre>
-     * </p>
-     * @type url
-     */
-    this.markersdef = null;
-
-    // an external markersdef is temporarily parked in Pdok.markersdef
-    if (Pdok.markersdef) {
-        this.markersdef = ''+Pdok.markersdef;
-    }
-
-
-    this.layersdef = null;
-
-    // an external layersdef is temporarily parked in Pdok.layersdef
-    if (Pdok.layersdef) {
-        this.layersdef = ''+Pdok.layersdef;
-    }
-
-    this.defaultLayers = OpenLayers.Util.applyDefaults(
-        this.defaultPdokLayers, this.defaultLayers);
-
-    // create this.styles, based on either this.defaultStyles object, OR via a this.customStyles object
-    this.createStyles();
-
-    if (config) {
-        // hack to make x and y fields null
-        // better fix would be to remove one of the three locationtool fields
-        // so you have either ONE field (wkt) or TWO (x and y)
-        if (config.locationtoolwktfield){
-            config.locationtoolxfield = null;
-            config.locationtoolyfield = null;
-        }
-        OpenLayers.Util.extend( this, config );
-    }
-
-    this.createOlMap();
-}
+            if (callback && typeof(callback) === "function") {  
+                callback(that);  
+            }
+        });
+    });
+};
 
 // Array will contain OpenLayers.Style Objects
 Pdok.Api.prototype.defaultStyles=[];
@@ -1030,16 +1323,30 @@ Pdok.Api.prototype.defaultPdokLayers = {
  */
 Pdok.Api.prototype.createOlMap = function() {
     var controls = [
-        new OpenLayers.Control.Attribution(),
-        new OpenLayers.Control.Navigation(),
-        new OpenLayers.Control.Zoom(),
-        new OpenLayers.Control.MousePosition({
+            new OpenLayers.Control.Attribution()
+            
+    ];
+
+    if (this.showmouseposition && 
+        (this.showmouseposition === true || this.showmouseposition.toLowerCase() === "true")){
+        controls.push(new OpenLayers.Control.MousePosition({
             separator: ', ',
             numDigits: 0,
             emptyString: 'Plaats de cursor op de kaart voor co&ouml;rdinaten'
-        }),
-        new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''})
-    ];
+        }));
+    }
+    if (this.showscaleline && 
+        (this.showscaleline === true || this.showscaleline.toLowerCase() === "true")){
+        controls.push(new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''}));
+    }
+    if (this.shownavigation &&
+        (this.shownavigation === true || this.shownavigation.toLowerCase() === "true")){
+        controls.push(new OpenLayers.Control.Navigation());
+    }
+    if (this.showzoom && 
+        (this.showzoom === true || this.showzoom.toLowerCase() === "true")){
+        controls.push(new OpenLayers.Control.Zoom());
+    }
     if (this.showlayerswitcher && 
         (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")){
         controls.push(new OpenLayers.Control.LayerSwitcher());
@@ -1109,21 +1416,27 @@ Pdok.Api.prototype.createOlMap = function() {
         olMap.addControl(panel);
     }
     // apply layer if a layer was given
-    if (this.pdoklayers != null) {
+    if (this.baselayers) {
         // if there is just one layer (without comma's), OL returns a String:
-        if (typeof this.pdoklayers == 'string') {
-            this.pdoklayers=this.pdoklayers.split(',');
+        if (typeof this.baselayers === 'string') {
+            this.baselayers = this.baselayers.split(',');
         }
-        this.addLayers(this.pdoklayers, olMap);
-        // if the map does NOT have a baseLayer, always add BRT layer
-        if (!olMap.baseLayer){
-            //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
-            this.addLayers(['BRT']);
+        this.addLayers(this.baselayers, olMap);
+    }
+    // apply layer if a layer was given
+    if (this.overlays) {
+        // if there is just one layer (without comma's), OL returns a String:
+        if (typeof this.overlays === 'string') {
+            this.overlays=this.overlays.split(',');
+        }
+        for (layer in this.overlays){
+            this.addLayers([this.overlays[layer]], olMap);
         }
     }
-    else {
-        // not layer param, at least load one default layer
-        this.addLayers(['BRT'], olMap);
+
+    if (!olMap.baseLayer){
+        //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
+        this.addLayers([{id:'BRT', visible:true}], olMap);
     }
 
     // possiblitiy to override externalGraphic of mt0
@@ -1183,7 +1496,7 @@ Pdok.Api.prototype.createOlMap = function() {
         // meaning we received a features string (kml) from the outside
         // features string handled, this.features now used as feature array
         if (this.features.toString().length > 0) {
-            var kmlString = this.features.toString();
+            var kmlString = decodeURIComponent(this.features.toString());
             this.features = [];
             this.addFeaturesFromString(kmlString, 'KML');
         }
@@ -1641,11 +1954,17 @@ Pdok.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
  * Method to create a TMS layer and add it to the map based on a layer configuration object. Normally you'll use the addTMS method, but you can also use this way.
  * @param {Object} layerConfigObj a layer configuration object as described in markersdef
  */
-Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
+Pdok.Api.prototype.createTMSLayer = function(layerConfigObj, id) {
 
+    // default WMS layer object to set defaults:
+    // missing values in config object will be replaced by sensible defaults:
+    if (!id) {
+        id = null;
+    }
     // default TMS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
+        pdokid: id,
         name: 'tms layer',
         url: '',
         layertype: '',
@@ -1665,7 +1984,7 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj) {
             type:layerConfigObj.type, 
             visibility: layerConfigObj.visibility, 
             isBaseLayer: layerConfigObj.isBaseLayer,
-            attribution:layerConfigObj.attribution
+	    attribution:layerConfigObj.attribution
         }
     );
 
@@ -1701,7 +2020,11 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
  * Method to create a WMTS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMTS method, but you can also use this way.
  * @param {Object} layerConfigObj a layer configuration object as described in markersdef
  */
-Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
+Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj, id) {
+
+    if (!id) {
+        id = null;
+    }
     // From WMTS openlayers example:
     // If tile matrix identifiers differ from zoom levels (0, 1, 2, ...)
     // then they must be explicitly provided.
@@ -1713,6 +2036,7 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
     // default WMTS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
+            pdokid: id,
             name: 'wmts layer',
             url: '',
             layer: '',
@@ -1738,6 +2062,7 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
     var layer = new OpenLayers.Layer.WMTS(
         {
             name: layerConfigObj.name,
+            pdokid: layerConfigObj.pdokid,
             url:layerConfigObj.url,
             layer: layerConfigObj.layer,
             style: layerConfigObj.style,
@@ -1750,7 +2075,7 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
         }
     );
     return layer;
-}
+};
 
 /**
  * Api method to add a WMS layer to the map, based on two strings
@@ -1778,11 +2103,15 @@ Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
  * Method to create a WMS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMS method, but you can also use this way.
  * @param {Object} layerConfigObj a layer configuration object as described in markersdef
  */
-Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
-
+Pdok.Api.prototype.createWMSLayer = function(layerConfigObj, id) {
+    //console.log('pdok-api.js>createWMSLayer()');
     // default WMS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
+    if (!id) {
+        id = null;
+    }
     var defaults = {
+            pdokid: id,
             name: 'WMS layer',
             url: '',
             layers: '',
@@ -1806,6 +2135,7 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
                 format: layerConfigObj.format
             },
             {
+                pdokid: layerConfigObj.pdokid,  
                 visibility: layerConfigObj.visibility, 
                 isBaseLayer: layerConfigObj.isBaseLayer, 
                 singleTile: layerConfigObj.singleTile,
@@ -1864,26 +2194,31 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     if (!map){
         map = this.map;
     }
-    for (l in arrLayerNames)
-    {
-        var layerId = arrLayerNames[l];
-        if (this.defaultLayers[layerId]){
+    for (l in arrLayerNames) {
+        var layer = arrLayerNames[l];
+        if (this.defaultLayers[layer.id]){
             var lyr;
-            if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMS'){
-                lyr = this.createWMSLayer( this.defaultLayers[layerId]);
+            if (this.defaultLayers[layer.id].layertype.toUpperCase() === 'WMS'){
+                lyr = this.createWMSLayer( this.defaultLayers[layer.id], layer.id);
             }
-            else if (this.defaultLayers[layerId].layertype.toUpperCase()=='WMTS'){
-                lyr = this.createWMTSLayer( this.defaultLayers[layerId]);
+            else if (this.defaultLayers[layer.id].layertype.toUpperCase() === 'WMTS'){
+                lyr = this.createWMTSLayer( this.defaultLayers[layer.id], layer.id);
             }
-            else if (this.defaultLayers[layerId].layertype.toUpperCase()=='TMS'){
-                lyr = this.createTMSLayer( this.defaultLayers[layerId]);
+            else if (this.defaultLayers[layer.id].layertype.toUpperCase() === 'TMS'){
+                lyr = this.createTMSLayer( this.defaultLayers[layer.id], layer.id);
             }
             else {
                 alert('Laag type "' + this.defaultLayers.l.layertype + '" niet beschikbaar, controleer de configuratie.');
             }
             if (lyr){
-                lyr.pdokId = layerId;
                 map.addLayer(lyr);
+                if(!lyr.isBaseLayer){
+                    lyr.setVisibility(layer.visible);
+                } else {
+                    if(layer.visible){
+                        map.setBaseLayer(lyr);
+                    }
+                }
             }
         } else {
             alert('Laag niet beschikbaar: ' + layer.id);
@@ -2429,18 +2764,9 @@ Pdok.Api.prototype.createMailLink = function(){
 };
 
 /**
- * Create the html body string for this instance
- */
-Pdok.Api.prototype.createHtmlBody = function(){
-    var activeClass = $('#map').attr('class');
-    var html = '<div id="map" class="' + activeClass + '"></div>';
-    return html;
-};
-
-/**
  * Create the html head string for this instance
  */
-Pdok.Api.prototype.createHtmlHead = function(){
+Pdok.Api.prototype.createHtml = function(){
     var base = Pdok.createBaseUri();
     // styles and layers definitions
     var stylesAndLayers = '';
@@ -2450,154 +2776,168 @@ Pdok.Api.prototype.createHtmlHead = function(){
     if (this.layersdef) {
         stylesAndLayers += '<script type="text/javascript" src="'+this.layersdef+'"></script>';
     }
-    var conf = JSON.stringify(this.getConfig());
+    var uniqueid = OpenLayers.Util.createUniqueID("");
+    var conf = JSON.stringify(this.getConfig(uniqueid));
     var head = '<script type="text/javascript" src="'+base+'api/js/OpenLayers.js"></script>'+
-    '\n<script type="text/javascript" src="'+base+'api/js/proj4js-compressed.js"></script>'+
-    '\n<script type="text/javascript" src="'+base+'api/js/pdok-api.js"></script>'+
-    stylesAndLayers +
-    '\n<link rel="stylesheet" href="'+base+'api/styles/default/style.css" type="text/css">'+
-    '\n<link rel="stylesheet" href="'+base+'api/styles/api.css" type="text/css">'+
-    '\n<script>'+
-    '\nOpenLayers.ImgPath="'+Pdok.ApiUrl+'/img/";'+
-    '\nvar config='+ conf +';\n'+
-    '\nfunction createPDOKKaart() {var api = new Pdok.Api(config);return api;}\n</script>';
+    '<script type="text/javascript" src="'+base+'api/js/proj4js-compressed.js"></script>'+
+    '<script type="text/javascript" src="'+base+'api/js/pdok-api.js"></script>'+ stylesAndLayers;
+    head += '<script type="text/javascript">'+
+    //add the css ref automagically, it cannot be put inside the body!
+    'Pdok.addcss("'+base+'api/styles/default/style.css");'+
+    'Pdok.addcss("'+base+'api/styles/api.css");'+        
+    'OpenLayers.ImgPath="'+Pdok.ApiUrl+'/img/";'+
+    'var config_' + uniqueid + '='+conf+';'+
+    'var api_' + uniqueid + '; Pdok.ready( function(){ new Pdok.Api(config_' + uniqueid + ', function(retval){api_' + uniqueid + ' = retval;});});' +
+    '</script>';
+    var activeClass = $('#map').attr('class');
+    head += '<div id="map_' + uniqueid + '" class="' + activeClass + '"></div>';
     return head;
 };
 
 /**
  * Api call to get a config object which can be used to start an Api instance in current state
  */
-Pdok.Api.prototype.getConfig = function() {
+Pdok.Api.prototype.getConfig = function(uniqueid) {
     var config = {};
-
+    config.mapdiv = 'map_' + uniqueid;
+    if(this.map){
         config.zoom = this.map.getZoom();
         // only add the LayerSwitcher parameter if false (default value is true)
         if (this.showlayerswitcher){
             config.showlayerswitcher = this.showlayerswitcher;
         }
-    // bbox
-    // config.bbox = this.map.getExtent().toArray();
-    // or better ? loc
-    config.loc = this.map.getCenter().toShortString();
-    // layers
-    var layers = [];
-    for (layer in this.map.layers){
-        var pdokId = this.map.layers[layer].pdokId;
-        // only layers with a pdokId, and NOT our this.featuresLayer
-        if (pdokId && this.map.layers[layer].name != this.FEATURESLAYER_NAME){
-            layers.push(pdokId);
-        }
-        else{
-            // we have a layer from 'outside'
-        }
-    }
-    if (layers.length>0) {
-        config.pdoklayers = [layers.join()];
-    }
-    // wmsurl AND wmslayers
-    if(this.wmsurl && this.wmsurl.length>0 && this.wmslayers && this.wmslayers.length>0) {
-        config.wmsurl = this.wmsurl;
-        config.wmslayers = this.wmslayers;
-        if (this.wmsinfoformat && this.wmsinfoformat != 'none'){
-            config.wmsinfoformat = this.wmsinfoformat;
-        }
-    }
-    // wmts
-    if (this.wmtsurl != null && this.wmtslayer != null && this.wmtsmatrixset != null && 
-        this.wmtsurl.length>0 && this.wmtslayer.length>0 && this.wmtsmatrixset.length>0) {
-        config.wmtsurl = this.wmtsurl;
-        config.wmtslayer = this.wmtslayer;
-        config.wmtsmatrixset = this.wmtsmatrixset;
-    }
-    // locationtool
-    if(this.locationtool) {
-        config.locationtool = true;
-        config.locationtoolstyle = this.locationtoolstyle;
-        if (this.locationtoolwktfield) {
-            config.locationtoolwktfield = this.locationtoolwktfield;
-        }
-        else {
-            config.locationtoolxfield = this.locationtoolxfield;
-            config.locationtoolyfield = this.locationtoolyfield;
-        }
-        config.locationtoolurlfield = this.locationtoolurlfield;
-        config.locationtoolzmin = this.locationtoolzmin;
-        config.locationtoolzmax = this.locationtoolzmax;
-    }
-    // markersdef
-    if(this.markersdef) {
-        config.markersdef = this.markersdef;
-    }
-    // layersdef
-    if(this.layersdef) {
-        config.layersdef = this.layersdef;
-    }
+        if (this.showzoom){
+            config.showzoom = this.showzoom;
+        }   
+        if (this.shownavigation){
+            config.shownavigation = this.shownavigation;
+        } 
 
-    /*if (this.locationLayer.features.length==1) {
-        var locationtoolFeature = this.locationLayer.features[0];
-        // IE8 bug:
-        this.featuresLayer.addFeatures([locationtoolFeature]);
-    }*/
-    // if we use features from featuresLayer to write out config, IE is in trouble
-    // that's why we use a clone of this layer
-    var tempLayer = this.featuresLayer.clone();
-    var allFeatures = tempLayer.features;
-    if (this.locationLayer.features.length==1) {
-        allFeatures.push(this.locationLayer.features[0]);
-    }
-
-    // kmlurl OR txturl OR features
-    // at this moment NOT a combination of these two
-    // all features from KML or TXT are added to 'featureslayer'
-    // so if the user added even more markers/features
-    // we should try to make a diff, to know which features to add in the features-kmlstring-parameter
-    // but if the user has made changes by hand in wizard, it is getting even more comples
-    // so for now: there is either a kmlurl and/or a txturl OR only features as parameter
-    if (allFeatures.length>0) {
-    //if (this.featuresLayer.features.length>0) {
-        var doFeatures = true;
-        // if features came from a kml/txt-url, do NOT write features yourself, only use kmlurl
-        // NOTE: so at this moment it is NOT possible to use kmlurl PLUS wizard features!!
-        if (this.kmlurl) {
-            config.kmlurl = this.kmlurl;
-            doFeatures = false;
-            // if kmlstyles
-            if (this.kmlstyles) {
-                config.kmlstyles = true;
+        if (this.showscaleline){
+            config.showscaleline = this.showscaleline;
+        }
+        if (this.showmouseposition){
+            config.showmouseposition = this.showmouseposition;
+        }
+    
+        config.loc = this.map.getCenter().toShortString();
+        // layers
+        var layers = [];
+        var baselayers = [];
+        for (layer in this.map.layers){
+            // only layers with a pdokId, and NOT our this.featuresLayer
+            if (this.map.layers[layer].name !== this.FEATURESLAYER_NAME && this.map.layers[layer].name !== this.LOCATIONSLAYER_NAME){
+                if (!this.map.layers[layer].isBaseLayer) {
+                     layers.push({"id": this.map.layers[layer].pdokid, visible: this.map.layers[layer].visibility});
+                     //console.log("Overlay: " + this.map.layers[layer].name + " visible: " + this.map.layers[layer].visibility.toString() + " id:" + this.map.layers[layer].pdokid);
+                } else {
+                    if(this.map.layers[layer].visibility){
+                        //console.log("Baselayer: " + this.map.layers[layer].name + " visible: true" + " id:" + this.map.layers[layer].pdokid);
+                        baselayers.push({"id": this.map.layers[layer].pdokid, visible: true});
+                    } else {
+                        //console.log("Baselayer: " + this.map.layers[layer].name + " visible: false" + " id:" + this.map.layers[layer].pdokid);
+                        baselayers.push({"id": this.map.layers[layer].pdokid, visible: false});
+                    }
+                }
             }
         }
-        if (this.txturl) {
-            config.txturl = this.txturl;
-            doFeatures = false;
+        if (baselayers.length > 0) {
+            config.baselayers = baselayers;
         }
-        if (this.mimg != null){
-            config.mimg = this.mimg;
+        if (layers.length > 0) {
+            config.overlays = layers;
         }
-        if (doFeatures) {
-            // If only one feature is added and this is a point then use the parameter mloc
-            /*if (this.featuresLayer.features.length == 1 && this.featuresLayer.features[0].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
-            	config.mloc = this.featuresLayer.features[0].geometry.x + "," + this.featuresLayer.features[0].geometry.y;
-            	config.titel = this.featuresLayer.features[0].attributes.name;
-            	config.tekst =  this.featuresLayer.features[0].attributes.description;
-            	config.mt = this.featuresLayer.features[0].attributes.styletype;
-            }*/
-            if (allFeatures.length == 1 && allFeatures[0].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
-            	config.mloc = allFeatures[0].geometry.x + "," + allFeatures[0].geometry.y;
-            	config.titel = allFeatures[0].attributes.name;
-            	config.tekst =  allFeatures[0].attributes.description;
-            	config.mt = allFeatures[0].attributes.styletype;
+        // wmsurl AND wmslayers
+        if(this.wmsurl && this.wmsurl.length>0 && this.wmslayers && this.wmslayers.length>0) {
+            config.wmsurl = this.wmsurl;
+            config.wmslayers = this.wmslayers;
+            if (this.wmsinfoformat && this.wmsinfoformat !== 'none'){
+                config.wmsinfoformat = this.wmsinfoformat;
             }
-			else{
-				var kmlformat = new OpenLayers.Format.KML({
-					foldersDesc: null,
-					foldersName: null,
-					placemarksDesc: '&nbsp;',   // we add &nbsp; here because null or '' will cause the KML writer to not see it as value
-					internalProjection: this.map.baseLayer.projection,
-					externalProjection: new OpenLayers.Projection("EPSG:4326"),
-                    extractStyles: this.kmlstyles
-				});
-				config.features='<?xml version="1.0" encoding="UTF-8"?>\n'+kmlformat.write(allFeatures);
-			}
+        }
+        // wmts
+        if (this.wmtsurl && this.wmtslayer && this.wmtsmatrixset && 
+            this.wmtsurl.length > 0 && this.wmtslayer.length > 0 && this.wmtsmatrixset.length > 0) {
+            config.wmtsurl = this.wmtsurl;
+            config.wmtslayer = this.wmtslayer;
+            config.wmtsmatrixset = this.wmtsmatrixset;
+        }
+        // locationtool
+        if(this.locationtool) {
+            config.locationtool = true;
+            config.locationtoolstyle = this.locationtoolstyle;
+            if (this.locationtoolwktfield) {
+                config.locationtoolwktfield = this.locationtoolwktfield;
+            } else {
+                config.locationtoolxfield = this.locationtoolxfield;
+                config.locationtoolyfield = this.locationtoolyfield;
+            }
+            config.locationtoolurlfield = this.locationtoolurlfield;
+            config.locationtoolzmin = this.locationtoolzmin;
+            config.locationtoolzmax = this.locationtoolzmax;
+        }
+        // markersdef
+        if(this.markersdef) {
+            config.markersdef = this.markersdef;
+        }
+        // layersdef
+        if(this.layersdef) {
+            config.layersdef = this.layersdef;
+        }
+
+        var tempLayer = this.featuresLayer.clone();
+        var allFeatures = tempLayer.features;
+        if (this.locationLayer.features.length === 1) {
+            allFeatures.push(this.locationLayer.features[0]);
+        }
+
+        // kmlurl OR txturl OR features
+        // at this moment NOT a combination of these two
+        // all features from KML or TXT are added to 'featureslayer'
+        // so if the user added even more markers/features
+        // we should try to make a diff, to know which features to add in the features-kmlstring-parameter
+        // but if the user has made changes by hand in wizard, it is getting even more comples
+        // so for now: there is either a kmlurl and/or a txturl OR only features as parameter
+        if (allFeatures.length > 0) {
+        //if (this.featuresLayer.features.length>0) {
+            var doFeatures = true;
+            // if features came from a kml/txt-url, do NOT write features yourself, only use kmlurl
+            // NOTE: so at this moment it is NOT possible to use kmlurl PLUS wizard features!!
+            if (this.kmlurl) {
+                config.kmlurl = this.kmlurl;
+                doFeatures = false;
+                // if kmlstyles
+                if (this.kmlstyles) {
+                    config.kmlstyles = true;
+                }
+            }
+            if (this.txturl) {
+                config.txturl = this.txturl;
+                doFeatures = false;
+            }
+            if (this.mimg){
+                config.mimg = this.mimg;
+            }
+            if (doFeatures) {
+                // If only one feature is added and this is a point then use the parameter mloc
+                /*if (this.featuresLayer.features.length == 1 && this.featuresLayer.features[0].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
+                    config.mloc = this.featuresLayer.features[0].geometry.x + "," + this.featuresLayer.features[0].geometry.y;
+                    config.titel = this.featuresLayer.features[0].attributes.name;
+                    config.tekst =  this.featuresLayer.features[0].attributes.description;
+                    config.mt = this.featuresLayer.features[0].attributes.styletype;
+                }*/
+                if (allFeatures.length === 1 && allFeatures[0].geometry.CLASS_NAME === "OpenLayers.Geometry.Point"){
+                    config.mloc = allFeatures[0].geometry.x + "," + allFeatures[0].geometry.y;
+                    config.titel = allFeatures[0].attributes.name;
+                    config.tekst =  allFeatures[0].attributes.description;
+                    config.mt = allFeatures[0].attributes.styletype;
+                } else {
+                    var myKML = this.createKML();
+                    if(myKML){
+                        config.features = myKML;
+                    }
+                }
+            }
         }
     }
     return config;
@@ -2636,7 +2976,55 @@ Pdok.Api.prototype.setLayerSwitcherVisible = function(isVisible){
     else{
         this.showlayerswitcher = false;
     }
-}
+};
+/**
+ * Function to toggle visibility of the OpenLayers.zoom
+ * @param {Boolean} isVisible to show the layer or not
+ */
+Pdok.Api.prototype.setZoomVisible = function(isVisible){
+    if (isVisible){
+        this.showzoom = true;
+    }
+    else{
+        this.showzoom = false;
+    }
+};
+/**
+ * Function to toggle visibility of the OpenLayers.navigation
+ * @param {Boolean} isVisible to show the layer or not
+ */
+Pdok.Api.prototype.setNavigationVisible = function(isVisible){
+    if (isVisible){
+        this.shownavigation = true;
+    }
+    else{
+        this.shownavigation = false;
+    }
+};
+/**
+ * Function to toggle visibility of the OpenLayers.navigation
+ * @param {Boolean} isVisible to show the layer or not
+ */
+Pdok.Api.prototype.setScaleLineVisible = function(isVisible){
+    if (isVisible){
+        this.showscaleline = true;
+    }
+    else{
+        this.showscaleline = false;
+    }
+};
+/**
+ * Function to toggle visibility of the OpenLayers.navigation
+ * @param {Boolean} isVisible to show the layer or not
+ */
+Pdok.Api.prototype.setMousePositionVisible = function(isVisible){
+    if (isVisible){
+        this.showmouseposition = true;
+    }
+    else{
+        this.showmouseposition = false;
+    }
+};
 
 Pdok.Api.prototype.kmlToService = function(){
     var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);

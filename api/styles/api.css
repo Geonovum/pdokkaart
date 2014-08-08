@@ -132,36 +132,6 @@ div.olControlMousePosition {
     }
 }
 
-/* search form */
-/* class for autopopulate fields */
-#pdoksearchinput.default {
-    color: #7F8181;
-}
-#pdoksearchinput{
-    border: 1px solid #000;
-    margin-right:5px;
-    width: 250px;
-    padding-left: 0.3em;
-}
-#pdoksearchbutton{
-    background-color: #50309F;
-    border: 1px solid #000;
-    color : #FFFFFF;
-}
-.pdokGeocoderDiv {
-    position: absolute;
-    z-index: 1200;
-    right:5px;
-    top:5px;
-}
-#pdoksearchresults{
-    display:none;
-    padding: 10px;
-    background-color:white;
-    border: 1px solid black;
-    font-size: 12px;
-}
-
 ul.geozetSuggestions{
     padding:0;
 }
@@ -175,9 +145,7 @@ ul.geozetSuggestions{
     list-style-type: none;
     width: 95%;
 }
-.geozetSuggestions li:hover {
-    border-bottom: solid 1px black;
-}
+
 .closeWindow {
 	float: right;
 	margin: 2px;
