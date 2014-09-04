@@ -1,109 +1,529 @@
-#content{
-	padding:20px;
-}
 
 .header .branding img {
-	float: left;
-	margin-bottom: 15px;
-	margin-left: 24px;
-	margin-right: 0;
-	margin-top: 26px;
+    float: left;
+    margin-bottom: 15px;
+    margin-left: 24px;
+    margin-right: 0;
+    margin-top: 26px;
 }
-html, body {
-	height: 100%;
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-	line-height: 1.25em;
-	font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
+.row input {
+    width: 20px;
 }
+#topbar {
+    height: 100px;
+}
+#tabs>h2 {
+    background-color: #273397;
+    color: #FFF !important;
+}
+#tabs li {
+    list-style: none outside none;
+}
+#tabs li, #tabs li a {
+    float: left;
+}
+.activetab {
+    font-weight: bold;
+}
+#tabs {
+    border: 1px solid #F6D4B2;
+    background-color: #F6D4B2;
+    margin: 10px 0px;
+    width: 370px;
+}
+#tabs .tabpane {
+    clear: both;
+    min-height: 200px;
+}
+.codesnippet {
+    border: 1px solid #BBB;
+    background-color: #ccc;
+    font-family: Courier, monospace;
+}
+#container {
+    width: 940px;
+    height: 100%;
+    margin: 0px auto;
+}
+
+#content {
+    min-height: 600px;
+}
+#loading {
+    position:absolute;
+    left: 390px;
+    background: url('../../img/ajax-loader.gif') no-repeat center;;
+    /*  border: 1px solid #a0a0a0; */
+}
+#map {
+    position:absolute;
+    left: 390px;
+    /*  border: 1px solid #a0a0a0; */
+}
+#map2 {
+    position:absolute;
+    left: 450px;
+    top: 460px;
+    /*  border: 1px solid #a0a0a0; */
+}
+#map3 {
+    position:absolute;
+    left: 390px;
+    display: none;
+    /*  border: 1px solid #a0a0a0; */
+}
+
+#leftcolumn{
+    margin:0px;
+    padding:0px;
+    width: 360px;
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    /*left: 1200px;*/
+    /* z-index: 2000;*/
+}
+
+#searchResults{
+    height: 350px;
+    overflow-y: auto;
+}
+
+#leftcolumn ul {
+    padding-left: 3px;
+    list-style-type: none;
+}
+
+#leftcolumn li {
+    font-size: 0.9em;
+    padding: 10px 4px 5px 32px;
+}
+
+.filterbutton{
+    background-color: rgb(225,112,0);
+    text-decoration: none !important;
+    color : #fff !important;
+    font-size: 1.1em;
+    margin-top: 5px;
+    margin-right: 5px;
+    border: 1px solid #000; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin: 0; 
+    padding: 0.4em 1em;
+}
+
+li {
+    margin: 0;
+    list-style-type: none;
+}
+
+.olPopup
+{
+    font-size:8pt;
+    border: 1px solid black;
+    box-shadow: 5px 5px 8px grey;
+    border-radius: 0 10px 10px 10px;
+}
+
+.olPopup h4 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.labelSpan, .baseLbl, .dataLbl {
+    font-size: 10px;
+}
+
+.popInWindow {
+    /* background-color: #303030; */
+    background-color: #FFFFFF;
+    /* color: white; */
+    border: 1px solid #909090;	
+    padding: 5px;
+    overflow-y: auto;
+}
+
+.popInWindow h4 {
+    margin: 0px;
+    margin-top: 8px;
+}
+
+#drawlocationhelp {
+    display: none;
+    width: 350px;
+    position: absolute;
+    left: 350px;
+    top: 0px;
+}
+
+#geocodeerresult {
+    display: none;
+    background-color: #F6D4B2;
+    height: 450px;
+    width: 324px;
+    border: 0px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    overflow-y: auto;
+    z-index: 2000;
+    padding:24px;
+}
+#geocodeerresult li{
+    /*height: 20px;*/
+    background: url(../img/link-hover.gif) no-repeat right bottom;
+}
+#geocodeerresult a{
+    color: black;
+    margin: 5px;
+    text-decoration: none;
+}
+#readfile {
+    display: none;
+    width: 350px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 430px;
+    overflow-y: auto;
+    z-index: 2000;
+}
+
+#cancelDrawingPoint {
+    display: none;
+}
+
+#addviamap2 {
+    margin-bottom: 12px;
+    margin-top: 5px;
+}
+
+#apilink1, #kmlservicelink {
+    color:#273397;
+    text-decoration: underline;
+}
+
+#createlink {
+    display: none;
+    /* position: absolute; was de oorspronkelijke */
+    position: fixed;
+    left: 350px;
+    top: 0px;
+    width: 420px;
+    height: 580px;
+}
+
+#createlink input {
+    font-size: 0.9em;
+}
+
+#addlayer {
+    display: none;
+    position: absolute;
+    left: 350px;
+    top: 0px;
+    width: 420px;
+    height: 500px;
+}
+
+ul.geozetSuggestions{
+    padding:0;
+}
+.geozetSuggestions li a span{
+    display: none;
+}
+
+
+.geozetSuggestions li {
+    margin-top: 4px;
+    width: 95%;
+}
+.geozetSuggestions li:hover {
+    border-bottom: solid 1px black;
+}
+
+#mapfunctions h3 {
+    position: relative;
+    margin: 3px;
+    text-align: right;
+    padding-top:10px;
+}
+
+.closeWindow {
+    float: right;
+    margin: 2px;
+    font-weight: bold;
+    color: black;
+}
+
+.help {
+    float: right;
+}
+
+.defaultmarker {
+    height: 24px;
+}
+
+.left-nav li{ float: none;display:inline;}
+.right-nav {float:right;}
+
+
+#styleselector{
+    height:150px;
+    width:300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+#styleselector li{
+    margin-left: 18px;
+    padding-top: 5px;
+    height: 30px;
+    font-size: 0.9em;
+    cursor: pointer;
+    background-image: none;
+}
+
+#styleselector img{
+    float:left;
+    margin-top:-5px;
+}
+
+.styleselected{
+    background-color: #e17000;
+}
+
+.listyletext{
+    padding-left: 45px;
+    padding-top: 5px;
+    font-size: 1.1em;
+}
+.stylehead {
+    font-weight: bold;
+    font-size:1.2em;
+    /*text-decoration: underline;
+    letter-spacing:1px;*/
+}
+
+form input[type=text], form select, form textarea, form select {
+    background: #fff; 
+    padding: 0.3em 0.3em;
+    color: #000; 
+    border: 1px solid #000; 
+    font-size: 11px;
+    width: 298px;
+}
+button { 
+    background: #deebe3; 
+    border: 1px solid #000; 
+    color: #000; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin: 0; 
+    padding: 0.4em 1em;
+}
+
+#kml_url_service, #addviamap, #addviaurltxt, #step3, #step4, #wktfield, #urlfield, #xfield, #yfield, #locationtoolzooms {
+    display:none
+}
+
+.lefting{
+    width:15px;
+}
+
+#minzoom select, #maxzoom select{
+    font-size:10px;
+}
+
+#description{
+    height:60px;
+}	
+
+#copypaste{
+    height:180px;
+}
+
+#editmarker3{
+    width : 20px;
+}
+
+#editmarker4{
+    width : 20px;
+}
+
+#searchLocation{
+    width : 170px;
+}
+/* class for autopopulate fields */
+#searchLocation.default, 
+#description.default, 
+#attr_name.default,
+#urltext.default,
+#copypaste.default,
+#wmsUrl.default,
+#wmsLayer.default,
+#WmtsUrl.default,
+#WmtsLayer.default,
+#WmtsMatrix.default
+{
+    color: #7F8181;
+}
+#mapsize1{
+    width : 20px;
+}	
+
+#mapsize2{
+    width : 20px;
+}	
+
+#mapsize3{
+    width : 20px;
+}
+
+.stepwrapper form {
+    margin: 10px;
+    display: none;
+}
+
+.active form {
+    display: block;
+}
+
+#wrapper {
+    width: 960px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 10px 0;
+}
+
+.stepwrapper{
+    background-color:rgb(246,212,178);
+    margin: 10px 0px;
+    width: 370px;
+}
+.stepwrapper_fixed{
+    border: 1px solid #F6D4B2;
+    background-color:rgb(246,212,178);
+    margin: 10px 0px;
+    width: 370px;
+}
+h2 {
+    background-color:rgb(225,112,0);
+    font-size: 1.3em;
+    padding: 8px 8px 10px 14px;
+    position: relative;
+    margin: 10px 0px;
+}
+
+
+a {
+    color:#154373;
+}
+
+h2 a {
+    color: #fff !important;
+    cursor: pointer;
+}
+h2 a:focus {
+    outline:none;
+}
+h2 a:hover {
+    color: #fff !important;
+    text-decoration:underline;
+}
+a, a:link, a:focus, a:hover, a:visited {
+    color: #000;
+    outline:none;
+}
+
+.active h2 {
+    background-color: #273397;
+}
+
+.active h2 a, #col3 h2, #col4 h2 {
+    color: #fff !important;
+}
+
+#editor1, #codeoutput {
+    border: 1px solid #273397;
+    width: 100%;
+    font-family: "Courier New", Courier, monospace;
+}
+
+#opties {
+    margin:10px;
+}
+
 .ex_container{
-	border-bottom: 1px solid #cccccc;
-	background-color: #F6D4B2;
+    border-bottom: 1px solid #cccccc;
+    background-color: #F6D4B2;
 }
 .ex_container a {
-	text-decoration: none;
-	padding: 5px 1em;
-	display: block;
+    text-decoration: none;
+    padding: 5px 1em;
+    display: block;
 }
 .ex_container a:hover {
-	background-color: #eeeeee;
+    background-color: #eeeeee;
 }
 .ex_container_simple_advanced{
-	border-bottom: 1px solid #cccccc;
-	background-color: #E17000;
+    border-bottom: 1px solid #cccccc;
+    background-color: #E17000;
 }
 .ex_container_simple_advanced a {
-	text-decoration: none;
-	padding: 5px 1em;
-	display: block;
+    text-decoration: none;
+    padding: 5px 1em;
+    display: block;
 }
 .ex_container_simple_advanced a:hover {
-	background-color: #eeeeee;
+    background-color: #eeeeee;
 }
 .ex_title{
-	display: inline;
-	font-weight: bold;
-	color: #333;
+    display: inline;
+    font-weight: bold;
+    color: #333;
 }
 .ex_tags{
-	display: inline;
-	font-size: smaller;
-	font-style: italic;
-	color: #333;
+    display: inline;
+    font-size: smaller;
+    font-style: italic;
+    color: #333;
 }
 .ex_filename {
-	font-weight: normal;
-	font-size: 0.8em;
-	color: #000;
+    font-weight: normal;
+    font-size: 0.8em;
+    color: #000;
 }
 .ex_description{
-	color: #222;
-	padding: 3px;
+    color: #222;
+    padding: 3px;
 }
 .ex_classes{
-	font-size: .7em;
-	color: grey;
-	display: none;
+    font-size: .7em;
+    color: grey;
+    display: none;
 }
 #exwin {
-	position: absolute;
-	top: 0;
-	left: 30%;
-	width: 70%;
-	height: 400px;
-	border: none;
-	border-left: 1px solid #cccccc;
-	margin: 0;
+    position:absolute;
+    left: 390px;
+    /*  border: 1px solid #a0a0a0; */
+    width: 550px;
+    height: 440px;
+    display: none;
 }
-#toc {
-	position: absolute;
-	top: 0;
-	left: 0%;
-	width: 30%;
-	height: 400px;
-	border: none;
-	border-left: 1px solid #cccccc;
-	margin: 0;
-}
+
 #examples {
-	border-top: 1px solid #cccccc;
-	position: absolute;
-	width: 100%;
-	top: 0;
-	bottom: 0px;
-	overflow: auto;
-	list-style: none;
-	margin: 0;
-	padding: 0;
+    overflow: auto;
+    list-style: none;
 }
 #examples ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 #examples ul li {
-	display: block;
-	margin: 0;
-	padding: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
 }

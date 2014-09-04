@@ -1,4 +1,3 @@
-
 OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
     /**
      * APIProperty: kmlns
@@ -240,7 +239,6 @@ OpenLayers.Control.GeocoderControl =
      * @param options - {Object} Options for control.
      */
     initialize: function(options) {
-	//console.log('pdok-api.js>OpenLayers.Control.GeocoderControl.initialize()');
         OpenLayers.Control.prototype.initialize.apply(this, arguments);
         // we create the div ourselves, to be able to put it outside the map-div
         // if we let OpenLayers create it, and let it be part of the map-div
@@ -284,7 +282,7 @@ OpenLayers.Control.GeocoderControl =
             // IE8
             this.div.attachEvent("onclick", clickFunc);
         }
-	me.draw();
+        me.draw();
     },
 
     /** 
@@ -303,7 +301,6 @@ OpenLayers.Control.GeocoderControl =
      * {DOMElement} A reference to the DIV DOMElement containing the control
      */    
     draw: function() {
-        //console.log('pdok-api.js>OpenLayers.Control.GeocoderControl.draw()');
         OpenLayers.Control.prototype.draw.apply(this, arguments);
         this.div.innerHTML =
             '<div>' + 
@@ -419,7 +416,7 @@ OpenLayers.Control.GeocoderControl =
                 if(!zoom){
                     zoom='standaard';
                 }
-		
+
                 // hack to be able to handle results without geom
                 var x = geom ? geom.x : 150000;
                 var y = geom ? geom.y : 450000;
@@ -520,6 +517,23 @@ Pdok.API_VERSION_NUMBER = '1.0.0';
 // CONFIG
 Pdok.ApiKmlService = 'http://www.duif.net/kml/';
 
+
+Pdok.absoluteUri = function(relative) {
+    var base = Pdok.createBaseUri();
+    var stack = base.split("/"),
+        parts = relative.split("/");
+    stack.pop(); // remove current file name (or empty string)
+                 // (omit if "base" is the current folder without trailing slash)
+    for (var i=0; i<parts.length; i++) {
+        if (parts[i] === ".")
+            continue;
+        if (parts[i] === "..")
+            stack.pop();
+        else
+            stack.push(parts[i]);
+    }
+    return stack.join("/");
+};
 // The api-url is the base-url for api.js, markersdefs, layerdefs etc
 // The proxyhost is needed for the geocoder
 
@@ -535,7 +549,9 @@ Pdok.createBaseUri = function(){
     base = window.location.protocol+'//'+window.location.host + path;
     return base;
 };
-Pdok.ApiUrl =  Pdok.createBaseUri() + 'api';
+
+Pdok.ApiUrl =  Pdok.createBaseUri();
+
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
 OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url=";  // current pdokloket proxy
 OpenLayers.ImgPath = Pdok.ApiUrl + '/img/';
@@ -858,7 +874,7 @@ Pdok.Api = function(config, callback) {
     
     // it is possible to override the layerdefinitions with a request parameter layersdef
     if(OpenLayers.Util.getParameters()['layersdef']){
-        Pdok.layersdef = Pdok.ApiUrl + '/js/' + OpenLayers.Util.getParameters()['layersdef'];
+        Pdok.layersdef = OpenLayers.Util.getParameters()['layersdef'];
     } else if (!Pdok.layersdef) {
         // we use the layersdef from the api
         Pdok.layersdef = Pdok.ApiUrl + '/js/pdok-layers.js';
@@ -915,7 +931,7 @@ Pdok.Api = function(config, callback) {
      */
     this.zoom = Pdok.zoom;
 
-	/**
+    /**
      * The location (x,y) to zoom to. A x,y commaseparated String (epsg:28992)
      * @type String
      */
@@ -933,6 +949,7 @@ Pdok.Api = function(config, callback) {
      */
     this.overlays = Pdok.overlays || [];
     this.baselayers = Pdok.baselayers || [];
+    this.pdoklayers = Pdok.pdoklayers;
     
     /**
      * Reference to OpenLayers Map object
@@ -946,7 +963,7 @@ Pdok.Api = function(config, callback) {
      * By giving a mloc param (eg 125000,450000) in the config or querystring, a marker will be placed on that point (using mt0 as style)
      * @type String
      */
-    this.mloc = null;
+    this.mloc = Pdok.mloc;
 
     /**
      * Reference to an image URL for the marker. To be used in combination with mloc
@@ -954,14 +971,14 @@ Pdok.Api = function(config, callback) {
      * It is overriding the mt0 externalGraphic image
      * @type URL
      */
-    this.mimg = null;
+    this.mimg = Pdok.mimg;
 
 
     /**
      * Markertype property. You can set a mt (styletype) for your mloc. Eg 'mt3'
      * @type String
      */
-    this.mt = null;
+    this.mt = Pdok.mt;
 
     /**
      * If a popup should be used or not. Defaults to true
@@ -974,20 +991,20 @@ Pdok.Api = function(config, callback) {
      * If a popup hover should be used or not Defaults to false
      * @type boolean
      */
-    this.hoverPopup = false;
-    this.hoverpopup = false;
+    this.hoverPopup = Pdok.hoverPopup || false;
+    this.hoverpopup = Pdok.hoverpopup || false;
 
     /**
      * Reference to popup titel, only used in case of the use of mloc
      * @type String
      */
-    this.titel = null;
+    this.titel = Pdok.titel;
 
     /**
      * Reference to popup text, only used in case of the use of mloc
      * @type String
      */
-    this.tekst = null;
+    this.tekst = Pdok.tekst;
 
     /**
      * an URL to a text file, to be used loaded as features
@@ -1033,37 +1050,37 @@ Pdok.Api = function(config, callback) {
      * @see <a href="../../../documentatie/examples/data/test2.txt">test2.txt</a>
      * @type URL
      */
-    this.txturl = null;
+    this.txturl = Pdok.txturl;
 
     /**
      * Wmts URL to be used as wmts layer. Always together with a wmtslayer and wmtsmatrixset parameter
      * @type URL
      */
-    this.wmtsurl = null;
+    this.wmtsurl = Pdok.wmtsurl;
 
     /**
      * The layername of the wmts service. ALways together with a wmtsurl and wmtsmatrixset parameter
      * @type String
      */
-    this.wmtslayer = null;
+    this.wmtslayer = Pdok.wmtslayer;
 
     /**
      * The matrixset of the wmts service. ALways together with a wmtsurl and wmtslayer parameter
      * @type String
      */
-    this.wmtsmatrixset = null;
+    this.wmtsmatrixset = Pdok.wmtsmatrixset;
 
     /**
      * The WMS url to be used as a wms layer. Always together with a wmslayers parameter
      * @type URL
      */
-    this.wmsurl = null;
+    this.wmsurl = Pdok.wmsurl;
 
     /**
      * The wms layers parameter, a commaseparated string of layername(s). Always together with a wmsurl parameter
      * @type String
      */
-    this.wmslayers = null;
+    this.wmslayers = Pdok.wmslayers;
 
 
     /**
@@ -1073,23 +1090,23 @@ Pdok.Api = function(config, callback) {
      *
      * @type String
      */
-    this.wmsinfoformat = 'none';
+    this.wmsinfoformat = Pdok.wmsinfoformat || 'none';
 
     /**
      * The TMS url to be loaded as a layer. Always together with tmslayer
      * @type URL
      */
-    this.tmsurl = null;
+    this.tmsurl = Pdok.tmsurl;
     /**
      * The tms layer parameter, a layer name of the tms service. Always together with a tmsurl parameter
      * @type String
      */
-    this.tmslayer = null;
+    this.tmslayer = Pdok.tmslayer;
     /**
      * The tmstype parameter, the image format to use (defaults to .png). Always together with a tmsurl and tmslayer parameter
      * @type String
      */
-    this.tmstype = 'png';
+    this.tmstype = Pdok.tmstype || 'png';
 
     /**
      * Url to a KML file, to be used as feature layer (note that in KML coordinates always in wgs84/latlon)
@@ -1119,7 +1136,7 @@ Pdok.Api = function(config, callback) {
      * The Styles in the KML will be used by default. If you do not want that, set the kmlstyles parameter to false
      * @type URL
      */
-    this.kmlurl = null;
+    this.kmlurl = Pdok.kmlurl;
 
     /**
      * Property to determine if the internal styles of a KML file should be used for visualisation. 
@@ -1150,7 +1167,7 @@ Pdok.Api = function(config, callback) {
      */
     this.div = Pdok.mapdiv || 'map';
 
-	/**
+    /**
      * Reference to internal styles Object with all marker, lines and polygon rules.
      *
      * This Object is created from the pdok-markers.js file. Which is a json file with marker definitions
@@ -1191,42 +1208,42 @@ Pdok.Api = function(config, callback) {
      * Boolean which determines if the Api started in Locationtool/Lokatieprikker modus or not. Defaults to false
      * @type Boolean
      */
-    this.locationtool = false;
+    this.locationtool = Pdok.locationtool || false;
     /**
      * Style to be used for the locationtool. Defaults to 'mt0'. NOTE: this also determines the TYPE of the locationtool (point, line or polygon) !!
      * @type String
      */ 
-    this.locationtoolstyle = 'mt0';
+    this.locationtoolstyle = Pdok.locationtoolstyle || 'mt0';
     /**
      * Name for X field to be used for the locationtool. Defaults to 'x'.
      * @type String
      */ 
-    this.locationtoolxfield = 'x';
+    this.locationtoolxfield = Pdok.locationtoolxfield || 'x';
     /**
      * Name for Y field to be used for the locationtool. Defaults to 'y'.
      * @type String
      */ 
-    this.locationtoolyfield = 'y';
+    this.locationtoolyfield = Pdok.locationtoolyfield || 'y';
     /**
      * Name for wkt field to be used for the locationtool. Defaults to 'wkt'. If this field is set, x and y will be ignored.
      * @type String
      */ 
-    this.locationtoolwktfield = 'wkt';
+    this.locationtoolwktfield = Pdok.locationtoolwktfield || 'wkt';
     /**
      * Name for url field to be used for the locationtool. Defaults to 'url'.
      * @type String
      */ 
-    this.locationtoolurlfield = 'url';
+    this.locationtoolurlfield = Pdok.locationtoolurlfield || 'url';
     /**
      * Minimal zoom to be able to set a point in the locationtool modus
      * @type int
      */ 
-    this.locationtoolzmin = '0';
+    this.locationtoolzmin = Pdok.locationtoolzmin || '0';
     /**
      * Maximal zoom to be able to set a point in the locationtool modus
      * @type int
      */ 
-    this.locationtoolzmax = '30';
+    this.locationtoolzmax = Pdok.locationtoolzmax || '30';
     
     // inject a script include for the layersdef, being either an external or the api included one
     var that = this;
@@ -1254,12 +1271,12 @@ Pdok.Api.prototype.defaultStyles=[];
  */
 var matrixIdsLufo = new Array(16);
 for (var i=0; i<16; ++i) {
-	matrixIdsLufo[i] = zeroPad(i, 2).toString();
+    matrixIdsLufo[i] = zeroPad(i, 2).toString();
 }
 
 function zeroPad(num, places) {
-	var zero = places - num.toString().length + 1;
-	return Array(+(zero > 0 && zero)).join("0") + num;
+    var zero = places - num.toString().length + 1;
+    return Array(+(zero > 0 && zero)).join("0") + num;
 }
 
 Pdok.Api.prototype.defaultPdokLayers = {
@@ -1322,6 +1339,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
  * @return OpenLayers.Map object
  */
 Pdok.Api.prototype.createOlMap = function() {
+    console.log(this);
     var controls = [
             new OpenLayers.Control.Attribution()
             
@@ -1411,7 +1429,7 @@ Pdok.Api.prototype.createOlMap = function() {
             trigger: showLufo,
             displayClass: "openLufo"
         });
-	
+    
         panel.addControls([openLufo,openTOP10,openBRT]);
         olMap.addControl(panel);
     }
@@ -1433,7 +1451,15 @@ Pdok.Api.prototype.createOlMap = function() {
             this.addLayers([this.overlays[layer]], olMap);
         }
     }
-
+	if(this.pdoklayers) {
+		if (typeof this.pdoklayers === 'string') {
+            this.pdoklayers = this.pdoklayers.split(',');
+        }
+		var i;
+		for (i = 0; i < this.pdoklayers.length; ++i) {
+			this.addLayers([{id:this.pdoklayers[i], visible:true}], olMap);
+		}
+	}
     if (!olMap.baseLayer){
         //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
         this.addLayers([{id:'BRT', visible:true}], olMap);
@@ -1512,12 +1538,15 @@ Pdok.Api.prototype.createOlMap = function() {
         if (!this.mt){
             this.mt='mt0'; // mt0 is default point symbol
         }
+        if(!this.features){
+            this.features = [];
+        }
         this.features.push(this.createFeature(wkt, this.mt, this.titel, this.tekst));
     }
 
     // selectControl for popups
     if ( (this.hoverPopup) || (this.hoverpopup) ){
-    	this.hoverPopup = true;
+        this.hoverPopup = true;
     }
     this.selectControl = new OpenLayers.Control.SelectFeature(
         this.featuresLayer, 
@@ -1545,7 +1574,7 @@ Pdok.Api.prototype.createOlMap = function() {
     );
     olMap.addControl(this.selectControl);
     if ( (this.showPopup.toString().toLowerCase() === "false") || (this.showpopup.toString().toLowerCase() === "false") ){
-    	this.showPopup = false;
+        this.showPopup = false;
     }
     if (this.showPopup) {
         this.enablePopups();
@@ -1895,12 +1924,12 @@ Pdok.Api.prototype.setZoomLevel = function(zoomlevel) {
  * @returns {OpenLayers.LonLat} the reprojected latlon coordinate actually a RD coordinate
  */
 Pdok.Api.prototype.reprojectWGS84toRD = function(lat,lon){
-	pointRD = new OpenLayers.LonLat(lon,lat)
+    pointRD = new OpenLayers.LonLat(lon,lat)
         .transform(
             new OpenLayers.Projection("EPSG:4326"), // transform from wgs84 
             new OpenLayers.Projection("EPSG:28992") // new RD
         );
-	return(pointRD);
+    return(pointRD);
 };
 
 /**
@@ -1953,6 +1982,8 @@ Pdok.Api.prototype.addTMS = function(tmsurl,tmslayer,tmstype) {
 /**
  * Method to create a TMS layer and add it to the map based on a layer configuration object. Normally you'll use the addTMS method, but you can also use this way.
  * @param {Object} layerConfigObj a layer configuration object as described in markersdef
+ * @param {type} id
+ * @returns {OpenLayers.Layer.TMS}
  */
 Pdok.Api.prototype.createTMSLayer = function(layerConfigObj, id) {
 
@@ -1984,7 +2015,7 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj, id) {
             type:layerConfigObj.type, 
             visibility: layerConfigObj.visibility, 
             isBaseLayer: layerConfigObj.isBaseLayer,
-	    attribution:layerConfigObj.attribution
+        attribution:layerConfigObj.attribution
         }
     );
 
@@ -2019,6 +2050,8 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
 /**
  * Method to create a WMTS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMTS method, but you can also use this way.
  * @param {Object} layerConfigObj a layer configuration object as described in markersdef
+ * @param {type} id
+ * @returns {OpenLayers.Layer.WMTS}
  */
 Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj, id) {
 
@@ -2102,6 +2135,8 @@ Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
 /**
  * Method to create a WMS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMS method, but you can also use this way.
  * @param {Object} layerConfigObj a layer configuration object as described in markersdef
+ * @param {type} id
+ * @returns {OpenLayers.Layer.WMS}
  */
 Pdok.Api.prototype.createWMSLayer = function(layerConfigObj, id) {
     //console.log('pdok-api.js>createWMSLayer()');
@@ -2515,15 +2550,8 @@ Pdok.Api.prototype.startLocationTool = function(){
  * @param {response} response
  */
 Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
-    if (response.status !== 200){
-        // we have to clean up the this.txturl or this.kmlurl
-        if(this.dataType === 'KML'){
-            api.kmlurl = '';
-        }
-        if(this.dataType === 'TXT'){
-            api.txturl = '';
-        }
-    }
+
+    //console.log(this);
     //  trying to catch proxy errors
     if (response.status === 502 || response.status === 403){
         alert('Fout bij het ophalen van de url.\nDit lijkt een proxy probleem.\nKomt de data van een ander domein dan de web applicatie?\nDan moet het data domein opgenomen worden in de proxy-instellingen.');
@@ -2535,7 +2563,7 @@ Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
     }
     var data = response.responseText;
     // we have data now: add to map
-    api.addFeaturesFromString(data, this.dataType, this.zoomToFeatures);
+    this.passthroughPdokObject.addFeaturesFromString(data, this.dataType, this.zoomToFeatures);
 };
 
 /**
@@ -2555,12 +2583,12 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     if (type.toUpperCase() === 'KML') {
         format = new OpenLayers.Format.KMLv2_2(options);
         if (data.search(/\n/) > -1 && data.search(/\n/) < data.length){
-        	//alert("Er zijn returns gevonden in de KML, deze zijn vervangen door een spatie.")
-        	//features = format.read(data.replace(/\n/g," ").slice(0,data.replace(/\n/g," ").lastIndexOf(" ")) +"\n");
-        	features = format.read(data.replace(/\n/g," ") +"\n");
+            //alert("Er zijn returns gevonden in de KML, deze zijn vervangen door een spatie.")
+            //features = format.read(data.replace(/\n/g," ").slice(0,data.replace(/\n/g," ").lastIndexOf(" ")) +"\n");
+            features = format.read(data.replace(/\n/g," ") +"\n");
         } else {
-	        features = format.read(data);
-	}
+            features = format.read(data);
+        }
     } else if(type.toUpperCase() === "TXT") {
         // TXT files will default to epsg:28992 / RD coordinates
         options = {
@@ -2654,14 +2682,17 @@ Pdok.Api.prototype.deleteLayers = function(nonVectorLayers, vectorLayers) {
  * @param url {String} URL of either a text or a kml file to load
  * @param type {String} type, one of 'KML' or 'TXT'
  * @param {Boolean} zoomToFeatures boolean to determine if we should zoom to the extent of the just added features
+ * @param {Pdok} passthroughPdokObject pass Pdok as it will be lost in context
+ * @returns {Boolean|undefined}
  */
-Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
+Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures, passthroughPdokObject){
 
     var apiObject = this;
     var context = {};
     // little dirty way to pass type and zoomToFeatures:
     context.dataType = type;
     context.zoomToFeatures = zoomToFeatures;
+    context.passthroughPdokObject = passthroughPdokObject;
 
     if (type.toUpperCase() === "KML"){
         // kml
@@ -2696,7 +2727,7 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures){
   * @param {type} url
  */
 Pdok.Api.prototype.addKML = function(url) {
-    this.addFeaturesFromUrl(url, 'KML', true);
+    this.addFeaturesFromUrl(url, 'KML', true, this);
 };
 
 //Wellicht moet dit een andere call worden omdat nu een combinatie van txturl en mloc niet goed gaat
@@ -2705,7 +2736,7 @@ Pdok.Api.prototype.addKML = function(url) {
  * @param {string} url
  */
 Pdok.Api.prototype.addTxt = function(url) {
-    this.addFeaturesFromUrl(url, 'TXT', true);
+    this.addFeaturesFromUrl(url, 'TXT', true, this);
 };
 
 /**
@@ -2752,7 +2783,32 @@ Pdok.Api.prototype.createMapLink = function(){
     else {
         uri += 'api/api.html';
     }
-    var config = this.getConfig();
+    var config = this.getConfig('vialink');
+    var pdoklayers = [];
+    var i;
+    if(config.baselayers) {
+        for (i = 0; i < config.baselayers.length; ++i) {
+            if(config.baselayers[i].visible){
+                pdoklayers.push(config.baselayers[i].id);
+            }
+        }    
+        delete config.baselayers;
+    } else {
+        pdoklayers.push("BRT");
+    }
+    //Get the visible overlays and remove the others
+    if(config.overlays){
+        for (i = 0; i < config.overlays.length; ++i) {
+          if(config.overlays[i].visible){
+            pdoklayers.push(config.overlays[i].id);
+          }
+        }
+        delete config.overlays;
+    }
+    //console.log(pdoklayers);    
+    //Concat the layers, assuming the first to be the baselayer and write them to the config object
+    config.pdoklayers = pdoklayers.join(',');
+    //console.log(config);
     return uri + '?'+OpenLayers.Util.getParameterString(config);
 };
 
@@ -2785,7 +2841,7 @@ Pdok.Api.prototype.createHtml = function(){
     //add the css ref automagically, it cannot be put inside the body!
     'Pdok.addcss("'+base+'api/styles/default/style.css");'+
     'Pdok.addcss("'+base+'api/styles/api.css");'+        
-    'OpenLayers.ImgPath="'+Pdok.ApiUrl+'/img/";'+
+    'OpenLayers.ImgPath="'+base+'/img/";'+
     'var config_' + uniqueid + '='+conf+';'+
     'var api_' + uniqueid + '; Pdok.ready( function(){ new Pdok.Api(config_' + uniqueid + ', function(retval){api_' + uniqueid + ' = retval;});});' +
     '</script>';
@@ -2796,6 +2852,8 @@ Pdok.Api.prototype.createHtml = function(){
 
 /**
  * Api call to get a config object which can be used to start an Api instance in current state
+ * @param {type} uniqueid
+ * @returns {Pdok.Api.prototype.getConfig.config}
  */
 Pdok.Api.prototype.getConfig = function(uniqueid) {
     var config = {};
@@ -2878,11 +2936,11 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         }
         // markersdef
         if(this.markersdef) {
-            config.markersdef = this.markersdef;
+            config.markersdef = Pdok.absoluteUri(this.markersdef);
         }
         // layersdef
         if(this.layersdef) {
-            config.layersdef = this.layersdef;
+            config.layersdef = Pdok.absoluteUri(this.layersdef);
         }
 
         var tempLayer = this.featuresLayer.clone();
