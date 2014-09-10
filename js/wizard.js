@@ -90,6 +90,8 @@ function createOnClickEvents() {
     $('#mapnavigation').click( function() { setNavigationVisible($('#mapnavigation').is(':checked')); } );
     $('#mapscaleline').click( function() { setScaleLineVisible($('#mapscaleline').is(':checked')); } );
     $('#mapmouseposition').click( function() { setMousePositionVisible($('#mapmouseposition').is(':checked')); } );
+    $('#mapsearch').click( function() { setMapsearchVisible($('#mapsearch').is(':checked')); } );
+    $('#maplegend').click( function() { setLegendVisible($('#maplegend').is(':checked')); } );
     $('#addpdoklayerbutton').click( function() { addPdokLayer();return false; } );
     $('#addwmslayerbutton').click( function() { addWmsLayer();return false; } );
     $('#addwmtslayerbutton').click( function() { addWmtsLayer();return false; } );
@@ -780,7 +782,23 @@ function setMousePositionVisible(isVisible){
     }
     api.setMousePositionVisible(isVisible);
 }
-
+function setMapsearchVisible(isVisible){
+    if (isVisible){
+        api.activateGeocoder({div:'searchthingonthemap'});
+        $('#searchthingonthemap').show();
+    } else {
+        $('#searchthingonthemap').hide();
+    }
+    api.setMapsearchVisible(isVisible);
+}
+function setLegendVisible(isVisible){
+    if (isVisible){
+        $('.olControlMousePosition').show();
+    } else {
+        $('.olControlMousePosition').hide();
+    }
+    api.setLegendVisible(isVisible);
+}
 function reload_wizard_based_on_url(){
     strUrl = $('#pdokkaartUrl').val();
     if (strUrl.substr(0,4).toUpperCase() === 'HTTP'){

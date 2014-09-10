@@ -44,7 +44,6 @@
                 "showzoom": true,
                 "showscaleline": true,
                 "showmouseposition": true,
-                "geocoder": {}
             };
             var api;
             var examplescripts = {};
@@ -208,7 +207,7 @@
                                 </div>
                                 <div id="vb2" class="stepwrapper">
                                     <h2>
-                                        <a id="vb2a" href="../api/api.html?zoom=7&loc=119060.64%2C%20570880.64&pdoklayers=BRT%2CTOP50VECTOR&features=%3Ckml%20xmlns%3D%22http%3A%2F%2Fearth.google.com%2Fkml%2F2.0%22%3E%3CFolder%3E%3CPlacemark%3E%3Cname%3EDe%20Slufter%3C%2Fname%3E%3Cdescription%3E%26lt%3Ba%20href%3D%22http%3A%2F%2Fwww.npduinenvantexel.nl%2Fpage%2FNatuur%2FDe-Slufter-en-de-Muy%22%20target%3D%22_blank%22%26gt%3BWebsite%26lt%3B%2Fa%26gt%3B%26lt%3BBR%26gt%3B%0A%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E4.815576834099498%2C53.14168733521495%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt3%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3C%2FFolder%3E%3C%2Fkml%3E" target="exwin">Voorbeeld 2: features - Markers gebruiken in de kaart</a>
+                                        <a id="vb2a" href="../api/api.html?zoom=7&loc=119060.64%2C%20570880.64&pdoklayers=TOP50VECTOR&features=%3Ckml%20xmlns%3D%22http%3A%2F%2Fearth.google.com%2Fkml%2F2.0%22%3E%3CFolder%3E%3CPlacemark%3E%3Cname%3EDe%20Slufter%3C%2Fname%3E%3Cdescription%3E%26lt%3Ba%20href%3D%22http%3A%2F%2Fwww.npduinenvantexel.nl%2Fpage%2FNatuur%2FDe-Slufter-en-de-Muy%22%20target%3D%22_blank%22%26gt%3BWebsite%26lt%3B%2Fa%26gt%3B%26lt%3BBR%26gt%3B%0A%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E4.815576834099498%2C53.14168733521495%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt3%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3C%2FFolder%3E%3C%2Fkml%3E" target="exwin">Voorbeeld 2: Marker met Popup op Texel</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -217,8 +216,7 @@
                                         <div class="row">
                                             <p>
                                                 Demonstreert API met gebruik van de parameter <span class="codesnippet">features</span> en <span class="codesnippet">pdoklayers</span>
-                                                waarmee een met de wizard ingetekende marker en een met de wizard
-                                                toegevoegde PDOK kaartlaag te gebruiken is op de kaart.
+                                                waarmee een met de wizard ingetekende marker wordt getoond, gecombineerd met de TOP50VECTOR als achtergrond.
                                             </p>
                                         </div>
                                     </form>
@@ -226,7 +224,7 @@
                                 <div id="vb3" class="stepwrapper">
                                     <h2>
                                         <a id="vb3a" href="../api/api.html?hoverpopup=true&zoom=7&loc=132378.75926468,517588.18036766&pdoklayers=BRT,TOP50VECTOR&features=%3Ckml%20xmlns%3D%22http%3A%2F%2Fearth.google.com%2Fkml%2F2.2%22%3E%3CFolder%3E%3CPlacemark%3E%3Cname%3EWerkzaamheden%20aan%20het%20spoor%3C%2Fname%3E%3Cdescription%3EEen%20tijd%20lang%20zal%20alles%20hier%20open%20liggen.%20We%20raden%20iedereen%20aan%20om%20met%20de%20fiets%20te%20gaan!%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.052663671297333%2C52.645459645318915%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt14%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3C%2FFolder%3E%3C%2Fkml%3E" target="exwin">
-                                            Voorbeeld 3: hoverpopup - Popup bij een marker automatisch tonen</a>
+                                            Voorbeeld 3: Popup bij een marker automatisch tonen</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -243,7 +241,7 @@
                                 <div id="vb4" class="stepwrapper">
                                     <h2>
                                         <a id="vb4a" href="../api/api.html?kmlurl=../examples/data/provincies.kml&" target="exwin">
-                                            Voorbeeld 4: kmlurl - KML bestand toevoegen aan de kaart</a>
+                                            Voorbeeld 4: KML bestand toevoegen aan de kaart</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -263,7 +261,7 @@
                                 <div id="vb5" class="stepwrapper">
                                     <h2>
                                         <a id="vb5a" href="../api/api.html?loc=150000,450000&zoom=5" target="exwin">
-                                            Voorbeeld 5: loc & zoom - Zoomen naar de opgegeven locatie</a>
+                                            Voorbeeld 5: Zoomen naar een opgegeven locatie</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -284,7 +282,7 @@
                                 <div id="vb6" class="stepwrapper">
                                     <h2>
                                         <a id="vb6a" href="../api/api.html?mloc=150000,450000&mimg=http://lorempixel.com/64/64/nature/&titel=Met dank aan Lorempixel&tekst=%3Ca%20href%3D%22http%3A%2F%2Florempixel.com%22%20target%3D%22_blank%22%3Elorempixel%20website%3C%2Fa%3E" target="exwin">
-                                            Voorbeeld 6: mloc, mimg - Toon een externe marker op de kaart</a>
+                                            Voorbeeld 6: Toon een externe marker op de kaart</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -302,7 +300,7 @@
                                 <div id="vb7" class="stepwrapper">
                                     <h2>
                                         <a id="vb7a" href="../api/api.html?mloc=150000,450000&mt=mt12" target="exwin">
-                                            Voorbeeld 7: mloc, mt - Toon een marker op de kaart</a>
+                                            Voorbeeld 7: Toon een benoemde marker op de kaart</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -319,8 +317,8 @@
                                 </div>
                                 <div id="vb8" class="stepwrapper">
                                     <h2>
-                                        <a id="vb8a" href="../api/api.html?zoom=12&loc=120497.88%2C%20566440.4&pdoklayers=TOP10NL,CBS_PROVINCIES,CBS_GEMEENTEN,AAN,CBS_KERNEN_NAMEN" target="exwin">
-                                            Voorbeeld 8: pdoklayers - Voorgedefinieerde PDOK kaartlagen</a>
+                                        <a id="vb8a" href="../api/api.html?zoom=12&loc=120497.88%2C%20566440.4&pdoklayers=TOP10NL,CBS_PROVINCIES,CBS_GEMEENTEN,AAN,CBS_KERNEN_NAMEN&showlayerswitcher=true&shownavigation=true" target="exwin">
+                                            Voorbeeld 8: PDOK lagen</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -438,7 +436,7 @@
                                 <div id="vb13" class="stepwrapper">
                                     <h2>
                                         <a id="vb13a" href="../api/api.html?wmsurl=http://geodata.nationaalgeoregister.nl/nwbwegen/wms&wmslayers=wegvakken,hectopunten&zoom=8&loc=140000,470000" target="exwin">
-                                            Voorbeeld 13: wmslayers, wmsurl - WMS toevoegen</a>
+                                            Voorbeeld 13: WMS Nationaal wegenbestand</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -477,7 +475,7 @@
                                     <h2>
                                         <!-- ./gegenereerde_code_standaard.html -->
                                         <a href="">
-                                            Voorbeeld 15: genereer code - Gegenereerde code met toegevoegde WMS</a>
+                                            Voorbeeld 15: Kaart met WMS en PDOK zoekfunctie</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
                                         </span>
@@ -487,7 +485,7 @@
                                             <p>
                                                 Demonstreert de gegeneerde code in een html pagina. Hierbij wordt ingezoomd op een locatie en
                                                 worden de BRT Achtergrondkaart en de Gemeentegrenzen gebruikt in de kaart. De gemeentegrenzen
-                                                kaartlaag is via de wizard toegevoegd aan de kaart.
+                                                kaartlaag is via de wizard toegevoegd aan de kaart. De zoekfunctie maakt gebruik van de PDOK geocoder.
                                             </p>
                                             <script>
                                                 examplescripts.vb15 = function() {
@@ -495,7 +493,8 @@
                                                     var config = {
                                                         "zoom": 7,
                                                         "loc": ['119974.56', '500535.68'],
-                                                        "pdoklayers": 'BRT,BG_GEMEENTEGRENZEN'
+                                                        "pdoklayers": 'BRT,BG_GEMEENTEGRENZEN',
+                                                        "geocoder": {}
                                                     };
                                                     new Pdok.Api(config);
                                                 };

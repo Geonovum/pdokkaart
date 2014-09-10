@@ -512,7 +512,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.0.0';
+Pdok.API_VERSION_NUMBER = '1.1.0';
 
 // CONFIG
 Pdok.ApiKmlService = 'http://www.duif.net/kml/';
@@ -553,7 +553,8 @@ Pdok.createBaseUri = function(){
 Pdok.ApiUrl =  Pdok.createBaseUri();
 
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url=";  // current pdokloket proxy
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url=";  // current pdokloket proxy
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy/?url=";  // current test proxy
 OpenLayers.ImgPath = Pdok.ApiUrl + '/img/';
 OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
@@ -1332,6 +1333,41 @@ Pdok.Api.prototype.defaultPdokLayers = {
     };
 
 /**
+ * 
+ * @param {type} geocoder a geocoder config object containing the div to create the geocoder on
+ * @returns {void}
+ */
+Pdok.Api.prototype.activateGeocoder = function(geocoder){
+   //console.log(geocoder);
+   //console.log(this);
+   var mapdiv;
+    if(typeof this.map.div === 'string'){
+        mapdiv = this.map.div;
+    } else {
+        mapdiv = this.map.div.id;
+    }
+    if (geocoder){
+        var sdiv = 'search';
+        if(geocoder.div){
+            sdiv = geocoder.div;
+        }
+        //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
+        if(!document.getElementById(sdiv)){
+            //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
+            var element = document.createElement("div");
+            element.id = sdiv;
+            document.getElementById(mapdiv).appendChild(element);
+        }
+        var that = this;
+        Pdok.addJs(Pdok.ApiUrl+'/js/geozetlib.js', function(){
+            that.map.addControl(new OpenLayers.Control.GeocoderControl({
+                div: document.getElementById(sdiv)
+            }));
+        });
+    }    
+};
+
+/**
  *
  * Given all properties of this Api-instance, create an OpenLayers Map object and return it
  * For internal use only
@@ -1339,7 +1375,6 @@ Pdok.Api.prototype.defaultPdokLayers = {
  * @return OpenLayers.Map object
  */
 Pdok.Api.prototype.createOlMap = function() {
-    console.log(this);
     var controls = [
             new OpenLayers.Control.Attribution()
             
@@ -1380,24 +1415,8 @@ Pdok.Api.prototype.createOlMap = function() {
         div: this.div
     });
     this.map = olMap;
-    if (this.geocoder){
-        var sdiv = 'search';
-        if(this.geocoder.div){
-            sdiv = this.geocoder.div;
-        }
-        //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
-        if(!document.getElementById(sdiv)){
-            //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
-            var element = document.createElement("div");
-            element.id = sdiv;
-            document.getElementById(this.div).appendChild(element);
-        }
-        Pdok.addJs(Pdok.ApiUrl+'/js/geozetlib.js', function(){
-            olMap.addControl(new OpenLayers.Control.GeocoderControl({
-                div: document.getElementById(sdiv)
-            }));
-        });
-    }
+    this.activateGeocoder(this.geocoder, this.div);
+    
     function showBRT(){
         var layers = olMap.getLayersByName("BRT Achtergrondkaart");
         for(var layerIndex = 0; layerIndex < layers.length; layerIndex++) {
@@ -2884,7 +2903,9 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         if (this.showmouseposition){
             config.showmouseposition = this.showmouseposition;
         }
-    
+        if (this.geocoder){
+            config.geocoder = JSON.stringify(this.geocoder);
+        }
         config.loc = this.map.getCenter().toShortString();
         // layers
         var layers = [];
@@ -3088,6 +3109,18 @@ Pdok.Api.prototype.setMousePositionVisible = function(isVisible){
     }
     else{
         this.showmouseposition = false;
+    }
+};
+
+/**
+ * Function to toggle visibility of the OpenLayers.navigation
+ * @param {Boolean} isVisible to show the layer or not
+ */
+Pdok.Api.prototype.setMapsearchVisible = function(isVisible){
+    if (isVisible){
+        this.geocoder = {};
+    } else {
+        this.geocoder = null;
     }
 };
 
