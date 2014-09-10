@@ -6,11 +6,80 @@
         <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
         <meta name="keywords" content="pdok,kaart,wizard" />
         <meta name="description" content="" />
-        <title>PDOK API</title>
+        <title>PDOK Kaart op maat</title>
         <style>
             div.olMap.big {
                 height: inherit;
                 width: auto;
+            }
+            #search {
+                top: 5px;
+                left: 30px;
+                position: absolute;
+                z-index:2000;
+                padding: 10px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            fieldset {
+                padding: 0;
+                margin: 0;
+                border: 0px solid #fff;
+            }
+            #searchResults{
+                height: 350px;
+                overflow-y: auto;
+            }
+            .filterbutton:hover {
+                background-color: #273397;
+                border: 1px solid #273397;
+            }
+            .filterbutton{
+                cursor:pointer;
+                width:70px;
+                height: 31px;
+                color: transparent;
+                background-color: #e17000;
+                color: #fff;
+                border: 1px solid #e17000;
+                -moz-border-radius: 2px;
+                -webkit-border-radius: 2px; 
+            }
+            #geocodeerresult {
+                display: none;
+                background-color: #F6D4B2;
+                height: 450px;
+                width: 324px;
+                border: 0px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                overflow-y: auto;
+                z-index: 2000;
+                padding:24px;
+            }
+            #geocodeerresult li{
+                /*height: 20px;*/
+                background: url(../img/link-hover.gif) no-repeat right bottom;
+            }
+            #geocodeerresult a{
+                color: black;
+                margin: 5px;
+                text-decoration: none;
+            }
+            form input[type=text], form select, form textarea, form select {
+                float:left;
+                width:190px;
+                height:27px;
+                line-height:27px;
+                text-indent:10px;
+                font-size:1em;
+                color:#333;
+                background: #fff;
+                border:solid 1px #d9d9d9;
+                border-top:solid 1px #c0c0c0;
+                border-right:none;
             }
         </style>
     </head>
@@ -33,6 +102,6 @@
                 });
             });
         </script>
-        <div id="map_vialink" class="big olMap"></div>
+        <div id="map_vialink" class="fullscreen olMap"></div>
     </body>
 </html>
