@@ -26,19 +26,19 @@
             Pdok.ApiUrl = '../pdokkaart/api';
             OpenLayers.ImgPath = '../pdokkaart/api/img/';
             var config = {
-                "zoom":3,
-                "loc":"170000, 470000",
-                "baselayers" : [{"id":"BRT","visible":true}],
+                "zoom": 3,
+                "loc": "170000, 470000",
+                "baselayers": [{"id": "BRT", "visible": true}],
                 "shownavigation": true,
                 "showlayerswitcher": true,
                 "showzoom": true,
                 "showscaleline": true,
                 "showmouseposition": true,
-		"geocoder": {div: 'search'}
+                "geocoder": {div: 'search'}
             };
             var api;
-            Pdok.ready( function(){
-                new Pdok.Api(config, function(retval){
+            Pdok.ready(function() {
+                new Pdok.Api(config, function(retval) {
                     //console.log(retval);
                     api = retval;
                     $('input:radio[name=mapsize]')[2].checked = true;
@@ -63,7 +63,7 @@
                     autoPopulateInputs();
 
                     // not sure if we want this here
-                    api.map.events.register("moveend", api, createApiLinksAndCode );                    
+                    api.map.events.register("moveend", api, createApiLinksAndCode);
                 });
             });
         </script>
@@ -206,10 +206,12 @@
                                         <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
                                         <label><input type="radio" name="txttype" value="kml" class="lefting" />KML</label>
                                         <label><input type="radio" checked="checked" name="txttype" value="txt" class="lefting" />TXT</label>
-                                        <!--<textarea id="copypaste" class="autopopulate default" rows="10" cols="10" title="TXT voorbeeld:
-                    # LET OP: eerst Y dan X (latlon!!)
-                    point title   description
-                    517000,17960   naam    en omschrijving"></textarea>-->
+                                        <!--
+                                            <textarea id="copypaste" class="autopopulate default" rows="10" cols="10" title="TXT voorbeeld:
+                                            # LET OP: eerst Y dan X (latlon!!)
+                                            point title   description
+                                            517000,17960   naam    en omschrijving"></textarea>
+                                        -->
                                         <textarea id="copypaste" class="autopopulate default" rows="10" cols="10" title=""></textarea>
                                         <button id="getfeaturesfromtxt" class="filterbutton">Opslaan</button>
                                     </div>
@@ -230,7 +232,7 @@
                                 URL van de WMS:<br />
                                 <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
                                 Lagen van de WMS:<br />
-                                <input type="text" id="wmsLayer" class="autopopulate default" title="bijv: provgrens_generalisatie_2008" size="30" /><br />
+                                <input type="text" id="wmsLayer" class="autopopulate default" title="bijv: provgrens_generalisatie_2008" size="30"/><br/>
                                 Featureinfo-formaat van deze WMS (optioneel)<br />
                                 <select id="wmsInfoFormat">
                                     <option value="none" selected="selected">Geen feature info</option>
@@ -242,9 +244,9 @@
                                 URL van de WMTS:<br />
                                 <input type="text" id="WmtsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/wmts/" size="30" /><br />
                                 Laagnaam van de WMTS:<br />
-                                <input type="text" id="WmtsLayer" class="autopopulate default" title="bijv: natura2000" size="30" /><br />
+                                <input type="text" id="WmtsLayer" class="autopopulate default" title="bijv: natura2000" size="30" /><br/>
                                 Matrixset van de WMTS:<br />
-                                <input type="text" id="WmtsMatrix" class="autopopulate default" title="bijv: EPSG:28992" size="30" /><br />
+                                <input type="text" id="WmtsMatrix" class="autopopulate default" title="bijv: EPSG:28992" size="30" /><br/>
                                 <button id="addwmtslayerbutton" class="filterbutton" >Voeg toe aan kaart</button>
                                 <button id="deletelayers" class="filterbutton" ><span>Verwijder alle lagen</span></button>
                             </form>
@@ -281,9 +283,9 @@
                                 </div>
                                 <div id="locationtoolfield" class="row">
                                     <label id="wktfield" >Veldnaam (wkt): <input type="text" value="wkt" /></label>
-                                    <label id="xfield" >X-coordinaat: <input type="text" value="x" /></label></br>
-                                    <label id="yfield" >Y-coordinaat: <input type="text" value="y" /></label></br>
-                                    <label id="urlfield" >Url veldnaam: <input type="text" value="url" /></label></br>
+                                    <label id="xfield" >X-coordinaat: <input type="text" value="x" /></label><br/>
+                                    <label id="yfield" >Y-coordinaat: <input type="text" value="y" /></label><br/>
+                                    <label id="urlfield" >Url veldnaam: <input type="text" value="url" /></label><br/>
                                 </div>
                                 <div id="locationtoolzooms" >
                                     <div class="row">
@@ -318,7 +320,6 @@
                                     <div id="generated_url">
                                         <p><strong>Als URL</strong></p>
                                         <textarea id="generated_url_to_long_message" rows="4" cols="10"></textarea>
-
                                         <div id="kml_url_service">
                                             <a href="#" id="kmlservicelink" target="_blank">KML opslagservice</a> (Sla KML op en vervang door KML-url)
                                         </div>
@@ -333,53 +334,16 @@
                                 </div>
                                 <div id="generated_html">
                                     <p><strong>Als broncode</strong></p>
-                                    <!--In de HTML Head-sectie plaatsen:
-                                    <textarea id="scriptcodeHead" rows="12" cols="10"></textarea>
-                                    <br/>-->In de HTML plaatsen:
+                                    In de HTML plaatsen:
                                     <textarea id="scriptcodeBody"></textarea>
                                 </div>
                                 <div id="generated_kml">
                                     <p><strong>Features als KML</strong></p>
                                     <textarea id="featuresKML"></textarea>
-                                    
                                 </div>
+                            </form>
                         </div>
                     </div>
-                    <!--<h3 id="importfile"><input type="file" id="files" name="files[]" /><output id="list"></output></h3>
-                                                <script>
-                                                    function handleFileSelect(evt) {
-                                                        var files = evt.target.files; // FileList object
-                    
-                                                        // Loop through the FileList and render image files as thumbnails.
-                                                        for (var i = 0, f; f = files[i]; i++) {
-                    
-                                                            // Only process image files.
-                                                            //if (!f.type.match('image.*')) {
-                                                                //  continue;
-                                                                //}
-                    
-                                                            var reader = new FileReader();
-                    
-                                                            // Closure to capture the file information.
-                                                            reader.onload = (function(theFile) {
-                                                            return function(e) {
-                                                            // Render thumbnail.
-                                                            //var span = document.createElement('span');
-                                                            //span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                                                            //                  '" title="', escape(theFile.name), '"/>'].join('');
-                                                            //document.getElementById('list').insertBefore(span, null);
-                                                            //alert(e.target.result);
-                                                            ZetMarkersOpKaart(e.target.result);
-                                                            };
-                                                            })(f);
-                    
-                                                            // Read in the image file as a data URL.
-                                                            reader.readAsText(f);
-                                                            }
-                                                            }
-                    
-                                                            document.getElementById('files').addEventListener('change', handleFileSelect, false);
-                                                        </script>  -->
                     <div class="stepwrapper">
                         <div class="row">
                             <button id="opties" class="filterbutton" value="Meer opties">

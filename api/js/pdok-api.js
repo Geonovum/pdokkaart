@@ -1381,13 +1381,20 @@ Pdok.Api.prototype.createOlMap = function() {
     });
     this.map = olMap;
     if (this.geocoder){
-        var div = 'search';
+        var sdiv = 'search';
         if(this.geocoder.div){
-            div = this.geocoder.div;
+            sdiv = this.geocoder.div;
+        }
+        //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
+        if(!document.getElementById(sdiv)){
+            //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
+            var element = document.createElement("div");
+            element.id = sdiv;
+            document.getElementById(this.div).appendChild(element);
         }
         Pdok.addJs(Pdok.ApiUrl+'/js/geozetlib.js', function(){
             olMap.addControl(new OpenLayers.Control.GeocoderControl({
-                div: document.getElementById(div)
+                div: document.getElementById(sdiv)
             }));
         });
     }
