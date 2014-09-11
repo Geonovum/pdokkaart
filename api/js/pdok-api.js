@@ -121,7 +121,6 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
     },
 
     createStyleNode: function(document, style) {
-        //console.log('pdok-api.js>createStyleNode');
         if (!style){
             return false;
         } else {
@@ -216,6 +215,125 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
  * Inherits from:
  *  - <OpenLayers.Control>
  */
+OpenLayers.Control.LegendControl = 
+  OpenLayers.Class(OpenLayers.Control, {
+    dynamic: true,
+    html: '<h2>Legenda</h2>',
+    /**
+     * Constructor:
+     * 
+     * Parameters:
+     * @param options - {Object} Options for control.
+     */
+    initialize: function(options) {
+        OpenLayers.Control.prototype.initialize.apply(this, arguments);
+        // we create the div ourselves, to be able to put it outside the map-div
+        // if we let OpenLayers create it, and let it be part of the map-div
+        // then OpenLayers steals the cursor from our input
+        if (!this.div){
+            this.div = document.createElement("div");
+            this.div.className = OpenLayers.Util.createUniqueID("lg_");
+            this.div.id = this.div.className+'_'+this.id;
+        }
+        
+        // deferred event delegation:
+        // http://davidwalsh.name/event-delegate
+        var me = this;
+        var clickFunc = function(e) {
+            var target;
+            e.target?target=e.target:target=e.srcElement;
+            if(target && target.className === "hideWindow") {
+                me.hideLegend();
+            } else if (target && target.className === "hideWindow"){
+                me.showLegend();
+            }
+        };
+        if (this.div.addEventListener) {
+            this.div.addEventListener("click", clickFunc);
+        } else{
+            // IE8
+            this.div.attachEvent("onclick", clickFunc);
+        }
+        //me.draw();
+    },
+
+    /** 
+     * Method: destroy
+     * Destroy control.
+     */
+    destroy: function() {
+        OpenLayers.Control.prototype.destroy.apply(this, arguments);
+    },
+    
+    /**
+     * Method: draw
+     * Initialize control.
+     * 
+     * Returns: 
+     * {DOMElement} A reference to the DIV DOMElement containing the control
+     */    
+    draw: function() {
+        OpenLayers.Control.prototype.draw.apply(this, arguments);
+        var str = this.div.innerHTML;
+        if(this.html){
+            str += this.html;
+        }
+        this.div.innerHTML = str;
+        this.map.events.register('addlayer', this, this.addLegend);
+        return this.div;
+    },
+    addLegend: function(event){
+        //console.log('@todo:addLegend');
+        //console.log(event.layer);
+        //console.log(event.layer.getVisibility());
+        var str = this.div.innerHTML;
+        if(this.dynamic){
+            switch (event.layer.CLASS_NAME) {
+                case "OpenLayers.Layer.WMS":
+                var legend = event.layer.url + 
+                    "?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2F" +
+                    "vnd.ogc.se_xml&FORMAT=image%2Fpng&LAYER=" + 
+                event.layer.params["LAYERS"];
+                    str += '<h4>' + event.layer.name + '</h4><p><img src=' + legend + ' alt="' + event.layer.name + '" title="' + event.layer.name + '" /></p>';
+                    break;
+                case "OpenLayers.Layer.WMTS":
+                    break;
+            } 
+//            str += "<div><h3>" + event.layer.name + "</h3><p>"
+//            + event.layer.CLASS_NAME;
+//            if (event.layer.getVisibility()){
+//                str += ': shown';
+//            } else {
+//                str += ': hidden';
+//            }
+//            if (event.layer.isBaseLayer){
+//                str += ': base';
+//            } else {
+//                str += ': overlay';
+//            }
+//            str += '</p></div>';
+        }
+        this.div.innerHTML = str;
+    },
+    hideResults: function() {
+        document.getElementById(this.div.id).style.display = 'none';
+    },
+    showResults: function() {
+        document.getElementById(this.div.id).style.display = 'block';
+    },
+    CLASS_NAME: "OpenLayers.Control.LegendControl"
+});
+/**
+ * @requires OpenLayers/Control.js
+ */
+
+/**
+ * Class: OpenLayers.Control.GeocoderControl
+ * The GeocoderControl control adds pdok search functionality. 
+ *
+ * Inherits from:
+ *  - <OpenLayers.Control>
+ */
 OpenLayers.Control.GeocoderControl = 
   OpenLayers.Class(OpenLayers.Control, {
 
@@ -282,7 +400,6 @@ OpenLayers.Control.GeocoderControl =
             // IE8
             this.div.attachEvent("onclick", clickFunc);
         }
-        me.draw();
     },
 
     /** 
@@ -860,7 +977,6 @@ Pdok.addJs = function(js, callback){
  * @param {Function} callback the callback function
  */
 Pdok.Api = function(config, callback) {
-    //console.log('pdok-api.js>Pdok.Api');
     if (config) {
         OpenLayers.Util.extend(Pdok, config);
     }
@@ -1160,7 +1276,7 @@ Pdok.Api = function(config, callback) {
     this.showscaleline = Pdok.showscaleline;
     this.showmouseposition = Pdok.showmouseposition;
     this.geocoder = Pdok.geocoder;
-
+    this.legend = Pdok.legend;
     /**
      * Reference to the DIV-id the map should be rendered in.
      * Note that you have to set this one to have two maps in one page!
@@ -1334,12 +1450,41 @@ Pdok.Api.prototype.defaultPdokLayers = {
 
 /**
  * 
+ * @param {type} legend a legend config object containing the div to create the legend on
+ * @returns {void}
+ */
+Pdok.Api.prototype.activateLegend = function(legend){
+   var mapdiv;
+    if(typeof this.map.div === 'string'){
+        mapdiv = this.map.div;
+    } else {
+        mapdiv = this.map.div.id;
+    }
+    if (legend){
+        var sdiv = 'legend';
+        if(legend.div){
+            sdiv = legend.div;
+        }
+        //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
+        if(!document.getElementById(sdiv)){
+            //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
+            var element = document.createElement("div");
+            element.id = sdiv;
+            document.getElementById(mapdiv).appendChild(element);
+        }
+        this.map.addControl(new OpenLayers.Control.LegendControl({
+            div: document.getElementById(sdiv),
+            map: this.map
+        }));
+    }    
+};
+
+/**
+ * 
  * @param {type} geocoder a geocoder config object containing the div to create the geocoder on
  * @returns {void}
  */
 Pdok.Api.prototype.activateGeocoder = function(geocoder){
-   //console.log(geocoder);
-   //console.log(this);
    var mapdiv;
     if(typeof this.map.div === 'string'){
         mapdiv = this.map.div;
@@ -1416,7 +1561,7 @@ Pdok.Api.prototype.createOlMap = function() {
     });
     this.map = olMap;
     this.activateGeocoder(this.geocoder, this.div);
-    
+    this.activateLegend(this.legend, this.div);
     function showBRT(){
         var layers = olMap.getLayersByName("BRT Achtergrondkaart");
         for(var layerIndex = 0; layerIndex < layers.length; layerIndex++) {
@@ -2165,7 +2310,6 @@ Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
  * @returns {OpenLayers.Layer.WMS}
  */
 Pdok.Api.prototype.createWMSLayer = function(layerConfigObj, id) {
-    //console.log('pdok-api.js>createWMSLayer()');
     // default WMS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     if (!id) {
@@ -2333,8 +2477,6 @@ Pdok.Api.prototype.disableLocationTool = function(){
  */
 
 Pdok.Api.prototype.setLocationToolProps = function(styletype, zmin, zmax, url, xorwkt, y){
-
-    //console.log('setting locationtoolprops: '+styletype+' '+zmin+' '+ zmax+' '+ xorwkt+' '+y);
     this.locationtool = true;
     if (styletype){
         this.locationtoolstyle = styletype;
@@ -2375,7 +2517,6 @@ Pdok.Api.prototype.setLocationToolProps = function(styletype, zmin, zmax, url, x
  *
  */
 Pdok.Api.prototype.removeLocationToolProps = function(){
-    //console.log('remove locationtoolprops');
     // back to defaults
     this.locationtool = false;
     this.locationtoolstyle = 'mt0';
@@ -2576,8 +2717,6 @@ Pdok.Api.prototype.startLocationTool = function(){
  * @param {response} response
  */
 Pdok.Api.prototype.handleGetFeaturesResponse = function(response){
-
-    //console.log(this);
     //  trying to catch proxy errors
     if (response.status === 502 || response.status === 403){
         alert('Fout bij het ophalen van de url.\nDit lijkt een proxy probleem.\nKomt de data van een ander domein dan de web applicatie?\nDan moet het data domein opgenomen worden in de proxy-instellingen.');
@@ -2638,7 +2777,6 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
     // add styling to features
     for (f in features){
         var feature = features[f];
-        //console.log(feature);
         if (feature.attributes['styletype']) {
             var styletype = feature.attributes['styletype'];
             // some formats (KML) return attr as objects instead of strings
@@ -2649,12 +2787,10 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
         } else if (type === 'KML' && this.kmlstyles) {
             // ok a KML layer containing styles
         } else if (type === 'TXT' && feature.style.externalGraphic) {
-            //console.log('TXT feature WITH style:', feature.style);
             // this is a TXT feature with some style information
             // this is possible via the txturl parameter
             // in combination with OpenLayers.Format.Txt
         } else {
-            //console.log("feature WITHOUT style, adding some");
             if (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Point') {
                 feature.style = this.styles['mt0'];
             } else if (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.LineString') {
@@ -2831,10 +2967,8 @@ Pdok.Api.prototype.createMapLink = function(){
         }
         delete config.overlays;
     }
-    //console.log(pdoklayers);    
     //Concat the layers, assuming the first to be the baselayer and write them to the config object
     config.pdoklayers = pdoklayers.join(',');
-    //console.log(config);
     return uri + '?'+OpenLayers.Util.getParameterString(config);
 };
 
@@ -2906,6 +3040,9 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         if (this.geocoder){
             config.geocoder = JSON.stringify(this.geocoder);
         }
+        if (this.legend){
+            config.legend = JSON.stringify(this.legend);
+        }
         config.loc = this.map.getCenter().toShortString();
         // layers
         var layers = [];
@@ -2915,13 +3052,10 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
             if (this.map.layers[layer].name !== this.FEATURESLAYER_NAME && this.map.layers[layer].name !== this.LOCATIONSLAYER_NAME){
                 if (!this.map.layers[layer].isBaseLayer) {
                      layers.push({"id": this.map.layers[layer].pdokid, visible: this.map.layers[layer].visibility});
-                     //console.log("Overlay: " + this.map.layers[layer].name + " visible: " + this.map.layers[layer].visibility.toString() + " id:" + this.map.layers[layer].pdokid);
                 } else {
                     if(this.map.layers[layer].visibility){
-                        //console.log("Baselayer: " + this.map.layers[layer].name + " visible: true" + " id:" + this.map.layers[layer].pdokid);
                         baselayers.push({"id": this.map.layers[layer].pdokid, visible: true});
                     } else {
-                        //console.log("Baselayer: " + this.map.layers[layer].name + " visible: false" + " id:" + this.map.layers[layer].pdokid);
                         baselayers.push({"id": this.map.layers[layer].pdokid, visible: false});
                     }
                 }
@@ -3121,6 +3255,14 @@ Pdok.Api.prototype.setMapsearchVisible = function(isVisible){
         this.geocoder = {};
     } else {
         this.geocoder = null;
+    }
+};
+
+Pdok.Api.prototype.setLegendVisible = function(isVisible){
+    if (isVisible){
+        this.legend = {};
+    } else {
+        this.legend = null;
     }
 };
 
