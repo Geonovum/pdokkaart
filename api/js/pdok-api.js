@@ -1622,15 +1622,17 @@ Pdok.Api.prototype.createOlMap = function() {
             this.addLayers([this.overlays[layer]], olMap);
         }
     }
-	if(this.pdoklayers) {
-		if (typeof this.pdoklayers === 'string') {
+    if(this.pdoklayers) {
+        if (typeof this.pdoklayers === 'string') {
             this.pdoklayers = this.pdoklayers.split(',');
         }
-		var i;
-		for (i = 0; i < this.pdoklayers.length; ++i) {
-			this.addLayers([{id:this.pdoklayers[i], visible:true}], olMap);
-		}
-	}
+        var i;
+        for (i = 0; i < this.pdoklayers.length; ++i) {
+            if(this.pdoklayers[i] !== ""){
+                this.addLayers([{id:this.pdoklayers[i], visible:true}], olMap);
+            }
+        }
+    }
     if (!olMap.baseLayer){
         //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
         this.addLayers([{id:'BRT', visible:true}], olMap);
