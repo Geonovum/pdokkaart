@@ -16,12 +16,6 @@
 	background-position:400px; 
 }
 
-#container {
-    width: 940px;
-    height: 100%;
-	margin: 0px auto;
-}
-
 #content {
     min-height: 600px;
 }
@@ -286,9 +280,8 @@ button {
 #kml_url_service, #addviamap, #addviaurltxt, #step3, #step4, #wktfield, #urlfield, #xfield, #yfield, #locationtoolzooms {
     display:none
 }
-
-.lefting{
-    width:15px;
+.autopopulate{
+    
 }
 
 #minzoom select, #maxzoom select{

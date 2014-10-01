@@ -30,9 +30,6 @@ function goTo(step) {
 function disableEditTools(){
     // cleanup of edit controls
     // to always start with a clean sheet
-    $('#addfeatures').attr('checked', false);
-    $('#editfeatures').attr('checked', false);
-    $('#externalfeatures').attr('checked', false);
     $('#addviamap').hide();
     $('#editviamap').hide();
     $('#addviaurltxt').hide();
@@ -162,10 +159,8 @@ function createMarkersLogic() {
         if (this.id === 'addfeatures') {
             if ($('#addviamap').is(':visible')) {
                 $('#addviamap').hide();
-                $(this).attr('checked', false);
                 api.disableDrawingTool();
-            }
-            else {
+            } else {
                 $('#addviamap').show();
                 $('#editviamap').hide();
                 $('#addviaurltxt').hide();
@@ -174,13 +169,11 @@ function createMarkersLogic() {
         } else if (this.id === 'editfeatures') {
             if ($('#editviamap').is(':visible')) {
                 api.disableEditingTool();
-                $(this).attr('checked', false);
                 $('#editviamap').hide();
                 $('#edit2a').hide();
             } else {
                 disableEditTools();
                 // disableEditTools() also unchecks the radio, check it here
-                $(this).attr('checked', true);
                 $('#addviamap').hide();
                 $('#editviamap').show();
                 $('#addviaurltxt').hide();
@@ -189,7 +182,6 @@ function createMarkersLogic() {
         } else if (this.id === 'externalfeatures') {
             if ($('#addviaurltxt').is(':visible')) {
                 $('#addviaurltxt').hide();
-                $(this).attr('checked', false);
             }
             else {
                 $('#addviamap').hide();
@@ -460,7 +452,7 @@ function featureModifiedCallback(domevent){
 }
 
 function deleteFeature() {
-    markers.removeFeatures([activeFeature]);
+    markers.destroyFeatures([activeFeature]);
     markers.refresh();
     // without this disabling and enabling we have a 
     // null pointer somewhere in the event handling of OL

@@ -345,10 +345,6 @@ button {
     display:none
 }
 
-.lefting{
-    width:15px;
-}
-
 #minzoom select, #maxzoom select{
     font-size:10px;
 }

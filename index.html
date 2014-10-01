@@ -50,8 +50,8 @@
                     //api.selectControl.deactivate();
 
                     // for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
-                    //mapPDOKKaart = api.getMapObject();
-                    //markers = api.featuresLayer;
+                    mapPDOKKaart = api.getMapObject();
+                    markers = api.featuresLayer;
                     createOnClickEvents();
                     createSearchLogic();
                     createStyleSelector();
@@ -176,7 +176,7 @@
                                     <!-- add markers via map -->
                                     <div class="row">
                                         <label>
-                                            <input type="radio" name="editmarkers" id="addfeatures" value="addfeatures" class="lefting" />
+                                            <input type="radio" name="editmarkers" id="addfeatures" value="addfeatures"/>
                                             Voeg een marker toe
                                         </label>
                                     </div>
@@ -190,9 +190,9 @@
                                         </div>
                                     </div>
                                     <!-- edit markers via map -->
-                                    <div id="edit3">
+                                    <div id="edit3" class="row">
                                         <label>
-                                            <input type="radio" name="editmarkers" id="editfeatures" value="editfeatures" class="lefting" />
+                                            <input type="radio" name="editmarkers" id="editfeatures" value="editfeatures"/>
                                             Wijzig een marker
                                         </label>
                                     </div>
@@ -200,21 +200,21 @@
                                     <!-- add markers via url or text string -->
                                     <div id="edit4" class="row">
                                         <label>
-                                            <input type="radio" name="editmarkers" id="externalfeatures" value="externalfeatures" class="lefting" />
+                                            <input type="radio" name="editmarkers" id="externalfeatures" value="externalfeatures"/>
                                             Markers uit url, bestand of tekst
                                         </label>
                                         <br />
                                     </div>
                                     <div id="addviaurltxt">
                                         <p><strong>Via URL</strong> Kies datatype, en geef de URL waar het bestand met markerdefinities zich bevindt klik dan "Haal op ":</p>
-                                        <label><input type="radio" checked="checked" name="urltype" value="kml" class="lefting" />KML</label>
-                                        <label><input type="radio" name="urltype" value="txt" class="lefting" />TXT</label>
+                                        <label><input type="radio" checked="checked" name="urltype" value="kml"/>KML</label>
+                                        <label><input type="radio" name="urltype" value="txt"/>TXT</label>
                                         <input type="text" id="urltext" class="autopopulate default" title="Voer een volledige url in (startend met http://)"/>
                                         <button id="getfeaturesfromurl" class="filterbutton">Haal op</button>
                                         <br />
                                         <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
-                                        <label><input type="radio" name="txttype" value="kml" class="lefting" />KML</label>
-                                        <label><input type="radio" checked="checked" name="txttype" value="txt" class="lefting" />TXT</label>
+                                        <label><input type="radio" name="txttype" value="kml"/>KML</label>
+                                        <label><input type="radio" checked="checked" name="txttype" value="txt"/>TXT</label>
                                         <!--
                                             <textarea id="copypaste" class="autopopulate default" rows="10" cols="10" title="TXT voorbeeld:
                                             # LET OP: eerst Y dan X (latlon!!)
@@ -270,23 +270,23 @@
                             </h2>
                             <form id="locationtoolform" action="#">
                                 <div class="row">
-                                    Selecteer een tekenobject en vul de veldnaam in waar de waarde ingezet moet worden
+                                    <p>Selecteer een tekenobject en vul de veldnaam in waar de waarde ingezet moet worden</p>
                                 </div>
                                 <div class="row">
-                                    <label><input type="radio" name="locationtoolstyle" id="none" value="mt0" class="lefting" checked="checked" />
+                                    <label><input type="radio" name="locationtoolstyle" id="none" value="mt0" checked="checked" />
                                         geen
                                     </label>
                                     <br />
-                                    <label><input type="radio" name="locationtoolstyle" id="pointxy" value="mt0" class="lefting" />
+                                    <label><input type="radio" name="locationtoolstyle" id="pointxy" value="mt0"/>
                                         punt (xy)
                                     </label>
-                                    <label><input type="radio" name="locationtoolstyle" id="point" value="mt0" class="lefting" />
+                                    <label><input type="radio" name="locationtoolstyle" id="point" value="mt0"/>
                                         punt (wkt)
                                     </label>
-                                    <label><input type="radio" name="locationtoolstyle" id="line" value="lt0" class="lefting" />
+                                    <label><input type="radio" name="locationtoolstyle" id="line" value="lt0"/>
                                         lijn (wkt)
                                     </label>
-                                    <label><input type="radio" name="locationtoolstyle" id="polygon" value="pt0" class="lefting" />
+                                    <label><input type="radio" name="locationtoolstyle" id="polygon" value="pt0"/>
                                         vlak (wkt)
                                     </label>
                                 </div>
