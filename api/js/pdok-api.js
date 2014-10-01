@@ -282,10 +282,7 @@ OpenLayers.Control.LegendControl =
         this.map.events.register('addlayer', this, this.addLegend);
         return this.div;
     },
-    addLegend: function(event){
-        //console.log('@todo:addLegend');
-        //console.log(event.layer);
-        //console.log(event.layer.getVisibility());
+    addLegend: function(event) {
         var str = this.div.innerHTML;
         if(this.dynamic){
             switch (event.layer.CLASS_NAME) {
@@ -378,15 +375,14 @@ OpenLayers.Control.GeocoderControl =
         var me = this;
         var clickFunc = function(e) {
             var target;
-            e.target?target=e.target:target=e.srcElement;
+            e.target ? target = e.target : target = e.srcElement;
             if(target && target.className === "closeWindow") {
                 me.hideResults();
-            }
-            else if(target && target.nodeName === "A") {
-              var x = document.getElementById(target.id).attributes['x'].value;
+            } else if(target && target.nodeName === "A") {
+                var x = document.getElementById(target.id).attributes['x'].value;
                 var y = document.getElementById(target.id).attributes['y'].value;
                 var z = document.getElementById(target.id).attributes['z'].value;
-                if(x && y){
+                if(x && y) {
                     me.map.setCenter(new OpenLayers.LonLat(x, y), z);
                 } else {
                     document.getElementById(this.resultdiv_id).innerHTML = "Fout met coordinaten";
@@ -558,7 +554,11 @@ OpenLayers.Control.GeocoderControl =
                     newId = newFt.id;
                     features.push(newFt);
                 }
-                var gazHtml = '<li><a href="#" id="result_'+newId.split('.')[2]+'" x="'+x+'" y="'+y+'" z="'+z+'">' + suggestion +'</a></li>';
+                var gazHtml = '<li><a href="#" id="result_'+ newId.replace('.','_') +
+                    '" x="' + x +
+                    '" y="' + y +
+                    '" z="' + z + '">' +
+                    suggestion +'</a></li>';
                 document.getElementById(this.geozet_id).innerHTML += gazHtml;
             } 
             if(hits === 1) {
