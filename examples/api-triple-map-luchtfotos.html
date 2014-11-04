@@ -1,99 +1,99 @@
 <!DOCTYPE html>
-<html><head>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>PDOK API - vergelijk drie soorten luchtfoto services</title>
-
     <link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
-
     <script src="../api/js/OpenLayers.js"></script>
     <script src="../api/js/proj4js-compressed.js"></script>
-	<script src="../api/js/pdok-api.js"></script>
+    <script src="../api/js/pdok-api.js"></script>
     <script>
-		OpenLayers.ImgPath="../api/img/";
+      OpenLayers.ImgPath = "../api/img/";
 
-        var configmap1 = {
-            "wmsurl":'http://geodata1.nationaalgeoregister.nl/luchtfoto/wms?format=image/jpeg',
-            "wmslayers":"luchtfoto",
-            "showlayerswitcher":"false"
-        };
-        var configmap2 = {
-            "tmsurl":'http://geodata1.nationaalgeoregister.nl/luchtfoto/tms/',
-            "tmslayer":"luchtfoto/EPSG28992",
-            "tmstype":"jpeg",
-            "div":"map2",
-            "showlayerswitcher":"false"
-        };
-        
-        var configmap3 = {
-            "div":"map3",
-            "showlayerswitcher":"false"
-        };
+      var configmap1 = {
+          "wmsurl": 'http://geodata1.nationaalgeoregister.nl/luchtfoto/wms?format=image/jpeg',
+          "wmslayers": "luchtfoto",
+          "showlayerswitcher": "false"
+      };
+      var configmap2 = {
+          "tmsurl": 'http://geodata1.nationaalgeoregister.nl/luchtfoto/tms/',
+          "tmslayer": "luchtfoto/EPSG28992",
+          "tmstype": "jpeg",
+          "div": "map2",
+          "showlayerswitcher": "false"
+      };
 
-		var matrixIds = new Array(14);
-		for (var i=0; i<14; ++i) {
-			matrixIds[i] = zeroPad(i, 2).toString();
-		}
+      var configmap3 = {
+          "div": "map3",
+          "showlayerswitcher": "false"
+      };
 
-		function zeroPad(num, places) {
-			var zero = places - num.toString().length + 1;
-			return Array(+(zero > 0 && zero)).join("0") + num;
-		}
-		
-        function init() {
-            api = new Pdok.Api(configmap1);
-            api2 = new Pdok.Api(configmap2);
-            api3 = new Pdok.Api(configmap3);
+      var matrixIds = new Array(14);
+      for (var i = 0; i < 14; ++i) {
+          matrixIds[i] = zeroPad(i, 2).toString();
+      }
 
-			// wijziging in de ene kaart wijzigt de andere kaart
-			api.map.events.register( "zoomend", api.map, map1Changed );
-			api2.map.events.register( "zoomend", api2.map, map2Changed );
-			api3.map.events.register( "zoomend", api3.map, map3Changed );
-			api.map.events.register( "moveend", api.map, map1Changed );
-			api2.map.events.register( "moveend", api2.map, map2Changed );
-			api3.map.events.register( "moveend", api3.map, map3Changed );
+      function zeroPad(num, places) {
+          var zero = places - num.toString().length + 1;
+          return Array(+(zero > 0 && zero)).join("0") + num;
+      }
 
-			var wmts = new OpenLayers.Layer.WMTS({
-				name: "Luchtfoto's",
-				url: "http://geodata1.nationaalgeoregister.nl/luchtfoto/wms/",
-				layer: "luchtfoto",
-				matrixSet: "nltilingschema",
-				matrixIds : matrixIds,
-				format: "image/jpeg",
-				style: "default",
-				isBaseLayer: false
-			});
-			api3.map.addLayers([wmts]);
-        }
-        
-		function map1Changed ( ) {
-		    api2.map.setCenter(api.map.getCenter(),api.map.getZoom());
-		    api3.map.setCenter(api.map.getCenter(),api.map.getZoom());
-		} 
-		function map2Changed ( ) {
-		   api.map.setCenter(api2.map.getCenter(),api2.map.getZoom());
-		   api3.map.setCenter(api2.map.getCenter(),api2.map.getZoom());
-		} 
-		function map3Changed ( ) {
-		   api.map.setCenter(api3.map.getCenter(),api3.map.getZoom());
-		   api2.map.setCenter(api3.map.getCenter(),api3.map.getZoom());
-		} 
+      function init() {
+          api = new Pdok.Api(configmap1);
+          api2 = new Pdok.Api(configmap2);
+          api3 = new Pdok.Api(configmap3);
+
+          // wijziging in de ene kaart wijzigt de andere kaart
+          api.map.events.register("zoomend", api.map, map1Changed);
+          api2.map.events.register("zoomend", api2.map, map2Changed);
+          api3.map.events.register("zoomend", api3.map, map3Changed);
+          api.map.events.register("moveend", api.map, map1Changed);
+          api2.map.events.register("moveend", api2.map, map2Changed);
+          api3.map.events.register("moveend", api3.map, map3Changed);
+
+          var wmts = new OpenLayers.Layer.WMTS({
+              name: "Luchtfoto's",
+              url: "http://geodata1.nationaalgeoregister.nl/luchtfoto/wms/",
+              layer: "luchtfoto",
+              matrixSet: "nltilingschema",
+              matrixIds: matrixIds,
+              format: "image/jpeg",
+              style: "default",
+              isBaseLayer: false
+          });
+          api3.map.addLayers([wmts]);
+      }
+
+      function map1Changed( ) {
+          api2.map.setCenter(api.map.getCenter(), api.map.getZoom());
+          api3.map.setCenter(api.map.getCenter(), api.map.getZoom());
+      }
+      function map2Changed( ) {
+          api.map.setCenter(api2.map.getCenter(), api2.map.getZoom());
+          api3.map.setCenter(api2.map.getCenter(), api2.map.getZoom());
+      }
+      function map3Changed( ) {
+          api.map.setCenter(api3.map.getCenter(), api3.map.getZoom());
+          api2.map.setCenter(api3.map.getCenter(), api3.map.getZoom());
+      }
     </script>
 
   </head>
-    <body onload="init()">
+  <body onload="init()">
     <div id="mapdiv" style="padding:1px;width:300px;height:300px;float:left;">
-		<div id="map" style="width:300px;height:300px;float:left;"></div>
-		<div id="maptitle1" style="position:fixed;top:320px;width:300px;height:100px;float:left;text-align:center;">Luchtfoto's WMS</div>
+      <div id="map" style="width:300px;height:300px;float:left;"></div>
+      <div id="maptitle1" style="position:fixed;top:320px;width:300px;height:100px;float:left;text-align:center;">Luchtfoto's WMS</div>
     </div>
-    <div id="mapdiv" style="padding:1px;width:300px;height:300px;float:left;">
-		<div id="map2" style="width:300px;height:300px;float:left;"></div><br/>
-		<div id="maptitle2" style="position:fixed;top:320px;left:300px;width:300px;height:100px;float:left;text-align: center">Luchtfoto's TMS</div>
+    <div id="mapdiv2" style="padding:1px;width:300px;height:300px;float:left;">
+      <div id="map2" style="width:300px;height:300px;float:left;"></div><br/>
+      <div id="maptitle2" style="position:fixed;top:320px;left:300px;width:300px;height:100px;float:left;text-align: center">Luchtfoto's TMS</div>
     </div>
-    <div id="mapdiv" style="padding:1px;width:300px;height:300px;float:left;">
-		<div id="map3" style="width:300px;height:300px;float:left;"></div><br/>
-		<div id="maptitle3" style="position:fixed;top:320px;left:600px;width:300px;height:100px;float:left;text-align: center">Luchtfoto's WMTS</div>
+    <div id="mapdiv3" style="padding:1px;width:300px;height:300px;float:left;">
+      <div id="map3" style="width:300px;height:300px;float:left;"></div><br/>
+      <div id="maptitle3" style="position:fixed;top:320px;left:600px;width:300px;height:100px;float:left;text-align: center">Luchtfoto's WMTS</div>
     </div>
   </body>
 </html>

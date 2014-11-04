@@ -1,70 +1,73 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>
-		<script src="../api/js/OpenLayers.js"></script>
-		<script src="../api/js/proj4js-compressed.js"></script>
-		<script src="../api/js/pdok-api.js"></script>
-		<link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
-		<link rel="stylesheet" href="../api/styles/api.css" type="text/css">
-		<script>var config = {
-			"zoom":6,
-			"loc":['119060','570880'],
-			"pdoklayers":'BRT,AHN1_25M,CBS_GEMEENTEN'
-		};
-		function createPDOKKaart() {var api = new Pdok.Api(config);return api;}
-		OpenLayers.ImgPath="http://kaart.pdok.nl/api/img/";
-		function BUTTON_CLICK(strLayer){
-			var extKaart,strUrl,strImageURL,szeKaartGrootte,newWindow;
-			extKaart = api.map.getExtent();
-			szeKaartGrootte = api.map.getCurrentSize();
-			if (strLayer == "AHN"){
-				strURL =  "http://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WCS&VERSION=1.0.0&REQUEST=GetCoverage&FORMAT=GEOTIFF&COVERAGE=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&CRS=EPSG:28992&RESPONSE_CRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
-				strImageURL =  "http://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/png&LAYERS=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
-			}
-			else if (strLayer == "CBS"){
-				strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
-				strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
-			}
-			else if (strLayer == "CBS_PROV_SHP"){
-				strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=shape-zip&format_options=filename:provgrens_generalisatie_2008_" + extKaart.left + '_' + extKaart.bottom + '_' + extKaart.right + '_' + extKaart.top + ".zip&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
-				strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
-			}
-			else{
-				strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
-				strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top +  "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
-			}
-			//Nieuw venster openen waarin de url geopend wordt
-			//Of een div waarin de url geopend wordt
-			newWindow = window.open("","Data extractie","location=0,status=0,menubar=0,resizable=0,width=800,height=600,scrollbars=0");
-			newWindow.document.write("<TITLE>PDOK Data Extractie Voorbeeld</TITLE>")
-			newWindow.document.write("<BODY>")
-			newWindow.document.write("<h1>PDOK Data Extractie</h1>")
-			if (strLayer == "AHN"){
-				newWindow.document.write("<a href='" + strURL + "' target='_blank'><IMG SRC='"+strImageURL+"'><BR>Klik met de rechtermuisknop op deze link en sla het resultaat van de link op als TIF-bestand</a>")
-			}
-			else{
-				newWindow.document.write("<a href='" + strURL + "' target='_blank'><IMG SRC='"+strImageURL+"'><BR>Klik hier om de data te downloaden</a>")
-			}
-			newWindow.document.write("</BODY>")
-			newWindow.document.write("</HTML>")
-			newWindow.document.close()
-			self.name="main"
-		}
-		</script>
-	</head>
-	<body>
-		<div id="Titel">Exporteer de uitsnede (AHN & CBS Gemeentegrenzen)<HR/>
-		<div id="map" style="width:300px;height:300px;float:left;"></div>
-		<div id="Export">
-		<input type="button" value="Actueel Hoogtebestand Nederland (versie 1) - GEOTIFF" onclick="BUTTON_CLICK('AHN')"><BR/>
-		<input type="button" value="CBS Gemeentegrenzen (2008) - KML" onclick="BUTTON_CLICK('CBS')"><BR/>
-		<input type="button" value="CBS Provinciegrenzen (2008) - KML" onclick="BUTTON_CLICK()"><BR/>
-		<input type="button" value="CBS Provinciegrenzen (2008) - Shapefile (ZIP)" onclick="BUTTON_CLICK('CBS_PROV_SHP')"><BR/>
-		</div>
-		<script>
-			var api = createPDOKKaart();
-		</script>
-	</body>
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script src="../api/js/OpenLayers.js"></script>
+    <script src="../api/js/proj4js-compressed.js"></script>
+    <script src="../api/js/pdok-api.js"></script>
+    <link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
+    <link rel="stylesheet" href="../api/styles/api.css" type="text/css">
+    <script>var config = {
+          "zoom": 6,
+          "loc": ['119060', '570880'],
+          "pdoklayers": 'BRT,AHN1_25M,CBS_GEMEENTEN'
+      };
+      function createPDOKKaart() {
+          var api = new Pdok.Api(config);
+          return api;
+      }
+      OpenLayers.ImgPath = "http://kaart.pdok.nl/api/img/";
+      function BUTTON_CLICK(strLayer) {
+          var extKaart, strUrl, strImageURL, szeKaartGrootte, newWindow;
+          extKaart = api.map.getExtent();
+          szeKaartGrootte = api.map.getCurrentSize();
+          if (strLayer == "AHN") {
+              strURL = "http://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WCS&VERSION=1.0.0&REQUEST=GetCoverage&FORMAT=GEOTIFF&COVERAGE=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&CRS=EPSG:28992&RESPONSE_CRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
+              strImageURL = "http://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/png&LAYERS=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
+          }
+          else if (strLayer == "CBS") {
+              strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
+              strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
+          }
+          else if (strLayer == "CBS_PROV_SHP") {
+              strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=shape-zip&format_options=filename:provgrens_generalisatie_2008_" + extKaart.left + '_' + extKaart.bottom + '_' + extKaart.right + '_' + extKaart.top + ".zip&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
+              strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+          }
+          else {
+              strURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+              strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+          }
+          //Nieuw venster openen waarin de url geopend wordt
+          //Of een div waarin de url geopend wordt
+          newWindow = window.open("", "Data extractie", "location=0,status=0,menubar=0,resizable=0,width=800,height=600,scrollbars=0");
+          newWindow.document.write("<TITLE>PDOK Data Extractie Voorbeeld</TITLE>")
+          newWindow.document.write("<BODY>")
+          newWindow.document.write("<h1>PDOK Data Extractie</h1>")
+          if (strLayer == "AHN") {
+              newWindow.document.write("<a href='" + strURL + "' target='_blank'><IMG SRC='" + strImageURL + "'><BR>Klik met de rechtermuisknop op deze link en sla het resultaat van de link op als TIF-bestand</a>")
+          }
+          else {
+              newWindow.document.write("<a href='" + strURL + "' target='_blank'><IMG SRC='" + strImageURL + "'><BR>Klik hier om de data te downloaden</a>")
+          }
+          newWindow.document.write("</BODY>")
+          newWindow.document.write("</HTML>")
+          newWindow.document.close()
+          self.name = "main"
+      }
+    </script>
+  </head>
+  <body>
+    <div id="Titel">Exporteer de uitsnede (AHN & CBS Gemeentegrenzen)<hr/>
+      <div id="map" style="width:300px;height:300px;float:left;"></div>
+      <div id="Export">
+        <input type="button" value="Actueel Hoogtebestand Nederland (versie 1) - GEOTIFF" onclick="BUTTON_CLICK('AHN')"><BR/>
+        <input type="button" value="CBS Gemeentegrenzen (2008) - KML" onclick="BUTTON_CLICK('CBS')"><BR/>
+        <input type="button" value="CBS Provinciegrenzen (2008) - KML" onclick="BUTTON_CLICK()"><BR/>
+        <input type="button" value="CBS Provinciegrenzen (2008) - Shapefile (ZIP)" onclick="BUTTON_CLICK('CBS_PROV_SHP')"><BR/>
+      </div>
+    </div>
+    <script>
+      var api = createPDOKKaart();
+    </script>
+  </body>
 </html>
