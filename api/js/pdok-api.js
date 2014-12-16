@@ -209,8 +209,8 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
  */
 
 /**
- * Class: OpenLayers.Control.GeocoderControl
- * The GeocoderControl control adds pdok search functionality. 
+ * Class: OpenLayers.Control.LegendControl
+ * The LegendControl control adds pdok search functionality. 
  *
  * Inherits from:
  *  - <OpenLayers.Control>
@@ -667,11 +667,15 @@ Pdok.createBaseUri = function(){
     return base;
 };
 
-Pdok.ApiUrl =  Pdok.createBaseUri();
+// ontwikkelen
+Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
 
+// produktie
+//Pdok.ApiUrl = "http://www.rijkswaterstaat.nl/pdokkaart/api";
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url=";  // current pdokloket proxy
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy/?url=";  // current test proxy
+
+
 OpenLayers.ImgPath = Pdok.ApiUrl + '/img/';
 OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
@@ -2771,22 +2775,23 @@ Pdok.Api.prototype.createHtml = function(){
     // styles and layers definitions
     var stylesAndLayers = '';
     if (this.markersdef) {
-        stylesAndLayers += '<script type="text/javascript" src="'+this.markersdef+'"></script>';
+        stylesAndLayers += '<script type="text/javascript" src="' + this.markersdef + '"></script>';
     }
     if (this.layersdef) {
-        stylesAndLayers += '<script type="text/javascript" src="'+this.layersdef+'"></script>';
+        stylesAndLayers += '<script type="text/javascript" src="' + this.layersdef + '"></script>';
     }
     var uniqueid = OpenLayers.Util.createUniqueID("");
-    var conf = JSON.stringify(this.getConfig(uniqueid));
-    var head = '<script type="text/javascript" src="'+base+'api/js/OpenLayers.js"></script>'+
-    '<script type="text/javascript" src="'+base+'api/js/proj4js-compressed.js"></script>'+
-    '<script type="text/javascript" src="'+base+'api/js/pdok-api.js"></script>'+ stylesAndLayers;
-    head += '<script type="text/javascript">'+
+    var confobj = this.getConfig(uniqueid);
+    var conf = JSON.stringify(confobj);
+    var head = '<script type="text/javascript" src="' + base + 'api/js/OpenLayers.js"></script>' +
+    '<script type="text/javascript" src="' + base + 'api/js/proj4js-compressed.js"></script>' +
+    '<script type="text/javascript" src="' + base + 'api/js/pdok-api.js"></script>'+ stylesAndLayers;
+    head += '<script type="text/javascript">' +
     //add the css ref automagically, it cannot be put inside the body!
-    'Pdok.addcss("'+base+'api/styles/default/style.css");'+
-    'Pdok.addcss("'+base+'api/styles/api.css");'+        
-    'OpenLayers.ImgPath="'+base+'/img/";'+
-    'var config_' + uniqueid + '='+conf+';'+
+    'Pdok.addcss("' + base + 'api/styles/default/style.css");' +
+    'Pdok.addcss("' + base + 'api/styles/api.css");' +
+    'OpenLayers.ImgPath="' + Pdok.ApiUrl+ '/img/";' +
+    'var config_' + uniqueid + '=' + conf + ';' +
     'var api_' + uniqueid + '; Pdok.ready( function(){ new Pdok.Api(config_' + uniqueid + ', function(retval){api_' + uniqueid + ' = retval;});});' +
     '</script>';
     var activeClass = $('#map').attr('class');
@@ -2833,7 +2838,9 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         var baselayers = [];
         for (layer in this.map.layers){
             // only layers with a pdokId, and NOT our this.featuresLayer
-            if (this.map.layers[layer].name !== this.FEATURESLAYER_NAME && this.map.layers[layer].name !== this.LOCATIONSLAYER_NAME){
+            if (!(this.map.layers[layer].name == this.FEATURESLAYER_NAME 
+                || this.map.layers[layer].name == this.LOCATIONSLAYER_NAME
+                || this.map.layers[layer].name.indexOf("OpenLayers.Handler.")>=0)){  // if there is still an editor active, we have such a layer
                 if (!this.map.layers[layer].isBaseLayer) {
                      layers.push({"id": this.map.layers[layer].pdokid, visible: this.map.layers[layer].visibility});
                 } else {
