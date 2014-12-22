@@ -1531,6 +1531,14 @@ Pdok.Api.prototype.createOlMap = function() {
             */
         }
     );
+    
+    
+    // Add invisible mousePosition control to keep track of mouseposition for making popups appear where mouse has been
+    // clicked, instead of at center of feature. Not needed if normal mousePosition control is available.
+    if (!this.showmouseposition) {
+        olMap.addControl(new OpenLayers.Control.MousePosition({div: 'someDivNameThatHardlyEverWillExist:)'}));
+    }
+    
     olMap.addControl(this.selectControl);
     if ( (this.showPopup.toString().toLowerCase() === "false") || (this.showpopup.toString().toLowerCase() === "false") ){
         this.showPopup = false;
@@ -1579,8 +1587,11 @@ Pdok.Api.prototype.onPopupFeatureSelect = function(evt) {
     if (!content || content.length === 0) {
         content = '&nbsp;';
     }
+    var popupLoc = this.map.getLonLatFromPixel(this.map.getControlsByClass("OpenLayers.Control.MousePosition")[0].lastXy);
+    //alert(popupLoc);
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
-                feature.geometry.getBounds().getCenterLonLat(),
+                //feature.geometry.getBounds().getCenterLonLat(),
+                popupLoc,
                 new OpenLayers.Size(100,100),
                 content,
                 null, true, function(evt) {
