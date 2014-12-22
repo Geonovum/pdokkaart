@@ -671,11 +671,12 @@ Pdok.createBaseUri = function(){
 
 // ontwikkelen
 //Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
+//Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
 
 // produktie
-//Pdok.ApiUrl = "http://www.rijkswaterstaat.nl/pdokkaart/api";
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
+Pdok.ApiUrl = "http://www.rijkswaterstaat.nl/pdokkaart/api";
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
 
 
 OpenLayers.ImgPath = Pdok.ApiUrl + '/img/';
