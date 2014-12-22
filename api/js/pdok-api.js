@@ -1,3 +1,5 @@
+
+
 OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
     /**
      * APIProperty: kmlns
@@ -668,8 +670,8 @@ Pdok.createBaseUri = function(){
 };
 
 // ontwikkelen
-Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
+//Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
 
 // produktie
 //Pdok.ApiUrl = "http://www.rijkswaterstaat.nl/pdokkaart/api";
@@ -723,23 +725,7 @@ Pdok.addcss = function(css){
         document.getElementsByTagName("head")[0].appendChild(fileref);
     }
  };
-Pdok.addJs = function(js, callback){
-    var script  = document.createElement("script");
-    script.setAttribute("type", "text/javascript");
-    script.setAttribute("src", js);
-    if (script.addEventListener) {
-        script.addEventListener( "load", callback, false );
-    } else if (script.attachEvent) { //< IE8
-        script.onreadystatechange = function () {
-            if (this.readyState == 'complete') {
-                callback();
-            };
-        }
-        script.attachEvent( "onload", callback);
-    }
-    //script.addEventListener("load", callback);
-    document.getElementsByTagName("body")[0].appendChild(script);
- };
+
 
 /**
  * Creates an instance of the Pdok Api based on an optional config object <a href="#constructor">more ...</a>
@@ -765,22 +751,6 @@ Pdok.addJs = function(js, callback){
 Pdok.Api = function(config, callback) {
     if (config) {
         OpenLayers.Util.extend(Pdok, config);
-    }
-
-    // it is possible to override the markerdefinitions with a request parameter markersdef
-    if(OpenLayers.Util.getParameters()['markersdef']){
-        Pdok.markersdef = OpenLayers.Util.getParameters()['markersdef'];
-    } else if (!Pdok.markersdef) {
-        // we use the markersdef from the api
-        Pdok.markersdef = Pdok.ApiUrl+'/js/pdok-markers.js';
-    }
-    
-    // it is possible to override the layerdefinitions with a request parameter layersdef
-    if(OpenLayers.Util.getParameters()['layersdef']){
-        Pdok.layersdef = OpenLayers.Util.getParameters()['layersdef'];
-    } else if (!Pdok.layersdef) {
-        // we use the layersdef from the api
-        Pdok.layersdef = Pdok.ApiUrl + '/js/pdok-layers.js';
     }
 
     /**
@@ -1147,25 +1117,38 @@ Pdok.Api = function(config, callback) {
      * @type int
      */ 
     this.locationtoolzmax = Pdok.locationtoolzmax || '30';
-    
-    // inject a script include for the layersdef, being either an external or the api included one
-    var that = this;
-    Pdok.addJs(this.layersdef, function(){
-        Pdok.addJs(that.markersdef, function(){
-            that.defaultLayers = OpenLayers.Util.applyDefaults(
-            that.defaultPdokLayers, that.defaultLayers);
-            that.createStyles();
-            that.createOlMap();
 
-            if (callback && typeof(callback) === "function") {  
-                callback(that);  
-            }
-        });
-    });
+    this.defaultLayers = OpenLayers.Util.applyDefaults(
+        this.defaultPdokLayers, this.defaultLayers);
+    this.createStyles();
+    this.createOlMap();
 };
+
+
 
 // Array will contain OpenLayers.Style Objects
 Pdok.Api.prototype.defaultStyles=[];
+
+// it is possible to override the markerdefinitions with a request parameter markersdef
+if(OpenLayers.Util.getParameters()['markersdef']){
+    Pdok.markersdef = OpenLayers.Util.getParameters()['markersdef'];
+} else if (!Pdok.markersdef) {
+    // we use the markersdef from the api
+    Pdok.markersdef = Pdok.ApiUrl+'/js/pdok-markers.js';
+}
+// inject a script include for the markersdef, being either an external or the api included one
+document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
+
+// it is possible to override the layerdefinitions with a request parameter layersdef
+if(OpenLayers.Util.getParameters()['layersdef']){
+    Pdok.layersdef = OpenLayers.Util.getParameters()['layersdef'];
+} else if (!Pdok.layersdef) {
+    // we use the layersdef from the api
+    Pdok.layersdef = Pdok.ApiUrl + '/js/pdok-layers.js';
+}
+// inject a script include for the layersdef, being either an external or the api included one
+document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script>');
+
 
 /**
  * Object which holds a Map of an shortname/id to'layer'-configuration objects. All layer objects holds hold an layertype, and other(OpenLayers-option) properties specific for that type of (OpenLayers)-layer.
@@ -1289,12 +1272,12 @@ Pdok.Api.prototype.activateGeocoder = function(geocoder){
             element.id = sdiv;
             document.getElementById(mapdiv).appendChild(element);
         }
-        var that = this;
-        Pdok.addJs(Pdok.ApiUrl+'/js/geozetlib.js', function(){
-            that.map.addControl(new OpenLayers.Control.GeocoderControl({
+
+        // inject a script include for the geozetlib.js
+        this.map.addControl(new OpenLayers.Control.GeocoderControl({
                 div: document.getElementById(sdiv)
-            }));
-        });
+        }));
+
     }    
 };
 
@@ -2200,6 +2183,10 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     }
     for (l in arrLayerNames) {
         var layer = arrLayerNames[l];
+        if ($.isNumeric(l)) {
+            // besides an array of layernames it is possible to pass an object like: {"id":"layername","visible":true}
+            layer = arrLayerNames[l];
+        }
         if (this.defaultLayers[layer.id]){
             var lyr;
             if (this.defaultLayers[layer.id].layertype.toUpperCase() === 'WMS'){
