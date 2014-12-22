@@ -714,7 +714,14 @@ OpenLayers.Lang.setCode('nl');
 
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
 
-Pdok.ready = (function (f){/in/.test(document.readyState) ? setTimeout('Pdok.ready('+f+')',9) : f()});
+Pdok.ready = (function (f){
+    if (/in/.test(document.readyState)) {
+        setTimeout('Pdok.ready('+f+')',9);
+    }
+    else {
+        f()
+    }
+});
 
 //http://stackoverflow.com/questions/3922139/add-css-to-head-with-javascript
 Pdok.addcss = function(css){
@@ -2184,7 +2191,7 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     }
     for (l in arrLayerNames) {
         var layer = arrLayerNames[l];
-        if ($.isNumeric(l)) {
+        if (isNaN(l)) {
             // besides an array of layernames it is possible to pass an object like: {"id":"layername","visible":true}
             layer = arrLayerNames[l];
         }
@@ -2888,11 +2895,11 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         }
         // markersdef
         if(this.markersdef) {
-            config.markersdef = Pdok.absoluteUri(this.markersdef);
+            config.markersdef = this.markersdef;
         }
         // layersdef
         if(this.layersdef) {
-            config.layersdef = Pdok.absoluteUri(this.layersdef);
+            config.layersdef = this.layersdef;
         }
 
         var tempLayer = this.featuresLayer.clone();
