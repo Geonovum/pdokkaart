@@ -18,6 +18,8 @@
         <script type="text/javascript" src="api/js/proj4js-compressed.js"></script>
         <script type="text/javascript" src="api/js/pdok-api.js"></script>
         <script type="text/javascript" src="js/wizard.js"></script>
+        <script type="text/javascript" src="api/js/pdok-markers.js"></script>
+        <script type="text/javascript" src="api/js/pdok-layers.js"></script>
         <script type="text/javascript">
             if (document.all && !document.querySelector) { // IE7 or lower
                 alert('U gebruikt Internet Explorer 7.\nDeze browser ondersteunt niet alle functionaliteit van de PDOK Wizard.\nWij raden U aan een nieuwere versie van Internet Explorer of een andere browser zoals Google Chrome, Mozilla FireFox of Apple Safari te gebruiken.');
@@ -39,33 +41,34 @@
             };
             var api;
             Pdok.ready(function() {
-                new Pdok.Api(config, function(retval) {
-                    //console.log(retval);
-                    api = retval;
-                    $('input:radio[name=mapsize]')[2].checked = true;
 
-                    // popups and selectionControl of Api interfears with modifyFeatureControl
-                    // we disable them while we find out how to handle this
-                    // TODO handle this ...
-                    //api.disablePopups();
-                    //api.selectControl.deactivate();
+                api = new Pdok.Api(config);
+                //console.log(retval);
+                //api = retval;
+                $('input:radio[name=mapsize]')[2].checked = true;
 
-                    // for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
-                    mapPDOKKaart = api.getMapObject();
-                    markers = api.featuresLayer;
-                    createOnClickEvents();
-                    createSearchLogic();
-                    createStyleSelector();
-                    createEditAttributes();
-                    createPdokLayers();
-                    createLocationToolLogic();
-                    createMarkersLogic();
-                    $('#step3 input:text').val('');
-                    autoPopulateInputs();
+                // popups and selectionControl of Api interfears with modifyFeatureControl
+                // we disable them while we find out how to handle this
+                // TODO handle this ...
+                //api.disablePopups();
+                //api.selectControl.deactivate();
 
-                    // not sure if we want this here
-                    api.map.events.register("moveend", api, createApiLinksAndCode);
-                });
+                // for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
+                mapPDOKKaart = api.getMapObject();
+                markers = api.featuresLayer;
+                createOnClickEvents();
+                createSearchLogic();
+                createStyleSelector();
+                createEditAttributes();
+                createPdokLayers();
+                createLocationToolLogic();
+                createMarkersLogic();
+                $('#step3 input:text').val('');
+                autoPopulateInputs();
+
+                // not sure if we want this here
+                api.map.events.register("moveend", api, createApiLinksAndCode);
+
             });
         </script>
     </head>

@@ -1,3 +1,5 @@
+
+
 OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
     /**
      * APIProperty: kmlns
@@ -209,8 +211,8 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
  */
 
 /**
- * Class: OpenLayers.Control.GeocoderControl
- * The GeocoderControl control adds pdok search functionality. 
+ * Class: OpenLayers.Control.LegendControl
+ * The LegendControl control adds pdok search functionality. 
  *
  * Inherits from:
  *  - <OpenLayers.Control>
@@ -667,11 +669,16 @@ Pdok.createBaseUri = function(){
     return base;
 };
 
-Pdok.ApiUrl =  Pdok.createBaseUri();
+// ontwikkelen
+//Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
+//Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
 
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url=";  // current pdokloket proxy
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy/?url=";  // current test proxy
+// produktie
+Pdok.ApiUrl = "http://www.rijkswaterstaat.nl/pdokkaart/api";
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
+
+
 OpenLayers.ImgPath = Pdok.ApiUrl + '/img/';
 OpenLayers.Feature.Vector.style['default'].strokeColor = 'red';
 OpenLayers.Feature.Vector.style['default'].fillColor = 'red';
@@ -707,7 +714,14 @@ OpenLayers.Lang.setCode('nl');
 
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
 
-Pdok.ready = (function (f){/in/.test(document.readyState) ? setTimeout('Pdok.ready('+f+')',9) : f()});
+Pdok.ready = (function (f){
+    if (/in/.test(document.readyState)) {
+        setTimeout('Pdok.ready('+f+')',9);
+    }
+    else {
+        f()
+    }
+});
 
 //http://stackoverflow.com/questions/3922139/add-css-to-head-with-javascript
 Pdok.addcss = function(css){
@@ -719,23 +733,7 @@ Pdok.addcss = function(css){
         document.getElementsByTagName("head")[0].appendChild(fileref);
     }
  };
-Pdok.addJs = function(js, callback){
-    var script  = document.createElement("script");
-    script.setAttribute("type", "text/javascript");
-    script.setAttribute("src", js);
-    if (script.addEventListener) {
-        script.addEventListener( "load", callback, false );
-    } else if (script.attachEvent) { //< IE8
-        script.onreadystatechange = function () {
-            if (this.readyState == 'complete') {
-                callback();
-            };
-        }
-        script.attachEvent( "onload", callback);
-    }
-    //script.addEventListener("load", callback);
-    document.getElementsByTagName("body")[0].appendChild(script);
- };
+
 
 /**
  * Creates an instance of the Pdok Api based on an optional config object <a href="#constructor">more ...</a>
@@ -761,22 +759,6 @@ Pdok.addJs = function(js, callback){
 Pdok.Api = function(config, callback) {
     if (config) {
         OpenLayers.Util.extend(Pdok, config);
-    }
-
-    // it is possible to override the markerdefinitions with a request parameter markersdef
-    if(OpenLayers.Util.getParameters()['markersdef']){
-        Pdok.markersdef = OpenLayers.Util.getParameters()['markersdef'];
-    } else if (!Pdok.markersdef) {
-        // we use the markersdef from the api
-        Pdok.markersdef = Pdok.ApiUrl+'/js/pdok-markers.js';
-    }
-    
-    // it is possible to override the layerdefinitions with a request parameter layersdef
-    if(OpenLayers.Util.getParameters()['layersdef']){
-        Pdok.layersdef = OpenLayers.Util.getParameters()['layersdef'];
-    } else if (!Pdok.layersdef) {
-        // we use the layersdef from the api
-        Pdok.layersdef = Pdok.ApiUrl + '/js/pdok-layers.js';
     }
 
     /**
@@ -1143,25 +1125,38 @@ Pdok.Api = function(config, callback) {
      * @type int
      */ 
     this.locationtoolzmax = Pdok.locationtoolzmax || '30';
-    
-    // inject a script include for the layersdef, being either an external or the api included one
-    var that = this;
-    Pdok.addJs(this.layersdef, function(){
-        Pdok.addJs(that.markersdef, function(){
-            that.defaultLayers = OpenLayers.Util.applyDefaults(
-            that.defaultPdokLayers, that.defaultLayers);
-            that.createStyles();
-            that.createOlMap();
 
-            if (callback && typeof(callback) === "function") {  
-                callback(that);  
-            }
-        });
-    });
+    this.defaultLayers = OpenLayers.Util.applyDefaults(
+        this.defaultPdokLayers, this.defaultLayers);
+    this.createStyles();
+    this.createOlMap();
 };
+
+
 
 // Array will contain OpenLayers.Style Objects
 Pdok.Api.prototype.defaultStyles=[];
+
+// it is possible to override the markerdefinitions with a request parameter markersdef
+if(OpenLayers.Util.getParameters()['markersdef']){
+    Pdok.markersdef = OpenLayers.Util.getParameters()['markersdef'];
+} else if (!Pdok.markersdef) {
+    // we use the markersdef from the api
+    Pdok.markersdef = Pdok.ApiUrl+'/js/pdok-markers.js';
+}
+// inject a script include for the markersdef, being either an external or the api included one
+document.write('<script type="text/javascript" src="'+Pdok.markersdef+'"></script>');
+
+// it is possible to override the layerdefinitions with a request parameter layersdef
+if(OpenLayers.Util.getParameters()['layersdef']){
+    Pdok.layersdef = OpenLayers.Util.getParameters()['layersdef'];
+} else if (!Pdok.layersdef) {
+    // we use the layersdef from the api
+    Pdok.layersdef = Pdok.ApiUrl + '/js/pdok-layers.js';
+}
+// inject a script include for the layersdef, being either an external or the api included one
+document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script>');
+
 
 /**
  * Object which holds a Map of an shortname/id to'layer'-configuration objects. All layer objects holds hold an layertype, and other(OpenLayers-option) properties specific for that type of (OpenLayers)-layer.
@@ -1285,12 +1280,12 @@ Pdok.Api.prototype.activateGeocoder = function(geocoder){
             element.id = sdiv;
             document.getElementById(mapdiv).appendChild(element);
         }
-        var that = this;
-        Pdok.addJs(Pdok.ApiUrl+'/js/geozetlib.js', function(){
-            that.map.addControl(new OpenLayers.Control.GeocoderControl({
+
+        // inject a script include for the geozetlib.js
+        this.map.addControl(new OpenLayers.Control.GeocoderControl({
                 div: document.getElementById(sdiv)
-            }));
-        });
+        }));
+
     }    
 };
 
@@ -1527,6 +1522,14 @@ Pdok.Api.prototype.createOlMap = function() {
             */
         }
     );
+    
+    
+    // Add invisible mousePosition control to keep track of mouseposition for making popups appear where mouse has been
+    // clicked, instead of at center of feature. Not needed if normal mousePosition control is available.
+    if (!this.showmouseposition) {
+        olMap.addControl(new OpenLayers.Control.MousePosition({div: 'someDivNameThatHardlyEverWillExist:)'}));
+    }
+    
     olMap.addControl(this.selectControl);
     if ( (this.showPopup.toString().toLowerCase() === "false") || (this.showpopup.toString().toLowerCase() === "false") ){
         this.showPopup = false;
@@ -1575,8 +1578,11 @@ Pdok.Api.prototype.onPopupFeatureSelect = function(evt) {
     if (!content || content.length === 0) {
         content = '&nbsp;';
     }
+    var popupLoc = this.map.getLonLatFromPixel(this.map.getControlsByClass("OpenLayers.Control.MousePosition")[0].lastXy);
+    //alert(popupLoc);
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
-                feature.geometry.getBounds().getCenterLonLat(),
+                //feature.geometry.getBounds().getCenterLonLat(),
+                popupLoc,
                 new OpenLayers.Size(100,100),
                 content,
                 null, true, function(evt) {
@@ -2185,6 +2191,10 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     }
     for (l in arrLayerNames) {
         var layer = arrLayerNames[l];
+        if (isNaN(l)) {
+            // besides an array of layernames it is possible to pass an object like: {"id":"layername","visible":true}
+            layer = arrLayerNames[l];
+        }
         if (this.defaultLayers[layer.id]){
             var lyr;
             if (this.defaultLayers[layer.id].layertype.toUpperCase() === 'WMS'){
@@ -2771,22 +2781,23 @@ Pdok.Api.prototype.createHtml = function(){
     // styles and layers definitions
     var stylesAndLayers = '';
     if (this.markersdef) {
-        stylesAndLayers += '<script type="text/javascript" src="'+this.markersdef+'"></script>';
+        stylesAndLayers += '<script type="text/javascript" src="' + this.markersdef + '"></script>';
     }
     if (this.layersdef) {
-        stylesAndLayers += '<script type="text/javascript" src="'+this.layersdef+'"></script>';
+        stylesAndLayers += '<script type="text/javascript" src="' + this.layersdef + '"></script>';
     }
     var uniqueid = OpenLayers.Util.createUniqueID("");
-    var conf = JSON.stringify(this.getConfig(uniqueid));
-    var head = '<script type="text/javascript" src="'+base+'api/js/OpenLayers.js"></script>'+
-    '<script type="text/javascript" src="'+base+'api/js/proj4js-compressed.js"></script>'+
-    '<script type="text/javascript" src="'+base+'api/js/pdok-api.js"></script>'+ stylesAndLayers;
-    head += '<script type="text/javascript">'+
+    var confobj = this.getConfig(uniqueid);
+    var conf = JSON.stringify(confobj);
+    var head = '<script type="text/javascript" src="' + base + 'api/js/OpenLayers.js"></script>' +
+    '<script type="text/javascript" src="' + base + 'api/js/proj4js-compressed.js"></script>' +
+    '<script type="text/javascript" src="' + base + 'api/js/pdok-api.js"></script>'+ stylesAndLayers;
+    head += '<script type="text/javascript">' +
     //add the css ref automagically, it cannot be put inside the body!
-    'Pdok.addcss("'+base+'api/styles/default/style.css");'+
-    'Pdok.addcss("'+base+'api/styles/api.css");'+        
-    'OpenLayers.ImgPath="'+base+'/img/";'+
-    'var config_' + uniqueid + '='+conf+';'+
+    'Pdok.addcss("' + base + 'api/styles/default/style.css");' +
+    'Pdok.addcss("' + base + 'api/styles/api.css");' +
+    'OpenLayers.ImgPath="' + Pdok.ApiUrl+ '/img/";' +
+    'var config_' + uniqueid + '=' + conf + ';' +
     'var api_' + uniqueid + '; Pdok.ready( function(){ new Pdok.Api(config_' + uniqueid + ', function(retval){api_' + uniqueid + ' = retval;});});' +
     '</script>';
     var activeClass = $('#map').attr('class');
@@ -2833,7 +2844,9 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         var baselayers = [];
         for (layer in this.map.layers){
             // only layers with a pdokId, and NOT our this.featuresLayer
-            if (this.map.layers[layer].name !== this.FEATURESLAYER_NAME && this.map.layers[layer].name !== this.LOCATIONSLAYER_NAME){
+            if (!(this.map.layers[layer].name == this.FEATURESLAYER_NAME 
+                || this.map.layers[layer].name == this.LOCATIONSLAYER_NAME
+                || this.map.layers[layer].name.indexOf("OpenLayers.Handler.")>=0)){  // if there is still an editor active, we have such a layer
                 if (!this.map.layers[layer].isBaseLayer) {
                      layers.push({"id": this.map.layers[layer].pdokid, visible: this.map.layers[layer].visibility});
                 } else {
@@ -2882,11 +2895,11 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         }
         // markersdef
         if(this.markersdef) {
-            config.markersdef = Pdok.absoluteUri(this.markersdef);
+            config.markersdef = this.markersdef;
         }
         // layersdef
         if(this.layersdef) {
-            config.layersdef = Pdok.absoluteUri(this.layersdef);
+            config.layersdef = this.layersdef;
         }
 
         var tempLayer = this.featuresLayer.clone();
