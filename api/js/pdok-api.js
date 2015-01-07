@@ -2797,7 +2797,7 @@ Pdok.Api.prototype.createHtml = function(){
     //add the css ref automagically, it cannot be put inside the body!
     'Pdok.addcss("' + base + 'api/styles/default/style.css");' +
     'Pdok.addcss("' + base + 'api/styles/api.css");' +
-    'OpenLayers.ImgPath="' + Pdok.ApiUrl+ '/img/";' +
+    //'OpenLayers.ImgPath="' + Pdok.ApiUrl+ '/img/";' +
     'var config_' + uniqueid + '=' + conf + ';' +
     'var api_' + uniqueid + '; Pdok.ready( function(){ new Pdok.Api(config_' + uniqueid + ', function(retval){api_' + uniqueid + ' = retval;});});' +
     '</script>';
