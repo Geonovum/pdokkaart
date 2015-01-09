@@ -23,6 +23,7 @@
 #map {
     position:absolute;
     left: 390px;
+    width: 550px; /* as current api width is always 100% */
   /*  border: 1px solid #a0a0a0; */
 }
 
