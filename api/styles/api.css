@@ -9,16 +9,20 @@ body {
     height: 100%;
     margin: 0px;
 }
+img {
+    max-width: none;  /* fix for responsive lay outs, these often set this to 100%, which breaks OpenLayers! */
+}
+/* because RWS uses these maps in responsive layouts, let's make all widht's 100% */
 div.olMap.small {
-   width: 300px;
+   width: 100%;
    height: 250px;
 }
 div.olMap.medium {
-   width: 400px;
+   width: 100%;
    height: 350px;
 }
 div.olMap.big {
-   width: 550px;
+   width: 100%;;
    height: 440px;
 }
 div.olMap.fullscreen {

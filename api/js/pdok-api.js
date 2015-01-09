@@ -672,6 +672,7 @@ Pdok.createBaseUri = function(){
 // ontwikkelen
 //Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
 //Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
+
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
 
 // produktie
@@ -2782,27 +2783,28 @@ Pdok.Api.prototype.createHtml = function(){
     // styles and layers definitions
     var stylesAndLayers = '';
     if (this.markersdef) {
-        stylesAndLayers += '<script type="text/javascript" src="' + this.markersdef + '"></script>';
+        stylesAndLayers += '<script type="text/javascript" src="' + this.markersdef + '"></script>\n';
     }
     if (this.layersdef) {
-        stylesAndLayers += '<script type="text/javascript" src="' + this.layersdef + '"></script>';
+        stylesAndLayers += '<script type="text/javascript" src="' + this.layersdef + '"></script>\n';
     }
     var uniqueid = OpenLayers.Util.createUniqueID("");
     var confobj = this.getConfig(uniqueid);
     var conf = JSON.stringify(confobj);
-    var head = '<script type="text/javascript" src="' + base + 'api/js/OpenLayers.js"></script>' +
-    '<script type="text/javascript" src="' + base + 'api/js/proj4js-compressed.js"></script>' +
-    '<script type="text/javascript" src="' + base + 'api/js/pdok-api.js"></script>'+ stylesAndLayers;
+    var head = '<script type="text/javascript" src="' + base + 'api/js/OpenLayers.js"></script>\n' +
+    '<script type="text/javascript" src="' + base + 'api/js/proj4js-compressed.js"></script>\n' +
+    '<script type="text/javascript" src="' + base + 'api/js/pdok-api.js"></script>\n'+ stylesAndLayers;
     head += '<script type="text/javascript">' +
     //add the css ref automagically, it cannot be put inside the body!
-    'Pdok.addcss("' + base + 'api/styles/default/style.css");' +
-    'Pdok.addcss("' + base + 'api/styles/api.css");' +
+    'Pdok.addcss("' + base + 'api/styles/default/style.css");\n' +
+    'Pdok.addcss("' + base + 'api/styles/api.css");\n' +
     //'OpenLayers.ImgPath="' + Pdok.ApiUrl+ '/img/";' +
-    'var config_' + uniqueid + '=' + conf + ';' +
-    'var api_' + uniqueid + '; Pdok.ready( function(){ new Pdok.Api(config_' + uniqueid + ', function(retval){api_' + uniqueid + ' = retval;});});' +
-    '</script>';
+    'var config_' + uniqueid + '=' + conf + ';\n' +
+    'var api_' + uniqueid + ';\n' +
+    'Pdok.ready( \nfunction(){ api_' + uniqueid + ' = new Pdok.Api(config_' + uniqueid + '); } );\n' +
+    '</script>\n';
     var activeClass = $('#map').attr('class');
-    head += '<div id="map_' + uniqueid + '" class="' + activeClass + '"></div>';
+    head += '<div id="map_' + uniqueid + '" class="' + activeClass + '"></div>\n';
     return head;
 };
 
