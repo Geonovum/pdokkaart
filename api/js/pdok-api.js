@@ -678,7 +678,8 @@ Pdok.createBaseUri = function(){
 // produktie
 //Pdok.ApiUrl = "http://www.rijkswaterstaat.nl/pdokkaart/api"; // target url
 Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
 
 OpenLayers.ImgPath = Pdok.ApiUrl + '/img/';
