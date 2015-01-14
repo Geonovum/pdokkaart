@@ -1234,28 +1234,27 @@ Pdok.Api.prototype.defaultPdokLayers = {
  * @returns {void}
  */
 Pdok.Api.prototype.activateLegend = function(legend){
-   var mapdiv;
-    if(typeof this.map.div === 'string'){
-        mapdiv = this.map.div;
-    } else {
-        mapdiv = this.map.div.id;
-    }
-    if (legend){
+    var mapdiv;
+    if (typeof legend != 'undefined'){
+        if (typeof this.map.div === 'string'){
+            mapdiv = this.map.div;
+        } else {
+            mapdiv = this.map.div.id;
+        }
         var sdiv = 'legend';
         if(legend.div){
             sdiv = legend.div;
         }
-        //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
+        //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div en voeg de legendControl toe aan de kaart
         if(!document.getElementById(sdiv)){
-            //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
             var element = document.createElement("div");
             element.id = sdiv;
             document.getElementById(mapdiv).appendChild(element);
-        }
-        this.map.addControl(new OpenLayers.Control.LegendControl({
-            div: document.getElementById(sdiv),
-            map: this.map
-        }));
+            this.map.addControl(new OpenLayers.Control.LegendControl({
+                div: document.getElementById(sdiv),
+                map: this.map
+            })
+        )};
     }    
 };
 
