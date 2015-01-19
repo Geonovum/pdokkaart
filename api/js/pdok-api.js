@@ -669,17 +669,17 @@ Pdok.createBaseUri = function(){
     return base;
 };
 
-// ontwikkelen
-//Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
-//Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
-
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
-
 // produktie
 //Pdok.ApiUrl = "http://www.rijkswaterstaat.nl/pdokkaart/api"; // target url
 Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
 OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
+
+// ontwikkelen (put in comments before checking in !!)
+//Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
+//Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
+//Pdok.ApiUrl = "http://192.168.178.26/pdokkaart/api";
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
 
 
 OpenLayers.ImgPath = Pdok.ApiUrl + '/img/';
@@ -2086,6 +2086,7 @@ Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
     this.wmsinfoformat = wmsinfoformat;
     var lyrWMS = this.createWMSLayer({
             url: wmsurl,
+            name: wmslayers, // RWS prefers to have layernames as names instead of default 'WMS-layer'
             layers: wmslayers,
             transparent: true,
             wmsinfoformat: wmsinfoformat
