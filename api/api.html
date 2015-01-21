@@ -99,9 +99,7 @@
             }
             var api_vialink;
             Pdok.ready(function() {
-                new Pdok.Api(config_vialink, function(retval) {
-                    api_vialink = retval;
-                });
+                api_vialink = new Pdok.Api(config_vialink);
             });
         </script>
         <div id="map_vialink" class="fullscreen olMap"></div>
