@@ -32,12 +32,12 @@
                 "zoom": 3,
                 "loc": "170000, 470000",
                 "baselayers": [{"id": "BRT", "visible": true}],
-                "shownavigation": true,
                 "showlayerswitcher": true,
                 "showzoom": true,
+                "shownavigation": true,
                 "showscaleline": true,
-                "showmouseposition": true,
-                "geocoder": {div: 'search'}
+                "showmouseposition": true
+                //,"geocoder": {}
             };
             var api;
             Pdok.ready(function() {
@@ -68,7 +68,7 @@
 
                 // not sure if we want this here
                 api.map.events.register("moveend", api, createApiLinksAndCode);
-
+                setGuiToApiState(api);
             });
         </script>
     </head>

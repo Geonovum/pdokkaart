@@ -663,3 +663,21 @@ function reload_wizard_based_on_url(){
         return;
     }
 }
+function setCheckbox(id, value) {
+    // unchecks if value is false or undefined, otherwise checks
+    if (value) {
+        $(id).prop("checked", true)
+    } else {
+        $(id).prop("checked", false)
+    }
+}
+function setGuiToApiState(api) {
+    var config = api.getConfig();
+    setCheckbox('#maplayerswitcher', config.showlayerswitcher);
+    setCheckbox('#mapzoom', config.showzoom);
+    setCheckbox('#mapnavigation', config.shownavigation);
+    setCheckbox('#mapscaleline', config.showscaleline);
+    setCheckbox('#mapmouseposition', config.showmouseposition);
+    setCheckbox('#mapsearch', config.geocoder);
+    setCheckbox('#maplegend', config.legend);   
+}
