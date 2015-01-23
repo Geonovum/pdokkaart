@@ -2011,6 +2011,25 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
 };
 
 /**
+ * Api method to find one (! last one is returned) WMTS layer in the map, based on two wmtsurl and wmtslayer
+ *
+ * @param {String} wmtsurl a valid URL string
+ * @param {String} wmtslayer a valid layername of the above url service
+ * @return {Object} Layer if found or NULL if nothing found
+ */
+Pdok.Api.prototype.findWMTS = function(wmtsurl, wmtslayer) {
+    var url_layers = this.map.getLayersBy('url', this.wmtsurl);
+    var layer = null;
+    for (var i = 0;i<url_layers.length;i++) {
+        if (url_layers[i].CLASS_NAME == "OpenLayers.Layer.WMTS" &&
+            url_layers[i].layer == this.wmtslayer) {
+            layer = url_layers[i];
+        }
+    }
+    return layer;
+}
+
+/**
  * Method to create a WMTS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMTS method, but you can also use this way.
  * @param {Object} layerConfigObj a layer configuration object as described in markersdef
  * @param {type} id
@@ -2095,6 +2114,24 @@ Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
     return true;
 };
 
+/**
+ * Api method to find one (! last one is returned) WMS layer in the map, based on two wmsurl and wmslayers
+ *
+ * @param {String} wmsurl a valid URL string
+ * @param {String} wmslayers a valid layername of the above url service
+ * @return {Object} Layer if found or NULL if nothing found
+ */
+Pdok.Api.prototype.findWMS = function(wmsurl, wmslayers) {
+    var url_layers = this.map.getLayersBy('url', this.wmsurl);
+    var layer = null;
+    for (var i = 0;i<url_layers.length;i++) {
+        if (url_layers[i].CLASS_NAME == "OpenLayers.Layer.WMS" &&
+            url_layers[i].params.LAYERS == this.wmslayers) {
+            layer = url_layers[i];
+        }
+    }
+    return layer;
+}
 
 /**
  * Method to create a WMS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMS method, but you can also use this way.
