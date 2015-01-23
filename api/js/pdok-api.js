@@ -349,7 +349,6 @@ OpenLayers.Control.GeocoderControl =
      * @param options - {Object} Options for control.
      */
     initialize: function(options) {
-        console.log('init geocoder', this.div);
         OpenLayers.Control.prototype.initialize.apply(this, arguments);
         // we create the div ourselves, to be able to put it outside the map-div
         // if we let OpenLayers create it, and let it be part of the map-div
@@ -672,7 +671,7 @@ OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + 
 // ontwikkelen (put in comments before checking in !!)
 //Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
 //Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
-//Pdok.ApiUrl = "http://192.168.178.26/pdokkaart/api";
+//Pdok.ApiUrl = "http://192.168.178.23/pdokkaart/api";
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
 
 
@@ -1295,10 +1294,8 @@ Pdok.Api.prototype.activateGeocoder = function(geocoder){
         }
         var newGeocoder = new OpenLayers.Control.GeocoderControl({
             div: document.getElementById(sdiv)
-            //,map: this.map
         });
         this.map.addControl(newGeocoder);
-        //newGeocoder.activate();
     }    
 };
 
@@ -1311,32 +1308,32 @@ Pdok.Api.prototype.activateGeocoder = function(geocoder){
  */
 Pdok.Api.prototype.createOlMap = function() {
     var controls = [
-            new OpenLayers.Control.Attribution()
-            
+        new OpenLayers.Control.Attribution()
+
     ];
 
-    if (this.showmouseposition && 
-        (this.showmouseposition === true || this.showmouseposition.toLowerCase() === "true")){
+    if (this.showmouseposition &&
+        (this.showmouseposition === true || this.showmouseposition.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.MousePosition({
             separator: ', ',
             numDigits: 0,
             emptyString: 'Plaats de cursor op de kaart voor co&ouml;rdinaten'
         }));
     }
-    if (this.showscaleline && 
-        (this.showscaleline === true || this.showscaleline.toLowerCase() === "true")){
-        controls.push(new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''}));
+    if (this.showscaleline &&
+        (this.showscaleline === true || this.showscaleline.toLowerCase() === "true")) {
+        controls.push(new OpenLayers.Control.ScaleLine({bottomOutUnits: '', bottomInUnits: ''}));
     }
     if (this.shownavigation &&
-        (this.shownavigation === true || this.shownavigation.toLowerCase() === "true")){
+        (this.shownavigation === true || this.shownavigation.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.Navigation());
     }
-    if (this.showzoom && 
-        (this.showzoom === true || this.showzoom.toLowerCase() === "true")){
+    if (this.showzoom &&
+        (this.showzoom === true || this.showzoom.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.Zoom());
     }
-    if (this.showlayerswitcher && 
-        (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")){
+    if (this.showlayerswitcher &&
+        (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.LayerSwitcher());
     }
     var olMap = new OpenLayers.Map ({
@@ -1350,8 +1347,11 @@ Pdok.Api.prototype.createOlMap = function() {
         div: this.div
     });
     this.map = olMap;
-    this.activateGeocoder(this.geocoder, this.div);
     this.activateLegend(this.legend, this.div);
+    // geocoder is an object property with a div like {div:'bla'}
+    if (this.geocoder) {
+        this.activateGeocoder(this.geocoder)
+    }
     function showBRT(){
         var layers = olMap.getLayersByName("BRT Achtergrondkaart");
         for(var layerIndex = 0; layerIndex < layers.length; layerIndex++) {

@@ -111,6 +111,17 @@ li {
 	top: 0px;
 }
 
+#searchthingonthemap {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    left: 45px;
+    padding: 10px;
+    position: absolute;
+    top: 5px;
+    z-index: 2000;
+}
+
 #geocodeerresult {
     display: none;
     background-color: #F6D4B2;
