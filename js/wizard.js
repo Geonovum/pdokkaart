@@ -476,6 +476,21 @@ function addWmsLayer() {
     if ( ($("#wmsUrl").val().slice(0,4) === "bijv") || ($("#wmsLayer").val().slice(0,4) === "bijv") ){
         alert("U heeft geen URL naar, of een laagnaam van een WMS opgegeven");
     } else{
+        // wizard is just able to handle ONE wmsurl (because of the use of query params)
+        // if you need more: create a map via code
+        if (undefined != api.wmsurl){
+            var layer = api.findWMS(api.wmsurl, api.wmslayers);
+            var msg = "Er is al een extra WMS laag gedefinieerd voor deze kaart\nEr kan in de wizard slechts 1 extra laag worden toegevoegd. \nWilt u de oude keuze overschrijven?"
+            var overwrite = confirm(msg);
+            if (overwrite) {
+                if (layer != null) {
+                    api.map.removeLayer(layer);
+                }
+            }
+            else{
+                return;
+            }
+        }
         api.addWMS($("#wmsUrl").val(), $("#wmsLayer").val(), $("#wmsInfoFormat").val());
     }
 }
@@ -487,6 +502,21 @@ function addWmtsLayer() {
         
         alert("U heeft geen URL naar, een laagnaam of een projectie van een WMTS opgegeven");
     } else {
+        // wizard is just able to handle ONE wmtsurl (because of the use of query params)
+        // if you need more: create a map via code
+        if (undefined != api.wmtsurl){
+            var layer = api.findWMTS(api.wmsurl, api.wmslayers);
+            var msg = "Er is al een extra WMTS laag gedefinieerd voor deze kaart\nEr kan in de wizard slechts 1 extra laag worden toegevoegd. \nWilt u de oude keuze overschrijven?"
+            var overwrite = confirm(msg);
+            if (overwrite) {
+                if (layer != null) {
+                    api.map.removeLayer(layer);
+                }
+            }
+            else{
+                return;
+            }
+        }
         api.addWMTS($("#WmtsUrl").val(), $("#WmtsLayer").val(), $("#WmtsMatrix").val());
     }
 } 
@@ -632,4 +662,22 @@ function reload_wizard_based_on_url(){
         alert('Fout bij het ophalen van de url\n(Let op: een externe url moet met \'http://\' beginnen) ');
         return;
     }
+}
+function setCheckbox(id, value) {
+    // unchecks if value is false or undefined, otherwise checks
+    if (value) {
+        $(id).prop("checked", true)
+    } else {
+        $(id).prop("checked", false)
+    }
+}
+function setGuiToApiState(api) {
+    var config = api.getConfig();
+    setCheckbox('#maplayerswitcher', config.showlayerswitcher);
+    setCheckbox('#mapzoom', config.showzoom);
+    setCheckbox('#mapnavigation', config.shownavigation);
+    setCheckbox('#mapscaleline', config.showscaleline);
+    setCheckbox('#mapmouseposition', config.showmouseposition);
+    setCheckbox('#mapsearch', config.geocoder);
+    setCheckbox('#maplegend', config.legend);   
 }

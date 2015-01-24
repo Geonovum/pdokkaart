@@ -17,6 +17,7 @@
         <script type="text/javascript" src="api/js/OpenLayers.js"></script>
         <script type="text/javascript" src="api/js/proj4js-compressed.js"></script>
         <script type="text/javascript" src="api/js/pdok-api.js"></script>
+        <script type="text/javascript" src="api/js/geozetlib.js"></script>
         <script type="text/javascript" src="js/wizard.js"></script>
         <script type="text/javascript" src="api/js/pdok-markers.js"></script>
         <script type="text/javascript" src="api/js/pdok-layers.js"></script>
@@ -32,19 +33,16 @@
                 "zoom": 3,
                 "loc": "170000, 470000",
                 "baselayers": [{"id": "BRT", "visible": true}],
-                "shownavigation": true,
                 "showlayerswitcher": true,
                 "showzoom": true,
+                "shownavigation": true,
                 "showscaleline": true,
-                "showmouseposition": true,
-                "geocoder": {div: 'search'}
+                "showmouseposition": true
             };
             var api;
             Pdok.ready(function() {
 
                 api = new Pdok.Api(config);
-                //console.log(retval);
-                //api = retval;
                 $('input:radio[name=mapsize]')[2].checked = true;
 
                 // popups and selectionControl of Api interfears with modifyFeatureControl
@@ -65,10 +63,12 @@
                 createMarkersLogic();
                 $('#step3 input:text').val('');
                 autoPopulateInputs();
+                // show geocoder/search in the wizard
+                api.activateGeocoder({div:'wizardsearch'});
 
                 // not sure if we want this here
                 api.map.events.register("moveend", api, createApiLinksAndCode);
-
+                setGuiToApiState(api);
             });
         </script>
     </head>
@@ -107,7 +107,7 @@
                 <div class="content_wrapper2">
                     <div id="content">
                         <div id="map" class="olMap big"></div>
-                        <div id="search" class="stepwrapper active"></div>
+                        <div id="wizardsearch" class="stepwrapper active"></div>
                         <!-- Step 1 - Your map -->
                         <div id="step1" class="stepwrapper active">
                             <h2>

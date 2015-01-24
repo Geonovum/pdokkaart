@@ -220,7 +220,6 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
 OpenLayers.Control.LegendControl = 
   OpenLayers.Class(OpenLayers.Control, {
     dynamic: true,
-    html: '<h2>Legenda</h2>',
     /**
      * Constructor:
      * 
@@ -232,6 +231,7 @@ OpenLayers.Control.LegendControl =
         // we create the div ourselves, to be able to put it outside the map-div
         // if we let OpenLayers create it, and let it be part of the map-div
         // then OpenLayers steals the cursor from our input
+        console.log('init legend', this.div);
         if (!this.div){
             this.div = document.createElement("div");
             this.div.className = OpenLayers.Util.createUniqueID("lg_");
@@ -263,8 +263,22 @@ OpenLayers.Control.LegendControl =
      * Method: destroy
      * Destroy control.
      */
-    destroy: function() {
+    destroy: function() {    
         OpenLayers.Control.prototype.destroy.apply(this, arguments);
+    },
+    
+    activate: function() {
+        OpenLayers.Control.prototype.activate.apply(this, arguments);
+        this.map.events.register('addlayer', this, this.draw);
+        this.map.events.register('removelayer', this, this.draw);
+        this.map.events.register('changelayer', this, this.draw);
+    },
+    
+    deactivate: function() {
+        OpenLayers.Control.prototype.deactivate.apply(this, arguments);
+        this.map.events.unregister('addlayer', this, this.draw);
+        this.map.events.unregister('removelayer', this, this.draw);
+        this.map.events.unregister('changelayer', this, this.draw); 
     },
     
     /**
@@ -275,44 +289,23 @@ OpenLayers.Control.LegendControl =
      * {DOMElement} A reference to the DIV DOMElement containing the control
      */    
     draw: function() {
-        OpenLayers.Control.prototype.draw.apply(this, arguments);
-        var str = this.div.innerHTML;
-        if(this.html){
-            str += this.html;
+        OpenLayers.Control.prototype.draw.apply(this, arguments)
+        if(this.dynamic==false){
+            return;
         }
-        this.div.innerHTML = str;
-        this.map.events.register('addlayer', this, this.addLegend);
-        return this.div;
-    },
-    addLegend: function(event) {
-        var str = this.div.innerHTML;
-        if(this.dynamic){
-            switch (event.layer.CLASS_NAME) {
-                case "OpenLayers.Layer.WMS":
-                var legend = event.layer.url + 
+        var html = '<h2>Legenda</h2>';
+        // for every WMS add a P + IMG tag to legendgraphic image
+        for (var i = 0;i< this.map.layers.length;i++){
+            var layer = this.map.layers[i];
+            if (layer.CLASS_NAME == "OpenLayers.Layer.WMS" && layer.visibility) {
+                var legend = layer.url + 
                     "?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2F" +
-                    "vnd.ogc.se_xml&FORMAT=image%2Fpng&LAYER=" + 
-                event.layer.params["LAYERS"];
-                    str += '<h4>' + event.layer.name + '</h4><p><img src=' + legend + ' alt="' + event.layer.name + '" title="' + event.layer.name + '" /></p>';
-                    break;
-                case "OpenLayers.Layer.WMTS":
-                    break;
-            } 
-//            str += "<div><h3>" + event.layer.name + "</h3><p>"
-//            + event.layer.CLASS_NAME;
-//            if (event.layer.getVisibility()){
-//                str += ': shown';
-//            } else {
-//                str += ': hidden';
-//            }
-//            if (event.layer.isBaseLayer){
-//                str += ': base';
-//            } else {
-//                str += ': overlay';
-//            }
-//            str += '</p></div>';
+                    "vnd.ogc.se_xml&FORMAT=image%2Fpng&LAYER=" + layer.params["LAYERS"];
+                html += '<h4>' + layer.name + '</h4><p><img src=' + legend + ' alt="' + layer.name + '" title="' + layer.name + '" /></p>';
+            }           
         }
-        this.div.innerHTML = str;
+        this.div.innerHTML = html;    
+        return this.div;
     },
     hideResults: function() {
         document.getElementById(this.div.id).style.display = 'none';
@@ -678,7 +671,7 @@ OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + 
 // ontwikkelen (put in comments before checking in !!)
 //Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
 //Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
-//Pdok.ApiUrl = "http://192.168.178.26/pdokkaart/api";
+//Pdok.ApiUrl = "http://192.168.178.23/pdokkaart/api";
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
 
 
@@ -1245,17 +1238,27 @@ Pdok.Api.prototype.activateLegend = function(legend){
         if(legend.div){
             sdiv = legend.div;
         }
-        //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div en voeg de legendControl toe aan de kaart
+        //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
         if(!document.getElementById(sdiv)){
             var element = document.createElement("div");
             element.id = sdiv;
             document.getElementById(mapdiv).appendChild(element);
-            this.map.addControl(new OpenLayers.Control.LegendControl({
-                div: document.getElementById(sdiv),
-                map: this.map
-            })
-        )};
-    }    
+        }
+        //
+        var currentLegends = this.map.getControlsByClass('OpenLayers.Control.LegendControl');
+        // check if there is already a control for this div
+        for (var i = 0; i < currentLegends.length; i++) {
+            if (currentLegends[i].div.id == sdiv) {
+                return; // NO new control
+            }
+        }
+        var newLegend = new OpenLayers.Control.LegendControl({
+            div: document.getElementById(sdiv),
+            map: this.map
+        });
+        this.map.addControl(newLegend);
+        newLegend.activate();
+    }
 };
 
 /**
@@ -1264,30 +1267,35 @@ Pdok.Api.prototype.activateLegend = function(legend){
  * @returns {void}
  */
 Pdok.Api.prototype.activateGeocoder = function(geocoder){
-   var mapdiv;
-    if(typeof this.map.div === 'string'){
-        mapdiv = this.map.div;
-    } else {
-        mapdiv = this.map.div.id;
-    }
-    if (geocoder){
+    var mapdiv;
+    if (typeof geocoder != 'undefined'){
+        if (typeof this.map.div === 'string'){
+            mapdiv = this.map.div;
+        } else {
+            mapdiv = this.map.div.id;
+        }
         var sdiv = 'search';
         if(geocoder.div){
             sdiv = geocoder.div;
         }
         //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
         if(!document.getElementById(sdiv)){
-            //Controleer of de div bestaat. Indien dit niet zo is, hang deze dan aan de map div
             var element = document.createElement("div");
             element.id = sdiv;
             document.getElementById(mapdiv).appendChild(element);
         }
-
-        // inject a script include for the geozetlib.js
-        this.map.addControl(new OpenLayers.Control.GeocoderControl({
-                div: document.getElementById(sdiv)
-        }));
-
+        //
+        var currentGeocoders = this.map.getControlsByClass('OpenLayers.Control.GeocoderControl');
+        // check if there is already a control for this div
+        for (var i = 0; i < currentGeocoders.length; i++) {
+            if (currentGeocoders[i].div.id == sdiv) {
+                return; // NO new control
+            }
+        }
+        var newGeocoder = new OpenLayers.Control.GeocoderControl({
+            div: document.getElementById(sdiv)
+        });
+        this.map.addControl(newGeocoder);
     }    
 };
 
@@ -1300,32 +1308,32 @@ Pdok.Api.prototype.activateGeocoder = function(geocoder){
  */
 Pdok.Api.prototype.createOlMap = function() {
     var controls = [
-            new OpenLayers.Control.Attribution()
-            
+        new OpenLayers.Control.Attribution()
+
     ];
 
-    if (this.showmouseposition && 
-        (this.showmouseposition === true || this.showmouseposition.toLowerCase() === "true")){
+    if (this.showmouseposition &&
+        (this.showmouseposition === true || this.showmouseposition.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.MousePosition({
             separator: ', ',
             numDigits: 0,
             emptyString: 'Plaats de cursor op de kaart voor co&ouml;rdinaten'
         }));
     }
-    if (this.showscaleline && 
-        (this.showscaleline === true || this.showscaleline.toLowerCase() === "true")){
-        controls.push(new OpenLayers.Control.ScaleLine({bottomOutUnits:'',bottomInUnits:''}));
+    if (this.showscaleline &&
+        (this.showscaleline === true || this.showscaleline.toLowerCase() === "true")) {
+        controls.push(new OpenLayers.Control.ScaleLine({bottomOutUnits: '', bottomInUnits: ''}));
     }
     if (this.shownavigation &&
-        (this.shownavigation === true || this.shownavigation.toLowerCase() === "true")){
+        (this.shownavigation === true || this.shownavigation.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.Navigation());
     }
-    if (this.showzoom && 
-        (this.showzoom === true || this.showzoom.toLowerCase() === "true")){
+    if (this.showzoom &&
+        (this.showzoom === true || this.showzoom.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.Zoom());
     }
-    if (this.showlayerswitcher && 
-        (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")){
+    if (this.showlayerswitcher &&
+        (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.LayerSwitcher());
     }
     var olMap = new OpenLayers.Map ({
@@ -1339,8 +1347,11 @@ Pdok.Api.prototype.createOlMap = function() {
         div: this.div
     });
     this.map = olMap;
-    this.activateGeocoder(this.geocoder, this.div);
     this.activateLegend(this.legend, this.div);
+    // geocoder is an object property with a div like {div:'bla'}
+    if (this.geocoder) {
+        this.activateGeocoder(this.geocoder)
+    }
     function showBRT(){
         var layers = olMap.getLayersByName("BRT Achtergrondkaart");
         for(var layerIndex = 0; layerIndex < layers.length; layerIndex++) {
@@ -2011,6 +2022,25 @@ Pdok.Api.prototype.addWMTS = function(wmtsurl, wmtslayer, wmtsmatrixset, wmtssty
 };
 
 /**
+ * Api method to find one (! last one is returned) WMTS layer in the map, based on two wmtsurl and wmtslayer
+ *
+ * @param {String} wmtsurl a valid URL string
+ * @param {String} wmtslayer a valid layername of the above url service
+ * @return {Object} Layer if found or NULL if nothing found
+ */
+Pdok.Api.prototype.findWMTS = function(wmtsurl, wmtslayer) {
+    var url_layers = this.map.getLayersBy('url', this.wmtsurl);
+    var layer = null;
+    for (var i = 0;i<url_layers.length;i++) {
+        if (url_layers[i].CLASS_NAME == "OpenLayers.Layer.WMTS" &&
+            url_layers[i].layer == this.wmtslayer) {
+            layer = url_layers[i];
+        }
+    }
+    return layer;
+}
+
+/**
  * Method to create a WMTS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMTS method, but you can also use this way.
  * @param {Object} layerConfigObj a layer configuration object as described in markersdef
  * @param {type} id
@@ -2095,6 +2125,24 @@ Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
     return true;
 };
 
+/**
+ * Api method to find one (! last one is returned) WMS layer in the map, based on two wmsurl and wmslayers
+ *
+ * @param {String} wmsurl a valid URL string
+ * @param {String} wmslayers a valid layername of the above url service
+ * @return {Object} Layer if found or NULL if nothing found
+ */
+Pdok.Api.prototype.findWMS = function(wmsurl, wmslayers) {
+    var url_layers = this.map.getLayersBy('url', this.wmsurl);
+    var layer = null;
+    for (var i = 0;i<url_layers.length;i++) {
+        if (url_layers[i].CLASS_NAME == "OpenLayers.Layer.WMS" &&
+            url_layers[i].params.LAYERS == this.wmslayers) {
+            layer = url_layers[i];
+        }
+    }
+    return layer;
+}
 
 /**
  * Method to create a WMS layer and add it to the map based on a layer configuration object. Normally you'll use the addWMS method, but you can also use this way.
