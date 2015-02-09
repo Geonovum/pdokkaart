@@ -247,7 +247,6 @@ OpenLayers.Control.LegendControl =
         // we create the div ourselves, to be able to put it outside the map-div
         // if we let OpenLayers create it, and let it be part of the map-div
         // then OpenLayers steals the cursor from our input
-        console.log('init legend', this.div);
         if (!this.div){
             this.div = document.createElement("div");
             this.div.className = OpenLayers.Util.createUniqueID("lg_");
