@@ -11,6 +11,18 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+Inleiding
+=========
+Deze documentatie bevat de technische beschrijving van de PDOK kaart API inclusief voorbeelden.
+De Github wiki wordt gebruikt voor de meer functionele beschrijving van PDOK kaartAPI.
+
+API - documentatie
+==================
+
+Code voorbeelden
+================
+
+
 
 
 Indices and tables
