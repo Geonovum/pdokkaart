@@ -534,6 +534,10 @@ Pdok.Api = function(config, callback) {
         this.defaultPdokLayers, this.defaultLayers);
     this.createStyles();
     this.createOlMap();
+
+    if (callback) {
+        callback(this);
+    }
 };
 
 
