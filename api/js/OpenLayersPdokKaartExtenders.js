@@ -304,7 +304,7 @@ OpenLayers.Control.LegendControl =
      * {DOMElement} A reference to the DIV DOMElement containing the control
      */    
     draw: function() {
-        OpenLayers.Control.prototype.draw.apply(this, arguments)
+        OpenLayers.Control.prototype.draw.apply(this, arguments);
         if(this.dynamic==false){
             return;
         }

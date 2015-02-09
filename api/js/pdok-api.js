@@ -759,7 +759,7 @@ Pdok.Api.prototype.createOlMap = function() {
         div: this.div
     });
     this.map = olMap;
-    this.activateLegend(this.legend, this.div);
+
     // geocoder is an object property with a div like {div:'bla'}
     if (this.geocoder) {
         this.activateGeocoder(this.geocoder)
@@ -982,6 +982,9 @@ Pdok.Api.prototype.createOlMap = function() {
             this.locationtoolyfield
             );
     }
+
+    this.activateLegend(this.legend, this.div);
+
     return olMap;
 };
 
