@@ -2431,7 +2431,7 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
  * @public
  * @returns {String} KML including style information
  */
-Pdok.Api.prototype.createKML = function(){
+Pdok.Api.prototype.createKML = function(uri_encoded){
     var features = this.featuresLayer.clone().features;
     if(features){
         var kmlformat = new OpenLayers.Format.KMLv2_2({
@@ -2442,7 +2442,13 @@ Pdok.Api.prototype.createKML = function(){
             externalProjection: new OpenLayers.Projection("EPSG:4326"),
             extractStyles: this.kmlstyles
         });
-        return encodeURIComponent('<?xml version="1.0" encoding="UTF-8"?>'+kmlformat.write(features));
+        if(uri_encoded) {
+            return encodeURIComponent('<?xml version="1.0" encoding="UTF-8"?>' + kmlformat.write(features));
+        }
+        else{
+            return '<?xml version="1.0" encoding="UTF-8"?>' + kmlformat.write(features);
+
+        }
     } else {
         return;
     }
