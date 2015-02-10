@@ -311,22 +311,22 @@ de marker in de kaart mag tekenen.
 --------------
 
 .. |PDOK| image:: img/PDOK-logo.png
-.. |knop zoom in/uit| image:: ./img/help/image1.png
-.. |zoekscherm| image:: ./img/help/image2.png
-.. |keuzelijst| image:: ./img/help/image3.png
-.. |image4.png| image:: ./img/help/image4.png
-.. |image5.png| image:: ./img/help/image5.png
-.. |image6.png| image:: ./img/help/image6.png
-.. |image7.png| image:: ./img/help/image7.png
-.. |image8.png| image:: ./img/help/image8.png
-.. |image9.png| image:: ./img/help/image9.png
-.. |image10.png| image:: ./img/help/image10.png
-.. |image11.png| image:: ./img/help/image11.png
-.. |image12.png| image:: ./img/help/image12.png
-.. |image13.png| image:: ./img/help/image13.png
-.. |image14.png| image:: ./img/help/image14.png
-.. |image15.png| image:: ./img/help/image15.png
-.. |image16.png| image:: ./img/help/image16.png
-.. |image17.png| image:: ./img/help/image17.png
-.. |image18.png| image:: ./img/help/image18.png
-.. |image19.png| image:: ./img/help/image19.png
+.. |knop zoom in/uit| image:: ./images/help/image1.png
+.. |zoekscherm| image:: ./images/help/image2.png
+.. |keuzelijst| image:: ./images/help/image3.png
+.. |image4.png| image:: ./images/help/image4.png
+.. |image5.png| image:: ./images/help/image5.png
+.. |image6.png| image:: ./images/help/image6.png
+.. |image7.png| image:: ./images/help/image7.png
+.. |image8.png| image:: ./images/help/image8.png
+.. |image9.png| image:: ./images/help/image9.png
+.. |image10.png| image:: ./images/help/image10.png
+.. |image11.png| image:: ./images/help/image11.png
+.. |image12.png| image:: ./images/help/image12.png
+.. |image13.png| image:: ./images/help/image13.png
+.. |image14.png| image:: ./images/help/image14.png
+.. |image15.png| image:: ./images/help/image15.png
+.. |image16.png| image:: ./images/help/image16.png
+.. |image17.png| image:: ./images/help/image17.png
+.. |image18.png| image:: ./images/help/image18.png
+.. |image19.png| image:: ./images/help/image19.png
