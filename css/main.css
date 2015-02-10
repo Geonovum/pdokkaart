@@ -6,18 +6,14 @@
     margin-right: 0;
     margin-top: 26px;
 }
-
+.row input {
+    width: 20px;
+}
 #topbar {
     height: 100px;
     background-image: url(../img/PDOK-logo.png);
 	background-repeat:no-repeat;
 	background-position:400px; 
-}
-
-#container {
-    width: 940px;
-    height: 100%;
-	margin: 0px auto;
 }
 
 #content {
@@ -26,8 +22,8 @@
 
 #map {
     position:absolute;
-    width: 550px;
     left: 390px;
+    width: 550px; /* as current api width is always 100% */
   /*  border: 1px solid #a0a0a0; */
 }
 
@@ -59,10 +55,16 @@
 
 .filterbutton{
     background-color: rgb(225,112,0);
-    color : #FFFFFF;
+    text-decoration: none !important;
+    color : #fff !important;
     font-size: 1.1em;
     margin-top: 5px;
     margin-right: 5px;
+    border: 1px solid #000; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin: 0; 
+    padding: 0.4em 1em;
 }
 
 li {
@@ -107,6 +109,17 @@ li {
 	position: absolute;
 	left: 350px;
 	top: 0px;
+}
+
+#searchthingonthemap {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    left: 45px;
+    padding: 10px;
+    position: absolute;
+    top: 5px;
+    z-index: 2000;
 }
 
 #geocodeerresult {
@@ -275,21 +288,12 @@ button {
     margin: 0; 
     padding: 0.4em 1em;
 }
-button, x:-moz-any-link { 
-    padding: 0.2em 1em; 
-} /* Firefox only */
-#searchForm {
-    display:block;
-}
+
 #kml_url_service, #addviamap, #addviaurltxt, #step3, #step4, #wktfield, #urlfield, #xfield, #yfield, #locationtoolzooms {
     display:none
 }
-#maplayerswitcher {
-    width:20px;
-}
-
-.lefting{
-    width:15px;
+.autopopulate{
+    
 }
 
 #minzoom select, #maxzoom select{

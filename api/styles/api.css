@@ -9,8 +9,24 @@ body {
     height: 100%;
     margin: 0px;
 }
-#map {
-    width: 100%;
+img {
+    max-width: none;  /* fix for responsive lay outs, these often set this to 100%, which breaks OpenLayers! */
+}
+/* because RWS uses these maps in responsive layouts, let's make all widht's 100% */
+div.olMap.small {
+   width: 100%;
+   height: 250px;
+}
+div.olMap.medium {
+   width: 100%;
+   height: 350px;
+}
+div.olMap.big {
+   width: 100%;;
+   height: 440px;
+}
+div.olMap.fullscreen {
+     width: 100%;
     height: 100%;
 }
 .olControlAttribution {
@@ -72,7 +88,6 @@ div.olControlZoom {
     position: absolute;
     top: 8px;
     left: 8px;
-    #273397
     background: rgb(39, 51, 151);
     opacity: 0.8;
     filter: alpha(opacity=80);
@@ -121,36 +136,6 @@ div.olControlMousePosition {
     }
 }
 
-/* search form */
-/* class for autopopulate fields */
-#pdoksearchinput.default {
-    color: #7F8181;
-}
-#pdoksearchinput{
-    border: 1px solid #000;
-    margin-right:5px;
-    width: 250px;
-    padding-left: 0.3em;
-}
-#pdoksearchbutton{
-    background-color: #50309F;
-    border: 1px solid #000;
-    color : #FFFFFF;
-}
-.pdokGeocoderDiv {
-    position: absolute;
-    z-index: 1200;
-    right:5px;
-    top:5px;
-}
-#pdoksearchresults{
-    display:none;
-    padding: 10px;
-    background-color:white;
-    border: 1px solid black;
-    font-size: 12px;
-}
-
 ul.geozetSuggestions{
     padding:0;
 }
@@ -164,9 +149,7 @@ ul.geozetSuggestions{
     list-style-type: none;
     width: 95%;
 }
-.geozetSuggestions li:hover {
-    border-bottom: solid 1px black;
-}
+
 .closeWindow {
 	float: right;
 	margin: 2px;
