@@ -1,0 +1,3 @@
+point	title	description	icon
+450000,140000	Example	Star-3 marker	./markertypes/star-3.png
+460000,160000	my purple title	my purple description<br/>is great.	http://www.openlayers.org/api/img/zoom-world-mini.png

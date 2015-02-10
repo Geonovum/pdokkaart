@@ -1,0 +1,5 @@
+lat	lon	title	description	styletype
+450000	140000	Ministerie ELenI	Economische Zaken Landbouw en Innovatie	mt9
+460000	160000	Kadaster	Kadaster	mt11
+470000	170000	Rijkswaterstaat	Infrastructuur en Milieu	mt10
+480000	180000	Ministerie IenM	Infrastructuur en Milieu	mt8

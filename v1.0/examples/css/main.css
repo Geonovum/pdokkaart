@@ -1,0 +1,108 @@
+#content{
+	padding:20px;
+}
+.header .branding img {
+	float: left;
+	margin-bottom: 15px;
+	margin-left: 24px;
+	margin-right: 0;
+	margin-top: 26px;
+}
+html, body {
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	line-height: 1.25em;
+	font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
+}
+.ex_container{
+	border-bottom: 1px solid #cccccc;
+	background-color: #F6D4B2;
+}
+.ex_container a {
+	text-decoration: none;
+	padding: 5px 1em;
+	display: block;
+}
+.ex_container a:hover {
+	background-color: #eeeeee;
+}
+.ex_container_simple_advanced{
+	border-bottom: 1px solid #cccccc;
+	background-color: #E17000;
+}
+.ex_container_simple_advanced a {
+	text-decoration: none;
+	padding: 5px 1em;
+	display: block;
+}
+.ex_container_simple_advanced a:hover {
+	background-color: #eeeeee;
+}
+.ex_title{
+	display: inline;
+	font-weight: bold;
+	color: #333;
+}
+.ex_tags{
+	display: inline;
+	font-size: smaller;
+	font-style: italic;
+	color: #333;
+}
+.ex_filename {
+	font-weight: normal;
+	font-size: 0.8em;
+	color: #000;
+}
+.ex_description{
+	color: #222;
+	padding: 3px;
+}
+.ex_classes{
+	font-size: .7em;
+	color: grey;
+	display: none;
+}
+#exwin {
+	position: absolute;
+	top: 0;
+	left: 30%;
+	width: 70%;
+	height: 400px;
+	border: none;
+	border-left: 1px solid #cccccc;
+	margin: 0;
+}
+#toc {
+	position: absolute;
+	top: 0;
+	left: 0%;
+	width: 30%;
+	height: 400px;
+	border: none;
+	border-left: 1px solid #cccccc;
+	margin: 0;
+}
+#examples {
+	border-top: 1px solid #cccccc;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	bottom: 0px;
+	overflow: auto;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#examples ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#examples ul li {
+	display: block;
+	margin: 0;
+	padding: 0;
+}

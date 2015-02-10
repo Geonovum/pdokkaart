@@ -1,0 +1,391 @@
+
+.header .branding img {
+    float: left;
+    margin-bottom: 15px;
+    margin-left: 24px;
+    margin-right: 0;
+    margin-top: 26px;
+}
+
+#topbar {
+    height: 100px;
+    background-image: url(../img/PDOK-logo.png);
+	background-repeat:no-repeat;
+	background-position:400px; 
+}
+
+#container {
+    width: 940px;
+    height: 100%;
+	margin: 0px auto;
+}
+
+#content {
+    min-height: 600px;
+}
+
+#map {
+    position:absolute;
+    width: 550px;
+    left: 390px;
+  /*  border: 1px solid #a0a0a0; */
+}
+
+#leftcolumn{
+	margin:0px;
+	padding:0px;
+    width: 360px;
+    height: 100%;
+	left: 0px;
+    position: absolute;
+    /*left: 1200px;*/
+   /* z-index: 2000;*/
+}
+
+#searchResults{
+	height: 350px;
+    overflow-y: auto;
+}
+
+#leftcolumn ul {
+	padding-left: 3px;
+	list-style-type: none;
+}
+
+#leftcolumn li {
+    font-size: 0.9em;
+    padding: 10px 4px 5px 32px;
+}
+
+.filterbutton{
+    background-color: rgb(225,112,0);
+    color : #FFFFFF;
+    font-size: 1.1em;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+li {
+    margin: 0;
+    list-style-type: none;
+}
+
+.olPopup
+{
+	font-size:8pt;
+	border: 1px solid black;
+	box-shadow: 5px 5px 8px grey;
+	border-radius: 0 10px 10px 10px;
+}
+
+.olPopup h4 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.popInWindow {
+	/* background-color: #303030; */
+	background-color: #FFFFFF;
+	/* color: white; */
+	border: 1px solid #909090;	
+	padding: 5px;
+	overflow-y: auto;
+}
+
+.popInWindow h4 {
+	margin: 0px;
+	margin-top: 8px;
+}
+
+#drawlocationhelp {
+	display: none;
+	width: 350px;
+	position: absolute;
+	left: 350px;
+	top: 0px;
+}
+
+#geocodeerresult {
+    display: none;
+    background-color: #fff;
+    border:1px solid black;
+    max-height: 450px;
+    width: 324px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    overflow-y: auto;
+    z-index: 2000;
+    padding:24px;
+}
+#geocodeerresult li{
+    /*height: 20px;*/
+	background: url(../img/link-hover.gif) no-repeat right bottom;
+}
+#geocodeerresult a{
+    color: black;
+    margin: 5px;
+    text-decoration: none;
+}
+#readfile {
+	display: none;
+	width: 350px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	height: 430px;
+	overflow-y: auto;
+	z-index: 2000;
+}
+
+#cancelDrawingPoint {
+	display: none;
+}
+
+#addviamap2 {
+    margin-bottom: 12px;
+    margin-top: 5px;
+}
+
+#createlink {
+	display: none;
+    /* position: absolute; was de oorspronkelijke */
+    position: fixed;
+	left: 350px;
+	top: 0px;
+	width: 420px;
+	height: 580px;
+}
+
+#createlink input {
+	font-size: 0.9em;
+}
+
+#addlayer {
+	display: none;
+	position: absolute;
+	left: 350px;
+	top: 0px;
+	width: 420px;
+	height: 500px;
+}
+
+ul.geozetSuggestions{
+    padding:0;
+}
+.geozetSuggestions li a span{
+	display: none;
+}
+
+
+.geozetSuggestions li {
+    margin-top: 4px;
+    width: 95%;
+    padding-left: 0;
+}
+.geozetSuggestions li:hover {
+    border-bottom: solid 1px black;
+}
+
+#mapfunctions h3 {
+	position: relative;
+	margin: 3px;
+	text-align: right;
+	padding-top:10px;
+}
+
+.closeWindow {
+	float: right;
+	margin: 2px;
+	font-weight: bold;
+	color: black;
+}
+
+.help {
+	float: right;
+}
+
+.defaultmarker {
+	height: 24px;
+}
+
+.left-nav li{ float: none;display:inline;}
+.right-nav {float:right;}
+
+
+#styleselector{
+    height:250px;
+    width:300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+#styleselector li{
+    padding-left: 18px;
+    padding-top: 5px;
+    height: 30px;
+    font-size: 0.9em;
+    cursor: pointer;
+    background-image: none;
+}
+
+#styleselector img{
+    float:left;
+    margin-top:-5px;
+}
+
+.styleselected{
+    background-color: #A7C2E2;
+}
+
+.listyletext{
+    padding-left: 45px;
+    padding-top: 5px;
+    font-size: 1.1em;
+}
+.stylehead {
+    font-weight: bold;
+    font-size:1.2em;
+    /*text-decoration: underline;
+    letter-spacing:1px;*/
+}
+
+form input, form select, form textarea, form select {
+    background: #fff; 
+    padding: 0.3em 0.3em;
+    color: #000; 
+    border: 1px solid #000; 
+    font-size: 11px;
+    width: 298px;
+}
+button { 
+    background: #deebe3; 
+    border: 1px solid #000; 
+    color: #000; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin: 0; 
+    padding: 0.4em 1em;
+}
+button, x:-moz-any-link { 
+    padding: 0.2em 1em; 
+} /* Firefox only */
+
+.lefting{
+    width:15px;
+}
+
+#minzoom select, #maxzoom select{
+    font-size:10px;
+}
+
+#description{
+	height:60px;
+}	
+
+#copypaste{
+	height:180px;
+}
+
+#editmarker3{
+	width : 20px;
+}
+
+#editmarker4{
+	width : 20px;
+}
+
+#search{
+    padding-top:5px;
+}
+
+#searchLocation{
+	width : 170px;
+}
+#searchLocation.default{
+    color: #7F8181;
+}
+#mapsize1{
+	width : 20px;
+}	
+
+#mapsize2{
+	width : 20px;
+}	
+
+#mapsize3{
+	width : 20px;
+}
+
+.stepwrapper form {
+	margin: 10px;
+	display: none;
+}
+
+.active form {
+	display: block;
+}
+
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+	text-align: left;
+	padding: 10px 0;
+}
+
+.stepwrapper{
+	border: none;
+	/*background-color:rgb(246,212,178);*/
+	margin: 10px 0px;
+    width: 370px;
+    padding-bottom:5px;
+}
+
+h2 {
+	background-color:rgb(246,212,178);
+    font-size: 1.1em;
+    font-weight:bold;
+    padding: 8px 8px 10px 14px;
+    position: relative;
+    margin: 10px 0px;
+}
+
+
+a {
+	color:#154373;
+}
+
+h2 a {
+    color: #E17000 !important;
+    cursor: pointer;
+}
+h2 a:focus {
+    outline:none;
+}
+h2 a:hover {
+    color: #fff !important;
+    text-decoration:underline;
+}
+a, a:link, a:focus, a:hover, a:visited {
+    color: #000;
+    outline:none;
+}
+
+.active h2 {
+	ibbackground-color: #273397;
+    background-color:#E17000;
+}
+
+.active h2 a, #col3 h2, #col4 h2 {
+	color: #fff !important;
+}
+
+#editor1, #codeoutput {
+    border: 1px solid #273397;
+    width: 100%;
+	font-family: "Courier New", Courier, monospace;
+}
+
+#opties {
+    margin:10px;
+}
