@@ -1,17 +1,5 @@
-=========
-PDOK Help
-=========
-
-|PDOK|
-
 PDOK Kaart Wizard
 =================
-
--  `Home <http://www.pdok.nl>`__
--  `PDOK Wizard <index.html>`__
--  `Help <help.html>`__
--  `Voorbeelden <examples/>`__
--  `Documentatie <documentatie/>`__
 
 Zoek een locatie
 ----------------
@@ -40,16 +28,16 @@ locatie.
 Stap 1: De Kaart
 ----------------
 
-Kies de grootte van de kaart
-
-|image4.png|
-
 In stap 1 kunt u instellen hoe groot u uw kaart wilt hebben. U kunt
 kiezen tussen de formaten 
 
 - klein (300 \* 250 pixels)
 - middel (400 \* 350 pixels)
 - groot (550 \* 440 pixels)
+
+|image4.png|
+
+Kies de grootte van de kaart
 
 Het kaartbeeld aan de rechterzijde wordt direct aangepast aan uw keuze. Het voorbeeldkaartje aan de rechterzijde komt hiermee exact overeen met het eindresultaat. De "Toon knop kaartlagen" staat standaard aan en heeft betrekking op het wel of niet beschikbaar zijn van de knop aan de rechterkant van de
 kaart 
@@ -112,6 +100,7 @@ Naast het wijzigen van de marker kan deze ook verwijderd worden met
 de knop “Verwijderen marker”.
  
 Marker uit URL, bestand of tekst
+................................
 
 Door de optie “Marker uit URL, bestand of tekst” aan te vinken kunnen
 markers ingelezen worden die volgens een bepaalde standaard zijn
@@ -120,9 +109,7 @@ gedefinieerd. Er worden twee standaarden ondersteund KML en TXT.
 **KML** Voor meer informatie over het KML formaat zie `de documentatie van Google <https://developers.google.com/kml/documentation/>`_.
 
 **TXT** Het gaat hierbij om een YX-tekstbestand met coördinaten in RD. Het
-scheidingsteken is een `tab`. 
-
-In geval van RD is de volgende input vereist (inclusief koptekst):
+scheidingsteken is een `tab`. In geval van RD is de volgende input vereist (inclusief koptekst):
 
 ::
 
