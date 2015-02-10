@@ -7,6 +7,7 @@ Welcome to PDOK Kaart's documentation!
 ======================================
 
 Contents:
+*********
 
 .. toctree::
    :maxdepth: 2
