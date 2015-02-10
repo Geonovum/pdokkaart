@@ -6,7 +6,9 @@
  * a line marker 
  * a polygon marker 
  */ 
- 
+ var Pdok = Pdok || {};
+window.Pdok = Pdok;
+
 
 Pdok.Api.prototype.defaultStyles=[ 
         // all point marker styles will use mt0 as default 
@@ -306,17 +308,17 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt1', 
-        fillColor: 'green',
+        fillColor: '#008000',
         fillOpacity: 0.3, 
-        strokeColor: 'green', 
+        strokeColor: '#008000', 
         strokeWidth: 2, 
         name: 'Groen transparant'
     },
     {
         id: 'pt2', 
-        fillColor: 'red',
+        fillColor: '#ff0000',
         fillOpacity: 0.3, 
-        strokeColor: 'red', 
+        strokeColor: '#ff0000', 
         strokeWidth: 2, 
         name: 'Rood transparant'
     },
@@ -330,9 +332,9 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt4', 
-        fillColor: 'yellow',
+        fillColor: '#ffff00',
         fillOpacity: 0.3, 
-        strokeColor: 'yellow', 
+        strokeColor: '#ffff00', 
         strokeWidth: 2, 
         name: 'Geel transparant'
     },
@@ -340,23 +342,23 @@ Pdok.Api.prototype.defaultStyles=[
         id: 'pt5', 
         fillColor: '#273397',
         fillOpacity: 0.3, 
-        strokeColor: 'black', 
+        strokeColor: '#000000', 
         strokeWidth: 2, 
         name: 'Blauw transparant'
     },
     {
         id: 'pt6', 
-        fillColor: 'green',
+        fillColor: '#008000',
         fillOpacity: 0.3, 
-        strokeColor: 'black', 
+        strokeColor: '#000000', 
         strokeWidth: 2, 
         name: 'Groen transparant'
     },
     {
         id: 'pt7', 
-        fillColor: 'red',
+        fillColor: '#ff0000',
         fillOpacity: 0.3, 
-        strokeColor: 'black', 
+        strokeColor: '#000000', 
         strokeWidth: 2, 
         name: 'Rood transparant'
     },
@@ -364,15 +366,15 @@ Pdok.Api.prototype.defaultStyles=[
         id: 'pt8', 
         fillColor: '#FF6600',
         fillOpacity: 0.3, 
-        strokeColor: 'black', 
+        strokeColor: '#000000', 
         strokeWidth: 2, 
         name: 'Oranje transparant'
     },
     {
         id: 'pt9', 
-        fillColor: 'yellow',
+        fillColor: '#ffff00',
         fillOpacity: 0.3, 
-        strokeColor: 'black', 
+        strokeColor: '#000000', 
         strokeWidth: 2, 
         name: 'Geel transparant'
     },
@@ -385,15 +387,15 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt11', 
-        fillColor: 'green',
-        strokeColor: 'green', 
+        fillColor: '#008000',
+        strokeColor: '#008000', 
         strokeWidth: 2, 
         name: 'Groen'
     },
     {
         id: 'pt12', 
-        fillColor: 'red',
-        strokeColor: 'red', 
+        fillColor: '#ff0000',
+        strokeColor: '#ff0000', 
         strokeWidth: 2, 
         name: 'Rood'
     },
@@ -406,8 +408,8 @@ Pdok.Api.prototype.defaultStyles=[
     },
     {
         id: 'pt14', 
-        fillColor: 'yellow',
-        strokeColor: 'yellow', 
+        fillColor: '#ffff00',
+        strokeColor: '#ffff00', 
         strokeWidth: 2, 
         name: 'Geel'
     },
@@ -421,14 +423,14 @@ Pdok.Api.prototype.defaultStyles=[
     {
         id: 'pt16', 
         fillOpacity: 0.0, 
-        strokeColor: 'green', 
+        strokeColor: '#008000', 
         strokeWidth: 2, 
         name: 'Groen'
     },
     {
         id: 'pt17', 
         fillOpacity: 0.0, 
-        strokeColor: 'red', 
+        strokeColor: '#ff0000', 
         strokeWidth: 2, 
         name: 'Rood'
     },
@@ -442,59 +444,59 @@ Pdok.Api.prototype.defaultStyles=[
     {
         id: 'pt19', 
         fillOpacity: 0.0, 
-        strokeColor: 'yellow', 
+        strokeColor: '#ffff00', 
         strokeWidth: 2, 
         name: 'Geel'
     },
 	{ 
 		id:'lt2',  
-		strokeColor:'blue',  
+		strokeColor:'#273397',  
 		strokeWidth:1,  
 		name:'blauw 1px' 
 	}, 
 	{ 
 		id:'lt3',  
-		strokeColor:'blue',  
+		strokeColor:'#273397',  
 		strokeWidth:5,  
 		strokeOpacity:0.5,  
 		name:'blauw 5px transparant'  
 	}, 
 	{ 
 		id:'lt4',  
-		strokeColor:'red',  
+		strokeColor:'#ff0000',  
 		strokeWidth:1,  
 		name:'rood 1px' 
 	}, 
 	{ 
 		id:'lt5',  
-		strokeColor:'red',  
+		strokeColor:'#ff0000',  
 		strokeWidth:3,  
 		strokeOpacity:0.5,  
 		name:'rood 3px transparant' 
 	}, 
 	{ 
 		id:'lt6',  
-		strokeColor:'red',  
+		strokeColor:'#ff0000',  
 		strokeWidth:5,  
 		strokeOpacity:0.5,  
 		name:'rood 5px transparant'  
 	}, 
 	{ 
 		id:'lt7',  
-		strokeColor:'green',  
+		strokeColor:'#008000',  
 		strokeWidth:1,  
 		name:'groen 1px'  
 	}, 
 	{ 
 		id:'lt8',  
-		strokeColor:'green',  
+		strokeColor:'#008000',  
 		strokeWidth:3,  
 		strokeOpacity:0.5,  
 		name:'groen 2px transparant'  
 	}, 
 	{ 
 		id:'lt9',  
-		strokeColor:'green',  
+		strokeColor:'#008000',  
 		strokeWidth:5,  
 		strokeOpacity:0.5,  
 		name:'groen 5px transparant'  

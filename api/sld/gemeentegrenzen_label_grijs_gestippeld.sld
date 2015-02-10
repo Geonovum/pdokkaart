@@ -7,16 +7,16 @@ xmlns:xlink="http://www.w3.org/1999/xlink"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                 
 <NamedLayer>
-<Name>gemeenten</Name>
+<Name>bestuurlijkegrenzen_gemeentegrenzen</Name>
 <UserStyle>
 <Title>Gemeentegrenzen</Title>
 <Abstract>Gestippelde grijze lijn met gemeentenaam als label</Abstract>
 <FeatureTypeStyle>
               
 <Rule> 
-<Name>gemeenten</Name>
-<Title>gemeenten</Title>
-<Abstract>gemeenten</Abstract>
+<Name>bestuurlijkegrenzen_gemeentegrenzen</Name>
+<Title>bestuurlijkegrenzen_gemeentegrenzen</Title>
+<Abstract>bestuurlijkegrenzen_gemeentegrenzen</Abstract>
 <PolygonSymbolizer>
   <Stroke>
     <CssParameter name="stroke">#646464</CssParameter>

@@ -1,9 +1,15 @@
 # PDOKKaart
 
-Met deze applicatie kan een configuratie voor de PDOKKaart API gemaakt worden<br/>
-De laatste stabiele ontwikkel versie is 1.0.0<br/>
+Met deze applicatie kan een configuratie voor de PDOKKaart API gemaakt worden
+
+De laatste stabiele ontwikkel versie is 1.1.0, deze versie is een verbetering op basis van een proof of concept dat door Rijkswaterstaat is gestart
+
+Bekijk een voorbeeld van de <a href="http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/" target="_blank">versie in ontwikkeling met de hier beheerde github broncode</a>
+
+Of
+
 <a href="http://kaart.pdok.nl" target="_blank">Klik hier voor de productie versie</a>
 
-Let op! De versie van de Wizard welke op github staat is niet volledig werkend. Zo werkt het zoeken op adres bijvoorbeeld niet. Alle functionaliteit welke een proxyscript aanroept werkt niet.<br/>
-<br/>
-- De productielocatie is vanaf begin december 2012 http://kaart.pdok.nl<br/>
+http://pdok-kaart.readthedocs.org
+
+Markdown

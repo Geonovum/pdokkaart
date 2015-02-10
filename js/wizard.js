@@ -20,7 +20,7 @@ function goTo(step) {
         return;
     }
 
-    //set container for css styling i.e. make tabs active on selection	
+    //set container for css styling i.e. make tabs active on selection
     document.getElementById("step" + currentStep).className = "stepwrapper";
     currentStep = step;
     document.getElementById("step" + currentStep).className = "stepwrapper active";
@@ -30,9 +30,6 @@ function goTo(step) {
 function disableEditTools(){
     // cleanup of edit controls
     // to always start with a clean sheet
-    $('#addfeatures').attr('checked', false)
-    $('#editfeatures').attr('checked', false)
-    $('#externalfeatures').attr('checked', false)
     $('#addviamap').hide();
     $('#editviamap').hide();
     $('#addviaurltxt').hide();
@@ -44,73 +41,32 @@ function disableEditTools(){
 function selectCode() {
     document.getElementById("codeoutput").select();
     return false;
-a}
+};
 
 function MeerMinderOpties() {
 
     //if (document.getElementById('opties').value == "Meer opties") {
-    if ($("#opties").val() ==  "Meer opties") {
+    if ($("#opties").val() ===  "Meer opties") {
         $('#step3').toggle();
         $('#step4').toggle();
         $('#opties span').text('Minder opties');
         $("#opties").attr('value', 'Minder opties');
 
-    }
-    else {
+    } else {
         $('#step3').toggle();
         $('#step4').toggle();
         $('#opties span').text('Meer opties');
         $("#opties").attr('value', 'Meer opties');
-    }	
+    }
 }
 
 function SearchArray(arr, obj) {
     for(var i=0; i<arr.length; i++) {
-        if (arr[i][0] == obj) return arr[i][1];
+        if (arr[i][0] === obj) return arr[i][1];
     }
 }
 
 // init is called after loading the settings page and initilizes the map and some GUI components, like the PDOK map layer selector and the "popin" windows
-$(document).ready(function() {
-
-    //setMapSize();
-    //addFormEnhancements();
-    //$(window).resize(setMapSize);
-    //$('input:radio[name=editmarkers]')[0].checked = true;
-    $('input:radio[name=mapsize]')[2].checked = true;
-
-    // initiate the Pdok API object
-    var o = OpenLayers.Util.getParameters();
-    //var api = new Pdok.Api(o);
-    api = new Pdok.Api(o);
-    // popups and selectionControl of Api interfears with modifyFeatureControl
-    // we disable them while we find out how to handle this
-    // TODO handle this ...
-    api.disablePopups();
-    api.selectControl.deactivate();
-
-    // for convenience reasons to reuse the OpenLayers Map object from the API, set it to a global object
-    mapPDOKKaart = api.getMapObject();
-    markers = api.featuresLayer;
-    pdok_api_map_resize(550,440);
-    api.map.zoomToExtent([-15000,300000,300000,640000], true);
-
-    createOnClickEvents();
-    createSearchLogic();
-    createStyleSelector();
-    createEditAttributes();
-    createPdokLayers();
-    createLocationToolLogic();
-    createMarkersLogic();
-
-    $('#step3 input:text').val('');
-    createApiLinksAndCode();
-
-   autoPopulateInputs();
-
-    // not sure if we want this here
-    api.map.events.register("moveend", this, createApiLinksAndCode );
-});
 
 function createOnClickEvents() {
     $('#opties').click( function(){MeerMinderOpties(); return false;} );
@@ -122,14 +78,22 @@ function createOnClickEvents() {
     $('#goto3').click( function() {return goTo(3); } );
     $('#goto4').click( function() {return goTo(4); } );
     $('#goto5').click( function() {createApiLinksAndCode();return goTo(5); } );
-    $('#mapsize1').click( function() { pdok_api_map_resize(300,250) } );
-    $('#mapsize2').click( function() { pdok_api_map_resize(400,350) } );
-    $('#mapsize3').click( function() { pdok_api_map_resize(550,440) } );
-    $('#maplayerswitcher').click( function() { setLayerSwitcherVisible('checked'==$('#maplayerswitcher').attr('checked')); } );
+    $('#getpdokkaarturl').click( function() { reload_wizard_based_on_url();return false; } );
+    $('#mapsize1').click( function() { pdok_api_map_resize('small'); } );
+    $('#mapsize2').click( function() { pdok_api_map_resize('medium'); } );
+    $('#mapsize3').click( function() { pdok_api_map_resize('big'); } );
+    $('#maplayerswitcher').click( function() { setLayerSwitcherVisible($('#maplayerswitcher').is(':checked')); } );
+    $('#mapzoom').click( function() { setZoomVisible($('#mapzoom').is(':checked')); } );
+    $('#mapnavigation').click( function() { setNavigationVisible($('#mapnavigation').is(':checked')); } );
+    $('#mapscaleline').click( function() { setScaleLineVisible($('#mapscaleline').is(':checked')); } );
+    $('#mapmouseposition').click( function() { setMousePositionVisible($('#mapmouseposition').is(':checked')); } );
+    $('#mapsearch').click( function() { setMapsearchVisible($('#mapsearch').is(':checked')); } );
+    $('#maplegend').click( function() { setLegendVisible($('#maplegend').is(':checked')); } );
     $('#addpdoklayerbutton').click( function() { addPdokLayer();return false; } );
     $('#addwmslayerbutton').click( function() { addWmsLayer();return false; } );
     $('#addwmtslayerbutton').click( function() { addWmtsLayer();return false; } );
     $('#deletelayers').click( function() { api.deleteLayers();return false; } );
+    $('#kmlservicelink').click( function() { api.kmlToService();return false; } );
 }
 
 // function to automatically creat a hint text based on a title attribute
@@ -140,14 +104,21 @@ function autoPopulateInputs() {
     var oInput;
     for(var i=0;i<iInputs;i++){
         oInput=arrInputs[i];
-        if((oInput.type=='text' || oInput.type=='textarea')==false){continue;}
-        if((oInput.value=='')&&(oInput.title!='')){oInput.value=oInput.title;$(oInput).addClass('default');}
-        if(oInput.value==oInput.title){$(oInput).addClass('default');}
+        if((oInput.type === 'text' || oInput.type === 'textarea') === false){
+            continue;
+        }
+        if(oInput.value === '' && oInput.title !== ''){
+            oInput.value=oInput.title;$(oInput).addClass('default');
+        }
+        if(oInput.value === oInput.title) {
+            $(oInput).addClass('default');
+        }
         $('input.autopopulate, textarea.autopopulate').focus(
             function(){
                 // we put &nbsp; as fake value, this is actually a ''
-                if(this.value==this.title || this.value=='&nbsp;'){
-                    this.value='';this.select();
+                if(this.value ===this.title || this.value === '&nbsp;'){
+                    this.value='';
+                    this.select();
                     $(this).val('').removeClass('default');
                 }
         });
@@ -158,7 +129,7 @@ function autoPopulateInputs() {
                     $(this).addClass('default');
                 } 
                 else {
-                    if(this.value!=this.title){
+                    if(this.value !== this.title){
                         $(this).removeClass('default');
                     }
                 }
@@ -185,40 +156,32 @@ function createSearchLogic() {
 
 function createMarkersLogic() {
     $('#editmarkers input[type=radio]').click(function(){
-        if (this.id == 'addfeatures') {
+        if (this.id === 'addfeatures') {
             if ($('#addviamap').is(':visible')) {
                 $('#addviamap').hide();
-                $(this).attr('checked', false);
                 api.disableDrawingTool();
-            }
-            else {
+            } else {
                 $('#addviamap').show();
                 $('#editviamap').hide();
                 $('#addviaurltxt').hide();
                 enableStyleSelector();
             }
-        }
-        else if (this.id == 'editfeatures') {
+        } else if (this.id === 'editfeatures') {
             if ($('#editviamap').is(':visible')) {
                 api.disableEditingTool();
-                $(this).attr('checked', false);
                 $('#editviamap').hide();
                 $('#edit2a').hide();
-            }
-            else {
+            } else {
                 disableEditTools();
                 // disableEditTools() also unchecks the radio, check it here
-                $(this).attr('checked', true);
                 $('#addviamap').hide();
                 $('#editviamap').show();
                 $('#addviaurltxt').hide();
                 startEditingPoint();
             }
-        }
-        else if (this.id == 'externalfeatures') {
+        } else if (this.id === 'externalfeatures') {
             if ($('#addviaurltxt').is(':visible')) {
                 $('#addviaurltxt').hide();
-                $(this).attr('checked', false);
             }
             else {
                 $('#addviamap').hide();
@@ -227,12 +190,7 @@ function createMarkersLogic() {
             }
         }
     });
-    /*
-    $('#editmarkers input[type=radio]').click(function(){
-        console.log(1, $(this).val());
-        console.log(2, $("#editmarkers input:checked").val())
-    });
-    */
+
     $('#getfeaturesfromurl').click(function(){
         var format = $('#addviaurltxt input[name=urltype]:checked').val();
         api.addFeaturesFromUrl($('#urltext').val(), format.toUpperCase(), true);
@@ -245,26 +203,18 @@ function createMarkersLogic() {
         api.addFeaturesFromString($('#copypaste').val()+'\n', format.toUpperCase(), true);
         return false;
     });
-    // automatic selection of the inputs on select
-    /*
-    $('.row_right input:text').click(function(){ this.select(); });
-    $('.row_right textarea').click(function(){ this.select(); });
-    $("#urltext").click(function(){ this.select(); });
-    $("#copypaste").click(function(){ this.select(); });
-    */
 }
 
 function createLocationToolLogic() {
     // locationtool properties
     var locationToolPropertyChange = function() {
         // disable locationtool if 'none' is selected
-        if (this.id=='none'){
+        if (this.id === 'none'){
             api.removeLocationToolProps();
             // hide all field inputs
             $('#urlfield,#yfield,#xfield,#wktfield').hide();
             $('#locationtoolzooms').hide();
-        }
-        else {
+        } else {
             $('#locationtoolzooms').show();
             var xorwkt = $('#wktfield input').val();
             var y = $('#yfield input').val();
@@ -274,32 +224,37 @@ function createLocationToolLogic() {
             var locationtype = $("input[name=locationtoolstyle]:checked").attr('id');
             var styletype = $("input[name=locationtoolstyle]:checked").val();
             // showing and hiding of different inputs
-            if(locationtype=='pointxy'){
+            if(locationtype === 'pointxy'){
                 $('#yfield,#xfield').show();
                 $('#wktfield').hide();
                 xorwkt = $('#xfield input').val();
-                if(xorwkt==''){xorwkt='x'} // no prefilling, but defaulting for prop setting
+                if( xorwkt === ''){
+                    xorwkt='x';
+                } // no prefilling, but defaulting for prop setting
                 y = $('#yfield input').val();
-                if(y==''){y='y'} // no prefilling, but defaulting for prop setting
-            }
-            else if(locationtype=='line' || locationtype=='point' || locationtype=='polygon'){
+                if(y === ''){
+                    y = 'y';
+                } // no prefilling, but defaulting for prop setting
+            } else if(locationtype ==='line' || locationtype ==='point' || locationtype ==='polygon'){
                 $('#yfield,#xfield').hide();
                 $('#wktfield').show();
-                if(xorwkt==''){xorwkt='wkt'} // no prefilling, but defaulting for prop setting
+                if(xorwkt === ''){
+                    xorwkt='wkt';
+                } // no prefilling, but defaulting for prop setting
                 y = null;
             }
             $('#urlfield').show();
             // preview of zoom borders, and some checking that min<max and max>min
-            if(this.id=='zmin') {
+            if(this.id === 'zmin') {
                 api.map.zoomTo(zmin); // preview
-                if(zmin>zmax) {
+                if(zmin > zmax) {
                     zmax = zmin;
                     $('#zmax').val(zmax);
                 }
             }
-            else if(this.id=='zmax') {
+            else if(this.id === 'zmax') {
                 api.map.zoomTo(zmax); // preview
-                if(zmax<zmin) {
+                if(zmax < zmin) {
                     zmin = zmax;
                     $('#zmin').val(zmin);
                 }
@@ -307,7 +262,7 @@ function createLocationToolLogic() {
             // setting props with current values
             api.setLocationToolProps(styletype, zmin, zmax, url, xorwkt, y);
         }
-    }
+    };
     // attaching above logic to diffent inputs of the locationtool form
     $('#locationtoolform input[type=radio], #locationtoolform select').change(locationToolPropertyChange);
     //$('#locationtoolfield input[type=text]').keyup(locationToolPropertyChange);  // IE7 problem
@@ -331,7 +286,7 @@ function enableStyleSelector(){
         $('#description').val('');
         autoPopulateInputs();
         $('#edit2a').show();
-    }
+    };
     // no popup during editing
     api.disablePopups();
     api.enableDrawingTool("mt0", featureCreatedCallback);
@@ -353,19 +308,17 @@ function createStyleSelector(){
 
     for (styleId in apiStyles){
         // for now only point markers!
-        if (styleId[0]=='m'){
+        if (styleId[0] === 'm'){
             var style = apiStyles[styleId];
             pointStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div><img src="'+style.externalGraphic+
                 '"><div class="listyletext">'+style.name+'</div></div></li>';
-        }
-        else if (styleId[0]=='l'){
+        } else if (styleId[0] === 'l'){
             var style = apiStyles[styleId];
             lineStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+
             '; border-top: '+style.strokeWidth+'px '+style.strokeColor+' solid;border-left: '+style.strokeWidth+'px '+
             style.strokeColor+' solid;float:left;"><div>&nbsp;&nbsp;&nbsp;&nbsp;</div></div><div class="listyletext"> '+
             style.name+'</div></li>';
-        }
-        else if (styleId[0]=='p'){
+        } else if (styleId[0] === 'p') {
             var style = apiStyles[styleId];
             polygonStylesHtml += '\n<li id="'+styleId+'" style="styleitem"><div style="opacity:'+style.strokeOpacity+
                 ';border: '+style.strokeWidth+'px '+style.strokeColor+' solid;float:left;"><div style="width:16px; opacity:'+
@@ -398,7 +351,7 @@ function createStyleSelector(){
             $('#description').val('');
             autoPopulateInputs();
             $('#edit2a').show();
-        }
+        };
         api.enableDrawingTool(styleId, featureCreatedCallback);
     });
 }
@@ -409,22 +362,22 @@ function createPdokLayers(){
     layernames=[];
     i = 0;
     for (layer in api.defaultLayers){
-    	layernames[i]= api.defaultLayers[layer].name;
-    	i = i + 1;
+        layernames[i]= api.defaultLayers[layer].name;
+        i = i + 1;
     }
     layernames = layernames.sort();
 
     var html = '<select id="pdokLayerSelector" onselect="addPdokLayer(this.value)">' +
-                '<option value="-">-- Kies een PDOK kaartlaag --</option>'
+        '<option value="-">-- Kies een kaartlaag --</option>';
     for (layernum in layernames){
-		for (layer in api.defaultLayers){
-			// Because the layer 'BRT' is always the defaultlayer it is not necessary to show this layer in the select-list
-			if (api.defaultLayers[layer].name == layernames[layernum] && layer != "BRT"){
-				html = html + '<option value="'+ layer + '">' + api.defaultLayers[layer].name + '</option>'
-			}
-		}
-	}
-    html = html + '</select>'
+        for (layer in api.defaultLayers){
+            // Because the layer 'BRT' is always the defaultlayer it is not necessary to show this layer in the select-list
+            if (api.defaultLayers[layer].name === layernames[layernum] && layer !== "BRT"){
+                html = html + '<option value="'+ layer + '">' + api.defaultLayers[layer].name + '</option>';
+            }
+        }
+    }
+    html = html + '</select>';
     $('#divpdoklayerselector').html(html);
 }
 
@@ -449,11 +402,11 @@ function createEditAttributes () {
 function createFieldnameInput(radiobutton) {
     var  geometrie = $(radiobutton).attr('value') ;
     var html = ''; 
-    if (geometrie == 'mt1') {
+    if (geometrie === 'mt1') {
         html = html + '<label>X-co&ouml;rdinaat  : <input id="xcoord" type="text" value=""  /></label></br>';
         html = html + '<label>Y-co&ouml;rdinaat : <input id="ycoord" type="text" value=""  /></label></br>';
     }
-    else if (geometrie == 'lt1' || geometrie == 'pt1') {
+    else if (geometrie === 'lt1' || geometrie === 'pt1') {
         html = html + '<label>Veldnaam (wkt):<input id="veldnaam" type="text" value=""  /></label>';
     }
     else {
@@ -468,11 +421,11 @@ function saveAttributes() {
     var descDefault = $('#description').attr('title');
 
     $('#edit2a').hide();
-    if ($('#attr_name').val()==nameDefault || $('#attr_name').val()=='') {
+    if ($('#attr_name').val() === nameDefault || $('#attr_name').val() === '') {
         $('#attr_name').val('&nbsp;');  // we default to &nbsp;
     }
     activeFeature.attributes.name = $('#attr_name').val();
-    if ($('#description').val()==descDefault || $('#description').val()=='') {
+    if ($('#description').val() === descDefault || $('#description').val() === '') {
         $('#description').val('&nbsp;');  // we default to &nbsp;
     }
     activeFeature.attributes.description = $('#description').val().replace(/\n/g,"<br/>");
@@ -490,8 +443,8 @@ function featureModifiedCallback(domevent){
     $('#edit2a').appendTo($('#editviamap'));
     var desc = activeFeature.attributes.description;
     var name = activeFeature.attributes.name;
-    if (desc == '&nbsp;'){ desc = '';}
-    if (name == '&nbsp;'){ name = '';}
+    if (desc === '&nbsp;'){ desc = '';}
+    if (name === '&nbsp;'){ name = '';}
     $('#attr_name').val(name);
     $('#description').val(desc);
     autoPopulateInputs();
@@ -499,18 +452,12 @@ function featureModifiedCallback(domevent){
 }
 
 function deleteFeature() {
-    var ok = confirm ("Deze marker verwijderen?")
-    if (ok) {
-        markers.removeFeatures([activeFeature]);
-        markers.refresh();
-        // without this disabling and enabling we have a 
-        // null pointer somewhere in the event handling of OL
-        api.disableEditingTool();
-        api.enableEditingTool(featureModifiedCallback);
-    } else {
-		api.disableEditingTool();
-        api.enableEditingTool(featureModifiedCallback);
-	}
+    markers.destroyFeatures([activeFeature]);
+    markers.refresh();
+    // without this disabling and enabling we have a 
+    // null pointer somewhere in the event handling of OL
+    api.disableEditingTool();
+    api.enableEditingTool(featureModifiedCallback);
     $('#edit2a').hide();
 }
 
@@ -521,210 +468,99 @@ function startEditingPoint() {
 }
 
 
-var gazetteerConfig = {};
-var zoomScale = {
-    adres: 13,
-    postcode: 11,
-    plaats: 8,
-    gemeente: 8,
-    provincie: 5,
-    standaard: 9
-};
-gazetteerConfig.gazetteer = {
-    url:"http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?", 
-    param:"zoekterm", 
-    zoomScale: 
-    zoomScale
-};
-
-// Thijs: code based on Geozet.widgets.Search
-function searchLocationChanged() {
-	var searchString = jQuery("#searchLocation").val();
-    var params = {request: 'geocode'};
-    params[gazetteerConfig.gazetteer.param] = searchString;
-    if (searchString && searchString.length>0){            
-        OpenLayers.Request.GET({
-            url: gazetteerConfig.gazetteer.url,
-            params: params,
-            scope: this,
-            success: handleGeocodeResponse
-            // failure: this.handleError
-        });
-    }
-    return false;
-}
-
 function showError(msg){
-	alert(msg);
+    alert(msg);
 }
 
-function handleGeocodeResponse(req, returnCoords){
-    //removePopups(markers);
-    //markers.destroyFeatures();
-    $('#searchResults').html('').show();
-    
-    var responseText = req.responseText;
-    if (responseText && (responseText.indexOf('FAILED') != -1 ||
-        responseText.indexOf('Exception') != -1 )) {
-        // fail silently
-        return false;
-    }
-    var xlslusFormat = new Geozet.Format.XLSLUS();
-    var xlslus = xlslusFormat.read(req.responseXML || req.responseText);
-    if (xlslus.length == 0){
-    	hits = 0;
-    }
-    else{
-	    var hits=xlslus[0].numberOfGeocodedAddresses;
-	}
-    if (hits==0){
-        // zero responses
-        this.showError("Geen locaties gevonden ...");
-    }
-    else{
-        var maxEx = mapPDOKKaart.restrictedExtent;
-        // minx,miny,maxx,maxy are used to calcultate a bbox of the geocoding results
-        // initializes these with the max/min values of the extent of the map, so swap the left /right and bottomo/top of the maxExtent
-        // i.e.: the calculate minx will allways be smaller than the right-border of the map;
-        // TODO: for production use the map's restricted Extent, so request a change to Lucs API
-        /// For now: just values
-        maxEx = new OpenLayers.Bounds(-285401.92, 22598.08, 595401.92, 903401.92);
-        var minx = maxEx.right;
-        var miny = maxEx.top;
-        var maxx = maxEx.left;
-        var maxy = maxEx.bottom;
-        var minzoom = 15;
-        var features = [];
-        // > 0 hit show suggestions
-        if(hits>0){
-            $('#geocodeerresult').html('<span id="closedrawlocation" onclick="$(\'#geocodeerresult\').fadeOut(\'fast\')" class="closeWindow"><a onclick="return false;"><img src="api/styles/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>' +
-                '<span class="searchedFor">Gezocht op: "'+jQuery("#searchLocation").val()+'"</span><h3>Zoekresultaten</h3><ul class="geozetSuggestions"></ul>');
-        }
-        for (i=0;i<hits;i++){
-            var suggestion='';
-            var geom = xlslus[0].features[i].geometry;
-            var address = xlslus[0].features[i].attributes.address;
-            var plaats = address.place.MunicipalitySubdivision; // toont evt provincie afkorting
-            var gemeente = address.place.Municipality;
-            var prov = address.place.CountrySubdivision;
-            var adres = '';
-            var postcode = '';
-            // determine zoom and hash
-            var zoom = null;
-            if (address.street && address.street.length>0){
-                adres = address.street + ' - ' ;
-                if (address.building){
-                    var toevoeging = '';
-                    if (address.building.subdivision){
-                        toevoeging = address.building.subdivision
-                    }
-                    adres += address.building.number+toevoeging+' - ';
+function addWmsLayer() {
+    if ( ($("#wmsUrl").val().slice(0,4) === "bijv") || ($("#wmsLayer").val().slice(0,4) === "bijv") ){
+        alert("U heeft geen URL naar, of een laagnaam van een WMS opgegeven");
+    } else{
+        // wizard is just able to handle ONE wmsurl (because of the use of query params)
+        // if you need more: create a map via code
+        if (undefined != api.wmsurl){
+            var layer = api.findWMS(api.wmsurl, api.wmslayers);
+            var msg = "Er is al een extra WMS laag gedefinieerd voor deze kaart\nEr kan in de wizard slechts 1 extra laag worden toegevoegd. \nWilt u de oude keuze overschrijven?"
+            var overwrite = confirm(msg);
+            if (overwrite) {
+                if (layer != null) {
+                    api.map.removeLayer(layer);
                 }
-                if(!zoom){zoom='adres'}
-            }
-            if (address.postalCode){
-                adres += address.postalCode+' - ';
-                if(!zoom){zoom='postcode'}
-            }
-            if(plaats){
-                suggestion=adres+plaats+' (plaats)';
-                if(!zoom){zoom='plaats'}
-            }
-            else if(gemeente){
-                suggestion=adres+gemeente+' (gemeente)';
-                if(!zoom){zoom='gemeente'}
-            }
-            else if(prov){
-                suggestion=prov+' (provincie)';
-                if(!zoom){zoom='provincie'}
-            }
-            if(!zoom){zoom='standaard'}
-            
-            // one hit? zoom to it. Otherwize show resultlist
-            if(hits>1){
-                // hack to be able to handle results without geom
-                var x = geom?geom.x:150000;
-                var y = geom?geom.y:450000;
-                var z = geom?gazetteerConfig.gazetteer.zoomScale[zoom]:gazetteerConfig.gazetteer.zoomScale['provincie'];
-                var newId = -1;
-                if (geom) {
-                    minx = Math.min(minx, x);
-                    miny = Math.min(miny, y);
-                    maxx = Math.max(maxx, x);
-                    maxy = Math.max(maxy, y);
-                    minzoom = Math.min(minzoom, gazetteerConfig.gazetteer.zoomScale[zoom]);
-                    var newFt = new OpenLayers.Feature.Vector( new OpenLayers.Geometry.Point(x, y), {"title": suggestion, "postcode": postcode, "adres": adres, "plaats": plaats, "gemeente": gemeente, "provincie": prov}
-                    // ,{externalGraphic: 'js/img/marker.png', graphicHeight: 26, graphicWidth: 20}
-                    );
-                    newId = newFt.id;
-                    features.push(newFt);
-                }
-                var gazHtml = '<li id="listitem_'+newId.split('.')[2]+'"><a href="#">' + suggestion +' <span class="x">'+x+'</span> <span class="y">'+y+'</span> <span class="z">'+z+'</span> <span class="ft_id" id="searchresult_'+newId.split('.')[2]+'">'+newId+'</span></a></li>';
-                $("ul.geozetSuggestions").append(gazHtml);
-                $('#geocodeerresult').show()
             }
             else{
-                // hack to be able to handle results without geom
-                var x = geom?geom.x:150000;
-                var y = geom?geom.y:450000;
-                var z = geom?gazetteerConfig.gazetteer.zoomScale[zoom]:gazetteerConfig.gazetteer.zoomScale['provincie'];
-                mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
-                if (returnCoords === true) {
-                    return {
-                        center: new OpenLayers.LonLat(x, y),
-                        zoom: z
-                    };
-                } 
-                else 
-                {
-                    mapPDOKKaart.setCenter(new OpenLayers.LonLat(x, y), z);
-                }
+                return;
             }
         }
+        api.addWMS($("#wmsUrl").val(), $("#wmsLayer").val(), $("#wmsInfoFormat").val());
     }
-    return false;
-}
-
-
- function addWmsLayer() {
-	api.addWMS($("#wmsUrl").val(), $("#wmsLayer").val());
 }
 
 function addWmtsLayer() {
-	api.addWMTS($("#WmtsUrl").val(), $("#WmtsLayer").val(), $("#WmtsMatrix").val());
+    if ( ($("#WmtsUrl").val().slice(0,4) === "bijv") || 
+            ($("#WmtsLayer").val().slice(0,4) === "bijv") || 
+            ($("#WmtsMatrix").val().slice(0,4) === "bijv") ) {
+        
+        alert("U heeft geen URL naar, een laagnaam of een projectie van een WMTS opgegeven");
+    } else {
+        // wizard is just able to handle ONE wmtsurl (because of the use of query params)
+        // if you need more: create a map via code
+        if (undefined != api.wmtsurl){
+            var layer = api.findWMTS(api.wmsurl, api.wmslayers);
+            var msg = "Er is al een extra WMTS laag gedefinieerd voor deze kaart\nEr kan in de wizard slechts 1 extra laag worden toegevoegd. \nWilt u de oude keuze overschrijven?"
+            var overwrite = confirm(msg);
+            if (overwrite) {
+                if (layer != null) {
+                    api.map.removeLayer(layer);
+                }
+            }
+            else{
+                return;
+            }
+        }
+        api.addWMTS($("#WmtsUrl").val(), $("#WmtsLayer").val(), $("#WmtsMatrix").val());
+    }
 } 
 
 function addPdokLayer() {
-	api.addLayers([$("#pdokLayerSelector").val()]);
+    api.addLayers([{id: $("#pdokLayerSelector").val(),visible: true}]);
 }
 
 function createApiLinksAndCode() {
-	var strGeneratedUrlToLongMessage = "";
+    var strGeneratedUrlToLongMessage = "";
     var apiLink = api.createMapLink();
     if (apiLink.length > 2100){
-    	strGeneratedUrlToLongMessage = "De gemaakte URL is langer dan 2000 tekens!\nDe totale lengte is " + apiLink.length + " tekens.\nOmdat hierdoor sommige browsers een foutmelding geven, worden de URL's niet getoond.";
-    	$("#generated_url_to_long_message").val(strGeneratedUrlToLongMessage);
-		$("#generated_url_to_long_message").show();
-		$("#generated_url").hide();
-    }
-    else{
-		$("#generated_url_to_long_message").val(strGeneratedUrlToLongMessage);
-		$("#generated_url_to_long_message").hide();
-		$("#generated_url").show();
+        strGeneratedUrlToLongMessage = "De gemaakte URL is langer dan 2000 tekens!\nDe totale lengte is " + apiLink.length + " tekens.\nOmdat hierdoor sommige browsers een foutmelding geven, worden de URL's niet getoond.";
+        if (Pdok.ApiKmlService && Pdok.ApiKmlService.length > 0){
+            strGeneratedUrlToLongMessage += "\nU kunt via de knop 'KML-opslagservice' eventueel de KML vervangen door een KML-url.";
+            $("#kml_url_service").show();
+        }
+        $("#generated_url_to_long_message").val(strGeneratedUrlToLongMessage);
+        $("#generated_url_to_long_message").show();
+        $("#generated_url").hide();
+    } else {
+        $("#generated_url_to_long_message").val(strGeneratedUrlToLongMessage);
+        $("#generated_url_to_long_message").hide();
+        $("#generated_url").show();
+        $("#kml_url_service").hide();
     }
     $("#apilink1").attr('href', apiLink);
     $("#apilink2").val(apiLink);
     $("#apilink3").attr('href', api.createMailLink());
     $("#embedhtmliframe").val(api.createIframeTags());
     $("#embedhtmlobject").val(api.createObjectTags());
-    $("#scriptcodeHead").val(api.createHtmlHead());
-    $("#scriptcodeBody").val(api.createHtmlBody());
+    $("#scriptcodeBody").val(api.createHtml() + "\n");
+    var link = document.createElement("a");
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + api.createKML());
+    link.setAttribute("download", "markers.kml");
+    link.setAttribute("class", "filterbutton");
+    $(link).html('Download kml bestand');
+    $('#generated_kml').html(link);
 }
 
 function removeFeature (ft_id) {
-    var ok = confirm ("Deze locatie verwijderen?")
+    var ok = confirm ("Deze locatie verwijderen?");
     if (ok) {
-        $('#listitem_'+ft_id.split('.')[2]).remove()
+        $('#listitem_'+ft_id.split('.')[2]).remove();
         var ft = markers.getFeatureById(ft_id);
         mapPDOKKaart.removePopup(ft.popup);
         markers.removeFeatures([ft]);
@@ -746,30 +582,102 @@ function setMapSize() {
 
 
 function updateMarkerTitle(markerTitle, ft_id) {
-	var ft = markers.getFeatureById(ft_id);
-	ft.attributes.title = markerTitle;
+    var ft = markers.getFeatureById(ft_id);
+    ft.attributes.title = markerTitle;
 } 
 
 
  function updateMarkerText(markerText, ft_id) {
-	var ft = markers.getFeatureById(ft_id);
-	ft.attributes.description = markerText;
+    var ft = markers.getFeatureById(ft_id);
+    ft.attributes.description = markerText;
 }
  
 
-function pdok_api_map_resize(w,h) {
-    this.document.getElementById("map").style.height = h + 'px';
-    this.document.getElementById("map").style.width = w + 'px';
-    mapPDOKKaart.updateSize();
-	
+function pdok_api_map_resize(size) {
+    if(api){
+        api.setSizeByName(size);
+    }
 }
 
 function setLayerSwitcherVisible(isVisible){
-	if (isVisible){
-		$('.olControlLayerSwitcher').show();
-	}
-	else{
-		$('.olControlLayerSwitcher').hide();
-	}
-	api.setLayerSwitcherVisible(isVisible);
+    if (isVisible){
+        $('.olControlLayerSwitcher').show();
+    } else {
+        $('.olControlLayerSwitcher').hide();
+    }
+    api.setLayerSwitcherVisible(isVisible);
+}
+function setZoomVisible(isVisible){
+    if (isVisible){
+        $('.olControlZoom').show();
+    } else {
+        $('.olControlZoom').hide();
+    }
+    api.setZoomVisible(isVisible);
+}
+function setScaleLineVisible(isVisible){
+    if (isVisible){
+        $('.olControlScaleLine').show();
+    } else {
+        $('.olControlScaleLine').hide();
+    }
+    api.setScaleLineVisible(isVisible);
+}
+function setNavigationVisible(isVisible){
+    api.setNavigationVisible(isVisible);
+}
+function setMousePositionVisible(isVisible){
+    if (isVisible){
+        $('.olControlMousePosition').show();
+    } else {
+        $('.olControlMousePosition').hide();
+    }
+    api.setMousePositionVisible(isVisible);
+}
+function setMapsearchVisible(isVisible){
+    if (isVisible){
+        api.activateGeocoder({div:'searchthingonthemap'});
+        $('#searchthingonthemap').show();
+    } else {
+        $('#searchthingonthemap').hide();
+    }
+    api.setMapsearchVisible(isVisible);
+}
+function setLegendVisible(isVisible){
+    if (isVisible){
+        api.activateLegend({div:'legendonthemap'});
+        $('#legendonthemap').show();
+    } else {
+        $('#legendonthemap').hide();
+    }
+    api.setLegendVisible(isVisible);
+}
+function reload_wizard_based_on_url(){
+    strUrl = $('#pdokkaartUrl').val();
+    if (strUrl.substr(0,4).toUpperCase() === 'HTTP'){
+        if (strUrl.indexOf('?') > -1){
+            window.location.replace(Pdok.ApiUrl.split('api')[0] + '?' + strUrl.split('?')[1]);
+        }
+    } else {
+        alert('Fout bij het ophalen van de url\n(Let op: een externe url moet met \'http://\' beginnen) ');
+        return;
+    }
+}
+function setCheckbox(id, value) {
+    // unchecks if value is false or undefined, otherwise checks
+    if (value) {
+        $(id).prop("checked", true)
+    } else {
+        $(id).prop("checked", false)
+    }
+}
+function setGuiToApiState(api) {
+    var config = api.getConfig();
+    setCheckbox('#maplayerswitcher', config.showlayerswitcher);
+    setCheckbox('#mapzoom', config.showzoom);
+    setCheckbox('#mapnavigation', config.shownavigation);
+    setCheckbox('#mapscaleline', config.showscaleline);
+    setCheckbox('#mapmouseposition', config.showmouseposition);
+    setCheckbox('#mapsearch', config.geocoder);
+    setCheckbox('#maplegend', config.legend);   
 }

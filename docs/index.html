@@ -1,8 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
-<html><head>
-<meta http-equiv="content-type" content="text/html; charset=ISO Latin 1">
-	<title>PDOKKaart documentatie</title>
-    <head>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>PDOKKaart documentatie</title>
     <link rel="stylesheet" href="../css/rijkshuisstijl/screen.css" type="text/css" media="screen" />
 <!--[if IE 8]><link rel="stylesheet" href="../css/rijkshuisstijl/ie/ie8.css" type="text/css" media="screen" /><![endif]-->
 <!--[if lte IE 7]><link rel="stylesheet" href="../css/rijkshuisstijl/ie/ie7.css" type="text/css" media="screen" /><![endif]-->
@@ -14,6 +15,11 @@
     <script type="text/javascript" src="../api/js/OpenLayers.js"></script>
     <script type="text/javascript" src="../api/js/proj4js-compressed.js"></script>
 	<script type="text/javascript" src="../api/js/pdok-api.js"></script>
+    <!--
+        development.js contains the Pdok.ApiUrl and OpenLayers.ProxyHost for development
+        it is always included so in production should be empty or commented out
+     -->
+    <script type="text/javascript" src="../api/js/development.js"></script>
 	<!-- Extra layers which can be used to override the default layers -->
     <style>
         #content{
@@ -28,8 +34,8 @@
             margin-top: 26px;
         }
     </style>
-    </head>
-    <body>
+  </head>
+  <body>
     <div class="container equalize page orange default">
       <div class="header">
         <span></span>
@@ -40,22 +46,13 @@
         <div class="nav_bar">
           <ul class="nav_main">
             <li>
-              <a href="http://www.pdok.nl">Home</a>
+                <a href=".">Home</a>
             </li>
             <li>
-              <a href="../">PDOK Wizard</a>
+                <a href="index.html">PDOK Wizard</a>
             </li>
-            <li>
-              <a href="../help.html">Help</a>
-            </li>
-            <li>
-              <a href="../examples">Voorbeelden</a>
-            </li>
-            <li>
-              <a href="../faq.html">FAQ's</a>
-            </li>
-            <li class="sel ">
-              <a class="active" href="#">Documentatie</a>
+            <li class="sel">
+                <a class="active" href="help.html">Help</a>
             </li>
           </ul>
         </div>
@@ -132,7 +129,7 @@ De defaultmarkers<br/>
     document.getElementById("styleselector").innerHTML = document.getElementById("styleselector").innerHTML + '<UL>'+ pointSeparator+pointStylesHtml + "</dl>" + lineSeparator+lineStylesHtml  + "</dl>" +  polygonSeparator+polygonStylesHtml + "</dl>";
 </script>
 <br/>
-<h3><div class="stylehead">De default kaartlagen in de API:</div></h3>
+<div class="stylehead"><h3>De default kaartlagen in de API:</h3></div>
 <div id="divpdoklayers"></div>
 <script>
 	var o = OpenLayers.Util.getParameters();
@@ -258,5 +255,5 @@ http://localhost/~giscc/pdokkaart/index.html?tmsurl=http://geodata.sohosted-vps.
         </div>
       </div>
     </div>
-    </body>
+  </body>
 </html>

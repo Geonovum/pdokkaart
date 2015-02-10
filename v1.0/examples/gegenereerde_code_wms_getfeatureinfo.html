@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="../api/styles/default/style.css" type="text/css">
 		<link rel="stylesheet" href="../api/styles/api.css" type="text/css">
 		<script>var config = {
-			"zoom":11,
+			"zoom":5,
 			"loc":['153954', '462727'],
 			"pdoklayers":'BRT'
 		};
@@ -22,15 +22,15 @@
 		<script>
 			var info;
 			var api = createPDOKKaart();
-			api.addWMS("http://geodata.nationaalgeoregister.nl/bagviewer/wms","bagviewer:pand");
-			api.addWMS("http://geodata.nationaalgeoregister.nl/bagviewer/wms","bagviewer:verblijfsobject");
+			api.addWMS("http://geodata.nationaalgeoregister.nl/natura2000/wms","natura2000:natura2000");
+			api.addWMS("http://geodata.nationaalgeoregister.nl/nationaleparken/wms","nationaleparken");
 			var highlight = new OpenLayers.Layer.Vector("Highlighted Features", {
 	            displayInLayerSwitcher: false, 
     	        isBaseLayer: false 
 	        });
 	        api.map.addLayers([highlight]);
 			info = new OpenLayers.Control.WMSGetFeatureInfo({
-	            url: 'http://geodata.nationaalgeoregister.nl/bagviewer/wms', 
+	            url: 'http://geodata.nationaalgeoregister.nl/nationaleparken/wms', 
     	        title: 'Vraag informatie op uit de kaart door te klikken',
         	    queryVisible: true,
             	eventListeners: {
