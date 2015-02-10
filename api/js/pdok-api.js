@@ -9,17 +9,18 @@ window.Pdok = Pdok;
 Pdok.API_VERSION_NUMBER = '1.1.0';
 
 
-// production urls
-//Pdok.ApiUrl = "http://www.rijkswaterstaat.nl/pdokkaart/api"; // target url
-Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/apps/geoservices/geoservices2.4/proxy.cgi?url="; // Rijkswaterstaat proxy
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
+// CONFIGURATION
+// NOTE: for development we include a js/development.js into several html pages
+// please UNcomment the two configuration params in that file during development
+// that file is in .gitignore so should not be in your way during pushes to github
 
-// development urls (put in comments before checking in !!)
-//Pdok.ApiUrl = "http://192.168.1.176/pdokkaart/api";
-//Pdok.ApiUrl = "http://192.168.1.57/pdokkaart/api";
-//Pdok.ApiUrl = "http://192.168.178.23/pdokkaart/api";
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/cgi-bin/proxy.py?url=";  // current test proxy
+// PDOK LOKET PRODUKTIE
+Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
+OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaart.pdok.nl
+
+// RIJKSWATERSTAAT
+//Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
 
 
@@ -44,10 +45,6 @@ OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + 
  *    src="api/api.html?mloc=136260,456394&bbox=130000,450000,150000,470000"
  *  >
  */
-
-
-// CONFIG
-Pdok.ApiKmlService = 'http://www.duif.net/kml/';
 
 
 Pdok.absoluteUri = function(relative) {
