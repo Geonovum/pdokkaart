@@ -549,12 +549,10 @@ function createApiLinksAndCode() {
     $("#embedhtmliframe").val(api.createIframeTags());
     $("#embedhtmlobject").val(api.createObjectTags());
     $("#scriptcodeBody").val(api.createHtml() + "\n");
-    var link = document.createElement("a");
-    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + api.createKML());
-    link.setAttribute("download", "markers.kml");
-    link.setAttribute("class", "filterbutton");
-    $(link).html('Download kml bestand');
-    $('#generated_kml').html(link);
+    $('#featuresKML').val(api.createKML() + "\n");
+    // data:application/vnd.google-earth.kml+xml
+    // data:text/csv
+    $('#download_kml').attr('href', 'data:application/vnd.google-earth.kml+xml;charset=utf-8,' + api.createKML(true))
 }
 
 function removeFeature (ft_id) {
