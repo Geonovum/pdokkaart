@@ -16,6 +16,13 @@ Inleiding
 Deze documentatie bevat de technische beschrijving van de PDOK kaart API inclusief voorbeelden.
 De Github wiki wordt gebruikt voor de meer functionele beschrijving van PDOK kaartAPI.
 
+Zoek een locatie
+
+Voordat u een kaart voor uw website gaat maken, zult u eerst naar de plaats op de kaart willen gaan waarvoor u de kaart wilt maken. Dit kan door 
+
+.. image:: images/zoombutton.png
+
+
 API - documentatie
 ==================
 
