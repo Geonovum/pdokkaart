@@ -84,7 +84,7 @@ Vraag 7
     Hoe kan ik een KML bestand maken met de PDOK Kaart Wizard.
 
 Antwoord
-    Plaats de markers, lijnen en vlakken met de Wizard en kies stap 3: Genereer code. Kopieer uit “Als broncode in de HTML Head-sectie plaatsen:” de KML code die tussen <KML> en </KML> staat (inclusief <KML> en </KML>). Plak deze code in een tekstbestand. Voeg als eerste regel
+    Plaats de markers, lijnen en vlakken met de Wizard en kies stap 3: Genereer code. Kopieer uit “Als broncode in de HTML Head-sectie plaatsen:” de KML code die tussen <KML> en </KML> staat (inclusief <KML> en </KML>). Plak deze code in een tekstbestand. Voeg als eerste regel::
 
     <?xml version="1.0" encoding="UTF-8"?>
 
