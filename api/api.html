@@ -1,31 +1,108 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="nl" xml:lang="nl">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" > <!-- force >IE8 -->
-    <title>PDOK API</title>
-
-    <link rel="stylesheet" href="./styles/default/style.css" type="text/css"/>
-    <link rel="stylesheet" href="./styles/api.css" type="text/css"/>
-
-    <script src="./js/OpenLayers.js" type="text/javascript"></script>
-    <script src="./js/proj4js-compressed.js" type="text/javascript"></script>
-	<script src="./js/GeocoderControl.js" type="text/javascript"></script>
-	<script src="./js/tile.stamen.js" type="text/javascript"></script>
-	<script src="./js/pdok-api.js" type="text/javascript"></script>
-    <script src="js/geozetlib.js" type="text/javascript"></script>
-    <script type="text/javascript" >
-        function init() {
-            var o = OpenLayers.Util.getParameters();
-            api = new Pdok.Api(o);
-        }
-    </script>
-
-  </head>
-    <body onload="init()">
-    <div id="map"></div>
-  </body>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+        <meta name="keywords" content="pdok,kaart,wizard" />
+        <meta name="description" content="" />
+        <title>PDOK Kaart op maat</title>
+        <style>
+            div.olMap.big {
+                height: inherit;
+                width: auto;
+            }
+            #search {
+                top: 5px;
+                left: 45px;
+                position: absolute;
+                z-index:2000;
+                padding: 10px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            fieldset {
+                padding: 0;
+                margin: 0;
+                border: 0px solid #fff;
+            }
+            #searchResults{
+                height: 350px;
+                overflow-y: auto;
+            }
+            .filterbutton:hover {
+                background-color: #273397;
+                border: 1px solid #273397;
+            }
+            .filterbutton{
+                cursor:pointer;
+                width:70px;
+                height: 31px;
+                color: transparent;
+                background-color: #e17000;
+                color: #fff;
+                border: 1px solid #e17000;
+                -moz-border-radius: 2px;
+                -webkit-border-radius: 2px; 
+            }
+            #geocodeerresult {
+                display: none;
+                background-color: #F6D4B2;
+                height: 450px;
+                width: 324px;
+                border: 0px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                overflow-y: auto;
+                z-index: 2000;
+                padding:24px;
+            }
+            #geocodeerresult li{
+                /*height: 20px;*/
+                background: url(../img/link-hover.gif) no-repeat right bottom;
+            }
+            #geocodeerresult a{
+                color: black;
+                margin: 5px;
+                text-decoration: none;
+            }
+            form input[type=text], form select, form textarea, form select {
+                float:left;
+                width:190px;
+                height:27px;
+                line-height:27px;
+                text-indent:10px;
+                font-size:1em;
+                color:#333;
+                background: #fff;
+                border:solid 1px #d9d9d9;
+                border-top:solid 1px #c0c0c0;
+                border-right:none;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript" src="js/OpenLayers.js"></script>
+        <script type="text/javascript" src="js/proj4js-compressed.js"></script>
+        <script type="text/javascript" src="js/pdok-api.js"></script>
+        <script type="text/javascript" src="js/OpenLayersPdokKaartExtenders.js"></script>
+        <script type="text/javascript" src="js/geozetlib.js"></script>
+        <script type="text/javascript">
+            Pdok.addcss("styles/default/style.css");
+            Pdok.addcss("styles/api.css");
+            OpenLayers.ImgPath = "img/";
+            var config_vialink = OpenLayers.Util.getParameters();
+            if (!config_vialink.mapdiv) {
+                config_vialink.mapdiv = 'map_vialink';
+            }
+            var api_vialink;
+            Pdok.ready(function() {
+                api_vialink = new Pdok.Api(config_vialink);
+            });
+        </script>
+        <div id="map_vialink" class="fullscreen olMap"></div>
+    </body>
 </html>

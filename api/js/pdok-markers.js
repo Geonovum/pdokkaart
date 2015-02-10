@@ -6,7 +6,9 @@
  * a line marker 
  * a polygon marker 
  */ 
- 
+ var Pdok = Pdok || {};
+window.Pdok = Pdok;
+
 
 Pdok.Api.prototype.defaultStyles=[ 
         // all point marker styles will use mt0 as default 
