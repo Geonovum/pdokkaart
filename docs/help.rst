@@ -115,28 +115,24 @@ Marker uit URL, bestand of tekst
 
 Door de optie “Marker uit URL, bestand of tekst” aan te vinken kunnen
 markers ingelezen worden die volgens een bepaalde standaard zijn
-gedefinieerd. Er worden twee standaarden ondersteund:
+gedefinieerd. Er worden twee standaarden ondersteund KML en TXT.
 
--  KML
--  TXT = Y-X Bestand
+**KML** Voor meer informatie over het KML formaat zie `de documentatie van Google <https://developers.google.com/kml/documentation/>`_.
 
-Voor meer informatie over het KML formaat zie `de documentatie van Google <https://developers.google.com/kml/documentation/>`__.
-
-TXT
-Het gaat hierbij om een YX-tekstbestand met coördinaten in RD. Het
-scheidingsteken is een tab (hieronder aangeduid als <tab>. Let op:
-vooralsnog moet eerst de Y worden vermeld en dan de X!! Dit wordt in een
-later stadium aangepast.
+**TXT** Het gaat hierbij om een YX-tekstbestand met coördinaten in RD. Het
+scheidingsteken is een `tab`. 
 
 In geval van RD is de volgende input vereist (inclusief koptekst):
 
 ::
 
     point	title	description
-    517000	117960	tekst1	omschrijving1
-    517200	117200	tekst2	omschrijving2
+    517000,117960	tekst1	omschrijving1
+    517200,117200	tekst2	omschrijving2
 
-.. NOTE:: Let op, in de hierbovenstaande tabel moeten de gegevens door een TAB-gescheiden worden!
+.. NOTE:: In de hierbovenstaande tabel moeten de gegevens door een `TAB` gescheiden worden!
+
+.. NOTE:: Vooralsnog moet eerst de Y worden vermeld en dan de X. Dit wordt in een later stadium aangepast.
 
 Via URL
 .......
@@ -335,7 +331,7 @@ van de x en de y coördinaat te worden opgegeven.
 
 Voor een punt(WKT), lijn(WKT) en een vlak(WKT) dient u de naam van
 het attribuut op te geven waarin de wkt informatie wordt opgeslagen.
-Voor meer informatie over het WKT formaat zie `Wikipedia <http://en.wikipedia.org/wiki/Well-Known Text>`_.
+Voor meer informatie over het WKT formaat zie `Wikipedia <http://en.wikipedia.org/wiki/Well-known_text>`_ .
 
 |image19.png|
 
