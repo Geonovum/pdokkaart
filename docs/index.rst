@@ -20,7 +20,7 @@ Zoek een locatie
 
 Voordat u een kaart voor uw website gaat maken, zult u eerst naar de plaats op de kaart willen gaan waarvoor u de kaart wilt maken. Dit kan door 
 
-.. image:: images/zoombutton.png
+.. image:: images/zoombuttons.png
 
 
 API - documentatie
