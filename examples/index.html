@@ -17,10 +17,8 @@
         <!-- Extra layers which can be used to override the default layers -->
         <script type="text/javascript" src="../js/jquery.js"></script>
         <script type="text/javascript" src="../api/js/OpenLayers.js"></script>
-        <script type="text/javascript" src="../api/js/OpenLayersPdokKaartExtenders.js"></script>
         <script type="text/javascript" src="../api/js/proj4js-compressed.js"></script>
         <script type="text/javascript" src="../api/js/pdok-api.js"></script>
-        <script type="text/javascript" src="../api/js/geozetlib.js"></script>
         <!--
             development.js contains the Pdok.ApiUrl and OpenLayers.ProxyHost for development
             it is always included so in production should be empty or commented out
@@ -93,6 +91,10 @@
                                     $('#exwin').attr('src', hyperlink);
                                     $('#exwin').show();
                                     loadIframe('exwin', hyperlink);
+                                    //add hyperlink to code preview div
+                                    var p = $('#code').first();
+                                    p.empty();
+                                    p.append(hyperlink);
                                     return;
                                 }
                             }
@@ -102,6 +104,12 @@
                             $('#export').hide();
                             $('#map').show();
                             examplescripts[$(this).attr('id')]();
+                            //add hyperlink to code preview div
+                            var p = $('#code').first();
+                            p.empty();
+                            var script = examplescripts[$(this).attr('id')].toSource(); 
+                            // TODO: remove function and fix indentation
+                            p.append(script);
                         }
                         // no: do nothing for now.
                     }
@@ -119,7 +127,6 @@
                 });
             });
         </script>
-
     </head>
     <body>
         <div class="container equalize page orange default">
@@ -132,7 +139,7 @@
                 <div class="nav_bar">
                     <ul class="nav_main">
                         <li>
-                            <a href="../">Home</a>
+                            <a href="http://www.pdok.nl">Home</a>
                         </li>
                         <li>
                             <a href="../">PDOK Wizard</a>
@@ -151,6 +158,7 @@
                         <div id="map" class="big"></div>
                         <div id="map2" class="olMap medium"></div>
                         <div id="map3" class="olMap small"></div>
+                        <div><pre id="code" class="code">code();</pre></div>
                         <div id="export" style="display:none;">
                             <input id="export_ahn_geotiff" class="export_button" type="button" value="Actueel Hoogtebestand Nederland (versie 1) - GEOTIFF"><br/>
                             <input id="export_cbs_kml" class="export_button" type="button" value="CBS Gemeentegrenzen (2008) - KML" ><br/>
