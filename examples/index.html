@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="../css/rijkshuisstijl/toevoeging.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="../css/rijkshuisstijl/iconids.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" />
+
         <!-- To show the default markers these js-files are needed -->
         <!-- Extra layers which can be used to override the default layers -->
         <script type="text/javascript" src="../js/jquery.js"></script>
@@ -107,9 +108,14 @@
                             //add hyperlink to code preview div
                             var p = $('#code').first();
                             p.empty();
-                            var script = examplescripts[$(this).attr('id')].toSource(); 
-                            // TODO: remove function and fix indentation
-                            p.append(script);
+                            var script = examplescripts[$(this).attr('id')].toString().split('\n');
+                            script.shift();
+                            script.pop();
+                            var spaces = script[0].split(' ').length - 1;
+                            var formattedScript = script.join('\n');
+                            
+                            var regExp = new RegExp(' {' + spaces + '}', 'g');
+                            p.append(formattedScript.replace(regExp, ''));
                         }
                         // no: do nothing for now.
                     }
