@@ -541,3 +541,12 @@ a, a:link, a:focus, a:hover, a:visited {
     margin: 0;
     padding: 0;
 }
+
+#code {
+    position: relative;
+    /*left: 390px;*/
+    width: 100%;
+    overflow: auto;
+    margin-left: 20px;
+    font-size: 1.3em;
+}
