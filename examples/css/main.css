@@ -543,9 +543,10 @@ a, a:link, a:focus, a:hover, a:visited {
 }
 
 #code {
-    position: absolute;
-    left: 390px;
-    top: 450px;
-    width: 550px;
+    position: relative;
+    /*left: 390px;*/
+    width: 100%;
     overflow: auto;
+    margin-left: 20px;
+    font-size: 1.3em;
 }
