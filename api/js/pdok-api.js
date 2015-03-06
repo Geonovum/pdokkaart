@@ -1458,11 +1458,8 @@ Pdok.Api.prototype.findWMTS = function(wmtsurl, wmtslayer) {
  * @param {type} id
  * @returns {OpenLayers.Layer.WMTS}
  */
-Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj, id) {
+Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
 
-    if (!id) {
-        id = null;
-    }
     // From WMTS openlayers example:
     // If tile matrix identifiers differ from zoom levels (0, 1, 2, ...)
     // then they must be explicitly provided.
@@ -1474,7 +1471,6 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj, id) {
     // default WMTS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
-            pdokid: id,
             name: 'wmts layer',
             url: '',
             layer: '',
@@ -1500,7 +1496,6 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj, id) {
     var layer = new OpenLayers.Layer.WMTS(
         {
             name: layerConfigObj.name,
-            pdokid: layerConfigObj.pdokid,
             url:layerConfigObj.url,
             layer: layerConfigObj.layer,
             style: layerConfigObj.style,
@@ -1562,14 +1557,10 @@ Pdok.Api.prototype.findWMS = function(wmsurl, wmslayers) {
  * @param {type} id
  * @returns {OpenLayers.Layer.WMS}
  */
-Pdok.Api.prototype.createWMSLayer = function(layerConfigObj, id) {
+Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
     // default WMS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
-    if (!id) {
-        id = null;
-    }
     var defaults = {
-            pdokid: id,
             name: 'WMS layer',
             url: '',
             layers: '',
@@ -1593,7 +1584,6 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj, id) {
                 format: layerConfigObj.format
             },
             {
-                pdokid: layerConfigObj.pdokid,  
                 visibility: layerConfigObj.visibility, 
                 isBaseLayer: layerConfigObj.isBaseLayer, 
                 singleTile: layerConfigObj.singleTile,
@@ -1674,12 +1664,13 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
             }
             if (lyr){
                 map.addLayer(lyr);
-                if(!lyr.isBaseLayer){
-                    lyr.setVisibility(layer.visible);
-                } else {
+                lyr.pdokid = layer.id;
+                if(lyr.isBaseLayer){
                     if(layer.visible){
                         map.setBaseLayer(lyr);
                     }
+                } else {
+                    lyr.setVisibility(layer.visible);
                 }
             }
         } else {
@@ -2305,21 +2296,23 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
             config.legend = JSON.stringify(this.legend);
         }
         config.loc = this.map.getCenter().toShortString();
-        // layers
-        var layers = [];
+        // overlays are 'pdok layers' from the pdok-layers.js configuration
+        // only overlays will be outputted as 'overlays'-query parameter when outputting a config
+        // other added layers are NOT overlays as defined here
+        var overlays = [];
         var baselayers = [];
-        for (layer in this.map.layers){
-            // only layers with a pdokId, and NOT our this.featuresLayer
-            if (!(this.map.layers[layer].name == this.FEATURESLAYER_NAME 
-                || this.map.layers[layer].name == this.LOCATIONSLAYER_NAME
-                || this.map.layers[layer].name.indexOf("OpenLayers.Handler.")>=0)){  // if there is still an editor active, we have such a layer
-                if (!this.map.layers[layer].isBaseLayer) {
-                     layers.push({"id": this.map.layers[layer].pdokid, visible: this.map.layers[layer].visibility});
-                } else {
-                    if(this.map.layers[layer].visibility){
-                        baselayers.push({"id": this.map.layers[layer].pdokid, visible: true});
+        var mapLayer;
+        for (layerId in this.map.layers){
+            mapLayer = this.map.layers[layerId];
+            // NOT our this.featuresLayer and this.locationslayer 
+            if (!(mapLayer.name == this.FEATURESLAYER_NAME 
+                || mapLayer.name == this.LOCATIONSLAYER_NAME
+                || mapLayer.name.indexOf("OpenLayers.Handler.")>=0)){  // if there is still an editor active, we have such a layer
+                if (typeof mapLayer.pdokid !== 'undefined' && mapLayer.pdokid !== null) {  // only pdok-layers should be added to these lists
+                    if (mapLayer.isBaseLayer) {
+                        baselayers.push({"id": mapLayer.pdokid, visible: mapLayer.visibility});
                     } else {
-                        baselayers.push({"id": this.map.layers[layer].pdokid, visible: false});
+                        overlays.push({"id": mapLayer.pdokid, visible: mapLayer.visibility});
                     }
                 }
             }
@@ -2327,8 +2320,8 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         if (baselayers.length > 0) {
             config.baselayers = baselayers;
         }
-        if (layers.length > 0) {
-            config.overlays = layers;
+        if (overlays.length > 0) {
+            config.overlays = overlays;
         }
         // wmsurl AND wmslayers
         if(this.wmsurl && this.wmsurl.length>0 && this.wmslayers && this.wmslayers.length>0) {
