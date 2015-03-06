@@ -1381,7 +1381,6 @@ Pdok.Api.prototype.createTMSLayer = function(layerConfigObj, id) {
     // default TMS layer object to set defaults:
     // missing values in config object will be replaced by sensible defaults:
     var defaults = {
-        pdokid: id,
         name: 'tms layer',
         url: '',
         layertype: '',
@@ -2308,7 +2307,7 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
             if (!(mapLayer.name == this.FEATURESLAYER_NAME 
                 || mapLayer.name == this.LOCATIONSLAYER_NAME
                 || mapLayer.name.indexOf("OpenLayers.Handler.")>=0)){  // if there is still an editor active, we have such a layer
-                if (typeof mapLayer.pdokid !== 'undefined' && mapLayer.pdokid !== null) {  // only pdok-layers should be added to these lists
+                if (typeof mapLayer.pdokid !== 'undefined') {  // only pdok-layers should be added to these lists
                     if (mapLayer.isBaseLayer) {
                         baselayers.push({"id": mapLayer.pdokid, visible: mapLayer.visibility});
                     } else {
