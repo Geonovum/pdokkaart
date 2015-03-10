@@ -166,6 +166,7 @@ ul.geozetSuggestions{
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 80%;
 }
 fieldset {
     padding: 0;
