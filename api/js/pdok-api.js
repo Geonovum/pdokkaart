@@ -2241,20 +2241,20 @@ Pdok.Api.prototype.createHtml = function(){
     }
     var uniqueid = OpenLayers.Util.createUniqueID("");
     var confobj = this.getConfig(uniqueid);
-    var conf = JSON.stringify(confobj);
+    var conf = JSON.stringify(confobj, null, 2);
     var head = '<script type="text/javascript" src="' + base + 'api/js/OpenLayers.js"></script>\n' +
     '<script type="text/javascript" src="' + base + 'api/js/proj4js-compressed.js"></script>\n' +
     '<script type="text/javascript" src="' + base + 'api/js/OpenLayersPdokKaartExtenders.js"></script>\n' +
     '<script type="text/javascript" src="' + base + 'api/js/pdok-api.js"></script>\n'+ 
     '<script type="text/javascript" src="' + base + 'api/js/geozetlib.js"></script>\n' + stylesAndLayers;
-    head += '<script type="text/javascript">' +
+    head += '<script type="text/javascript">\n' +
     //add the css ref automagically, it cannot be put inside the body!
     'Pdok.addcss("' + base + 'api/styles/default/style.css");\n' +
     'Pdok.addcss("' + base + 'api/styles/api.css");\n' +
     //'OpenLayers.ImgPath="' + Pdok.ApiUrl+ '/img/";' +
     'var config_' + uniqueid + '=' + conf + ';\n' +
     'var api_' + uniqueid + ';\n' +
-    'Pdok.ready( \nfunction(){ api_' + uniqueid + ' = new Pdok.Api(config_' + uniqueid + '); } );\n' +
+    'Pdok.ready( \nfunction(){ \napi_' + uniqueid + ' = new Pdok.Api(config_' + uniqueid + ');\n} );\n' +
     '</script>\n';
     var activeClass = $('#map').attr('class');
     head += '<div id="map_' + uniqueid + '" class="' + activeClass + '"></div>\n';
