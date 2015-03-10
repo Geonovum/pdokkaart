@@ -10,9 +10,6 @@ Pdok.API_VERSION_NUMBER = '1.1.0';
 
 
 // CONFIGURATION
-// NOTE: for development we include a js/development.js into several html pages
-// please UNcomment the two configuration params in that file during development
-// that file is in .gitignore so should not be in your way during pushes to github
 
 // PDOK LOKET PRODUKTIE
 Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
