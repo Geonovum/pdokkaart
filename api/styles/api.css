@@ -229,3 +229,15 @@ fieldset {
     border-top:solid 1px #c0c0c0;
     border-right:none;
 }
+
+.olControlLoadingPanel {
+    background-image: url("../img/dataloading.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: none;
+    height: 24px;
+    position: relative;
+    right: 2px;
+    width: 24px;
+    top: 2px;
+}

@@ -19,6 +19,10 @@ OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaar
 //Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
+// PDOK LOKET DEV
+//Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
+///OpenLayers.ProxyHost = "http://pdokserver/proxy?url="; // kaart.pdok.nl
+
 
 
 /**
@@ -738,10 +742,6 @@ Pdok.Api.prototype.createOlMap = function() {
         (this.showzoom === true || this.showzoom.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.Zoom());
     }
-    if (this.showlayerswitcher &&
-        (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")) {
-        controls.push(new OpenLayers.Control.LayerSwitcher());
-    }
     var olMap = new OpenLayers.Map ({
         controls: controls,
         maxExtent: new OpenLayers.Bounds(-285401.92,22598.08,595401.9199999999,903401.9199999999),
@@ -753,6 +753,16 @@ Pdok.Api.prototype.createOlMap = function() {
         div: this.div
     });
     this.map = olMap;
+
+    if (this.showlayerswitcher &&
+        (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")) {
+        var switcher = new OpenLayers.Control.LayerSwitcher();
+        this.map.addControl(switcher);
+        switcher.maximizeControl(); // IF we do a layer switcher, then open it
+    }
+
+    // loading panel control (waiting for data control)
+    this.map.addControl(new OpenLayers.Control.LoadingPanel());
 
     // geocoder is an object property with a div like {div:'bla'}
     if (this.geocoder) {
