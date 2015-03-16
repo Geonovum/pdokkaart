@@ -10,6 +10,6 @@ Of
 
 <a href="http://kaart.pdok.nl" target="_blank">Klik hier voor de productie versie</a>
 
-http://pdok-kaart.readthedocs.org
+http://pdokkaart.readthedocs.org
 
 Markdown
