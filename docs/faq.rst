@@ -1,6 +1,6 @@
 
-Vaak gestelde vragen over PDOK kaart
-====================================
+PDOK Kaart Wizard - Vaak gestelde vragen
+========================================
 
 Vraag 1 - eigen afbeelding gebruiken als marker op de kaart
 -----------------------------------------------------------
