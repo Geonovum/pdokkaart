@@ -1,19 +1,25 @@
-.. PDOK Kaart documentation master file, created by
-   sphinx-quickstart on Mon Feb  9 14:16:30 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Deze documentatie bevat de technische beschrijving van de PDOK kaart API inclusief voorbeelden.
+De Github wiki wordt gebruikt voor de meer functionele beschrijving van PDOK kaartAPI.
 
-Welcome to PDOK Kaart's documentation!
-======================================
+PDOKKaart is ontstaan uit de wens om (voor de nederlandse) overheid snel een eenvoudige kaartje met informatie te kunnen maken voor het gebruik in website of content management systeem (bijv. ter vervanging van Google Maps kaartjes). 
+Daarbij wordt zoveel mogelijk gebruik gemaakt van Nederlandse gegevens/kaartmateriaal afkomstig van PDOK.
 
 PDOKKaart bestaat uit twee onderdelen: De Kaart Wizard en een JavaScript API.
 
 .. todo:: kort beschrijven wat de Wizard en JS API zijn 
 
-PDOKKaart is ontstaan uit de wens om (voor de nederlandse) overheid snel een eenvoudige kaartje met informatie te kunnen maken voor het gebruik in website of content management systeem (bijv. ter vervanging van Google Maps kaartjes). 
-Daarbij wordt zoveel mogelijk gebruik gemaakt van Nederlandse gegevens/kaartmateriaal afkomstig van PDOK.
-
 PDOKKaart is gebaseerd op OpenLayers. Hierdoor is het eenvoudig om de gestandaardiseerde geo-informatie diensten (WMS, WFS, WMTS, KML, GeoJSON.) van PDOK te tonen.
+
+
+Documentatie
+============
+
+.. toctree::
+   :maxdepth: 1
+
+   wizard
+   api
+   faq
 
 Kaart Wizard
 ------------
@@ -97,48 +103,3 @@ Voorbeelden
 -----------
 
 Deel van de code in Github is ook een heel aantal voorbeelden met zowel URL als CODE voorbeelden van allerlei use-cases
-
-
-header1
-=======
-
-header2
--------
-
-header3
-.......
-
-Contents:
-
-
-.. toctree::
-   :maxdepth: 2
-
-Inleiding
-=========
-Deze documentatie bevat de technische beschrijving van de PDOK kaart API inclusief voorbeelden.
-De Github wiki wordt gebruikt voor de meer functionele beschrijving van PDOK kaartAPI.
-
-Zoek een locatie
-
-Voordat u een kaart voor uw website gaat maken, zult u eerst naar de plaats op de kaart willen gaan waarvoor u de kaart wilt maken. Dit kan door 
-
-.. image:: images/zoombuttons.png
-
-
-API - documentatie
-==================
-
-Code voorbeelden
-================
-
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
