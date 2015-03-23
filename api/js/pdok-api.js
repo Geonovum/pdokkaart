@@ -21,7 +21,7 @@ OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaar
 
 // PDOK LOKET DEV
 //Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
-///OpenLayers.ProxyHost = "http://pdokserver/proxy?url="; // kaart.pdok.nl
+//OpenLayers.ProxyHost = "http://pdokserver/proxy?url="; // kaart.pdok.nl
 
 
 
@@ -1010,8 +1010,17 @@ Pdok.Api.prototype.onPopupFeatureSelect = function(evt) {
     if (!content || content.length === 0) {
         content = '&nbsp;';
     }
+    // first try: get it from the mouseclick from the MousePosition control (NOT working on touch devices)
     var popupLoc = this.map.getLonLatFromPixel(this.map.getControlsByClass("OpenLayers.Control.MousePosition")[0].lastXy);
-    //alert(popupLoc);
+    // second try: see if this is a point geometry with an x and an y
+    if (popupLoc == null && feature.geometry && feature.geometry.x && feature.geometry.y) {
+        popupLoc = new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y);
+    }
+    // if still null (non point geometries?): try the center of bbox of geometry
+    if (popupLoc == null){
+        // try to get a click from mouse control (not working on touch devices)
+        popupLoc = feature.geometry.getBounds().getCenterLonLat();
+    }
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",
                 //feature.geometry.getBounds().getCenterLonLat(),
                 popupLoc,
