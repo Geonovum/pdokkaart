@@ -889,6 +889,9 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // featuresLayer is used for all features/markers
     this.featuresLayer = new OpenLayers.Layer.Vector(this.FEATURESLAYER_NAME);
+    // fix for the label ordering in labels+icons
+    // http://comments.gmane.org/gmane.comp.gis.openlayers.devel.ol3/4156
+    this.featuresLayer.renderer.textRoot = this.featuresLayer.renderer.vectorRoot;
     olMap.addLayer(this.featuresLayer);
 
     // locationLayer holds features for 'kaarprikker/locationtool'
