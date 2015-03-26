@@ -157,3 +157,87 @@ ul.geozetSuggestions{
 	color: black;
 }
 
+#search {
+    top: 5px;
+    left: 45px;
+    position: absolute;
+    z-index:2000;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 80%;
+}
+fieldset {
+    padding: 0;
+    margin: 0;
+    border: 0px solid #fff;
+}
+#searchResults{
+    height: 350px;
+    overflow-y: auto;
+}
+.filterbutton:hover {
+    background-color: #273397;
+    border: 1px solid #273397;
+}
+.filterbutton{
+    cursor:pointer;
+    width:70px;
+    height: 31px;
+    color: transparent;
+    background-color: #e17000;
+    color: #fff;
+    border: 1px solid #e17000;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px; 
+}
+#geocodeerresult {
+    display: none;
+    background-color: #F6D4B2;
+    height: 450px;
+    width: 324px;
+    border: 0px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    overflow-y: auto;
+    z-index: 2000;
+    padding:24px;
+}
+#geocodeerresult li{
+    background: url(../img/link-hover.gif) no-repeat right bottom;
+}
+#geocodeerresult a{
+    color: black;
+    margin: 5px;
+    text-decoration: none;
+}
+#search form input[type=text],
+#search form select, 
+#search form textarea, 
+#search form select {
+    float:left;
+    width:190px;
+    height:27px;
+    line-height:27px;
+    text-indent:10px;
+    font-size:1em;
+    color:#333;
+    background: #fff;
+    border:solid 1px #d9d9d9;
+    border-top:solid 1px #c0c0c0;
+    border-right:none;
+}
+
+.olControlLoadingPanel {
+    background-image: url("../img/dataloading.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: none;
+    height: 24px;
+    position: relative;
+    right: 2px;
+    width: 24px;
+    top: 2px;
+}

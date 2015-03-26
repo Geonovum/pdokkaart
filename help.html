@@ -27,6 +27,69 @@
                 margin-right: 0;
                 margin-top: 26px;
             }
+
+            .card-container {
+                /*background-color: black;*/
+                background-color: rgb(225, 112, 0);
+                width: 190px;
+                height: 250px;
+                margin-left: 80px;
+                margin-top: 20px;
+                /*float: left;*/
+                display: inline-block;
+                border-radius: 5px;
+            }
+
+            .card-image {
+                background-color: white;
+                width: 80%;
+                height: 150px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 25px;
+                border-radius: 5px;
+            }
+
+            .card-title {
+                color: white;
+                text-align: center;
+                font-size: 25px;
+                margin-top: 15px;
+            }
+
+            div.img {
+                width: 100%;
+                height: 150px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+            div.img.github {
+                background-image: url("img/github.png");
+            }
+
+            div.img.issues {
+                background-image: url("img/issues.png");
+                background-size: 70% 70%;
+            }
+
+            div.img.forum {
+                background-image: url("img/forum.png");
+                background-size: 70% 70%;
+            }
+
+            div.img.documentatie {
+                background-image: url("img/documentatie.png");
+                background-size: 70% 70%;   
+            }
+
+            div.img.voorbeelden {
+                background-image: url("img/voorbeelden.png");
+                background-size: 70% 70%;    
+            }
+
+
+
         </style>
     </head>
     <body>
@@ -54,32 +117,52 @@
             <div class="content_wrapper1">
                 <div class="content_wrapper2">
                     <div id="content">
-                        <h1>Help en (ontwikkel) Documentatie</h1>
-                        <p>
-                            Om u op weg te helpen met PDOKKaart of de PDOKKaart wizard zijn er de volgende mogelijkheden:
-                        </p>
-                        <p>
-                            Ga naar de <a href="https://pdokkaart.readthedocs.org">documentatie</a> pagina's. De rst sources
-                            hiervan staan in de docs directory.
-                        </p>
-                        <p>
-                            U kunt ook de voorbeelden bekijken in de <a href="./examples">examples directory</a>.
-                        </p>
-                        <p>
-                            Op het forum deel van <a href="https://www.pdok.nl/nl/forums/pdok-kaart-onderwerpen">www.pdok.nl</a>
-                            is een apart deel ingericht voor
-                             <a href="https://www.pdok.nl/nl/forums/pdok-kaart-onderwerpen">pdok kaart onderwerpen</a>.
-                        </p>
-                        <p>
-                            De code staat in <a href="https://github.com/Geonovum/pdokkaart">Github</a>.
-                        </p>
-                        <p>
-                            Bugs of feature requests, worden ook op Github bijgehouden in de <a href="https://github.com/Geonovum/pdokkaart/issues">Github issues lijst</a>.
-                        </p>
-                        <p>
-                            Een versie wordt ook gehost op github <a href="https://geonovum.github.io/pdokkaart">https://geonovum.github.io/pdokkaart</a>.
-                        </p>
-                        <hr/>
+                    <div class="card-container">
+                        <a href="">
+                            <div class="card-image"></div>
+                            <div class="card-title">PDOK Wizard</div>
+                        </a>
+                    </div>
+                    <a href="https://github.com/geonovum/pdokkaart">
+                        <div class="card-container">
+                            <div class="card-image">
+                                <div class="img github"></div>
+                            </div>
+                            <div class="card-title">Broncode</div>
+                        </div>
+                    </a>
+                    <a href="https://www.pdok.nl/forum">
+                        <div class="card-container">
+                            <div class="card-image">
+                                <div class="img forum"></div>
+                            </div>
+                            <div class="card-title">Forum</div>
+                        </div>
+                    </a>
+                    <a href="http://pdokkaart.readthedocs.org/nl/latest/">
+                        <div class="card-container">
+                            <div class="card-image">
+                                <div class="img documentatie"></div>
+                            </div>
+                            <div class="card-title">Documentatie</div>
+                        </div>
+                    </a>
+                    <a href="http://geonovum.github.io/pdokkaart/examples/">
+                        <div class="card-container">
+                            <div class="card-image">
+                                <div class="img voorbeelden"></div>
+                            </div>
+                            <div class="card-title">Voorbeelden</div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/geonovum/pdokkaart/issues">
+                        <div class="card-container">
+                            <div class="card-image">
+                                <div class="img issues"></div>
+                            <div class="card-title">Issues</div>
+                        </div>
+                    </a>
+
                     </div>
                 </div>
             </div>
