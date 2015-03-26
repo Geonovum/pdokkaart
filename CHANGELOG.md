@@ -14,6 +14,7 @@ voor PDOK-services uit de lijst.
 - De mogelijkheid om een te lange url (> 2.000 tekens) in te korten door extern
 een KML op te slaan.
 hebben.
+- LoadingPanel toegevoegd
 
 ### Aangepast
 - Deel van documentatie is omgezet naar ReadTheDocs.
