@@ -183,7 +183,7 @@ fieldset {
 }
 .filterbutton{
     cursor:pointer;
-    width:70px;
+    width:150px;
     height: 31px;
     color: transparent;
     background-color: #e17000;
