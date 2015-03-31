@@ -528,9 +528,9 @@ function addPdokLayer() {
 function createApiLinksAndCode() {
     var strGeneratedUrlToLongMessage = "";
     var apiLink = api.createMapLink();
-    if (apiLink.length > 2100){
+    if (apiLink.length > 2100) {
         strGeneratedUrlToLongMessage = "De gemaakte URL is langer dan 2000 tekens!\nDe totale lengte is " + apiLink.length + " tekens.\nOmdat hierdoor sommige browsers een foutmelding geven, worden de URL's niet getoond.";
-        if (Pdok.ApiKmlService && Pdok.ApiKmlService.length > 0){
+        if (Pdok.ApiKmlService && Pdok.ApiKmlService.length > 0) {
             strGeneratedUrlToLongMessage += "\nU kunt via de knop 'KML-opslagservice' eventueel de KML vervangen door een KML-url.";
             $("#kml_url_service").show();
         }
@@ -552,7 +552,13 @@ function createApiLinksAndCode() {
     $('#featuresKML').val(api.createKML() + "\n");
     // data:application/vnd.google-earth.kml+xml
     // data:text/csv
-    $('#download_kml').attr('href', 'data:application/vnd.google-earth.kml+xml;charset=utf-8,' + api.createKML(true))
+    if (navigator.appVersion.indexOf('MSIE 10')>=0 || navigator.userAgent.indexOf('Trident')>=0) {
+        // IE >=10  cannot handle data-uri's
+        $('#download_kml_span').hide();
+    }
+    else {
+        $('#download_kml').attr('href', 'data:application/vnd.google-earth.kml+xml;charset=utf-8,' + api.createKML(true))
+    }
 
 }
 
