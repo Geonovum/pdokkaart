@@ -88,7 +88,6 @@ function createOnClickEvents() {
     $('#mapscaleline').click( function() { setScaleLineVisible($('#mapscaleline').is(':checked')); } );
     $('#mapmouseposition').click( function() { setMousePositionVisible($('#mapmouseposition').is(':checked')); } );
     $('#mapsearch').click( function() { setMapsearchVisible($('#mapsearch').is(':checked')); } );
-    $('#maplegend').click( function() { setLegendVisible($('#maplegend').is(':checked')); } );
     $('#addpdoklayerbutton').click( function() { addPdokLayer();return false; } );
     $('#addwmslayerbutton').click( function() { addWmsLayer();return false; } );
     $('#addwmtslayerbutton').click( function() { addWmtsLayer();return false; } );
@@ -648,15 +647,6 @@ function setMapsearchVisible(isVisible){
     }
     api.setMapsearchVisible(isVisible);
 }
-function setLegendVisible(isVisible){
-    if (isVisible){
-        api.activateLegend({div:'legendonthemap'});
-        $('#legendonthemap').show();
-    } else {
-        $('#legendonthemap').hide();
-    }
-    api.setLegendVisible(isVisible);
-}
 function reload_wizard_based_on_url(){
     strUrl = $('#pdokkaartUrl').val();
     if (strUrl.substr(0,4).toUpperCase() === 'HTTP'){
@@ -684,5 +674,4 @@ function setGuiToApiState(api) {
     setCheckbox('#mapscaleline', config.showscaleline);
     setCheckbox('#mapmouseposition', config.showmouseposition);
     setCheckbox('#mapsearch', config.geocoder);
-    setCheckbox('#maplegend', config.legend);   
 }

@@ -4,10 +4,7 @@
     
     OpenLayers.Format.KMLv2_2
       Symbology support for the OpenLayers class for reading/writing KML 2.2
-    
-    OpenLayers.Control.LegendControl
-      The LegendControl control adds a legend for WMS layers.
-    
+
     OpenLayers.Control.GeocoderControl
       The GeocoderControl control adds pdok search functionality.
     
@@ -220,116 +217,6 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
     }
 });
 
-
-
-/**
- * @requires OpenLayers/Control.js
- */
-
-/**
- * Class: OpenLayers.Control.LegendControl
- * The LegendControl control adds a legend for WMS layers. 
- *
- * Inherits from:
- *  - <OpenLayers.Control>
- */
-OpenLayers.Control.LegendControl = 
-  OpenLayers.Class(OpenLayers.Control, {
-    dynamic: true,
-    /**
-     * Constructor:
-     * 
-     * Parameters:
-     * @param options - {Object} Options for control.
-     */
-    initialize: function(options) {
-        OpenLayers.Control.prototype.initialize.apply(this, arguments);
-        // we create the div ourselves, to be able to put it outside the map-div
-        // if we let OpenLayers create it, and let it be part of the map-div
-        // then OpenLayers steals the cursor from our input
-        if (!this.div){
-            this.div = document.createElement("div");
-            this.div.className = OpenLayers.Util.createUniqueID("lg_");
-            this.div.id = this.div.className+'_'+this.id;
-        }
-        
-        // deferred event delegation:
-        // http://davidwalsh.name/event-delegate
-        var me = this;
-        var clickFunc = function(e) {
-            var target;
-            e.target?target=e.target:target=e.srcElement;
-            if(target && target.className === "hideWindow") {
-                me.hideLegend();
-            } else if (target && target.className === "hideWindow"){
-                me.showLegend();
-            }
-        };
-        if (this.div.addEventListener) {
-            this.div.addEventListener("click", clickFunc);
-        } else{
-            // IE8
-            this.div.attachEvent("onclick", clickFunc);
-        }
-        //me.draw();
-    },
-
-    /** 
-     * Method: destroy
-     * Destroy control.
-     */
-    destroy: function() {    
-        OpenLayers.Control.prototype.destroy.apply(this, arguments);
-    },
-    
-    activate: function() {
-        OpenLayers.Control.prototype.activate.apply(this, arguments);
-        this.map.events.register('addlayer', this, this.draw);
-        this.map.events.register('removelayer', this, this.draw);
-        this.map.events.register('changelayer', this, this.draw);
-    },
-    
-    deactivate: function() {
-        OpenLayers.Control.prototype.deactivate.apply(this, arguments);
-        this.map.events.unregister('addlayer', this, this.draw);
-        this.map.events.unregister('removelayer', this, this.draw);
-        this.map.events.unregister('changelayer', this, this.draw); 
-    },
-    
-    /**
-     * Method: draw
-     * Initialize control.
-     * 
-     * Returns: 
-     * {DOMElement} A reference to the DIV DOMElement containing the control
-     */    
-    draw: function() {
-        OpenLayers.Control.prototype.draw.apply(this, arguments);
-        if(this.dynamic==false){
-            return;
-        }
-        var html = '<h2>Legenda</h2>';
-        // for every WMS add a P + IMG tag to legendgraphic image
-        for (var i = 0;i< this.map.layers.length;i++){
-            var layer = this.map.layers[i];
-            if (layer.CLASS_NAME == "OpenLayers.Layer.WMS" && layer.visibility) {
-                var legend = layer.url + 
-                    "?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2F" +
-                    "vnd.ogc.se_xml&FORMAT=image%2Fpng&LAYER=" + layer.params["LAYERS"];
-                html += '<h4>' + layer.name + '</h4><p><img src=' + legend + ' alt="' + layer.name + '" title="' + layer.name + '" /></p>';
-            }           
-        }
-        this.div.innerHTML = html;    
-        return this.div;
-    },
-    hideResults: function() {
-        document.getElementById(this.div.id).style.display = 'none';
-    },
-    showResults: function() {
-        document.getElementById(this.div.id).style.display = 'block';
-    },
-    CLASS_NAME: "OpenLayers.Control.LegendControl"
-});
 /**
  * @requires OpenLayers/Control.js
  */
