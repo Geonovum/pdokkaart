@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.1.0';
+Pdok.API_VERSION_NUMBER = '1.1.1';
 
 
 // CONFIGURATION
