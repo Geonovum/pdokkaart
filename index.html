@@ -20,8 +20,11 @@
         <script type="text/javascript" src="api/js/pdok-api.js"></script>
         <script type="text/javascript" src="api/js/geozetlib.js"></script>
         <script type="text/javascript" src="js/wizard.js"></script>
+        <!--
+        NOT including this one, as they are included anyway when there is not a 'markersdef' or 'layersdef'
+         query-parameter found. Including this one will (again) override the styles objects
         <script type="text/javascript" src="api/js/pdok-markers.js"></script>
-        <script type="text/javascript" src="api/js/pdok-layers.js"></script>
+        <script type="text/javascript" src="api/js/pdok-layers.js"></script>-->
         <script type="text/javascript">
             if (document.all && !document.querySelector) { // IE7 or lower
                 alert('U gebruikt Internet Explorer 7.\nDeze browser ondersteunt niet alle functionaliteit van de PDOK Wizard.\nWij raden U aan een nieuwere versie van Internet Explorer of een andere browser zoals Google Chrome, Mozilla FireFox of Apple Safari te gebruiken.');

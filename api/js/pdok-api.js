@@ -591,28 +591,6 @@ Pdok.Api.prototype.defaultPdokLayers = {
             isBaseLayer: true,
             attribution: '(c) OSM & Kadaster'
         },
-        CBS_GEMEENTEN: {
-            layertype: 'WMS',
-            name: 'CBS Gemeentegrenzen 2008 (WMS)',
-            url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
-            layers: 'gemeentegrens_generalisatie_2008',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        CBS_PROVINCIES: {
-            layertype: 'WMS',
-            name: 'CBS Provinciegrenzen 2008 (WMS)',
-            url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
-            layers: 'provgrens_generalisatie_2008',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
         LUFO: {
                 layertype: 'WMTS',
                 name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
