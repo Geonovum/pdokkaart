@@ -2023,7 +2023,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
         return;
     }
     // add styling to features
-    for (f in features){
+    for (var f = 0;f<features.length;f++){
         var feature = features[f];
         if (feature.attributes['styletype']) {
             var styletype = feature.attributes['styletype'];
