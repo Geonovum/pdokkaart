@@ -232,6 +232,9 @@ fieldset {
 #pdoksearch form select {
     width:40px;
 }
+#pdoksearch form {
+    margin-bottom:0px!important;
+}
 
 .olControlLoadingPanel {
     background-image: url("../img/dataloading.gif");
