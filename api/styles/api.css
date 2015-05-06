@@ -157,7 +157,7 @@ ul.geozetSuggestions{
 	color: black;
 }
 
-#search {
+#pdoksearch {
     top: 5px;
     left: 45px;
     position: absolute;
@@ -190,7 +190,7 @@ fieldset {
     color: #fff;
     border: 1px solid #e17000;
     -moz-border-radius: 2px;
-    -webkit-border-radius: 2px; 
+    -webkit-border-radius: 2px;
 }
 #geocodeerresult {
     display: none;
@@ -213,10 +213,10 @@ fieldset {
     margin: 5px;
     text-decoration: none;
 }
-#search form input[type=text],
-#search form select, 
-#search form textarea, 
-#search form select {
+#pdoksearch form input[type=text],
+#pdoksearch form select,
+#pdoksearch form textarea,
+#pdoksearch form select {
     float:left;
     /*width:190px;*/
     height:27px;
@@ -229,7 +229,7 @@ fieldset {
     border-top:solid 1px #c0c0c0;
     border-right:none;
 }
-#search form select {
+#pdoksearch form select {
     width:40px;
 }
 

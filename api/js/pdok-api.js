@@ -662,7 +662,7 @@ Pdok.Api.prototype.activateGeocoder = function(geocoder){
         } else {
             mapdiv = this.map.div.id;
         }
-        var sdiv = 'search';
+        var sdiv = 'pdoksearch';
         if(geocoder.div){
             sdiv = geocoder.div;
         }
