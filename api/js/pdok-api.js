@@ -1624,6 +1624,7 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
 
 /**
  * Api Interface addLayers to add layers the map, based on their layerkey-names Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'
+ * In layer versions also "{id:'BRT',visible='true'},{id:'TOP10NL@',visible='false'}" is possible
  * @param {array} arrLayerNames javascript array of layer names
  * @param {OpenLayers.Map} map the Pdok.Api-map to add the layers to
  */
@@ -1640,9 +1641,10 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     }
     for (var l = 0;l<arrLayerNames.length;l++) {
         var layer = arrLayerNames[l];
-        if (isNaN(l)) {
+        if (typeof layer == 'string') {
             // besides an array of layernames it is possible to pass an object like: {"id":"layername","visible":true}
-            layer = arrLayerNames[l];
+            // to handle both cases we convert here to the object type
+            layer = {id: layer, visible:'true'};
         }
         if (this.defaultLayers[layer.id]){
             var lyr;
