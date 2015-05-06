@@ -1638,7 +1638,7 @@ Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     if (!map){
         map = this.map;
     }
-    for (l in arrLayerNames) {
+    for (var l = 0;l<arrLayerNames.length;l++) {
         var layer = arrLayerNames[l];
         if (isNaN(l)) {
             // besides an array of layernames it is possible to pass an object like: {"id":"layername","visible":true}
