@@ -802,16 +802,18 @@ Pdok.Api.prototype.createOlMap = function() {
         if (typeof this.overlays === 'string') {
             this.overlays=this.overlays.split(',');
         }
-        for (layer in this.overlays){
-            this.addLayers([this.overlays[layer]], olMap);
+        // now it is an array
+        for (var i = 0; i < this.overlays.length; ++i) {
+            if(this.overlays[i] !== ""){
+                this.addLayers([{id:this.overlays[i], visible:true}], olMap);
+            }
         }
     }
     if(this.pdoklayers) {
         if (typeof this.pdoklayers === 'string') {
             this.pdoklayers = this.pdoklayers.split(',');
         }
-        var i;
-        for (i = 0; i < this.pdoklayers.length; ++i) {
+        for (var i = 0; i < this.pdoklayers.length; ++i) {
             if(this.pdoklayers[i] !== ""){
                 this.addLayers([{id:this.pdoklayers[i], visible:true}], olMap);
             }
