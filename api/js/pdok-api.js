@@ -226,12 +226,12 @@ Pdok.Api = function(config, callback) {
      */
     this.bbox = Pdok.bbox;
 
+    this.baselayers = Pdok.baselayers || [];
     /**
      * A commaseparated list of pdok id's (defined in pdok-layers.js). Eg: 'brt,top10'
      * @type String
      */
     this.overlays = Pdok.overlays || [];
-    this.baselayers = Pdok.baselayers || [];
     this.pdoklayers = Pdok.pdoklayers;
     
     /**
@@ -788,36 +788,17 @@ Pdok.Api.prototype.createOlMap = function() {
         panel.addControls([openLufo,openTOP10,openBRT]);
         olMap.addControl(panel);
     }
-    // apply layer if a layer was given
+    // add different layers to the map
+    // NOTE: baselayers, overlays and pdoklayers should be an array(!) of objects OR a commaseparted string
+    // the function addLayers should handle both cases, NOT to be handled here!
     if (this.baselayers) {
-        // if there is just one layer (without comma's), OL returns a String:
-        if (typeof this.baselayers === 'string') {
-            this.baselayers = this.baselayers.split(',');
-        }
         this.addLayers(this.baselayers, olMap);
     }
-    // apply layer if a layer was given
     if (this.overlays) {
-        // if there is just one layer (without comma's), OL returns a String:
-        if (typeof this.overlays === 'string') {
-            this.overlays=this.overlays.split(',');
-        }
-        // now it is an array
-        for (var i = 0; i < this.overlays.length; ++i) {
-            if(this.overlays[i] !== ""){
-                this.addLayers([{id:this.overlays[i], visible:true}], olMap);
-            }
-        }
+        this.addLayers(this.overlays, olMap);
     }
     if(this.pdoklayers) {
-        if (typeof this.pdoklayers === 'string') {
-            this.pdoklayers = this.pdoklayers.split(',');
-        }
-        for (var i = 0; i < this.pdoklayers.length; ++i) {
-            if(this.pdoklayers[i] !== ""){
-                this.addLayers([{id:this.pdoklayers[i], visible:true}], olMap);
-            }
-        }
+        this.addLayers(this.pdoklayers, olMap);
     }
     if (!olMap.baseLayer){
         //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
@@ -1625,27 +1606,33 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
 };
 
 /**
- * Api Interface addLayers to add layers the map, based on their layerkey-names Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'
- * In layer versions also "{id:'BRT',visible='true'},{id:'TOP10NL@',visible='false'}" is possible
+ * Api Interface addLayers to add layers the map, there are three options handled
+ * -1- commaseparated-string based on the layerkey-names from the layer config files Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'
+ * -2- an array like [{id:'BRT',visible='true'},{id:'TOP10NL@',visible='false'}]
+ * -3- an array with layerkey-names ['BRT,TOP10NL2','CBS_PROVINCIES']
  * @param {array} arrLayerNames javascript array of layer names
  * @param {OpenLayers.Map} map the Pdok.Api-map to add the layers to
  */
 Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     if (!arrLayerNames){
-        alert('Geen lagen opgegeven om aan de kaart toe te voegen.');
         return;
-    } else if (arrLayerNames === '-') {
+    }
+    if (arrLayerNames === '-') {
         // this is the 'header' of the selectbox: "choose ..."
         return;
     }
+    // handle case in which it is just a commaseparated string of keys OR just one key
+    if (typeof arrLayerNames == 'string') {
+        arrLayerNames = arrLayerNames.split(','); // now it is an array
+    }
+    // handle empty [] could come from empty string ''
     if (!map){
         map = this.map;
     }
     for (var l = 0;l<arrLayerNames.length;l++) {
         var layer = arrLayerNames[l];
         if (typeof layer == 'string') {
-            // besides an array of layernames it is possible to pass an object like: {"id":"layername","visible":true}
-            // to handle both cases we convert here to the object type
+            // layer is a key from the layer configs
             layer = {id: layer, visible:'true'};
         }
         if (this.defaultLayers[layer.id]){
