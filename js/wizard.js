@@ -192,7 +192,7 @@ function createMarkersLogic() {
 
     $('#getfeaturesfromurl').click(function(){
         var format = $('#addviaurltxt input[name=urltype]:checked').val();
-        api.addFeaturesFromUrl($('#urltext').val(), format.toUpperCase(), true);
+        api.addFeaturesFromUrl($('#urltext').val(), format.toUpperCase(), true, api);
         return false;
     });
 
