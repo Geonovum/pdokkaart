@@ -743,7 +743,7 @@ Pdok.Api.prototype.createOlMap = function() {
         (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")) {
         var switcher = new OpenLayers.Control.LayerSwitcher();
         this.map.addControl(switcher);
-        switcher.maximizeControl(); // IF we do a layer switcher, then open it
+        switcher.minimizeControl(); // IF we do a layer switcher, but close it initially
     }
 
     // loading panel control (waiting for data control)
