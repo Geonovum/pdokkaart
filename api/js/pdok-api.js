@@ -227,6 +227,13 @@ Pdok.Api = function(config, callback) {
     this.bbox = Pdok.bbox;
 
     this.baselayers = Pdok.baselayers || [];
+
+    /**
+     * The actual ID of the baselayer to use (one out of 'baselayers' params)
+     * @type {null|*|string}
+     */
+    this.baselayer  = Pdok.baselayer || null;
+
     /**
      * A commaseparated list of pdok id's (defined in pdok-layers.js). Eg: 'brt,top10'
      * @type String
@@ -860,6 +867,15 @@ Pdok.Api.prototype.createOlMap = function() {
         name:'locations', displayInLayerSwitcher:false
     });
     olMap.addLayer(this.locationLayer);
+
+    // apply Baselayer if applicable
+    if (this.baselayer != null) {
+    	var baselayerbyid = olMap.getLayersBy('pdokid', this.baselayer);
+		if(baselayerbyid.length > 0)
+		{
+			olMap.setBaseLayer(baselayerbyid[0]);
+		}
+    }
 
     if (typeof this.features === 'object' || typeof this.features === 'string') {
         // meaning we received a features string (kml) from the outside
