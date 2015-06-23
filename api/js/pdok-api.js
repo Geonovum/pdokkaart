@@ -444,8 +444,8 @@ Pdok.Api = function(config, callback) {
      * @type Boolean
      */
     this.showlayerswitcher = Pdok.showlayerswitcher;
-    this.showzoom = Pdok.showzoom;
-    this.shownavigation = Pdok.shownavigation;
+    this.showzoom = Pdok.showzoom || true; // we want default this to true
+    this.shownavigation = Pdok.shownavigation || true; // we want default this to true
     this.showscaleline = Pdok.showscaleline;
     this.showmouseposition = Pdok.showmouseposition;
     this.geocoder = Pdok.geocoder;
