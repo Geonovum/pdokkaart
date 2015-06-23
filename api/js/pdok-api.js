@@ -445,7 +445,7 @@ Pdok.Api = function(config, callback) {
      */
     this.showlayerswitcher = Pdok.showlayerswitcher;
     this.showzoom = Pdok.showzoom || true; // we want default this to true
-    this.shownavigation = Pdok.shownavigation || true; // we want default this to true
+    this.navigation = Pdok.navigation || true; // we want default this to true
     this.showscaleline = Pdok.showscaleline;
     this.showmouseposition = Pdok.showmouseposition;
     this.geocoder = Pdok.geocoder;
@@ -719,10 +719,8 @@ Pdok.Api.prototype.createOlMap = function() {
         (this.showscaleline === true || this.showscaleline.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.ScaleLine({bottomOutUnits: '', bottomInUnits: ''}));
     }
-    if (this.shownavigation &&
-        (this.shownavigation === true || this.shownavigation.toLowerCase() === "true")) {
-        controls.push(new OpenLayers.Control.Navigation());
-    }
+    var navigationControl = new OpenLayers.Control.Navigation();
+    controls.push(navigationControl);
     if (this.showzoom &&
         (this.showzoom === true || this.showzoom.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.Zoom());
@@ -738,6 +736,14 @@ Pdok.Api.prototype.createOlMap = function() {
         div: this.div
     });
     this.map = olMap;
+
+    if (this.navigation &&
+        (this.navigation === true || this.navigation.toLowerCase() === "true")) {
+        // already on
+    }
+    else{
+        navigationControl.deactivate();
+    }
 
     if (this.showlayerswitcher &&
         (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")) {
@@ -2281,9 +2287,9 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         }
         if (this.showzoom){
             config.showzoom = this.showzoom;
-        }   
-        if (this.shownavigation){
-            config.shownavigation = this.shownavigation;
+        }
+        if (typeof this.navigation !== 'undefined'){
+            config.navigation = this.navigation;
         } 
 
         if (this.showscaleline){
@@ -2478,12 +2484,15 @@ Pdok.Api.prototype.setZoomVisible = function(isVisible){
  * Function to toggle visibility of the OpenLayers.navigation
  * @param {Boolean} isVisible to show the layer or not
  */
-Pdok.Api.prototype.setNavigationVisible = function(isVisible){
+Pdok.Api.prototype.setNavigation = function(isVisible){
+    var nav = this.map.getControlsByClass("OpenLayers.Control.Navigation")[0];
     if (isVisible){
-        this.shownavigation = true;
+        this.navigation = true;
+        if(nav){nav.activate();}
     }
     else{
-        this.shownavigation = false;
+        this.navigation = false;
+        if(nav){nav.deactivate();}
     }
 };
 /**

@@ -33,7 +33,7 @@ De Kaart Wizard genereert een URL waarin alle informatie opgeslagen is. Deze URL
 	zoom=3&
 	showlayerswitcher=true&
 	showzoom=true&
-	shownavigation=true&
+	navigation=true&
 	showscaleline=true&
 	showmouseposition=true&
 	loc=170000%2C470000&
@@ -74,7 +74,7 @@ website. Alleen configuratie staat lokaal of in de webpagina.
         "zoom":3,
         "showlayerswitcher":true,
         "showzoom":true,
-        "shownavigation":true,
+        "navigation":true,
         "showscaleline":true,
         "showmouseposition":true,
         "loc":"170000, 470000",

@@ -84,7 +84,7 @@ function createOnClickEvents() {
     $('#mapsize3').click( function() { pdok_api_map_resize('big'); } );
     $('#maplayerswitcher').click( function() { setLayerSwitcherVisible($('#maplayerswitcher').is(':checked')); } );
     $('#mapzoom').click( function() { setZoomVisible($('#mapzoom').is(':checked')); } );
-    $('#mapnavigation').click( function() { setNavigationVisible($('#mapnavigation').is(':checked')); } );
+    $('#mapnavigation').click( function() { setNavigation($('#mapnavigation').is(':checked')); } );
     $('#mapscaleline').click( function() { setScaleLineVisible($('#mapscaleline').is(':checked')); } );
     $('#mapmouseposition').click( function() { setMousePositionVisible($('#mapmouseposition').is(':checked')); } );
     $('#mapsearch').click( function() { setMapsearchVisible($('#mapsearch').is(':checked')); } );
@@ -627,8 +627,8 @@ function setScaleLineVisible(isVisible){
     }
     api.setScaleLineVisible(isVisible);
 }
-function setNavigationVisible(isVisible){
-    api.setNavigationVisible(isVisible);
+function setNavigation(isVisible){
+    api.setNavigation(isVisible);
 }
 function setMousePositionVisible(isVisible){
     if (isVisible){
@@ -670,7 +670,7 @@ function setGuiToApiState(api) {
     var config = api.getConfig();
     setCheckbox('#maplayerswitcher', config.showlayerswitcher);
     setCheckbox('#mapzoom', config.showzoom);
-    setCheckbox('#mapnavigation', config.shownavigation);
+    setCheckbox('#mapnavigation', config.navigation);
     setCheckbox('#mapscaleline', config.showscaleline);
     setCheckbox('#mapmouseposition', config.showmouseposition);
     setCheckbox('#mapsearch', config.geocoder);
