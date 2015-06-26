@@ -2214,6 +2214,7 @@ Pdok.Api.prototype.createMapLink = function(){
         delete config.baselayers;
     } else {
         pdoklayers.push("BRT");
+        pdoklayers.push("LUFO");
     }
     //Get the visible overlays and remove the others
     if(config.overlays){
