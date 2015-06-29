@@ -28,3 +28,7 @@ TODO
 ## Lokaal installeren
 
 TODO
+
+## Ontwerp principes / guiding principles
+
+TODO
