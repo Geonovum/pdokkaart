@@ -443,11 +443,11 @@ Pdok.Api = function(config, callback) {
      * To determine if the layer switcher should be shown or not. Defaults to true
      * @type Boolean
      */
-    this.showlayerswitcher = Pdok.showlayerswitcher;
+    this.showlayerswitcher = Pdok.showlayerswitcher || true; // we want default this to true
     this.showzoom = Pdok.showzoom || true; // we want default this to true
     this.navigation = Pdok.navigation || true; // we want default this to true
-    this.showscaleline = Pdok.showscaleline;
-    this.showmouseposition = Pdok.showmouseposition;
+    this.showscaleline = Pdok.showscaleline || false;
+    this.showmouseposition = Pdok.showmouseposition || false;
     this.geocoder = Pdok.geocoder;
     this.legend = Pdok.legend;
     /**
@@ -2282,16 +2282,15 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
     if(this.map){
         config.zoom = this.map.getZoom();
         // only add the LayerSwitcher parameter if false (default value is true)
-        if (this.showlayerswitcher){
+        if (typeof this.showlayerswitcher !== 'undefined' && this.showlayerswitcher == false){
             config.showlayerswitcher = this.showlayerswitcher;
         }
-        if (this.showzoom){
+        if (typeof this.showzoom !== 'undefined' && this.showzoom == false){
             config.showzoom = this.showzoom;
         }
-        if (typeof this.navigation !== 'undefined'){
+        if (typeof this.navigation !== 'undefined' && this.navigation == false){
             config.navigation = this.navigation;
-        } 
-
+        }
         if (this.showscaleline){
             config.showscaleline = this.showscaleline;
         }
