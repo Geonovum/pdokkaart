@@ -20,7 +20,7 @@ OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaar
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
 // PDOK LOKET DEV
-Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
+// Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
 OpenLayers.ProxyHost = "http://pdokserver/proxy?url="; // kaart.pdok.nl
 
 
