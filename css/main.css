@@ -122,6 +122,10 @@ li {
     z-index: 2000;
 }
 
+#wizardsearch div {
+    padding: 0 10px;
+}
+
 #geocodeerresult {
     display: none;
     background-color: #F6D4B2;

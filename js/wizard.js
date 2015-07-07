@@ -84,11 +84,10 @@ function createOnClickEvents() {
     $('#mapsize3').click( function() { pdok_api_map_resize('big'); } );
     $('#maplayerswitcher').click( function() { setLayerSwitcherVisible($('#maplayerswitcher').is(':checked')); } );
     $('#mapzoom').click( function() { setZoomVisible($('#mapzoom').is(':checked')); } );
-    $('#mapnavigation').click( function() { setNavigationVisible($('#mapnavigation').is(':checked')); } );
+    $('#mapnavigation').click( function() { setNavigation($('#mapnavigation').is(':checked')); } );
     $('#mapscaleline').click( function() { setScaleLineVisible($('#mapscaleline').is(':checked')); } );
     $('#mapmouseposition').click( function() { setMousePositionVisible($('#mapmouseposition').is(':checked')); } );
     $('#mapsearch').click( function() { setMapsearchVisible($('#mapsearch').is(':checked')); } );
-    $('#maplegend').click( function() { setLegendVisible($('#maplegend').is(':checked')); } );
     $('#addpdoklayerbutton').click( function() { addPdokLayer();return false; } );
     $('#addwmslayerbutton').click( function() { addWmsLayer();return false; } );
     $('#addwmtslayerbutton').click( function() { addWmtsLayer();return false; } );
@@ -193,7 +192,7 @@ function createMarkersLogic() {
 
     $('#getfeaturesfromurl').click(function(){
         var format = $('#addviaurltxt input[name=urltype]:checked').val();
-        api.addFeaturesFromUrl($('#urltext').val(), format.toUpperCase(), true);
+        api.addFeaturesFromUrl($('#urltext').val(), format.toUpperCase(), true, api);
         return false;
     });
 
@@ -528,9 +527,9 @@ function addPdokLayer() {
 function createApiLinksAndCode() {
     var strGeneratedUrlToLongMessage = "";
     var apiLink = api.createMapLink();
-    if (apiLink.length > 2100){
+    if (apiLink.length > 2100) {
         strGeneratedUrlToLongMessage = "De gemaakte URL is langer dan 2000 tekens!\nDe totale lengte is " + apiLink.length + " tekens.\nOmdat hierdoor sommige browsers een foutmelding geven, worden de URL's niet getoond.";
-        if (Pdok.ApiKmlService && Pdok.ApiKmlService.length > 0){
+        if (Pdok.ApiKmlService && Pdok.ApiKmlService.length > 0) {
             strGeneratedUrlToLongMessage += "\nU kunt via de knop 'KML-opslagservice' eventueel de KML vervangen door een KML-url.";
             $("#kml_url_service").show();
         }
@@ -621,8 +620,8 @@ function setScaleLineVisible(isVisible){
     }
     api.setScaleLineVisible(isVisible);
 }
-function setNavigationVisible(isVisible){
-    api.setNavigationVisible(isVisible);
+function setNavigation(isVisible){
+    api.setNavigation(isVisible);
 }
 function setMousePositionVisible(isVisible){
     if (isVisible){
@@ -640,15 +639,6 @@ function setMapsearchVisible(isVisible){
         $('#searchthingonthemap').hide();
     }
     api.setMapsearchVisible(isVisible);
-}
-function setLegendVisible(isVisible){
-    if (isVisible){
-        api.activateLegend({div:'legendonthemap'});
-        $('#legendonthemap').show();
-    } else {
-        $('#legendonthemap').hide();
-    }
-    api.setLegendVisible(isVisible);
 }
 function reload_wizard_based_on_url(){
     strUrl = $('#pdokkaartUrl').val();
@@ -673,9 +663,8 @@ function setGuiToApiState(api) {
     var config = api.getConfig();
     setCheckbox('#maplayerswitcher', config.showlayerswitcher);
     setCheckbox('#mapzoom', config.showzoom);
-    setCheckbox('#mapnavigation', config.shownavigation);
+    setCheckbox('#mapnavigation', config.navigation);
     setCheckbox('#mapscaleline', config.showscaleline);
     setCheckbox('#mapmouseposition', config.showmouseposition);
     setCheckbox('#mapsearch', config.geocoder);
-    setCheckbox('#maplegend', config.legend);   
 }

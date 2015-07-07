@@ -15,7 +15,6 @@ PDOK Kaart wordt ontwikkeld en beheerd op GitHub:
  - issues en bugs : https://github.com/Geonovum/pdokkaart/issues
  - ontwikkelversie : https://geonovum.github.io/pdokkaart/
 
-
 Documentatie
 ------------
 

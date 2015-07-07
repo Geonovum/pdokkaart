@@ -16,12 +16,14 @@
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="api/js/OpenLayers.js"></script>
         <script type="text/javascript" src="api/js/proj4js-compressed.js"></script>
-        <script type="text/javascript" src="api/js/OpenLayersPdokKaartExtenders.js"></script>
         <script type="text/javascript" src="api/js/pdok-api.js"></script>
         <script type="text/javascript" src="api/js/geozetlib.js"></script>
         <script type="text/javascript" src="js/wizard.js"></script>
+        <!--
+        NOT including this one, as they are included anyway when there is not a 'markersdef' or 'layersdef'
+         query-parameter found. Including this one will (again) override the styles objects
         <script type="text/javascript" src="api/js/pdok-markers.js"></script>
-        <script type="text/javascript" src="api/js/pdok-layers.js"></script>
+        <script type="text/javascript" src="api/js/pdok-layers.js"></script>-->
         <script type="text/javascript">
             if (document.all && !document.querySelector) { // IE7 or lower
                 alert('U gebruikt Internet Explorer 7.\nDeze browser ondersteunt niet alle functionaliteit van de PDOK Wizard.\nWij raden U aan een nieuwere versie van Internet Explorer of een andere browser zoals Google Chrome, Mozilla FireFox of Apple Safari te gebruiken.');
@@ -33,10 +35,15 @@
             var config = {
                 "zoom": 3,
                 "loc": "170000, 470000",
-                "baselayers": [{"id": "BRT", "visible": true}],
+                "baselayers": [{"id": "BRT", "visible": true},
+                    //{"id": "BRTGRIJSTIJDELIJK", "visible": false},
+                    //{"id": "BRTTIJDELIJK", "visible": false},
+                    //{"id": "BRTPASTEL", "visible": false},
+                    {"id": "LUFO", "visible": false}
+                ],
                 "showlayerswitcher": true,
                 "showzoom": true,
-                "shownavigation": true,
+                "navigation": true,
                 "showscaleline": true,
                 "showmouseposition": true
             };
@@ -151,10 +158,6 @@
                                     <div class="row">
                                         <input type="checkbox" name="mapsearch" id="mapsearch" />
                                         <label for="mapsearch"> Toon zoekfunctie in de kaart</label>
-                                    </div>
-                                     <div class="row">
-                                        <input type="checkbox" name="maplegend" id="maplegend" />
-                                        <label for="maplegend"> Toon legenda in de kaart</label>
                                     </div>
                                 </div>
                             </form>
@@ -343,7 +346,7 @@
                                     <textarea id="scriptcodeBody"></textarea>
                                 </div>
                                 <div id="generated_kml">
-                                    <p><strong>Features als KML ( of <a id="download_kml" href="">download</a>)</strong></p>
+                                    <p><strong>Features als KML <span id="download_kml_span">(of <a id="download_kml" href="">download</a>)</span></strong></p>
                                     <textarea id="featuresKML"></textarea>
                                 </div>
                             </form>

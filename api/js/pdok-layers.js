@@ -11,8 +11,6 @@
  * while for a WMS it is called 'layers' (mind the s on the end)
  */
 
-var Pdok = Pdok || {};
-window.Pdok = Pdok;
 
 Pdok.Api.prototype.defaultLayers = {
 
@@ -36,17 +34,6 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   },
-  AHN1_100M_WMS: {
-    layertype: 'WMS',
-    name: 'AHN1 - Actueel Hoogtebestand NL 100 meter (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn1/wms',
-    layers: 'ahn1_100m',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },  
   AHN1_25M: {
     layertype: 'WMTS',
     name: 'AHN1 - Actueel Hoogtebestand NL 25 meter (WMTS)',
@@ -57,17 +44,6 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   },
-  AHN1_25M_WMS: {
-    layertype: 'WMS',
-    name: 'AHN1 - Actueel Hoogtebestand NL 25 meter (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn1/wms',
-    layers: 'ahn1_25m',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },  
   AHN1_5M: {
     layertype: 'WMTS',
     name: 'AHN1 - Actueel Hoogtebestand NL 5 meter (WMTS)',
@@ -77,17 +53,6 @@ Pdok.Api.prototype.defaultLayers = {
     matrixSet: 'EPSG:28992',
     visibility: true,
     isBaseLayer: false
-  },
-  AHN1_5M_WMS: {
-    layertype: 'WMS',
-    name: 'AHN1 - Actueel Hoogtebestand NL 5 meter (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn1/wms',
-    layers: 'ahn1_5m',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
   },
   AHN1_BlADINDEX: {
     layertype: 'WMS',
@@ -143,28 +108,6 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   },
-  AHN2_5M_WMS: {
-    layertype: 'WMS',
-    name: 'AHN2 - Actueel Hoogtebestand NL 5 meter (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn2/wms',
-    layers: 'ahn2_5m',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },
-  AHN2_5M_BLADINDEX_WMS: {
-    layertype: 'WMS',
-    name: 'AHN2 - Actueel Hoogtebestand NL 5 meter Bladindex (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn2/wms',
-    layers: 'ahn2_bladindex',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },  
   AHN2_05M_INT: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter geinterpoleerd (WMTS)',
@@ -174,17 +117,6 @@ Pdok.Api.prototype.defaultLayers = {
     matrixSet: 'EPSG:28992',
     visibility: true,
     isBaseLayer: false
-  },
-  AHN2_05M_INT_WMS: {
-    layertype: 'WMS',
-    name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter geinterpoleerd (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn2/wms',
-    layers: 'ahn2_05m_int',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
   },
   AHN2_05M_NON: {
     layertype: 'WMTS',
@@ -196,17 +128,6 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   },
-  AHN2_05M_NON_WMS: {
-    layertype: 'WMS',
-    name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter niet geinterpoleerd (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn2/wms',
-    layers: 'ahn2_05m_non',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },
   AHN2_05M_RUW: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter ruw (WMTS)',
@@ -217,16 +138,15 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   },
-  AHN2_05M_RUW_WMS: {
-    layertype: 'WMS',
-    name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter ruw (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn2/wms',
-    layers: 'ahn2_05m_ruw',
-    transparent: 'true',
-    format: 'image/png',
+  BAG: {
+    layertype: 'WMTS',
+    name: 'BAG - Basisadministratie Adressen en Gebouwen (WMTS)',
+    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/bag?',
+    layer: 'bag',
+    style: null,
+    matrixSet: 'EPSG:28992',
     visibility: true,
-    isBaseLayer: false,
-    singleTile: true
+    isBaseLayer: false
   },
   BAG_LIGPLAATS: {
     layertype: 'WMS',
@@ -305,6 +225,28 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   },
+  BBG2010: {
+    layertype: 'WMS',
+    name: 'BBG - Bestand Bodemgebruik 2010 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2010/wms',
+    layers: 'bbg2010',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  BBG2010_hoofdgroep: {
+    layertype: 'WMS',
+    name: 'BBG - Bestand Bodemgebruik 2010 Hoofdgroep (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2010/wms',
+    layers: 'bbg2010_hoofdgroep',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },  
   BESCHERMDENATUURMONUMENTEN: {
     layertype: 'WMS',
     name: 'Beschermde Natuurmonumenten (WMS)',
@@ -360,16 +302,6 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   },
-  BGT_ACHTERGROND_WMTS: {
-    layertype: 'WMTS',
-    name: 'Basisregistratie Grootschalige Topografie Achtergrond (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-    layer: 'bgtachtergrond',
-    style: null,
-    matrixSet: 'EPSG:28992',
-    visibility: true,
-    isBaseLayer: false
-  },  
   BGT_ACHTERGROND_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Achtergrond (TMS)',
@@ -380,16 +312,6 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   }, 
-  BGT_LIJNGERICHT_WMTS: {
-    layertype: 'WMTS',
-    name: 'Basisregistratie Grootschalige Topografie Lijngericht (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-    layer: 'bgtlijngericht',
-    style: null,
-    matrixSet: 'EPSG:28992',
-    visibility: true,
-    isBaseLayer: false
-  },  
   BGT_LIJNGERICHT_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Lijngericht (TMS)',
@@ -400,16 +322,6 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   },    
-  BGT_OMTREKGERICHT_WMTS: {
-    layertype: 'WMTS',
-    name: 'Basisregistratie Grootschalige Topografie Omtrekgericht (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-    layer: 'bgtomtrekgericht',
-    style: null,
-    matrixSet: 'EPSG:28992',
-    visibility: true,
-    isBaseLayer: false
-  },  
   BGT_OMTREKGERICHT_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Omtrekgericht (TMS)',
@@ -420,16 +332,6 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   },   
-  BGT_STANDAARD_WMTS: {
-    layertype: 'WMTS',
-    name: 'Basisregistratie Grootschalige Topografie Standaard (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-    layer: 'bgtstandaard',
-    style: null,
-    matrixSet: 'EPSG:28992',
-    visibility: true,
-    isBaseLayer: false
-  },  
   BGT_STANDAARD_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Standaard (TMS)',
@@ -484,6 +386,17 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: true,
     attribution: '(c) OSM & Kadaster'
   },
+  BRTPASTEL: {
+    layertype: 'WMTS',
+    name: 'BRT Achtergrondkaart Pastel (WMTS)',
+    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+    layer: 'brtachtergrondkaartpastel',
+    style: null,
+    matrixSet: 'EPSG:28992',
+    visibility: true,
+    isBaseLayer: true,
+    attribution: '(c) OSM & Kadaster'
+  },
   CBS_KERNEN_NAMEN: {
     layertype: 'WMS',
     name: 'CBS Bevolkingskern namen 2008 (WMS)',
@@ -506,7 +419,17 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   },
-  CBS_GEMEENTEN: {
+  CBS_KERNEN2011: {
+    layertype: 'WMS',
+    name: 'CBS Bevolkingskernen 2011 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms',
+    layers: 'cbsbevolkingskernen2011',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },  CBS_GEMEENTEN: {
     layertype: 'WMS',
     name: 'CBS Gemeentegrenzen 2008 (WMS)',
     url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
@@ -1046,6 +969,50 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   },
+  NOK2014_BEGRENZING_WMS: {
+    layertype: 'WMS',
+    name: 'NOK2014 - Begrenzing 2014 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/nok2014/wms?',
+    layers: 'begrenzing',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  NOK2014_EHS_WMS: {
+    layertype: 'WMS',
+    name: 'NOK2014 - EHS 2014 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/nok2014/wms?',
+    layers: 'planologischeehs',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  NOK2014_VERWERVINGINRICHTING_WMS: {
+    layertype: 'WMS',
+    name: 'NOK2014 - Verwerving inrichting 2014 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/nok2014/wms?',
+    layers: 'verwervinginrichting',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  NOK2014_BEHEER_WMS: {
+    layertype: 'WMS',
+    name: 'NOK2014 - Beheer 2014 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/nok2014/wms?',
+    layers: 'beheer',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
   NOORD_KABELS_WMS: {
     layertype: 'WMS',
     name: 'Noordzee Kabels (WMS)',
@@ -1062,72 +1029,6 @@ Pdok.Api.prototype.defaultLayers = {
     name: 'Noordzee Leidingen (WMS)',
     url: 'http://geodata.nationaalgeoregister.nl/noordzeekabelsenleidingen/wms?',
     layers: 'leidingen',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },
-  NOORD_MARBASIS_WMS: {
-    layertype: 'WMS',
-    name: 'Noordzee Maritieme grenzen Basis (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/maritiemegrenzen/wms?',
-    layers: 'nederlandsebasislijn',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },
-  NOORD_MAR01_WMS: {
-    layertype: 'WMS',
-    name: 'Noordzee Maritieme grenzen 1 mijl grens (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/maritiemegrenzen/wms?',
-    layers: 'nautische01mijlgrens',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },
-  NOORD_MAR03_WMS: {
-    layertype: 'WMS',
-    name: 'Noordzee Maritieme grenzen 3 mijl grens (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/maritiemegrenzen/wms?',
-    layers: 'nautische03mijlgrens',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },
-  NOORD_MAR06_WMS: {
-    layertype: 'WMS',
-    name: 'Noordzee Maritieme grenzen 6 mijl grens (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/maritiemegrenzen/wms?',
-    layers: 'nautische06mijlgrens',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },
-  NOORD_MAR12_WMS: {
-    layertype: 'WMS',
-    name: 'Noordzee Maritieme grenzen 12 mijl grens (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/maritiemegrenzen/wms?',
-    layers: 'nautische12mijlgrens',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
-  },
-  NOORD_MAR24_WMS: {
-    layertype: 'WMS',
-    name: 'Noordzee Maritieme grenzen 24 mijl grens (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/maritiemegrenzen/wms?',
-    layers: 'nautische24mijlgrens',
     transparent: 'true',
     format: 'image/png',
     visibility: true,
@@ -1211,6 +1112,17 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   },
+  PUBLIEKRECHTELIJKEBEPERKING: {
+    layertype: 'WMS',
+    name: 'Publiekrechtelijke Beperking (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/publiekrechtelijkebeperking/wms',
+    layers: 'wetbodembescherming',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
   RD_INFO_STATIONS: {
     layertype: 'WMS',
     name: 'RD Info Stations (WMS)',
@@ -1266,11 +1178,99 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   },
+  SCHELPDIERWATER: {
+    layertype: 'WMS',
+    name: 'Schelpdierwater (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/schelpdierwater/wms',
+    layers: 'schelpdierwater',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
   STREEKPADEN: {
     layertype: 'WMS',
     name: 'Nationale Streekpaden (WMS)',
     url: 'http://geodata.nationaalgeoregister.nl/streekpaden/wms',
     layers: 'streekpaden',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  SPOORWEGEN_TRACE: {
+    layertype: 'WMS',
+    name: 'Spoorwegen trace (spoorbaanhartlijn) (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    layers: 'trace',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  SPOORWEGEN_KILOMETRERING: {
+    layertype: 'WMS',
+    name: 'Spoorwegen kilometrering (spoorbaanhartpunt) (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    layers: 'kilometrering',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  SPOORWEGEN_SPOORAS: {
+    layertype: 'WMS',
+    name: 'Spoorwegen spooras (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    layers: 'spooras',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  SPOORWEGEN_WISSEL: {
+    layertype: 'WMS',
+    name: 'Spoorwegen wissel (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    layers: 'wissel',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  SPOORWEGEN_KRUISING: {
+    layertype: 'WMS',
+    name: 'Spoorwegen kruising (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    layers: 'kruising',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  SPOORWEGEN_STATION: {
+    layertype: 'WMS',
+    name: 'Spoorwegen station (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    layers: 'station',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  SPOORWEGEN_OVERWEG: {
+    layertype: 'WMS',
+    name: 'Spoorwegen overweg (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    layers: 'overweg',
     transparent: 'true',
     format: 'image/png',
     visibility: true,
@@ -1354,6 +1354,61 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     attribution: '(c) Kadaster'
   },
+  VERKEERSSCHEIDINGSSTELSEL_ANKERGEBIEDEN: {
+    layertype: 'WMS',
+    name: 'Verkeersscheidingsstelsel - Ankergebieden (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    layers: 'ankergebieden',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  VERKEERSSCHEIDINGSSTELSEL_BEGRENZING: {
+    layertype: 'WMS',
+    name: 'Verkeersscheidingsstelsel - Begrenzing (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    layers: 'begrenzing',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  VERKEERSSCHEIDINGSSTELSEL_SEPERATIEZONES: {
+    layertype: 'WMS',
+    name: 'Verkeersscheidingsstelsel - Seperatiezones (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    layers: 'seperatiezones',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  VERKEERSSCHEIDINGSSTELSEL_KILOMETRERINGLABELS: {
+    layertype: 'WMS',
+    name: 'Verkeersscheidingsstelsel - Kilometreringlabels (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    layers: 'kilometreringlabels',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  VERKEERSSCHEIDINGSSTELSEL_VAARGEULENPERTYPEENTITEIT: {
+    layertype: 'WMS',
+    name: 'Verkeersscheidingsstelsel - Vaargeulen per type entiteit (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    layers: 'vaargeulenpertypeentiteit',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
   VIN_BEVAARBAARHEID: {
     layertype: 'WMS',
     name: 'Vaarkenmerken in Nederland (VIN) - Bevaarbaarheid (WMS)',
@@ -1398,6 +1453,72 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   },
+  CBS_WIJKENENBUURTEN_CBSBUURTEN2014: {
+    layertype: 'WMS',
+    name: 'CBS Wijken en buurten - Buurten 2014 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
+    layers: 'cbs_buurten_2014',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  CBS_WIJKENENBUURTEN_CBSWIJKEN2014: {
+    layertype: 'WMS',
+    name: 'CBS Wijken en buurten - Wijken 2014 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
+    layers: 'cbs_wijken_2014',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  CBS_WIJKENENBUURTEN_CBSGEMEENTEN2014: {
+    layertype: 'WMS',
+    name: 'CBS Wijken en buurten - Gemeenten 2014 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
+    layers: 'gemeenten2014',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },  
+  CBS_WIJKENENBUURTEN_CBSBUURTEN2013: {
+    layertype: 'WMS',
+    name: 'CBS Wijken en buurten - Buurten 2013 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
+    layers: 'cbs_buurten_2013',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  CBS_WIJKENENBUURTEN_CBSWIJKEN2013: {
+    layertype: 'WMS',
+    name: 'CBS Wijken en buurten - Wijken 2013 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
+    layers: 'cbs_wijken_2013',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  CBS_WIJKENENBUURTEN_CBSGEMEENTEN2013: {
+    layertype: 'WMS',
+    name: 'CBS Wijken en buurten - Gemeenten 2013 (WMS)',
+    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
+    layers: 'gemeenten2013',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },  
   CBS_WIJKENENBUURTEN_CBSBUURTEN2012: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2012 (WMS)',
@@ -1529,16 +1650,5 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false,
     singleTile: true
-  },
-  WKPB: {
-    layertype: 'WMS',
-    name: 'WKPB (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wkpb/wms',
-    layers: 'pbwetbodembescherming',
-    transparent: 'true',
-    format: 'image/png',
-    visibility: true,
-    isBaseLayer: false,
-    singleTile: true
   }
-};
+}

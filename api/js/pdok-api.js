@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.1.0';
+Pdok.API_VERSION_NUMBER = '1.1.1';
 
 
 // CONFIGURATION
@@ -20,8 +20,8 @@ OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaar
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
 // PDOK LOKET DEV
-//Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
-//OpenLayers.ProxyHost = "http://pdokserver/proxy?url="; // kaart.pdok.nl
+Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
+OpenLayers.ProxyHost = "http://pdokserver/proxy?url="; // kaart.pdok.nl
 
 
 
@@ -226,12 +226,19 @@ Pdok.Api = function(config, callback) {
      */
     this.bbox = Pdok.bbox;
 
+    this.baselayers = Pdok.baselayers || [];
+
+    /**
+     * The actual ID of the baselayer to use (one out of 'baselayers' params)
+     * @type {null|*|string}
+     */
+    this.baselayer  = Pdok.baselayer || null;
+
     /**
      * A commaseparated list of pdok id's (defined in pdok-layers.js). Eg: 'brt,top10'
      * @type String
      */
     this.overlays = Pdok.overlays || [];
-    this.baselayers = Pdok.baselayers || [];
     this.pdoklayers = Pdok.pdoklayers;
     
     /**
@@ -436,11 +443,11 @@ Pdok.Api = function(config, callback) {
      * To determine if the layer switcher should be shown or not. Defaults to true
      * @type Boolean
      */
-    this.showlayerswitcher = Pdok.showlayerswitcher;
-    this.showzoom = Pdok.showzoom;
-    this.shownavigation = Pdok.shownavigation;
-    this.showscaleline = Pdok.showscaleline;
-    this.showmouseposition = Pdok.showmouseposition;
+    this.showlayerswitcher = Pdok.showlayerswitcher || true; // we want default this to true
+    this.showzoom = Pdok.showzoom || true; // we want default this to true
+    this.navigation = Pdok.navigation || true; // we want default this to true
+    this.showscaleline = Pdok.showscaleline || false;
+    this.showmouseposition = Pdok.showmouseposition || false;
     this.geocoder = Pdok.geocoder;
     this.legend = Pdok.legend;
     /**
@@ -591,28 +598,6 @@ Pdok.Api.prototype.defaultPdokLayers = {
             isBaseLayer: true,
             attribution: '(c) OSM & Kadaster'
         },
-        CBS_GEMEENTEN: {
-            layertype: 'WMS',
-            name: 'CBS Gemeentegrenzen 2008 (WMS)',
-            url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
-            layers: 'gemeentegrens_generalisatie_2008',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
-        CBS_PROVINCIES: {
-            layertype: 'WMS',
-            name: 'CBS Provinciegrenzen 2008 (WMS)',
-            url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
-            layers: 'provgrens_generalisatie_2008',
-            transparent: 'true',
-            format: 'image/png',
-            visibility: true,
-            isBaseLayer: false,
-            singleTile: true
-        },
         LUFO: {
                 layertype: 'WMTS',
                 name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
@@ -684,7 +669,7 @@ Pdok.Api.prototype.activateGeocoder = function(geocoder){
         } else {
             mapdiv = this.map.div.id;
         }
-        var sdiv = 'search';
+        var sdiv = 'pdoksearch';
         if(geocoder.div){
             sdiv = geocoder.div;
         }
@@ -734,10 +719,8 @@ Pdok.Api.prototype.createOlMap = function() {
         (this.showscaleline === true || this.showscaleline.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.ScaleLine({bottomOutUnits: '', bottomInUnits: ''}));
     }
-    if (this.shownavigation &&
-        (this.shownavigation === true || this.shownavigation.toLowerCase() === "true")) {
-        controls.push(new OpenLayers.Control.Navigation());
-    }
+    var navigationControl = new OpenLayers.Control.Navigation();
+    controls.push(navigationControl);
     if (this.showzoom &&
         (this.showzoom === true || this.showzoom.toLowerCase() === "true")) {
         controls.push(new OpenLayers.Control.Zoom());
@@ -754,11 +737,19 @@ Pdok.Api.prototype.createOlMap = function() {
     });
     this.map = olMap;
 
+    if (this.navigation &&
+        (this.navigation === true || this.navigation.toLowerCase() === "true")) {
+        // already on
+    }
+    else{
+        navigationControl.deactivate();
+    }
+
     if (this.showlayerswitcher &&
         (this.showlayerswitcher === true || this.showlayerswitcher.toLowerCase() === "true")) {
         var switcher = new OpenLayers.Control.LayerSwitcher();
         this.map.addControl(switcher);
-        switcher.maximizeControl(); // IF we do a layer switcher, then open it
+        switcher.minimizeControl(); // IF we do a layer switcher, but close it initially
     }
 
     // loading panel control (waiting for data control)
@@ -810,34 +801,17 @@ Pdok.Api.prototype.createOlMap = function() {
         panel.addControls([openLufo,openTOP10,openBRT]);
         olMap.addControl(panel);
     }
-    // apply layer if a layer was given
+    // add different layers to the map
+    // NOTE: baselayers, overlays and pdoklayers should be an array(!) of objects OR a commaseparted string
+    // the function addLayers should handle both cases, NOT to be handled here!
     if (this.baselayers) {
-        // if there is just one layer (without comma's), OL returns a String:
-        if (typeof this.baselayers === 'string') {
-            this.baselayers = this.baselayers.split(',');
-        }
         this.addLayers(this.baselayers, olMap);
     }
-    // apply layer if a layer was given
     if (this.overlays) {
-        // if there is just one layer (without comma's), OL returns a String:
-        if (typeof this.overlays === 'string') {
-            this.overlays=this.overlays.split(',');
-        }
-        for (layer in this.overlays){
-            this.addLayers([this.overlays[layer]], olMap);
-        }
+        this.addLayers(this.overlays, olMap);
     }
     if(this.pdoklayers) {
-        if (typeof this.pdoklayers === 'string') {
-            this.pdoklayers = this.pdoklayers.split(',');
-        }
-        var i;
-        for (i = 0; i < this.pdoklayers.length; ++i) {
-            if(this.pdoklayers[i] !== ""){
-                this.addLayers([{id:this.pdoklayers[i], visible:true}], olMap);
-            }
-        }
+        this.addLayers(this.pdoklayers, olMap);
     }
     if (!olMap.baseLayer){
         //olMap.addLayer(this.createWMTSLayer( this.defaultLayers.BRT ));
@@ -899,6 +873,15 @@ Pdok.Api.prototype.createOlMap = function() {
         name:'locations', displayInLayerSwitcher:false
     });
     olMap.addLayer(this.locationLayer);
+
+    // apply Baselayer if applicable
+    if (this.baselayer != null) {
+    	var baselayerbyid = olMap.getLayersBy('pdokid', this.baselayer);
+		if(baselayerbyid.length > 0)
+		{
+			olMap.setBaseLayer(baselayerbyid[0]);
+		}
+    }
 
     if (typeof this.features === 'object' || typeof this.features === 'string') {
         // meaning we received a features string (kml) from the outside
@@ -1645,26 +1628,34 @@ Pdok.Api.prototype.createWMSLayer = function(layerConfigObj) {
 };
 
 /**
- * Api Interface addLayers to add layers the map, based on their layerkey-names Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'
+ * Api Interface addLayers to add layers the map, there are three options handled
+ * -1- commaseparated-string based on the layerkey-names from the layer config files Eg: 'BRT,TOP10NL2,CBS_PROVINCIES'
+ * -2- an array like [{id:'BRT',visible='true'},{id:'TOP10NL@',visible='false'}]
+ * -3- an array with layerkey-names ['BRT,TOP10NL2','CBS_PROVINCIES']
  * @param {array} arrLayerNames javascript array of layer names
  * @param {OpenLayers.Map} map the Pdok.Api-map to add the layers to
  */
 Pdok.Api.prototype.addLayers = function(arrLayerNames, map){
     if (!arrLayerNames){
-        alert('Geen lagen opgegeven om aan de kaart toe te voegen.');
         return;
-    } else if (arrLayerNames === '-') {
+    }
+    if (arrLayerNames === '-') {
         // this is the 'header' of the selectbox: "choose ..."
         return;
     }
+    // handle case in which it is just a commaseparated string of keys OR just one key
+    if (typeof arrLayerNames == 'string') {
+        arrLayerNames = arrLayerNames.split(','); // now it is an array
+    }
+    // handle empty [] could come from empty string ''
     if (!map){
         map = this.map;
     }
-    for (l in arrLayerNames) {
+    for (var l = 0;l<arrLayerNames.length;l++) {
         var layer = arrLayerNames[l];
-        if (isNaN(l)) {
-            // besides an array of layernames it is possible to pass an object like: {"id":"layername","visible":true}
-            layer = arrLayerNames[l];
+        if (typeof layer == 'string') {
+            // layer is a key from the layer configs
+            layer = {id: layer, visible:'true'};
         }
         if (this.defaultLayers[layer.id]){
             var lyr;
@@ -2041,7 +2032,7 @@ Pdok.Api.prototype.addFeaturesFromString = function(data, type, zoomToFeatures){
         return;
     }
     // add styling to features
-    for (f in features){
+    for (var f = 0;f<features.length;f++){
         var feature = features[f];
         if (feature.attributes['styletype']) {
             var styletype = feature.attributes['styletype'];
@@ -2223,6 +2214,7 @@ Pdok.Api.prototype.createMapLink = function(){
         delete config.baselayers;
     } else {
         pdoklayers.push("BRT");
+        pdoklayers.push("LUFO");
     }
     //Get the visible overlays and remove the others
     if(config.overlays){
@@ -2263,7 +2255,6 @@ Pdok.Api.prototype.createHtml = function(){
     var conf = JSON.stringify(confobj, null, 2);
     var head = '<script type="text/javascript" src="' + base + 'api/js/OpenLayers.js"></script>\n' +
     '<script type="text/javascript" src="' + base + 'api/js/proj4js-compressed.js"></script>\n' +
-    '<script type="text/javascript" src="' + base + 'api/js/OpenLayersPdokKaartExtenders.js"></script>\n' +
     '<script type="text/javascript" src="' + base + 'api/js/pdok-api.js"></script>\n'+ 
     '<script type="text/javascript" src="' + base + 'api/js/geozetlib.js"></script>\n' + stylesAndLayers;
     head += '<script type="text/javascript">\n' +
@@ -2291,16 +2282,15 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
     if(this.map){
         config.zoom = this.map.getZoom();
         // only add the LayerSwitcher parameter if false (default value is true)
-        if (this.showlayerswitcher){
+        if (typeof this.showlayerswitcher !== 'undefined' && this.showlayerswitcher == false){
             config.showlayerswitcher = this.showlayerswitcher;
         }
-        if (this.showzoom){
+        if (typeof this.showzoom !== 'undefined' && this.showzoom == false){
             config.showzoom = this.showzoom;
-        }   
-        if (this.shownavigation){
-            config.shownavigation = this.shownavigation;
-        } 
-
+        }
+        if (typeof this.navigation !== 'undefined' && this.navigation == false){
+            config.navigation = this.navigation;
+        }
         if (this.showscaleline){
             config.showscaleline = this.showscaleline;
         }
@@ -2492,12 +2482,15 @@ Pdok.Api.prototype.setZoomVisible = function(isVisible){
  * Function to toggle visibility of the OpenLayers.navigation
  * @param {Boolean} isVisible to show the layer or not
  */
-Pdok.Api.prototype.setNavigationVisible = function(isVisible){
+Pdok.Api.prototype.setNavigation = function(isVisible){
+    var nav = this.map.getControlsByClass("OpenLayers.Control.Navigation")[0];
     if (isVisible){
-        this.shownavigation = true;
+        this.navigation = true;
+        if(nav){nav.activate();}
     }
     else{
-        this.shownavigation = false;
+        this.navigation = false;
+        if(nav){nav.deactivate();}
     }
 };
 /**
@@ -2590,3 +2583,726 @@ Pdok.Api.prototype.kmlToService = function(){
         }
     });
 };
+
+
+/*
+    This part contains extra Openlayers classes to be used in the
+    PdokKaart-api. Currently, these are:
+
+    OpenLayers.Format.KMLv2_2
+      Symbology support for the OpenLayers class for reading/writing KML 2.2
+
+    OpenLayers.Control.GeocoderControl
+      The GeocoderControl control adds pdok search functionality.
+
+    OpenLayers.Control.LoadingPanel
+      To show a nice 'loading' image when W*S is loading
+
+*/
+
+OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
+    /**
+     * APIProperty: kmlns
+     * {String} KML Namespace to use. Defaults to 2.0 namespace.
+     */
+    kmlns: "http://earth.google.com/kml/2.2",
+
+    /**
+     *
+     * @param {type} features
+     * @returns {string} the KML document
+     */
+    write: function(features) {
+        this.styles = {};
+
+        if(!(features instanceof Array)) {
+            features = [features];
+        }
+        var kml = this.createElementNS(this.kmlns, "kml");
+        var document = this.createDocumentXML();
+        var folder = this.createFolderXML();
+        for(var i=0, len=features.length; i<len; ++i) {
+            var styleId = this.extractStyles ?
+                this.createStyleNode(document, this.computedStyle(features[i])) :
+                false;
+            folder.appendChild(this.createPlacemarkXML(features[i], styleId));
+        }
+        kml.appendChild(folder);
+        document.appendChild(folder);
+        kml.appendChild(document);
+        return OpenLayers.Format.XML.prototype.write.apply(this, [kml]);
+    },
+        /**
+     * Method: createDocumentXML
+     * Creates and returns a KML document node
+     *
+     * Returns:
+     * {DOMElement}
+     */
+    createDocumentXML: function() {
+        // Document name
+        var documentName = this.createElementNS(this.kmlns, "name");
+        var documentNameText = this.createTextNode(this.foldersName);
+        documentName.appendChild(documentNameText);
+
+        // Document description
+        var documentDesc = this.createElementNS(this.kmlns, "description");
+        var documentDescText = this.createTextNode(this.foldersDesc);
+        documentDesc.appendChild(documentDescText);
+
+        var document = this.createElementNS(this.kmlns, "Document");
+        document.appendChild(documentName);
+        document.appendChild(documentDesc);
+
+        return document;
+    },
+        createPlacemarkXML: function(feature, styleId) {
+        // Placemark name
+        var placemarkName = this.createElementNS(this.kmlns, "name");
+        var name = feature.style && feature.style.label ? feature.style.label :
+                   feature.attributes.name || feature.id;
+        placemarkName.appendChild(this.createTextNode(name));
+
+        // Placemark description
+        var placemarkDesc = this.createElementNS(this.kmlns, "description");
+        var desc = feature.attributes.description || this.placemarksDesc;
+        placemarkDesc.appendChild(this.createTextNode(desc));
+
+        // Placemark
+        var placemarkNode = this.createElementNS(this.kmlns, "Placemark");
+        if(feature.fid) {
+            placemarkNode.setAttribute("id", feature.fid);
+        }
+        placemarkNode.appendChild(placemarkName);
+        placemarkNode.appendChild(placemarkDesc);
+
+        if (styleId) {
+            var styleNode = this.createElementNS(this.kmlns, "styleUrl");
+            styleNode.appendChild(this.createTextNode(styleId));
+            placemarkNode.appendChild(styleNode);
+        }
+
+        // Geometry node (Point, LineString, etc. nodes)
+        var geometryNode = this.buildGeometryNode(feature.geometry);
+        placemarkNode.appendChild(geometryNode);
+
+        // output attributes as extendedData
+        if (feature.attributes) {
+            var edNode = this.buildExtendedData(feature.attributes);
+            if (edNode) {
+                placemarkNode.appendChild(edNode);
+            }
+        }
+
+        return placemarkNode;
+    },
+    computedStyle: function(feature) {
+        if (feature.style) {
+            return feature.style;
+        } else if (feature.layer) {
+            if (feature.layer.style) {
+                return feature.layer.style;
+            } else {
+                return feature.layer.styleMap.createSymbolizer(feature);
+            }
+        }
+    },
+    createKmlColorNode: function(color, opacity) {
+        var alpha = "ff";
+        if (opacity) {
+            alpha = Math.round(parseFloat(opacity) * 255).toString(16);
+        }
+        // TBD: handle '#ccc', 'red'
+        // only match '#rrggbb'
+        var r = color.slice(1, 3);
+        var g = color.slice(3, 5);
+        var b = color.slice(5, 7);
+        var colorNode = this.createElementNS(this.kmlns, "color");
+        colorNode.appendChild(this.createTextNode(alpha + b + g + r));
+        return colorNode;
+    },
+
+    createStyleNode: function(document, style) {
+        if (!style){
+            return false;
+        } else {
+            var styleNode = this.createElementNS(this.kmlns, "Style");
+            var id = OpenLayers.Util.createUniqueID("style_");
+            styleNode.setAttribute("id", id);
+
+            // LineStyle
+            if (style.strokeColor) {
+                var lineNode = this.createElementNS(this.kmlns, "LineStyle");
+                var colorNode = this.createKmlColorNode(style.strokeColor, style.strokeOpacity);
+                lineNode.appendChild(colorNode);
+
+                if (style.strokeWidth) {
+                    var width = this.createElementNS(this.kmlns, "width");
+                    width.appendChild(this.createTextNode(style.strokeWidth));
+                    lineNode.appendChild(width);
+                }
+                styleNode.appendChild(lineNode);
+            }
+
+            // PolyStyle
+            if (style.fillColor) {
+                var polyNode = this.createElementNS(this.kmlns, "PolyStyle");
+                var colorNode = this.createKmlColorNode(style.fillColor, style.fillOpacity);
+                polyNode.appendChild(colorNode);
+                styleNode.appendChild(polyNode);
+            } else /*if (style.fillColor == "none")*/ {
+                var polyNode = this.createElementNS(this.kmlns, "PolyStyle");
+                var fill = this.createElementNS(this.kmlns, "fill");
+                fill.appendChild(this.createTextNode("1"));
+                var colorNode = this.createKmlColorNode("#ffffff", "0.01");
+                polyNode.appendChild(colorNode);
+                polyNode.appendChild(fill);
+                styleNode.appendChild(polyNode);
+            }
+            if (polyNode && style.strokeWidth === "0") {
+                var outline = this.createElementNS(this.kmlns, "outline");
+                outline.appendChild(this.createTextNode("1"));
+                polyNode.appendChild(outline);
+                styleNode.appendChild(polyNode);
+            }
+
+            // IconStyle
+            if (style.externalGraphic) {
+                var iconstyleNode = this.createElementNS(this.kmlns, "IconStyle");
+                var iconNode = this.createElementNS(this.kmlns, "Icon");
+
+                var href = this.createElementNS(this.kmlns, "href");
+                var urlObj = OpenLayers.Util.createUrlObject(
+                    style.externalGraphic,
+                    {ignorePort80: true}
+                );
+                if(urlObj.port && urlObj.port !== "80"){
+                    url = [urlObj.protocol, '//', urlObj.host, ':', urlObj.port, urlObj.pathname].join('');
+                } else {
+                    url = [urlObj.protocol, '//', urlObj.host, urlObj.pathname].join('');
+                }
+                href.appendChild(this.createTextNode(url));
+                iconNode.appendChild(href);
+                iconstyleNode.appendChild(iconNode);
+                var scaleNode = this.createElementNS(this.kmlns, "scale");
+
+                // in KML 2.2, w and h <Icon> attributes are deprecated
+                // this means that we can't modify the width/height ratio of the image
+                var scale = style.graphicWidth || style.graphicHeight || style.pointRadius * 2;
+                scaleNode.appendChild(this.createTextNode(scale/32));
+                iconstyleNode.appendChild(scaleNode);
+                styleNode.appendChild(iconstyleNode);
+            }
+
+            // LabelStyle
+            if (style.fontColor) {
+                var colorNode = this.createKmlColorNode(style.fontColor, style.fontOpacity);
+                var labelStyle = this.createElementNS(this.kmlns, "LabelStyle");
+                labelStyle.appendChild(colorNode);
+                styleNode.appendChild(labelStyle);
+            }
+            document.appendChild(styleNode);
+            return "#" + id;
+        }
+    }
+});
+
+/**
+ * @requires OpenLayers/Control.js
+ */
+
+/**
+ * Class: OpenLayers.Control.GeocoderControl
+ * The GeocoderControl control adds pdok search functionality.
+ *
+ * Inherits from:
+ *  - <OpenLayers.Control>
+ */
+OpenLayers.Control.GeocoderControl =
+  OpenLayers.Class(OpenLayers.Control, {
+
+    // PDOK
+    geocoderUrl: 'http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?',
+    geocoderParameter: 'zoekterm',
+
+    zoomScale : {
+        adres: 13,
+        postcode: 11,
+        plaats: 8,
+        gemeente: 8,
+        provincie: 5,
+        standaard: 9
+    },
+
+    /**
+     * Constructor:
+     *
+     * Parameters:
+     * @param options - {Object} Options for control.
+     */
+    initialize: function(options) {
+        OpenLayers.Control.prototype.initialize.apply(this, arguments);
+        // we create the div ourselves, to be able to put it outside the map-div
+        // if we let OpenLayers create it, and let it be part of the map-div
+        // then OpenLayers steals the cursor from our input
+        if (!this.div){
+            this.div = document.createElement("div");
+            this.div.className = OpenLayers.Util.createUniqueID("gc_");
+            this.div.id = this.div.className+'_'+this.id;
+        }
+        this.resultdiv_id = OpenLayers.Util.createUniqueID("gcr_");
+        this.formdiv_id = this.resultdiv_id + '_form';
+        this.button_id = this.resultdiv_id + '_button';
+        this.input_id = this.resultdiv_id + '_input';
+        this.geozet_id = this.resultdiv_id + '_geozet';
+        this.allowSelection = true;
+
+        // deferred event delegation:
+        // http://davidwalsh.name/event-delegate
+        var me = this;
+        var clickFunc = function(e) {
+            var target;
+            e.target ? target = e.target : target = e.srcElement;
+            if(target && target.className === "closeWindow") {
+                me.hideResults();
+            } else if(target && target.nodeName === "A") {
+                var x = document.getElementById(target.id).attributes['x'].value;
+                var y = document.getElementById(target.id).attributes['y'].value;
+                var z = document.getElementById(target.id).attributes['z'].value;
+                if(x && y) {
+                    me.map.setCenter(new OpenLayers.LonLat(x, y), z);
+                } else {
+                    document.getElementById(this.resultdiv_id).innerHTML = "Fout met coordinaten";
+                }
+                return false;
+            }
+        };
+        if (this.div.addEventListener) {
+            this.div.addEventListener("click", clickFunc);
+        } else{
+            // IE8
+            this.div.attachEvent("onclick", clickFunc);
+        }
+    },
+
+    /**
+     * Method: destroy
+     * Destroy control.
+     */
+    destroy: function() {
+        OpenLayers.Control.prototype.destroy.apply(this, arguments);
+    },
+
+    /**
+     * Method: draw
+     * Initialize control.
+     *
+     * Returns:
+     * {DOMElement} A reference to the DIV DOMElement containing the control
+     */
+    draw: function() {
+        OpenLayers.Control.prototype.draw.apply(this, arguments);
+        this.div.innerHTML =
+            '<div>' +
+                '<form action="#" id="' + this.formdiv_id + '" name="' + this.formdiv_id + '" onsubmit="return false;">' +
+                    '<fieldset>' +
+                        '<input class="autovalue default" type="text" title="adres, postcode of plaatsnaam" id="' + this.input_id +'" name="'+ this.input_id + '" />' +
+                        '<input type="submit" id="' + this.button_id +'" class="filterbutton" value="Zoek" />' +
+                    '</fieldset>' +
+                '</form>' +
+            '</div>' +
+            '<div id="'+ this.resultdiv_id +'" style="display:none;"></div>';
+        var me = this;
+        document.getElementById(this.button_id).onclick = function(){
+            me.search();
+            if (document.getElementById(me.resultdiv_id).style.display === 'none'){
+                me.showResults();
+            }
+        };
+        return this.div;
+    },
+
+    handleGeocodeResponse: function(req){
+
+        var responseText = req.responseText;
+        if (responseText && (responseText.indexOf('FAILED') !== -1 ||
+            responseText.indexOf('Exception') !== -1 )) {
+            // fail silently
+            return false;
+        }
+        if(req.status === 404){
+            document.getElementById(this.resultdiv_id).innerHTML = "De zoekfunctie is niet actief, neem contact op met systeembeheer (status: 404)";
+            return false;
+        }
+        var xlslusFormat = new Geozet.Format.XLSLUS();
+        var xlslus = xlslusFormat.read(req.responseXML || req.responseText);
+        if (xlslus.length === 0) {
+            hits = 0;
+        } else {
+            var hits=xlslus[0].numberOfGeocodedAddresses;
+        }
+        if (hits === 0) {
+            // zero responses
+            document.getElementById(this.resultdiv_id).innerHTML = "Geen locaties gevonden ...";
+        } else {
+            var maxEx = this.restrictedExtent;
+            // minx,miny,maxx,maxy are used to calcultate a bbox of the geocoding results
+            // initializes these with the max/min values of the extent of the map, so swap the left /right and bottomo/top of the maxExtent
+            // i.e.: the calculate minx will allways be smaller than the right-border of the map;
+            // TODO: for production use the map's restricted Extent, so request a change to Lucs API
+            /// For now: just values
+            maxEx = new OpenLayers.Bounds(-285401.92, 22598.08, 595401.92, 903401.92);
+            var minx = maxEx.right;
+            var miny = maxEx.top;
+            var maxx = maxEx.left;
+            var maxy = maxEx.bottom;
+            var minzoom = 15;
+            var features = [];
+            // > 0 hit show suggestions
+            if(hits > 0){
+                var searchString = document.getElementById(this.input_id).value;
+                document.getElementById(this.resultdiv_id).innerHTML =
+                    '<span class="closeWindow"><a onclick="return false;"><img class="closeWindow" src="' + Pdok.ApiUrl +
+                    '/styles/default/img/close.gif" alt="Sluiten" title="Sluiten"/></a></span>' +
+                    '<span class="searchedFor">Gezocht op: "' + searchString +
+                    '"</span><h3>Zoekresultaten</h3><ul id="' + this.geozet_id + '" class="geozetSuggestions"></ul>';
+            }
+            for (i = 0; i < hits; i++) {
+                var suggestion='';
+                var geom = xlslus[0].features[i].geometry;
+                var address = xlslus[0].features[i].attributes.address;
+                var plaats = address.place.MunicipalitySubdivision; // toont evt provincie afkorting
+                var gemeente = address.place.Municipality;
+                var prov = address.place.CountrySubdivision;
+                var adres = '';
+                var postcode = '';
+                // determine zoom and hash
+                var zoom = null;
+                if (address.street && address.street.length>0) {
+                    adres = address.street + ' - ' ;
+                    if (address.building) {
+                        var toevoeging = '';
+                        if (address.building.subdivision) {
+                            toevoeging = '-'+address.building.subdivision;
+                        }
+                        adres += address.building.number+toevoeging+' - ';
+                    }
+                    if(!zoom){
+                        zoom='adres';
+                    }
+                }
+                if (address.postalCode) {
+                    adres += address.postalCode+' - ';
+                    if(!zoom){
+                        zoom='postcode';
+                    }
+                }
+                if (plaats) {
+                    suggestion=adres+plaats+' (plaats)';
+                    if(!zoom){
+                        zoom='plaats';
+                    }
+                } else if(gemeente) {
+                    suggestion=adres+gemeente+' (gemeente)';
+                    if(!zoom){
+                        zoom='gemeente';
+                    }
+                } else if(prov){
+                    suggestion=prov+' (provincie)';
+                    if(!zoom){
+                        zoom='provincie';
+                    }
+                }
+                if(!zoom){
+                    zoom='standaard';
+                }
+
+                // hack to be able to handle results without geom
+                var x = geom ? geom.x : 150000;
+                var y = geom ? geom.y : 450000;
+                var z = geom ? this.zoomScale[zoom] : this.zoomScale['provincie'];
+                var newId = -1;
+                if (geom) {
+                    minx = Math.min(minx, x);
+                    miny = Math.min(miny, y);
+                    maxx = Math.max(maxx, x);
+                    maxy = Math.max(maxy, y);
+                    minzoom = Math.min(minzoom, this.zoomScale[zoom]);
+                    var newFt = new OpenLayers.Feature.Vector(
+                        new OpenLayers.Geometry.Point(x, y), {
+                            "title": suggestion,
+                            "postcode": postcode,
+                            "adres": adres,
+                            "plaats": plaats,
+                            "gemeente": gemeente,
+                            "provincie": prov
+                        }
+                    );
+                    newId = newFt.id;
+                    features.push(newFt);
+                }
+                var gazHtml = '<li><a href="#" id="result_'+ newId.replace('.','_') +
+                    '" x="' + x +
+                    '" y="' + y +
+                    '" z="' + z + '">' +
+                    suggestion +'</a></li>';
+                document.getElementById(this.geozet_id).innerHTML += gazHtml;
+            }
+            if(hits === 1) {
+                var geom = xlslus[0].features[0].geometry;
+                // hack to be able to handle results without geom
+                var x = geom ? geom.x : 150000;
+                var y = geom ? geom.y : 450000;
+                var z = geom ? this.zoomScale[zoom] : this.zoomScale['provincie'];
+                this.map.setCenter(new OpenLayers.LonLat(x, y), z);
+            }
+        }
+        this.showResults();
+        return false;
+    },
+
+    search: function() {
+        document.getElementById(this.resultdiv_id).innerHTML = 'Bezig met zoeken...';
+        var searchString = document.getElementById(this.input_id).value;
+        var params = {}; //{request: 'geocode'};
+        params[this.geocoderParameter] = searchString;
+        if (searchString && searchString.length>0){
+            OpenLayers.Request.GET({
+                url: this.geocoderUrl,
+                params: params,
+                scope: this,
+                callback: this.handleGeocodeResponse
+                // failure: this.handleError
+            });
+        }
+        return false;
+    },
+    hideResults: function() {
+        document.getElementById(this.resultdiv_id).style.display = 'none';
+    },
+    showResults: function() {
+        document.getElementById(this.resultdiv_id).style.display = 'block';
+    },
+    CLASS_NAME: "OpenLayers.Control.GeocoderControl"
+});
+
+/* Copyright (c) 2006-2008 MetaCarta, Inc., published under the Clear BSD
+ * license.  See http://svn.openlayers.org/trunk/openlayers/license.txt for the
+ * full text of the license. */
+
+/**
+ * @requires OpenLayers/Control.js
+ *
+ * Class: OpenLayers.Control.LoadingPanel
+ * In some applications, it makes sense to alert the user that something is
+ * happening while tiles are loading. This control displays a div across the
+ * map when this is going on.
+ *
+ * Inherits from:
+ *  - <OpenLayers.Control>
+ */
+OpenLayers.Control.LoadingPanel = OpenLayers.Class(OpenLayers.Control, {
+
+    /**
+     * Property: counter
+     * {Integer} A counter for the number of layers loading
+     */
+    counter: 0,
+
+    /**
+     * Property: maximized
+     * {Boolean} A boolean indicating whether or not the control is maximized
+    */
+    maximized: false,
+
+    /**
+     * Property: visible
+     * {Boolean} A boolean indicating whether or not the control is visible
+    */
+    visible: true,
+
+    /**
+     * Constructor: OpenLayers.Control.LoadingPanel
+     * Display a panel across the map that says 'loading'.
+     *
+     * Parameters:
+     * options - {Object} additional options.
+     */
+    initialize: function(options) {
+         OpenLayers.Control.prototype.initialize.apply(this, [options]);
+    },
+
+    /**
+     * Function: setVisible
+     * Set the visibility of this control
+     *
+     * Parameters:
+     * visible - {Boolean} should the control be visible or not?
+    */
+    setVisible: function(visible) {
+        this.visible = visible;
+        if (visible) {
+            OpenLayers.Element.show(this.div);
+        } else {
+            OpenLayers.Element.hide(this.div);
+        }
+    },
+
+    /**
+     * Function: getVisible
+     * Get the visibility of this control
+     *
+     * Returns:
+     * {Boolean} the current visibility of this control
+    */
+    getVisible: function() {
+        return this.visible;
+    },
+
+    /**
+     * APIMethod: hide
+     * Hide the loading panel control
+    */
+    hide: function() {
+        this.setVisible(false);
+    },
+
+    /**
+     * APIMethod: show
+     * Show the loading panel control
+    */
+    show: function() {
+        this.setVisible(true);
+    },
+
+    /**
+     * APIMethod: toggle
+     * Toggle the visibility of the loading panel control
+    */
+    toggle: function() {
+        this.setVisible(!this.getVisible());
+    },
+
+    /**
+     * Method: addLayer
+     * Attach event handlers when new layer gets added to the map
+     *
+     * Parameters:
+     * evt - {Event}
+    */
+    addLayer: function(evt) {
+        if (evt.layer) {
+            evt.layer.events.register('loadstart', this, this.increaseCounter);
+            evt.layer.events.register('loadend', this, this.decreaseCounter);
+        }
+    },
+
+    /**
+     * Method: setMap
+     * Set the map property for the control and all handlers.
+     *
+     * Parameters:
+     * map - {<OpenLayers.Map>} The control's map.
+     */
+    setMap: function(map) {
+        OpenLayers.Control.prototype.setMap.apply(this, arguments);
+        this.map.events.register('preaddlayer', this, this.addLayer);
+        for (var i = 0; i < this.map.layers.length; i++) {
+            var layer = this.map.layers[i];
+            layer.events.register('loadstart', this, this.increaseCounter);
+            layer.events.register('loadend', this, this.decreaseCounter);
+        }
+    },
+
+    /**
+     * Method: increaseCounter
+     * Increase the counter and show control
+    */
+    increaseCounter: function() {
+        this.counter++;
+        if (this.counter > 0) {
+            if (!this.maximized && this.visible) {
+                this.maximizeControl();
+            }
+        }
+    },
+
+    /**
+     * Method: decreaseCounter
+     * Decrease the counter and hide the control if finished
+    */
+    decreaseCounter: function() {
+        if (this.counter > 0) {
+            this.counter--;
+        }
+        if (this.counter == 0) {
+            if (this.maximized && this.visible) {
+                this.minimizeControl();
+            }
+        }
+    },
+
+    /**
+     * Method: draw
+     * Create and return the element to be splashed over the map.
+     */
+    draw: function () {
+        OpenLayers.Control.prototype.draw.apply(this, arguments);
+        return this.div;
+    },
+
+    /**
+     * Method: minimizeControl
+     * Set the display properties of the control to make it disappear.
+     *
+     * Parameters:
+     * evt - {Event}
+     */
+    minimizeControl: function(evt) {
+        this.div.style.display = "none";
+        this.maximized = false;
+
+        if (evt != null) {
+            OpenLayers.Event.stop(evt);
+        }
+    },
+
+    /**
+     * Method: maximizeControl
+     * Make the control visible.
+     *
+     * Parameters:
+     * evt - {Event}
+     */
+    maximizeControl: function(evt) {
+        this.div.style.display = "block";
+        this.maximized = true;
+
+        if (evt != null) {
+            OpenLayers.Event.stop(evt);
+        }
+    },
+
+    /**
+     * Method: destroy
+     * Destroy control.
+     */
+    destroy: function() {
+        if (this.map) {
+            this.map.events.unregister('preaddlayer', this, this.addLayer);
+            if (this.map.layers) {
+                for (var i = 0; i < this.map.layers.length; i++) {
+                    var layer = this.map.layers[i];
+                    layer.events.unregister('loadstart', this,
+                        this.increaseCounter);
+                    layer.events.unregister('loadend', this,
+                        this.decreaseCounter);
+                }
+            }
+        }
+        OpenLayers.Control.prototype.destroy.apply(this, arguments);
+    },
+
+    CLASS_NAME: "OpenLayers.Control.LoadingPanel"
+
+});
