@@ -110,7 +110,7 @@
                         <!-- Step 1 - Your map -->
                         <div id="step1" class="stepwrapper active">
                             <h2>
-                                <a id="goto1" >Stap 1: De kaart</a>
+                                <a id="goto1" >▶ Stap 1: De kaart</a>
                                 <span class="help">
                                     <a href="help.html#help1" target="help">Help</a>
                                 </span>
@@ -165,7 +165,7 @@
                         <!-- Step 2 - Add markers -->
                         <div id="step2" class="stepwrapper">
                             <h2>
-                                <a id="goto2">Stap 2: Markers</a>
+                                <a id="goto2">▶ Stap 2: Markers</a>
                                 <span class="help">
                                     <a href="help.html#help2" target="help">Help</a>
                                 </span>
@@ -317,8 +317,7 @@
                         <!-- Step 6 - Save and download code -->
                         <div id="step5" class="stepwrapper">
                             <h2>
-                                <a id="goto5" >Stap 3: Genereer
-                                    code</a>
+                                <a id="goto5" >▼ Stap 3: Publiceer en deel kaart</a>
                                 <span class="help">
                                     <a href="help.html#help5" target="help">Help</a>
                                 </span>
@@ -326,21 +325,42 @@
                             <form action="#" name="savecode" id="savecode">
                                 <div class="row_right">
                                     <div id="generated_url">
-                                        <p><strong>Als URL</strong></p>
-                                        <textarea id="generated_url_to_long_message" rows="4" cols="10"></textarea>
+                                        <!-- <p><strong>Als URL</strong></p> -->
+                                        
+                                        <!-- BROKEN -->
+                                        <!-- <textarea id="generated_url_to_long_message" rows="4" cols="10"></textarea>
                                         <div id="kml_url_service">
                                             <a href="#" id="kmlservicelink" target="_blank">KML opslagservice</a> (Sla KML op en vervang door KML-url)
+                                        </div> -->
+
+
+
+                                        <!-- <a href="#" id="apilink1" target="_blank">Link</a> losse kaart: -->
+
+                                        <p><a href="#" id="apilink1" target="_blank">De kaart is klaar</a>! Gebruik onderstaande links om het te delen met vrienden en collega's of om het op te nemen in je website.</p>
+
+                                        <div class="deel-float">
+                                            <p>Deel via link:</p>
+                                            <input type="text" value="" id="apilink2" onClick="this.select()" />    
                                         </div>
-                                        <a href="#" id="apilink1" target="_blank">Link</a> losse kaart:
-                                        <input type="text" value="" id="apilink2" />
-                                        <a href="#" id="apilink3"><img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a>
-                                        <br/>Embed HTML iframe:
-                                        <input type="text" value="" id="embedhtmliframe" />
-                                        <br/>Embed HTML Object tag:<br />
-                                        <input type="text" value="" id="embedhtmlobject" />
+
+                                        <div class="deel-float">
+                                            <p>iFrame embed:</p>
+                                            <input type="text" value="" id="embedhtmliframe" />    
+                                        </div>
+                                        
+
+                                        
+                                        
+                                        <!-- <a href="#" id="apilink3"><img src="img/email.png" alt="Verstuur link per email" title="Verstuur link per email" /></a> -->
+                                        
+                                        
+                                        
+                                        <!-- <br/>Embed HTML Object tag:<br />
+                                        <input type="text" value="" id="embedhtmlobject" /> -->
                                     </div>
                                 </div>
-                                <div id="generated_html">
+                                <!-- <div id="generated_html">
                                     <p><strong>Als broncode</strong></p>
                                     In de HTML plaatsen:
                                     <textarea id="scriptcodeBody"></textarea>
@@ -348,7 +368,7 @@
                                 <div id="generated_kml">
                                     <p><strong>Features als KML <span id="download_kml_span">(of <a id="download_kml" href="">download</a>)</span></strong></p>
                                     <textarea id="featuresKML"></textarea>
-                                </div>
+                                </div> -->
                             </form>
                         </div>
                     </div>

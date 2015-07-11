@@ -17,7 +17,7 @@
 }
 
 #content {
-    min-height: 600px;
+    /*min-height: 370px;*/
 }
 
 #map {
@@ -278,10 +278,11 @@ ul.geozetSuggestions{
 form input[type=text], form select, form textarea, form select {
     background: #fff; 
     padding: 0.3em 0.3em;
-    color: #000; 
+    /*color: #000; */
+    color: gray;
     border: 1px solid #000; 
     font-size: 11px;
-    width: 298px;
+    width: 289px;
 }
 button { 
     background: #deebe3; 
@@ -417,4 +418,18 @@ a, a:link, a:focus, a:hover, a:visited {
 
 #opties {
     margin:10px;
+}
+
+.deel-float {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.deel-float p {
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+.deel-float input {
+    width: 150px !important;
 }
