@@ -6,14 +6,16 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.1.2';
+Pdok.API_VERSION_NUMBER = '1.1.3';
 
 
 // CONFIGURATION
+// NOTE: for proxy it is best to use // as protocol. Using https:// results in
+// cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
-OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaart.pdok.nl
+//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
+//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
 //Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
@@ -23,7 +25,9 @@ OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaar
 Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
 OpenLayers.ProxyHost = "http://pdokserver/proxy?url="; // kaart.pdok.nl
 
-
+// ZUIDT
+//Pdok.ApiUrl = 'https://zuidt.nl/pdokkaart/api';
+//OpenLayers.ProxyHost = "//zuidt.nl/proxy?url="; // kaart.pdok.nl
 
 /**
  * @class Pdok.Api
@@ -590,7 +594,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
         BRT: {
             layertype: 'WMTS',
             name: 'BRT Achtergrondkaart (WMTS)',
-            url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+            url: 'https://geodata.nationaalgeoregister.nl/wmts/',
             layer: 'brtachtergrondkaart',
             style: null,
             matrixSet: 'EPSG:28992',
@@ -601,7 +605,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
         LUFO: {
                 layertype: 'WMTS',
                 name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
-                url: 'http://geodata1.nationaalgeoregister.nl/luchtfoto/wmts?',
+                url: 'https://geodata1.nationaalgeoregister.nl/luchtfoto/wmts?',
                 version: "1.3.0",
                 layer: 'luchtfoto',
                 style: '',
@@ -2823,7 +2827,7 @@ OpenLayers.Control.GeocoderControl =
   OpenLayers.Class(OpenLayers.Control, {
 
     // PDOK
-    geocoderUrl: 'http://geodata.nationaalgeoregister.nl/geocoder/Geocoder?',
+    geocoderUrl: 'https://geodata.nationaalgeoregister.nl/geocoder/Geocoder?',
     geocoderParameter: 'zoekterm',
 
     zoomScale : {
