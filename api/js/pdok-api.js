@@ -10,24 +10,21 @@ Pdok.API_VERSION_NUMBER = '1.1.3';
 
 
 // CONFIGURATION
-// NOTE: for proxy it is best to use // as protocol. Using https:// results in
-// cross-origin problems when viewed via http
+// NOTE: for proxy it is best to use something like:
+//   OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url=";
+// Using https:// results in cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
 //Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
-//OpenLayers.ProxyHost = "http://"+window.location.host+"/proxy.php?url="; // kaart.pdok.nl
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
 //Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
-// PDOK LOKET DEV
+// DEV
 Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
-OpenLayers.ProxyHost = "http://pdokserver/proxy?url="; // kaart.pdok.nl
-
-// ZUIDT
-//Pdok.ApiUrl = 'https://zuidt.nl/pdokkaart/api';
-//OpenLayers.ProxyHost = "//zuidt.nl/proxy?url="; // kaart.pdok.nl
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url=";
 
 /**
  * @class Pdok.Api
