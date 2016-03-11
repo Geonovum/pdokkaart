@@ -23,7 +23,7 @@ Pdok.API_VERSION_NUMBER = '1.1.3';
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
 // DEV
-Pdok.ApiUrl = 'http://pdokserver/pdokkaart/api';
+Pdok.ApiUrl = window.location.protocol + "//" + window.location.host + '/pdokkaart/api';
 OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url=";
 
 /**
