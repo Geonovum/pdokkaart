@@ -368,6 +368,12 @@ Pdok.Api = function(config, callback) {
     this.wmsurl = Pdok.wmsurl;
 
     /**
+     * The name to use as the title of a wms layer. Optionally together with a wmslayers parameter
+     * @type String
+     */
+    this.wmsname = Pdok.wmsname;
+
+    /**
      * The wms layers parameter, a commaseparated string of layername(s). Always together with a wmsurl parameter
      * @type String
      */
@@ -826,7 +832,7 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // apply WMSURL and WMSLAYERS if applicable
     if (this.wmsurl && this.wmslayers) {
-        this.addWMS(this.wmsurl, this.wmslayers, this.wmsinfoformat);
+        this.addWMS(this.wmsurl, this.wmslayers, this.wmsinfoformat, this.wmsname);
     }
 
     // apply WMTSURL and WMTSLAYER and WMTSMATRIXSET if applicable
@@ -1519,13 +1525,13 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
  * @param {String} wmslayers a valid layername of the above url service
  * @param {String} wmsinfoformat the format use to retrieve featureinfo
  */
-Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
+Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat, wmsname) {
     this.wmsurl = wmsurl;
     this.wmslayers = wmslayers;
     this.wmsinfoformat = wmsinfoformat;
     var lyrWMS = this.createWMSLayer({
             url: wmsurl,
-            name: wmslayers, // RWS prefers to have layernames as names instead of default 'WMS-layer'
+            name: wmsname || wmslayers, // RWS prefers to have layernames as names instead of default 'WMS-layer'
             layers: wmslayers,
             transparent: true,
             wmsinfoformat: wmsinfoformat
