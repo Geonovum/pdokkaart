@@ -15,16 +15,16 @@ Pdok.API_VERSION_NUMBER = '1.2.0';
 // Using https:// results in cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
-//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url="; // kaart.pdok.nl
+Pdok.ApiUrl = window.location.protocol + '//kaart.pdok.nl/api';
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
 //Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
 // DEV
-Pdok.ApiUrl = window.location.protocol + "//" + window.location.host + '/pdokkaart/api';
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url=";
+//Pdok.ApiUrl = window.location.protocol + '//pdokserver/pdokkaart/api';
+//OpenLayers.ProxyHost = window.location.protocol + '//pdokserver/proxy?url=';
 
 /**
  * @class Pdok.Api
