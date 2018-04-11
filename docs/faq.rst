@@ -208,7 +208,7 @@ De URL van het toegevoegde bestand kunt u gebruiken in PDOK Kaart. De URL vindt 
 
 .. NOTE:: op dit moment is het niet mogelijk om een .js file te uploaden. U zou de file ook ergens op en webserver kunnen zetten.
 
-vraag 12 - Kaarprikker functionaliteit gebruiken
+Vraag 12 - Kaartprikker functionaliteit gebruiken
 ---------------------------------------------------
 
 Ik wil gebruik maken van de kaartprikker functionaliteit. Hoe moet ik dat doen?
