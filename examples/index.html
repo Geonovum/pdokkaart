@@ -169,8 +169,10 @@
                         <div id="export" style="display:none;">
                             <input id="export_ahn_geotiff" class="export_button" type="button" value="Actueel Hoogtebestand Nederland (versie 1) - GEOTIFF"><br/>
                             <input id="export_cbs_kml" class="export_button" type="button" value="CBS Gemeentegrenzen (2008) - KML" ><br/>
+                            <input id="export_cbs_atom_xml" class="export_button" type="button" value="CBS Gemeentegrenzen (2008) - ATOM XML" ><br/>
                             <input id="export_gem_kml" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - KML"><br/>
-                            <input id="export_gem_shp" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - Shapefile (ZIP)"><br/>
+                            <input id="export_gem_json" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - JSON"><br/>
+                            <input id="export_gem_csv" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - CSV"><br/>
                         </div>
                         <div id="uitleg" class="stepwrapper_fixed active">
                             <h2>
@@ -1028,12 +1030,20 @@
                                                                     strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
                                                                     strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
                                                                     break;
+                                                                case "export_cbs_atom":
+                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=atom+xml&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
+                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
+                                                                    break;
                                                                 case "export_gem_kml":
                                                                     strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     break;
-                                                                case "export_gem_shp":
-                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=shape-zip&format_options=filename:provgrens_generalisatie_2008_" + extKaart.left + '_' + extKaart.bottom + '_' + extKaart.right + '_' + extKaart.top + ".zip&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
+                                                                case "export_gem_json":
+                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=json&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
+                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+                                                                    break;
+                                                                case "export_gem_csv":
+                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=csv&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
                                                                     strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     break;
 

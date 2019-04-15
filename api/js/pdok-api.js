@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.1.2';
+Pdok.API_VERSION_NUMBER = '1.1.3';
 
 
 // CONFIGURATION
@@ -206,6 +206,8 @@ Pdok.Api = function(config, callback) {
     // an external layersdef is temporarily parked in Pdok.layersdef
     this.layersdef = Pdok.layersdef || null;
     
+    // an address to search for
+    this.q = Pdok.q;
 
     /**
      * The zoom level property = the zoom level to start in (between 0 and 14)
@@ -774,6 +776,7 @@ Pdok.Api.prototype.createOlMap = function() {
             this.baselayer = "TOP10NL";
         }
     }
+    
     if (this.ls === true){
         function showLufo(){
             alert("Helaas, er zijn nog geen\nluchtfoto's beschikbaar binnen PDOK'");
@@ -971,6 +974,12 @@ Pdok.Api.prototype.createOlMap = function() {
             xorwkt,
             this.locationtoolyfield
             );
+    }
+    
+    if (this.q){
+    	if(typeof this.q === 'string'){
+    		this.zoekQ(this.q);
+    	}
     }
 
     this.activateLegend(this.legend, this.div);
@@ -2303,6 +2312,11 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
         if (this.legend){
             config.legend = JSON.stringify(this.legend);
         }
+        
+        if (this.q){
+            config.q = this.q;
+        }
+        
         config.loc = this.map.getCenter().toShortString();
         // overlays are 'pdok layers' from the pdok-layers.js configuration
         // only overlays will be outputted as 'overlays'-query parameter when outputting a config
@@ -2584,6 +2598,12 @@ Pdok.Api.prototype.kmlToService = function(){
     });
 };
 
+
+Pdok.Api.prototype.zoekQ = function(q){
+	geocoderUrl = OpenLayers.Control.GeocoderControl.prototype.geocoderUrl;
+	alert(geocoderUrl);
+	alert(q);
+}
 
 /*
     This part contains extra Openlayers classes to be used in the
