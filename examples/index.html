@@ -148,8 +148,9 @@
                         <div id="export" style="display:none;">
                             <input id="export_ahn_geotiff" class="export_button" type="button" value="Actueel Hoogtebestand Nederland (versie 1) - GEOTIFF"><br/>
                             <input id="export_cbs_kml" class="export_button" type="button" value="CBS Gemeentegrenzen (2008) - KML" ><br/>
-                            <input id="export_gem_kml" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - KML"><br/>
-                            <input id="export_gem_shp" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - Shapefile (ZIP)"><br/>
+                            <input id="export_prov_kml" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - KML"><br/>
+                            <input id="export_prov_json" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - JSON"><br/>
+                            <input id="export_prov_csv" class="export_button" type="button" value="CBS Provinciegrenzen (2008) - CSV"><br/>
                         </div>
                         <div id="uitleg" class="stepwrapper_fixed active">
                             <h2>
@@ -180,7 +181,7 @@
                                 <li><a href="#tab-3">11 - 15</a></li>
                                 <li><a href="#tab-4">16 - 20</a></li>
                                 <li><a href="#tab-5">21 - 25</a></li>
-                                <li><a href="#tab-6">26 - 27</a></li>
+                                <li><a href="#tab-6">26 - 29</a></li>
                             </ul>
                             <div id="tab-1" class="tabpane">
                                 <div id="vb1" class="stepwrapper">
@@ -1000,22 +1001,25 @@
                                                             szeKaartGrootte = api.map.getCurrentSize();
                                                             switch (this.id) {
                                                                 case "export_ahn_geotiff":
-                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WCS&VERSION=1.0.0&REQUEST=GetCoverage&FORMAT=GEOTIFF&COVERAGE=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&CRS=EPSG:28992&RESPONSE_CRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
-                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/png&LAYERS=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
+                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WCS&VERSION=1.0.0&REQUEST=GetCoverage&FORMAT=image/tiff&COVERAGE=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&CRS=EPSG:28992&RESPONSE_CRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
+                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/ahn1/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/png&LAYERS=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + '&crs=EPSG:28992&styles=';
                                                                     break;
                                                                 case "export_cbs_kml":
                                                                     strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
                                                                     strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
                                                                     break;
-                                                                case "export_gem_kml":
+                                                                case "export_prov_kml":
                                                                     strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     break;
-                                                                case "export_gem_shp":
-                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=shape-zip&format_options=filename:provgrens_generalisatie_2008_" + extKaart.left + '_' + extKaart.bottom + '_' + extKaart.right + '_' + extKaart.top + ".zip&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
+                                                                case "export_prov_json":
+                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=application/json&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
                                                                     strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     break;
-
+                                                                case "export_prov_csv":
+                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=csv&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
+                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+                                                                    break;
                                                             }
                                                             //Nieuw venster openen waarin de url geopend wordt
                                                             //Of een div waarin de url geopend wordt
@@ -1037,6 +1041,38 @@
                                         </div>
                                     </form>
                                 </div>
+                                <div id="vb28" class="stepwrapper">
+                                    <h2>
+                                        <a id="vb28a" href="../api/api.html?q=Croeselaan 15, Utrecht" target="exwin">Voorbeeld 28: Kaart gezoomd naar het opgegeven adres (indien het gevonden kan worden)</a>
+                                        <span class="help">
+                                            <!--<a href="help.html#help1" target="help">Help</a>-->
+                                        </span>
+                                    </h2>
+                                    <form action="#">
+                                        <div class="row">
+                                            <p>
+                                                Demonstreert API met gebruik van de parameter <span class="codesnippet">q</span>
+                                                waarmee een adres gezocht kan worden en hierop ingezoomd kan worden
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="vb29" class="stepwrapper">
+                                    <h2>
+                                        <a id="vb29a" href="../api/api.html?q=Croeselaan 15, Utrecht&mt=mt6" target="exwin">Voorbeeld 29: Kaart gezoomd naar het opgegeven adres (indien het gevonden kan worden) en de opgegeven marker om het adres mee weer te geven</a>
+                                        <span class="help">
+                                            <!--<a href="help.html#help1" target="help">Help</a>-->
+                                        </span>
+                                    </h2>
+                                    <form action="#">
+                                        <div class="row">
+                                            <p>
+                                                Demonstreert API met gebruik van de parameters <span class="codesnippet">q</span> in combinatie met <span class="codesnippet">mt</span>
+                                                waarmee een adres gezocht kan worden en hierop ingezoomd kan worden en het gevonden adres met de opgegeven marker weergegeven kan worden
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>                                
                             </div>
                         </div>
                     </div>

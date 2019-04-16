@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.2.1';
+Pdok.API_VERSION_NUMBER = '1.2.2';
 
 
 // CONFIGURATION
@@ -207,6 +207,8 @@ Pdok.Api = function(config, callback) {
     // an external layersdef is temporarily parked in Pdok.layersdef
     this.layersdef = Pdok.layersdef || null;
     
+    // an address to search for
+    this.q = Pdok.q;
 
     /**
      * The zoom level property = the zoom level to start in (between 0 and 14)
@@ -972,6 +974,10 @@ Pdok.Api.prototype.createOlMap = function() {
             xorwkt,
             this.locationtoolyfield
             );
+    }
+
+    if (this.q){
+    	this.zoekQ(this.q);
     }
 
     this.activateLegend(this.legend, this.div);
@@ -2586,6 +2592,38 @@ Pdok.Api.prototype.kmlToService = function(){
     });
 };
 
+Pdok.Api.prototype.zoekQ = function(q){
+	OpenLayers.Control.GeocoderControl.prototype.searchAdres(q);
+	/*
+	Ga op zoek naar het opgegeven adres en zoom er op in
+	*/
+}
+
+Pdok.Api.prototype.handleLookupResponseAdres = function(req){
+	var format = new Pdok.Format.PdokLocatieServer();
+	var lookup = format.read(req.responseText);
+	console.log(lookup);
+	if (lookup.docs[0]){
+		var ft = new OpenLayers.Format.WKT().read(lookup.docs[0].centroide_rd)
+		var x = ft.geometry.x;
+		var y = ft.geometry.y;
+		var zoom = lookup.docs[0].type;
+		var z = this.zoomScale[zoom];
+		// Add marker to the map for the found location
+        var wkt = 'POINT('+x+' '+y+')';
+        weergavenaam = lookup.docs[0].weergavenaam
+        if (!this.mt){
+            this.mt='mt0'; // mt0 is default point symbol
+        }
+        if (Pdok.mt){
+            this.mt=Pdok.mt; // use in url given mt symbol
+        }
+		api_vialink.featuresLayer.features.push(api_vialink.createFeature(wkt, this.mt, 'Adres', weergavenaam));
+		api_vialink.map.setCenter(new OpenLayers.LonLat(x, y), z);
+	}
+	return false;
+}
+
 
 /*
     This part contains extra Openlayers classes to be used in the
@@ -2992,6 +3030,31 @@ OpenLayers.Control.GeocoderControl =
         this.showResults();
         return false;
     },
+    handleGeocodeResponseAdres: function(req){
+        var responseText = req.responseText;
+        if(req.status === 404){
+            console.error("De zoekfunctie is niet actief, neem contact op met systeembeheer (status: 404)");
+            return false;
+        }
+        else if(req.status != 200){
+            console.error("De zoekfunctie is niet actief, neem contact op met systeembeheer (status: )"+req.status);
+            return false;
+        }
+
+        var format = new Pdok.Format.PdokLocatieServer();
+        var suggest = format.read(req.responseText);
+        //console.log(suggest)
+
+        if (suggest.docs.length === 0) {
+            // zero responses
+            alert("Geen locaties gevonden ...");
+        } else {
+            // > 0 Zoom in to the 1st found address
+			var obj = suggest.docs[0];
+			this.resultClickAdres(obj.id);
+        }
+        return false;
+    },
 
     search: function() {
         var searchString = document.getElementById(this.input_id).value;
@@ -3005,6 +3068,22 @@ OpenLayers.Control.GeocoderControl =
                 params: params,
                 scope: this,
                 callback: this.handleGeocodeResponse
+                // failure: this.handleError
+            });
+        }
+        return false;
+    },
+    searchAdres: function(adres) {
+        var searchString = adres;
+        if (searchString.length<2){return}
+        var params = {}; //{request: 'geocode'};
+        params[this.geocoderParameter] = searchString;
+        if (searchString && searchString.length>0){
+            OpenLayers.Request.GET({
+                url: this.geocoderUrl,
+                params: params,
+                scope: this,
+                callback: this.handleGeocodeResponseAdres
                 // failure: this.handleError
             });
         }
@@ -3031,6 +3110,20 @@ OpenLayers.Control.GeocoderControl =
             });
 
     },
+    resultClickAdres: function(id) {
+        //console.log(id);
+        // retrieve the id, and get full info from
+        // https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=
+        lookupUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?';
+        OpenLayers.Request.GET({
+                url: lookupUrl,
+                params: {id:id},
+                scope: this,
+                callback: Pdok.Api.prototype.handleLookupResponseAdres
+                // failure: this.handleError
+            });
+
+    },
     handleLookupResponse: function(req){
         var format = new Pdok.Format.PdokLocatieServer();
         var lookup = format.read(req.responseText);
@@ -3042,6 +3135,7 @@ OpenLayers.Control.GeocoderControl =
             var zoom = lookup.docs[0].type;
             var z = this.zoomScale[zoom];
             this.map.setCenter(new OpenLayers.LonLat(x, y), z);
+            //OpenLayers.Map.prototype.setCenter(new OpenLayers.LonLat(x, y), z);
         }
         return false;
     },
