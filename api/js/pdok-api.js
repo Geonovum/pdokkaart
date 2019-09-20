@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.1.3';
+Pdok.API_VERSION_NUMBER = '1.2.2';
 
 
 // CONFIGURATION
@@ -15,16 +15,16 @@ Pdok.API_VERSION_NUMBER = '1.1.3';
 // Using https:// results in cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
-//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
-//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url="; // kaart.pdok.nl
+Pdok.ApiUrl = window.location.protocol + '//kaart.pdok.nl/api';
+OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
 //Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
 // DEV
-Pdok.ApiUrl = window.location.protocol + "//" + window.location.host + '/pdokkaart/api';
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url=";
+//Pdok.ApiUrl = window.location.protocol + '//pdokserver/pdokkaart/api';
+//OpenLayers.ProxyHost = window.location.protocol + '//pdokserver/proxy?url=';
 
 /**
  * @class Pdok.Api
@@ -207,6 +207,8 @@ Pdok.Api = function(config, callback) {
     // an external layersdef is temporarily parked in Pdok.layersdef
     this.layersdef = Pdok.layersdef || null;
     
+    // an address to search for
+    this.q = Pdok.q;
 
     /**
      * The zoom level property = the zoom level to start in (between 0 and 14)
@@ -972,6 +974,10 @@ Pdok.Api.prototype.createOlMap = function() {
             xorwkt,
             this.locationtoolyfield
             );
+    }
+
+    if (this.q){
+    	this.zoekQ(this.q);
     }
 
     this.activateLegend(this.legend, this.div);
@@ -2586,6 +2592,38 @@ Pdok.Api.prototype.kmlToService = function(){
     });
 };
 
+Pdok.Api.prototype.zoekQ = function(q){
+	OpenLayers.Control.GeocoderControl.prototype.searchAdres(q);
+	/*
+	Ga op zoek naar het opgegeven adres en zoom er op in
+	*/
+}
+
+Pdok.Api.prototype.handleLookupResponseAdres = function(req){
+	var format = new Pdok.Format.PdokLocatieServer();
+	var lookup = format.read(req.responseText);
+	console.log(lookup);
+	if (lookup.docs[0]){
+		var ft = new OpenLayers.Format.WKT().read(lookup.docs[0].centroide_rd)
+		var x = ft.geometry.x;
+		var y = ft.geometry.y;
+		var zoom = lookup.docs[0].type;
+		var z = this.zoomScale[zoom];
+		// Add marker to the map for the found location
+        var wkt = 'POINT('+x+' '+y+')';
+        weergavenaam = lookup.docs[0].weergavenaam
+        if (!this.mt){
+            this.mt='mt0'; // mt0 is default point symbol
+        }
+        if (Pdok.mt){
+            this.mt=Pdok.mt; // use in url given mt symbol
+        }
+		api_vialink.featuresLayer.features.push(api_vialink.createFeature(wkt, this.mt, 'Adres', weergavenaam));
+		api_vialink.map.setCenter(new OpenLayers.LonLat(x, y), z);
+	}
+	return false;
+}
+
 
 /*
     This part contains extra Openlayers classes to be used in the
@@ -2809,6 +2847,39 @@ OpenLayers.Format.KMLv2_2 = OpenLayers.Class(OpenLayers.Format.KML, {
     }
 });
 
+Pdok.Format = Pdok.Format || {};
+
+Pdok.Format.PdokLocatieServer = OpenLayers.Class(OpenLayers.Format.JSON, {
+
+    initialize: function(options) {
+        OpenLayers.Format.JSON.prototype.initialize.apply(this, [options]);
+    },
+
+    read: function(json, type, filter) {
+        var results = null;
+        var obj = null;
+        if (typeof json == "string") {
+            obj = OpenLayers.Format.JSON.prototype.read.apply(this,
+                                                              [json, filter]);
+        } else {
+            obj = json;
+        }
+        if(!obj) {
+            OpenLayers.Console.error("Bad JSON: " + json);
+        } else {
+            try {
+                results = obj.response;
+            } catch(err) {
+                OpenLayers.Console.error(err);
+            }
+        }
+        return results;
+    },
+
+    CLASS_NAME: "Pdok.Format.PdokLocatieServer"
+
+});
+
 /**
  * @requires OpenLayers/Control.js
  */
@@ -2824,13 +2895,14 @@ OpenLayers.Control.GeocoderControl =
   OpenLayers.Class(OpenLayers.Control, {
 
     // PDOK
-    geocoderUrl: 'https://geodata.nationaalgeoregister.nl/geocoder/Geocoder?',
-    geocoderParameter: 'zoekterm',
+    geocoderUrl: 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?',
+    geocoderParameter: 'q',
 
     zoomScale : {
         adres: 13,
         postcode: 11,
-        plaats: 8,
+        weg: 11,
+        woonplaats: 8,
         gemeente: 8,
         provincie: 5,
         standaard: 9
@@ -2867,15 +2939,10 @@ OpenLayers.Control.GeocoderControl =
             e.target ? target = e.target : target = e.srcElement;
             if(target && target.className === "closeWindow") {
                 me.hideResults();
+                document.getElementById(me.input_id).value = '';
+
             } else if(target && target.nodeName === "A") {
-                var x = document.getElementById(target.id).attributes['x'].value;
-                var y = document.getElementById(target.id).attributes['y'].value;
-                var z = document.getElementById(target.id).attributes['z'].value;
-                if(x && y) {
-                    me.map.setCenter(new OpenLayers.LonLat(x, y), z);
-                } else {
-                    document.getElementById(this.resultdiv_id).innerHTML = "Fout met coordinaten";
-                }
+                me.resultClick(document.getElementById(target.id).attributes['id'].value);
                 return false;
             }
         };
@@ -2885,6 +2952,7 @@ OpenLayers.Control.GeocoderControl =
             // IE8
             this.div.attachEvent("onclick", clickFunc);
         }
+
     },
 
     /**
@@ -2913,55 +2981,38 @@ OpenLayers.Control.GeocoderControl =
                     '</fieldset>' +
                 '</form>' +
             '</div>' +
-            '<div id="'+ this.resultdiv_id +'" style="display:none;"></div>';
+            '<div id="'+ this.resultdiv_id +'" style="display:none;height:300px;"></div>';
         var me = this;
         document.getElementById(this.button_id).onclick = function(){
             me.search();
-            if (document.getElementById(me.resultdiv_id).style.display === 'none'){
-                me.showResults();
-            }
+        };
+        document.getElementById(this.input_id).onkeyup = function(){
+            me.search();
         };
         return this.div;
     },
 
     handleGeocodeResponse: function(req){
-
         var responseText = req.responseText;
-        if (responseText && (responseText.indexOf('FAILED') !== -1 ||
-            responseText.indexOf('Exception') !== -1 )) {
-            // fail silently
-            return false;
-        }
         if(req.status === 404){
             document.getElementById(this.resultdiv_id).innerHTML = "De zoekfunctie is niet actief, neem contact op met systeembeheer (status: 404)";
             return false;
         }
-        var xlslusFormat = new Geozet.Format.XLSLUS();
-        var xlslus = xlslusFormat.read(req.responseXML || req.responseText);
-        if (xlslus.length === 0) {
-            hits = 0;
-        } else {
-            var hits=xlslus[0].numberOfGeocodedAddresses;
+        else if(req.status != 200){
+            document.getElementById(this.resultdiv_id).innerHTML = "De zoekfunctie is niet actief, neem contact op met systeembeheer (status: )"+req.status;
+            return false;
         }
-        if (hits === 0) {
+
+        var format = new Pdok.Format.PdokLocatieServer();
+        var suggest = format.read(req.responseText);
+        //console.log(suggest)
+
+        if (suggest.docs.length === 0) {
             // zero responses
             document.getElementById(this.resultdiv_id).innerHTML = "Geen locaties gevonden ...";
         } else {
-            var maxEx = this.restrictedExtent;
-            // minx,miny,maxx,maxy are used to calcultate a bbox of the geocoding results
-            // initializes these with the max/min values of the extent of the map, so swap the left /right and bottomo/top of the maxExtent
-            // i.e.: the calculate minx will allways be smaller than the right-border of the map;
-            // TODO: for production use the map's restricted Extent, so request a change to Lucs API
-            /// For now: just values
-            maxEx = new OpenLayers.Bounds(-285401.92, 22598.08, 595401.92, 903401.92);
-            var minx = maxEx.right;
-            var miny = maxEx.top;
-            var maxx = maxEx.left;
-            var maxy = maxEx.bottom;
-            var minzoom = 15;
-            var features = [];
             // > 0 hit show suggestions
-            if(hits > 0){
+            if(suggest.docs.length > 0){
                 var searchString = document.getElementById(this.input_id).value;
                 document.getElementById(this.resultdiv_id).innerHTML =
                     '<span class="closeWindow"><a onclick="return false;"><img class="closeWindow" src="' + Pdok.ApiUrl +
@@ -2969,103 +3020,46 @@ OpenLayers.Control.GeocoderControl =
                     '<span class="searchedFor">Gezocht op: "' + searchString +
                     '"</span><h3>Zoekresultaten</h3><ul id="' + this.geozet_id + '" class="geozetSuggestions"></ul>';
             }
-            for (i = 0; i < hits; i++) {
-                var suggestion='';
-                var geom = xlslus[0].features[i].geometry;
-                var address = xlslus[0].features[i].attributes.address;
-                var plaats = address.place.MunicipalitySubdivision; // toont evt provincie afkorting
-                var gemeente = address.place.Municipality;
-                var prov = address.place.CountrySubdivision;
-                var adres = '';
-                var postcode = '';
-                // determine zoom and hash
-                var zoom = null;
-                if (address.street && address.street.length>0) {
-                    adres = address.street + ' - ' ;
-                    if (address.building) {
-                        var toevoeging = '';
-                        if (address.building.subdivision) {
-                            toevoeging = '-'+address.building.subdivision;
-                        }
-                        adres += address.building.number+toevoeging+' - ';
-                    }
-                    if(!zoom){
-                        zoom='adres';
-                    }
-                }
-                if (address.postalCode) {
-                    adres += address.postalCode+' - ';
-                    if(!zoom){
-                        zoom='postcode';
-                    }
-                }
-                if (plaats) {
-                    suggestion=adres+plaats+' (plaats)';
-                    if(!zoom){
-                        zoom='plaats';
-                    }
-                } else if(gemeente) {
-                    suggestion=adres+gemeente+' (gemeente)';
-                    if(!zoom){
-                        zoom='gemeente';
-                    }
-                } else if(prov){
-                    suggestion=prov+' (provincie)';
-                    if(!zoom){
-                        zoom='provincie';
-                    }
-                }
-                if(!zoom){
-                    zoom='standaard';
-                }
-
-                // hack to be able to handle results without geom
-                var x = geom ? geom.x : 150000;
-                var y = geom ? geom.y : 450000;
-                var z = geom ? this.zoomScale[zoom] : this.zoomScale['provincie'];
-                var newId = -1;
-                if (geom) {
-                    minx = Math.min(minx, x);
-                    miny = Math.min(miny, y);
-                    maxx = Math.max(maxx, x);
-                    maxy = Math.max(maxy, y);
-                    minzoom = Math.min(minzoom, this.zoomScale[zoom]);
-                    var newFt = new OpenLayers.Feature.Vector(
-                        new OpenLayers.Geometry.Point(x, y), {
-                            "title": suggestion,
-                            "postcode": postcode,
-                            "adres": adres,
-                            "plaats": plaats,
-                            "gemeente": gemeente,
-                            "provincie": prov
-                        }
-                    );
-                    newId = newFt.id;
-                    features.push(newFt);
-                }
-                var gazHtml = '<li><a href="#" id="result_'+ newId.replace('.','_') +
-                    '" x="' + x +
-                    '" y="' + y +
-                    '" z="' + z + '">' +
-                    suggestion +'</a></li>';
-                document.getElementById(this.geozet_id).innerHTML += gazHtml;
-            }
-            if(hits === 1) {
-                var geom = xlslus[0].features[0].geometry;
-                // hack to be able to handle results without geom
-                var x = geom ? geom.x : 150000;
-                var y = geom ? geom.y : 450000;
-                var z = geom ? this.zoomScale[zoom] : this.zoomScale['provincie'];
-                this.map.setCenter(new OpenLayers.LonLat(x, y), z);
+            for (i = 0; i < suggest.docs.length; i++) {
+                var obj = suggest.docs[i];
+                var suggestion = obj.weergavenaam + ' (' + obj.type + ')';
+                var li = '<li><a href="#" id="'+obj.id+'">' + suggestion +'</a></li>';
+                document.getElementById(this.geozet_id).innerHTML += li;
             }
         }
         this.showResults();
         return false;
     },
+    handleGeocodeResponseAdres: function(req){
+        var responseText = req.responseText;
+        if(req.status === 404){
+            console.error("De zoekfunctie is niet actief, neem contact op met systeembeheer (status: 404)");
+            return false;
+        }
+        else if(req.status != 200){
+            console.error("De zoekfunctie is niet actief, neem contact op met systeembeheer (status: )"+req.status);
+            return false;
+        }
+
+        var format = new Pdok.Format.PdokLocatieServer();
+        var suggest = format.read(req.responseText);
+        //console.log(suggest)
+
+        if (suggest.docs.length === 0) {
+            // zero responses
+            alert("Geen locaties gevonden ...");
+        } else {
+            // > 0 Zoom in to the 1st found address
+			var obj = suggest.docs[0];
+			this.resultClickAdres(obj.id);
+        }
+        return false;
+    },
 
     search: function() {
-        document.getElementById(this.resultdiv_id).innerHTML = 'Bezig met zoeken...';
         var searchString = document.getElementById(this.input_id).value;
+        if (searchString.length<2){this.hideResults();return}
+        document.getElementById(this.resultdiv_id).innerHTML = 'Bezig met zoeken...';
         var params = {}; //{request: 'geocode'};
         params[this.geocoderParameter] = searchString;
         if (searchString && searchString.length>0){
@@ -3079,11 +3073,71 @@ OpenLayers.Control.GeocoderControl =
         }
         return false;
     },
+    searchAdres: function(adres) {
+        var searchString = adres;
+        if (searchString.length<2){return}
+        var params = {}; //{request: 'geocode'};
+        params[this.geocoderParameter] = searchString;
+        if (searchString && searchString.length>0){
+            OpenLayers.Request.GET({
+                url: this.geocoderUrl,
+                params: params,
+                scope: this,
+                callback: this.handleGeocodeResponseAdres
+                // failure: this.handleError
+            });
+        }
+        return false;
+    },
     hideResults: function() {
         document.getElementById(this.resultdiv_id).style.display = 'none';
+        //document.getElementById(this.input_id).value = '';
     },
     showResults: function() {
         document.getElementById(this.resultdiv_id).style.display = 'block';
+    },
+    resultClick: function(id) {
+        //console.log(id);
+        // retrieve the id, and get full info from
+        // https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=
+        lookupUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?';
+        OpenLayers.Request.GET({
+                url: lookupUrl,
+                params: {id:id},
+                scope: this,
+                callback: this.handleLookupResponse
+                // failure: this.handleError
+            });
+
+    },
+    resultClickAdres: function(id) {
+        //console.log(id);
+        // retrieve the id, and get full info from
+        // https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=
+        lookupUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?';
+        OpenLayers.Request.GET({
+                url: lookupUrl,
+                params: {id:id},
+                scope: this,
+                callback: Pdok.Api.prototype.handleLookupResponseAdres
+                // failure: this.handleError
+            });
+
+    },
+    handleLookupResponse: function(req){
+        var format = new Pdok.Format.PdokLocatieServer();
+        var lookup = format.read(req.responseText);
+        // console.log(lookup);
+        if (lookup.docs[0]){
+            var ft = new OpenLayers.Format.WKT().read(lookup.docs[0].centroide_rd)
+            var x = ft.geometry.x;
+            var y = ft.geometry.y;
+            var zoom = lookup.docs[0].type;
+            var z = this.zoomScale[zoom];
+            this.map.setCenter(new OpenLayers.LonLat(x, y), z);
+            //OpenLayers.Map.prototype.setCenter(new OpenLayers.LonLat(x, y), z);
+        }
+        return false;
     },
     CLASS_NAME: "OpenLayers.Control.GeocoderControl"
 });
