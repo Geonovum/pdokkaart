@@ -276,7 +276,7 @@
                             <div id="tab-2" class="tabpane">
                                 <div id="vb6" class="stepwrapper">
                                     <h2>
-                                        <a id="vb6a" href="../api/api.html?mloc=150000,450000&mimg=http://lorempixel.com/64/64/nature/&titel=Met dank aan Lorempixel&tekst=%3Ca%20href%3D%22http%3A%2F%2Florempixel.com%22%20target%3D%22_blank%22%3Elorempixel%20website%3C%2Fa%3E" target="exwin">
+                                        <a id="vb6a" href="../api/api.html?mloc=150000,450000&mimg=https://lorempixel.com/64/64/nature/&titel=Met dank aan Lorempixel&tekst=%3Ca%20href%3D%22http%3A%2F%2Florempixel.com%22%20target%3D%22_blank%22%3Elorempixel%20website%3C%2Fa%3E" target="exwin">
                                             Voorbeeld 6: Toon een externe marker op de kaart</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
@@ -337,7 +337,7 @@
                                 </div>
                                 <div id="vb9" class="stepwrapper">
                                     <h2>
-                                        <a id="vb9a" href="../api/api.html?tmsurl=http://geodata.nationaalgeoregister.nl/tms/1.0.0/natura2000@EPSG:28992@png8&tmslayer=nok2011&tmstype=png" target="exwin">
+                                        <a id="vb9a" href="../api/api.html?tmsurl=https://geodata.nationaalgeoregister.nl/tms/1.0.0/natura2000@EPSG:28992@png8&tmslayer=nok2011&tmstype=png" target="exwin">
                                             Voorbeeld 9: tmslayer, tmstype, tmsurl - TMS kaartlaag toevoegen</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
@@ -420,7 +420,7 @@
                                                 gebruiken is als kaartlaag.<br/>Het formaat van dit tekstbestand is (tab-gescheiden):<br/>
                                                 <span class="codesnippet">
                                                     lat(tab)lon(tab)title(tab)description(tab)iconSize(tab)iconOffset(tab)icon<br/>
-                                                    450000(tab)140000(tab)Ministerie ELenI (Economische Zaken Landbouw en Innovatie)(tab)32,37(tab)16,-37(tab)http://kaart.pdok.nl/api/markertypes/information_green.png<br/>
+                                                    450000(tab)140000(tab)Ministerie ELenI (Economische Zaken Landbouw en Innovatie)(tab)32,37(tab)16,-37(tab)https://kaart.pdok.nl/api/markertypes/information_green.png<br/>
                                                 </span><br/>
                                                 Let op, na de laatste regel in een tekstbestand moet altijd return gegeven worden! Is dit niet het geval dan
                                                 wordt de laatste marker niet getoond.
@@ -430,7 +430,7 @@
                                 </div>
                                 <div id="vb13" class="stepwrapper">
                                     <h2>
-                                        <a id="vb13a" href="../api/api.html?wmsurl=http://geodata.nationaalgeoregister.nl/nwbwegen/wms&wmslayers=wegvakken,hectopunten&zoom=8&loc=140000,470000" target="exwin">
+                                        <a id="vb13a" href="../api/api.html?wmsurl=https://geodata.nationaalgeoregister.nl/nwbwegen/wms&wmslayers=wegvakken,hectopunten&zoom=8&loc=140000,470000" target="exwin">
                                             Voorbeeld 13: WMS Nationaal wegenbestand</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
@@ -450,7 +450,7 @@
                                 </div>
                                 <div id="vb14" class="stepwrapper">
                                     <h2>
-                                        <a id="vb14a" href="../api/api.html?wmtsurl=http://geodata.nationaalgeoregister.nl/wmts/&wmtslayer=top50vector&wmtsmatrixset=EPSG:28992&zoom=7&loc=142500,470000" target="exwin">
+                                        <a id="vb14a" href="../api/api.html?wmtsurl=https://geodata.nationaalgeoregister.nl/wmts/&wmtslayer=top50vector&wmtsmatrixset=EPSG:28992&zoom=7&loc=142500,470000" target="exwin">
                                             Voorbeeld 14: wmtslayer, wmtsmatrixset, wmtsurl - WMTS toevoegen</a>
                                         <span class="help">
                                             <!--<a href="help.html#help1" target="help">Help</a>-->
@@ -596,7 +596,7 @@
                                                         var layer = new OpenLayers.Layer.Vector("WFS", {
                                                             strategies: [new OpenLayers.Strategy.BBOX()],
                                                             protocol: new OpenLayers.Protocol.WFS({
-                                                                url: "http://geodata.nationaalgeoregister.nl/ahn25m/wfs",
+                                                                url: "https://geodata.nationaalgeoregister.nl/ahn25m/wfs",
                                                                 featureType: "stadspolygonen",
                                                                 featureNS: "http://ahn25m.geonovum.nl",
                                                                 geometryName: "geom"
@@ -754,7 +754,7 @@
                                                     var vb22map1;
                                                     var vb22map2;
                                                     var configmap1 = {
-                                                        "wmsurl": 'http://geodata.nationaalgeoregister.nl/lfroutes/wms',
+                                                        "wmsurl": 'https://geodata.nationaalgeoregister.nl/lfroutes/wms',
                                                         "wmslayers": "lfroutes",
                                                         "showlayerswitcher": false,
                                                         "showzoom": true,
@@ -762,7 +762,7 @@
                                                         "mapdiv": "map"
                                                     };
                                                     var configmap2 = {
-                                                        "wmsurl": 'http://geodata.nationaalgeoregister.nl/lawroutes/wms',
+                                                        "wmsurl": 'https://geodata.nationaalgeoregister.nl/lawroutes/wms',
                                                         "wmslayers": "lawroutes",
                                                         "showlayerswitcher": false,
                                                         "showzoom": false,
@@ -818,7 +818,7 @@
                                                         "titel": "Locatie op Texel",
                                                         "tekst": "Dit is een test",
                                                         "pdoklayers": 'BRT,TOP50VECTOR',
-                                                        "markersdef": "http://www.lusc.nl/pdokkaart/examples/js/lusc-markers.js"
+                                                        "markersdef": "https://www.lusc.nl/pdokkaart/examples/js/lusc-markers.js"
                                                     };
                                                     new Pdok.Api(config);
                                                 };
@@ -850,7 +850,7 @@
                                                         "loc": '140097, 470472',
                                                         "features": '%3Ckml%20xmlns%3D%22http%3A%2F%2Fearth.google.com%2Fkml%2F2.0%22%3E%3CFolder%3E%3CPlacemark%3E%3Cname%3EAankomst%20Sinterklaas%3C%2Fname%3E%3Cdescription%3E%26lt%3Bimg%20src%3D%22http%3A%2F%2Fwww.lusc.nl%2Fpdokkaart%2Fexamples%2Fimg%2FSinterklaas%2Fpakjesboot-12.jpg%22%20width%3D%2250%25%22%26gt%3B%26lt%3Bbr%2F%26gt%3BOp%2016%20november%20om%2014%3A00%20uur%20komt%20Sinterklaas%20aan%20in%20de%20Oude%20Haven%20van%20Hilversum.%26lt%3Bbr%2F%26gt%3BDe%20Pakjesparade%20vertrekt%20om%2014%3A30%20richting%20de%20Kerkbrink%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.166234936331346%2C52.21976297269226%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt4%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EPakjesparade%3C%2Fname%3E%3Cdescription%3EDe%20%26lt%3Ba%20href%3D%22http%3A%2F%2Fwww.pakjesparadehilversum.nl%22%20target%3D%22_blank%22%26gt%3BPakjesparade%26lt%3B%2Fa%26gt%3B%20gaat%20dwars%20door%20het%20centrum%20van%20Hilversum%3C%2Fdescription%3E%3CLineString%3E%3Ccoordinates%3E5.166239174734771%2C52.21975520612328%205.166272426595238%2C52.21986662781753%205.166316724364972%2C52.21991955921477%205.166378608335506%2C52.21998951050491%205.166483618600692%2C52.22003878037831%205.16657728715982%2C52.2200512237194%205.166717126852712%2C52.22004865354845%205.16736884575352%2C52.22000456897707%205.167786925219047%2C52.219977034264616%205.168255994915416%2C52.220830087612086%205.168405080521092%2C52.22113565861806%205.1687620350156%2C52.22166810769729%205.169088937548001%2C52.22206318828913%205.169227888099259%2C52.222243696006004%205.169507794739587%2C52.22250939847772%205.170085929112818%2C52.223067259316224%205.170275619465989%2C52.223243140347854%205.170474916750948%2C52.2233397658674%205.17066196744404%2C52.22342693136834%205.170855183855864%2C52.22351033296244%205.171146043293951%2C52.22373924628438%205.171464593396787%2C52.223962547086785%205.171673326510003%2C52.22401577649008%3C%2Fcoordinates%3E%3C%2FLineString%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Elt8%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3E%3C%2Fname%3E%3Cdescription%3EKom%20je%20ook%20op%2016%20november%3F%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.1699499311021535%2C52.223225555023895%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt11%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3E%3C%2Fname%3E%3Cdescription%3EIk%20heb%20er%20al%20heel%20veel%20zin%20in!%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.171745475142163%2C52.2230778464254%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt10%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3E%3C%2Fname%3E%3Cdescription%3ESinterklaas%20kapoentje%2C%26lt%3BBR%26gt%3Bgooi%20wat%20in%20mijn%20schoentje%20...%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.168283982735047%2C52.22201451361774%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt9%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EWat%20wil%20je%20dit%20jaar%20van%20Sinterklaas%3F%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.1689512009294045%2C52.221321166639655%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt8%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EVergeet%20je%20het%20paard%20van%20Sinterklaas%20niet%20als%20je%20je%20schoen%20zet.%20Het%20is%20voor%20Amerigo%20hard%20werken%20hoor%20de%20daken%20op%20en%20af%20lopen.%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.167651147600255%2C52.22071477473207%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt7%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EZie%20de%20maan%20schijnt%20door%20de%20bomen%2C%26lt%3BBR%26gt%3Bmakkers%20staakt%20Uw%20wild%20geraas...%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.168512737478762%2C52.22048987846328%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt6%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EAls%20alles%20dit%20jaar%20nu%20maar%20goed%20gaat...%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.171172888811761%2C52.224541460662444%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt5%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EIk%20ben%20dol%20op%20gymnastiek%2C%20jij%20ook%3F%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.172303173008443%2C52.22469451720304%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt11%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EHopelijk%20hoeven%20we%20niemand%20mee%20terug%20te%20nemen%20in%20de%20zak%20naar%20Spanje%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.16988103063933%2C52.22222885562614%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt10%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EZZzzzzz.....%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.169066960419905%2C52.22278604048615%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt9%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EWil%20je%20een%20paar%20pepernoten%20van%20mij%3F%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.1677051136210315%2C52.21974095115227%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt8%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EAankomst%20Pakjesparade%3C%2Fname%3E%3Cdescription%3EOm%2016%3A00%20komt%20Sinterklaas%20met%20de%20Pakjesparade%20aan%20op%20de%20Kerkbrink%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E5.171691675446724%2C52.224034684430585%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt4%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3C%2FFolder%3E%3C%2Fkml%3E',
                                                         "FEATURESLAYER_NAME": 'Sinterklaasintocht',
-                                                        "markersdef": "http://www.lusc.nl/pdokkaart/examples/js/lusc-markers.js"
+                                                        "markersdef": "https://www.lusc.nl/pdokkaart/examples/js/lusc-markers.js"
                                                     };
 
                                                     new Pdok.Api(config);
@@ -934,15 +934,15 @@
                                                     };
 
                                                     new Pdok.Api(config, function(api) {
-                                                        api.addWMS("http://geodata.nationaalgeoregister.nl/natura2000/wms", "natura2000:natura2000");
-                                                        api.addWMS("http://geodata.nationaalgeoregister.nl/nationaleparken/wms", "nationaleparken");
+                                                        api.addWMS("https://geodata.nationaalgeoregister.nl/natura2000/wms", "natura2000:natura2000");
+                                                        api.addWMS("https://geodata.nationaalgeoregister.nl/nationaleparken/wms", "nationaleparken");
                                                         var highlight = new OpenLayers.Layer.Vector("Highlighted Features", {
                                                             displayInLayerSwitcher: false,
                                                             isBaseLayer: false
                                                         });
                                                         api.map.addLayers([highlight]);
                                                         info = new OpenLayers.Control.WMSGetFeatureInfo({
-                                                            url: 'http://geodata.nationaalgeoregister.nl/nationaleparken/wms',
+                                                            url: 'https://geodata.nationaalgeoregister.nl/nationaleparken/wms',
                                                             title: 'Vraag informatie op uit de kaart door te klikken',
                                                             queryVisible: true,
                                                             eventListeners: {
@@ -1001,24 +1001,24 @@
                                                             szeKaartGrootte = api.map.getCurrentSize();
                                                             switch (this.id) {
                                                                 case "export_ahn_geotiff":
-                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WCS&VERSION=1.0.0&REQUEST=GetCoverage&FORMAT=image/tiff&COVERAGE=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&CRS=EPSG:28992&RESPONSE_CRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
-                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/ahn1/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/png&LAYERS=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + '&crs=EPSG:28992&styles=';
+                                                                    strUrl = "https://geodata.nationaalgeoregister.nl/ahn1/wcs?SERVICE=WCS&VERSION=1.0.0&REQUEST=GetCoverage&FORMAT=image/tiff&COVERAGE=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&CRS=EPSG:28992&RESPONSE_CRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h;
+                                                                    strImageURL = "https://geodata.nationaalgeoregister.nl/ahn1/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/png&LAYERS=ahn1_25m&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + '&crs=EPSG:28992&styles=';
                                                                     break;
                                                                 case "export_cbs_kml":
-                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
-                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
+                                                                    strUrl = "https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
+                                                                    strImageURL = "https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=gemeentegrens_generalisatie_2008";
                                                                     break;
                                                                 case "export_prov_kml":
-                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
-                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+                                                                    strUrl = "https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=application/vnd.google-earth.kml+XML&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+                                                                    strImageURL = "https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     break;
                                                                 case "export_prov_json":
-                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=application/json&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
-                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+                                                                    strUrl = "https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=application/json&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
+                                                                    strImageURL = "https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     break;
                                                                 case "export_prov_csv":
-                                                                    strUrl = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=csv&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
-                                                                    strImageURL = "http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
+                                                                    strUrl = "https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=wfs&version=2.0.0&request=GetFeature&outputFormat=csv&typeName=bevolkingskernen2008:provgrens_generalisatie_2008&srsName=EPSG:28992&bbox=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top;
+                                                                    strImageURL = "https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/ows?service=WMS&request=GetMap&version=1.1.1&format=image/png&BBOX=" + extKaart.left + ',' + extKaart.bottom + ',' + extKaart.right + ',' + extKaart.top + "&SRS=EPSG:28992&WIDTH=" + szeKaartGrootte.w + "&HEIGHT=" + szeKaartGrootte.h + "&layers=provgrens_generalisatie_2008";
                                                                     break;
                                                             }
                                                             //Nieuw venster openen waarin de url geopend wordt
