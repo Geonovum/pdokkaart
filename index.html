@@ -19,6 +19,27 @@
         <script type="text/javascript" src="api/js/pdok-api.js"></script>
         <script type="text/javascript" src="api/js/geozetlib.js"></script>
         <script type="text/javascript" src="js/wizard.js"></script>
+		<link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+		<link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="img/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="192x192" href="img/android-chrome-192x192.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+		<link rel="manifest" href="img/manifest.json">
+		<link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#f58520">
+		<meta name="apple-mobile-web-app-title" content="PDOK Kaartwizard">
+		<meta name="application-name" content="PDOK Kaartwizard">
+		<meta name="msapplication-TileColor" content="#f58520">
+		<meta name="msapplication-TileImage" content="img/mstile-144x144.png">
+		<meta name="theme-color" content="#f58520">
+		
         <!--
         NOT including this one, as they are included anyway when there is not a 'markersdef' or 'layersdef'
          query-parameter found. Including this one will (again) override the styles objects
@@ -28,17 +49,14 @@
             if (document.all && !document.querySelector) { // IE7 or lower
                 alert('U gebruikt Internet Explorer 7.\nDeze browser ondersteunt niet alle functionaliteit van de PDOK Wizard.\nWij raden U aan een nieuwere versie van Internet Explorer of een andere browser zoals Google Chrome, Mozilla FireFox of Apple Safari te gebruiken.');
             }
-            Pdok.addcss("../pdokkaart/api/styles/default/style.css");
-            Pdok.addcss("../pdokkaart/api/styles/api.css");
-            Pdok.ApiUrl = '../pdokkaart/api';
-            OpenLayers.ImgPath = '../pdokkaart/api/img/';
+            Pdok.addcss("../api/styles/default/style.css");
+            Pdok.addcss("../api/styles/api.css");
+            Pdok.ApiUrl = '../api';
+            OpenLayers.ImgPath = '../api/img/';
             var config = {
                 "zoom": 3,
                 "loc": "170000, 470000",
                 "baselayers": [{"id": "BRT", "visible": true},
-                    //{"id": "BRTGRIJSTIJDELIJK", "visible": false},
-                    //{"id": "BRTTIJDELIJK", "visible": false},
-                    //{"id": "BRTPASTEL", "visible": false},
                     {"id": "LUFO", "visible": false}
                 ],
                 "showlayerswitcher": true,
@@ -79,6 +97,17 @@
                 setGuiToApiState(api);
             });
         </script>
+		<script>
+			var _prum = [['id', '5a1432ac9c55531b6f8dda08'],
+						 ['mark', 'firstbyte', (new Date()).getTime()]];
+			(function() {
+				var s = document.getElementsByTagName('script')[0]
+				  , p = document.createElement('script');
+				p.async = 'async';
+				p.src = '//rum-static.pingdom.net/prum.min.js';
+				s.parentNode.insertBefore(p, s);
+			})();
+		</script>
     </head>
     <body>
         <div class="container equalize page orange default">

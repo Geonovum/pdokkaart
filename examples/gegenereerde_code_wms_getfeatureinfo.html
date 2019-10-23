@@ -25,15 +25,15 @@
     <script>
       var info;
       var api = createPDOKKaart();
-      api.addWMS("http://geodata.nationaalgeoregister.nl/natura2000/wms", "natura2000:natura2000");
-      api.addWMS("http://geodata.nationaalgeoregister.nl/nationaleparken/wms", "nationaleparken");
+      api.addWMS("https://geodata.nationaalgeoregister.nl/natura2000/wms", "natura2000:natura2000");
+      api.addWMS("https://geodata.nationaalgeoregister.nl/nationaleparken/wms", "nationaleparken");
       var highlight = new OpenLayers.Layer.Vector("Highlighted Features", {
           displayInLayerSwitcher: false,
           isBaseLayer: false
       });
       api.map.addLayers([highlight]);
       info = new OpenLayers.Control.WMSGetFeatureInfo({
-          url: 'http://geodata.nationaalgeoregister.nl/nationaleparken/wms',
+          url: 'https://geodata.nationaalgeoregister.nl/nationaleparken/wms',
           title: 'Vraag informatie op uit de kaart door te klikken',
           queryVisible: true,
           eventListeners: {
