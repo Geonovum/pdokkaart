@@ -15,16 +15,21 @@ Pdok.API_VERSION_NUMBER = '1.2.2';
 // Using https:// results in cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = window.location.protocol + '//kaart.pdok.nl/api';
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // kaart.pdok.nl
+//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
 //Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
+var protocol = window.location.protocol;
+if (window.location.protocol == 'file:') {
+	protocol = 'https:'
+}
+
 // DEV
-//Pdok.ApiUrl = window.location.protocol + '//pdokserver/pdokkaart/api';
-//OpenLayers.ProxyHost = window.location.protocol + '//pdokserver/proxy?url=';
+Pdok.ApiUrl = protocol + '//{{kaart.kaart.url}}/api';
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; 
 
 /**
  * @class Pdok.Api
@@ -430,6 +435,7 @@ Pdok.Api = function(config, callback) {
      * @type URL
      */
     this.kmlurl = Pdok.kmlurl;
+	this.zoomtofeatures = Pdok.zoomtofeatures;
 
     /**
      * Property to determine if the internal styles of a KML file should be used for visualisation. 
@@ -593,28 +599,28 @@ Pdok.Api.prototype.defaultPdokLayers = {
         BRT: {
             layertype: 'WMTS',
             name: 'BRT Achtergrondkaart (WMTS)',
-            url: 'https://geodata.nationaalgeoregister.nl/wmts/',
+            url: 'https://{{kaart.geodata.url}}/wmts/',
             layer: 'brtachtergrondkaart',
             style: null,
             matrixSet: 'EPSG:28992',
             visibility: true, 
             isBaseLayer: true,
-            attribution: '(c) OSM & Kadaster'
+            attribution: '&copy; CC BY Kadaster'
         },
         LUFO: {
                 layertype: 'WMTS',
                 name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
-                url: 'https://geodata1.nationaalgeoregister.nl/luchtfoto/wmts?',
+                url: 'https://{{kaart.geodata.url}}/luchtfoto/rgb/wmts?',
                 version: "1.3.0",
-                layer: 'luchtfoto',
+                layer: 'Actueel_ortho25',
                 style: '',
-                matrixSet: 'nltilingschema',
+                matrixSet: 'EPSG:28992',
                 matrixIds : matrixIdsLufo,
                 serverResolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42],
                 visibility: true,
                 isBaseLayer: true,
                 format: 'image/jpeg',
-                attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">(c) CC-BY-NC</a>',
+                attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">&copy; CC-BY-NC</a>',
                 zoomOffset: 2
         }
     };
@@ -843,12 +849,12 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // apply KMLURL if applicable
     if ((this.kmlurl)) {
-        this.addKML(this.kmlurl, this.kmlstyles);
+        this.addKML(this.kmlurl, this.kmlstyles, this.zoomtofeatures);
     }
 
     // apply TXTURL if applicable
     if (this.txturl) {
-        this.addTxt(this.txturl);
+        this.addTxt(this.txturl, this.zoomtofeatures);
     }
 
     // apply BBOX or zoomlevel and location
@@ -940,7 +946,9 @@ Pdok.Api.prototype.createOlMap = function() {
             */
         }
     );
-    
+	if (typeof(this.selectControl.handlers) != "undefined") {
+		this.selectControl.handlers.feature.stopDown = false;
+	}
     
     // Add invisible mousePosition control to keep track of mouseposition for making popups appear where mouse has been
     // clicked, instead of at center of feature. Not needed if normal mousePosition control is available.
@@ -2152,8 +2160,11 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures, pass
  * Shorthand to add KML features via a KML url (always zooming to the extent of the KML)
   * @param {type} url
  */
-Pdok.Api.prototype.addKML = function(url) {
-    this.addFeaturesFromUrl(url, 'KML', true, this);
+Pdok.Api.prototype.addKML = function(url, kmlstyles, zoomtofeatures) {
+	if (zoomtofeatures !== true && zoomtofeatures !== false) {
+		zoomtofeatures = true;
+	}
+    this.addFeaturesFromUrl(url, 'KML', zoomtofeatures, this);
 };
 
 //Wellicht moet dit een andere call worden omdat nu een combinatie van txturl en mloc niet goed gaat
@@ -2161,7 +2172,10 @@ Pdok.Api.prototype.addKML = function(url) {
  * Shorthand to add TXT features via a TXT url (always zooming to the extent of the TXT)
  * @param {string} url
  */
-Pdok.Api.prototype.addTxt = function(url) {
+Pdok.Api.prototype.addTxt = function(url, zoomtofeatures) {
+	if (zoomtofeatures !== true && zoomtofeatures !== false) {
+		zoomtofeatures = true;
+	}
     this.addFeaturesFromUrl(url, 'TXT', true, this);
 };
 
@@ -3135,7 +3149,6 @@ OpenLayers.Control.GeocoderControl =
             var zoom = lookup.docs[0].type;
             var z = this.zoomScale[zoom];
             this.map.setCenter(new OpenLayers.LonLat(x, y), z);
-            //OpenLayers.Map.prototype.setCenter(new OpenLayers.LonLat(x, y), z);
         }
         return false;
     },
