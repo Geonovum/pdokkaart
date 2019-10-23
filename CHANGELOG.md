@@ -1,5 +1,11 @@
 # Changelog
 
+## 2019-10-23 v1.2.2
+### Toegevoegd
+- ZoomToFeatures configurabel gemaakt
+- Adreszoek parameter (q) toegevoegd
+- Rijkslogo marker toegevoegd (mt34)
+
 ## 2015-03-26
 ### Toegevoegd
 - De geocoder is toegevoegd aan het eindresultaat. Dit is met name voor de
