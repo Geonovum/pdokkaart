@@ -28,7 +28,7 @@ if (window.location.protocol == 'file:') {
 }
 
 // DEV
-Pdok.ApiUrl = protocol + '//{{kaart.kaart.url}}/api';
+Pdok.ApiUrl = protocol + '//kaart.pdok.nl//api';
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; 
 
 /**
