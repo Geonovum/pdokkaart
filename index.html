@@ -114,7 +114,7 @@
             <div class="header">
                 <span></span>
                 <div class="branding">
-                    <img alt="PDOK" src="img/PDOK-logo.png" />
+                    <img alt="PDOK" src="img/pdok-logo-2018.png" />
                     <h1 class="invisible">PDOK Kaart Wizard</h1>
                 </div>
                 <div class="nav_bar">
@@ -148,7 +148,7 @@
                                 <div class="row">
                                     <p>Pas een bestaande configuratie aan:</p>
                                     URL van geconfigureerde kaart:<br />
-                                    <input type="text" id="pdokkaartUrl" class="autopopulate default" title="bijv: http://kaart.pdok.nl/api/api.html?mloc=150000,450000&mt=mt3&loc=150000,450000&zoom=10&tekst=Locatie:</BR>150000,450000" size="30" /><br />
+                                    <input type="text" id="pdokkaartUrl" class="autopopulate default" title="bijv: https://kaart.pdok.nl/api/api.html?mloc=150000,450000&mt=mt3&loc=150000,450000&zoom=10&tekst=Locatie:</BR>150000,450000" size="30" /><br />
                                     <button id="getpdokkaarturl" class="filterbutton">Haal op</button>
                                     <p>Selecteer een kaartgrootte:</p>
                                     <div class="row">
@@ -237,7 +237,7 @@
                                         <p><strong>Via URL</strong> Kies datatype, en geef de URL waar het bestand met markerdefinities zich bevindt klik dan "Haal op ":</p>
                                         <label><input type="radio" checked="checked" name="urltype" value="kml"/>KML</label>
                                         <label><input type="radio" name="urltype" value="txt"/>TXT</label>
-                                        <input type="text" id="urltext" class="autopopulate default" title="Voer een volledige url in (startend met http://)"/>
+                                        <input type="text" id="urltext" class="autopopulate default" title="Voer een volledige url in (startend met http:// of https://)"/>
                                         <button id="getfeaturesfromurl" class="filterbutton">Haal op</button>
                                         <br />
                                         <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
@@ -267,7 +267,7 @@
                                 <h3>Voeg een standaard kaartlaag toe</h3><div id="divpdoklayerselector"> </div>
                                 <button id="addpdoklayerbutton" class="filterbutton" >Voeg toe aan kaart</button><h3>Voeg een WMS kaartlaag toe</h3>
                                 URL van de WMS:<br />
-                                <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
+                                <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
                                 Lagen van de WMS:<br />
                                 <input type="text" id="wmsLayer" class="autopopulate default" title="bijv: provgrens_generalisatie_2008" size="30"/><br/>
                                 Featureinfo-formaat van deze WMS (optioneel)<br />
@@ -279,7 +279,7 @@
                                 <button id="addwmslayerbutton" class="filterbutton" >Voeg toe aan kaart</button>
                                 <h3>Voeg een WMTS kaartlaag toe</h3>
                                 URL van de WMTS:<br />
-                                <input type="text" id="WmtsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/wmts/" size="30" /><br />
+                                <input type="text" id="WmtsUrl" class="autopopulate default" title="bijv: https://geodata.nationaalgeoregister.nl/wmts/" size="30" /><br />
                                 Laagnaam van de WMTS:<br />
                                 <input type="text" id="WmtsLayer" class="autopopulate default" title="bijv: natura2000" size="30" /><br/>
                                 Matrixset van de WMTS:<br />

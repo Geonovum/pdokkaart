@@ -599,7 +599,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
         BRT: {
             layertype: 'WMTS',
             name: 'BRT Achtergrondkaart (WMTS)',
-            url: 'https://{{kaart.geodata.url}}/wmts/',
+            url: 'https://geodata.nationaalgeoregister.nl/wmts/',
             layer: 'brtachtergrondkaart',
             style: null,
             matrixSet: 'EPSG:28992',
@@ -610,7 +610,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
         LUFO: {
                 layertype: 'WMTS',
                 name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
-                url: 'https://{{kaart.geodata.url}}/luchtfoto/rgb/wmts?',
+                url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts?',
                 version: "1.3.0",
                 layer: 'Actueel_ortho25',
                 style: '',

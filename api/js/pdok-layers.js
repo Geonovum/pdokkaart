@@ -1358,7 +1358,7 @@ Pdok.Api.prototype.defaultLayers = {
     layertype: 'WMTS',
     name: 'TOP50NL Vector (WMTS)',
     url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
-    layer: 'top50vector',
+    layer: 'top50raster',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
