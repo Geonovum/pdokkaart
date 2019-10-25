@@ -271,7 +271,6 @@ Pdok.Api = function(config, callback) {
      */
     this.mimg = Pdok.mimg;
 
-
     /**
      * Markertype property. You can set a mt (styletype) for your mloc. Eg 'mt3'
      * @type String
@@ -282,15 +281,13 @@ Pdok.Api = function(config, callback) {
      * If a popup should be used or not. Defaults to true
      * @type boolean
      */
-    this.showPopup = true;
-    this.showpopup = true;
+    this.showPopup = Pdok.showpopup || true;
 
     /**
      * If a popup hover should be used or not Defaults to false
      * @type boolean
      */
     this.hoverPopup = Pdok.hoverPopup || false;
-    this.hoverpopup = Pdok.hoverpopup || false;
 
     /**
      * Reference to popup titel, only used in case of the use of mloc
@@ -957,7 +954,7 @@ Pdok.Api.prototype.createOlMap = function() {
     }
     
     olMap.addControl(this.selectControl);
-    if ( (this.showPopup.toString().toLowerCase() === "false") || (this.showpopup.toString().toLowerCase() === "false") ){
+    if (this.showPopup.toString().toLowerCase() === "false") {
         this.showPopup = false;
     }
     if (this.showPopup) {
