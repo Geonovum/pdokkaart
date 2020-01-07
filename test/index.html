@@ -1,0 +1,40 @@
+<script type="text/javascript" src="http://localhost:9898/api/js/OpenLayers.js"></script>
+<script type="text/javascript" src="http://localhost:9898/api/js/proj4js-compressed.js"></script>
+<script type="text/javascript" src="http://localhost:9898/api/js/pdok-api.js"></script>
+<script type="text/javascript" src="http://localhost:9898/api/js/geozetlib.js"></script>
+<script type="text/javascript" src="http://kaart.pdok.nl/api/js/pdok-markers.js"></script>
+<script type="text/javascript" src="http://kaart.pdok.nl/api/js/pdok-layers.js"></script>
+<script type="text/javascript">
+Pdok.addcss("http://localhost:9898/api/styles/default/style.css");
+Pdok.addcss("http://localhost:9898/api/styles/api.css");
+var config_180={
+  "mapdiv": "map_180",
+  "zoom": 8,
+  "showlayerswitcher": false,
+  "showscaleline": true,
+  "showmouseposition": true,
+  "geocoder": "{}",
+  "loc": "189705.038, 445983.039",
+  "baselayers": [
+    {
+      "id": "BRT",
+      "visible": true
+    },
+    {
+      "id": "LUFO",
+      "visible": false
+    }
+  ],
+  "markersdef": "http://kaart.pdok.nl/api/js/pdok-markers.js",
+  "layersdef": "http://kaart.pdok.nl/api/js/pdok-layers.js"
+};
+var api_180;
+var pdok_kaart_api;
+Pdok.ready( 
+function(){ 
+api_180 = new Pdok.Api(config_180);
+pdok_kaart_api = api_180;
+} );
+</script>
+<div id="map_180" class="olMap big"></div>
+

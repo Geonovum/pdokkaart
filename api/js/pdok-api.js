@@ -473,7 +473,7 @@ Pdok.Api = function(config, callback) {
 
     // internal name of the features layer
     this.FEATURESLAYER_NAME = "Markers";
-    this.SEARCHFEATURESLAYER_NAME = "SearchMarkers";
+    this.SEARCHFEATURESLAYER_NAME = "Zoek Markers";
     this.LOCATIONSLAYER_NAME = "locationtool";
 
     // this.features can come as KML string from config/params
@@ -872,6 +872,7 @@ Pdok.Api.prototype.createOlMap = function() {
     // featuresLayer is used for all features/markers
     this.featuresLayer = new OpenLayers.Layer.Vector(this.FEATURESLAYER_NAME);
     this.searchFeaturesLayer = new OpenLayers.Layer.Vector(this.SEARCHFEATURESLAYER_NAME);
+    this.searchFeaturesLayer.displayInLayerSwitcher = false;
     // fix for the label ordering in labels+icons
     // http://comments.gmane.org/gmane.comp.gis.openlayers.devel.ol3/4156
     this.featuresLayer.renderer.textRoot = this.featuresLayer.renderer.vectorRoot;
@@ -3164,13 +3165,8 @@ OpenLayers.Control.GeocoderControl =
             
             // Add marker to the map for the found location
             var wkt = 'POINT('+x+' '+y+')';
-            weergavenaam = lookup.docs[0].weergavenaam
-            if (!this.mt){
-                this.mt='mt0'; // mt0 is default point symbol
-            }
-            if (Pdok.mt){
-                this.mt=Pdok.mt; // use in url given mt symbol
-            }
+            weergavenaam = lookup.docs[0].weergavenaam;
+            this.mt = 'mt6';
             currentApi.searchFeaturesLayer.features.push(currentApi.createFeature(wkt, this.mt, 'Adres', weergavenaam));
             this.map.setCenter(new OpenLayers.LonLat(x, y), z);
         }
