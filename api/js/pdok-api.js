@@ -2953,7 +2953,7 @@ OpenLayers.Control.GeocoderControl =
                 document.getElementById(me.input_id).value = '';
 
             } else if(target && target.nodeName === "A") {
-                me.resultClick(document.getElementById(target.id).attributes['id'].value);
+                me.resultClick(document.getElementById(target.id).attributes['id'].value, e);
                 return false;
             }
         };
@@ -3107,10 +3107,11 @@ OpenLayers.Control.GeocoderControl =
     showResults: function() {
         document.getElementById(this.resultdiv_id).style.display = 'block';
     },
-    resultClick: function(id) {
+    resultClick: function(id, event) {
         //console.log(id);
         // retrieve the id, and get full info from
         // https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=
+        event.preventDefault();
         lookupUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?';
         OpenLayers.Request.GET({
                 url: lookupUrl,
