@@ -2289,8 +2289,7 @@ Pdok.Api.prototype.createHtml = function(){
     //'OpenLayers.ImgPath="' + Pdok.ApiUrl+ '/img/";' +
     'var config_' + uniqueid + '=' + conf + ';\n' +
     'var api_' + uniqueid + ';\n' +
-    'var pdok_kaart_api;\n' +
-    'Pdok.ready( \nfunction(){ \napi_' + uniqueid + ' = new Pdok.Api(config_' + uniqueid + ');\n' + 'pdok_kaart_api = api_' + uniqueid + ';\n' +'} );\n' +
+    'Pdok.ready( \nfunction(){ \napi_' + uniqueid + ' = new Pdok.Api(config_' + uniqueid + ');\n} );\n' +
     '</script>\n';
     var activeClass = $('#map').attr('class');
     head += '<div id="map_' + uniqueid + '" class="' + activeClass + '"></div>\n';
@@ -2949,6 +2948,7 @@ OpenLayers.Control.GeocoderControl =
         this.input_id = this.resultdiv_id + '_input';
         this.geozet_id = this.resultdiv_id + '_geozet';
         this.allowSelection = true;
+        this.api_id = options.div.offsetParent.id.split("_")[1];
 
         // deferred event delegation:
         // http://davidwalsh.name/event-delegate
@@ -3146,10 +3146,15 @@ OpenLayers.Control.GeocoderControl =
     handleLookupResponse: function(req){
         let  currentApi = null;
         // check for running in map editor or as map
-        if (typeof pdok_kaart_api !== 'undefined') {
-            currentApi = pdok_kaart_api;
-        }else if (typeof api !== 'undefined') {
+        if (typeof api !== 'undefined') {
             currentApi = api;
+        }else {
+            currentApi = window["api_" + this.api_id];
+        }
+        // in case of multiple maps on page, prevent zoom to if map is not the clicked map
+        // however, multiple maps with multiple geocoders does not seem to work anyways...
+        if (this.map.div.id !== "map_" + this.api_id){
+            return false;
         }
 
         currentApi.searchFeaturesLayer.removeAllFeatures();
