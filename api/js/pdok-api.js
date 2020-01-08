@@ -473,6 +473,7 @@ Pdok.Api = function(config, callback) {
 
     // internal name of the features layer
     this.FEATURESLAYER_NAME = "Markers";
+    this.SEARCHFEATURESLAYER_NAME = "Zoek Markers";
     this.LOCATIONSLAYER_NAME = "locationtool";
 
     // this.features can come as KML string from config/params
@@ -484,6 +485,7 @@ Pdok.Api = function(config, callback) {
      * @type OpenLayers.Layer.Vector
      */
     this.featuresLayer = null;
+    this.searchFeaturesLayer = null;
 
     // References to different drawing controls we use for the edit tools
     this.drawFeaturePointControl = null;
@@ -869,10 +871,15 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // featuresLayer is used for all features/markers
     this.featuresLayer = new OpenLayers.Layer.Vector(this.FEATURESLAYER_NAME);
+    this.searchFeaturesLayer = new OpenLayers.Layer.Vector(this.SEARCHFEATURESLAYER_NAME);
+    this.searchFeaturesLayer.displayInLayerSwitcher = false;
     // fix for the label ordering in labels+icons
     // http://comments.gmane.org/gmane.comp.gis.openlayers.devel.ol3/4156
     this.featuresLayer.renderer.textRoot = this.featuresLayer.renderer.vectorRoot;
+    this.searchFeaturesLayer.renderer.textRoot = this.searchFeaturesLayer.renderer.vectorRoot;
     olMap.addLayer(this.featuresLayer);
+    olMap.addLayer(this.searchFeaturesLayer);
+
 
     // locationLayer holds features for 'kaarprikker/locationtool'
     this.locationLayer = new OpenLayers.Layer.Vector('locationtool', {
@@ -2941,6 +2948,7 @@ OpenLayers.Control.GeocoderControl =
         this.input_id = this.resultdiv_id + '_input';
         this.geozet_id = this.resultdiv_id + '_geozet';
         this.allowSelection = true;
+        this.api_id = options.div.offsetParent.id.split("_")[1];
 
         // deferred event delegation:
         // http://davidwalsh.name/event-delegate
@@ -3137,6 +3145,21 @@ OpenLayers.Control.GeocoderControl =
 
     },
     handleLookupResponse: function(req){
+        let  currentApi = null;
+        // check for running in map editor or as map
+        if (typeof api !== 'undefined') {
+            currentApi = api;
+        }else {
+            // in case of multiple maps on page, prevent zoom to if map is not the clicked map
+            // however, multiple maps with multiple geocoders does not seem to work anyways...
+            if (this.map.div.id !== "map_" + this.api_id){
+                return false;
+            }
+            currentApi = window["api_" + this.api_id];
+        }
+        
+
+        currentApi.searchFeaturesLayer.removeAllFeatures();
         var format = new Pdok.Format.PdokLocatieServer();
         var lookup = format.read(req.responseText);
         // console.log(lookup);
@@ -3146,8 +3169,15 @@ OpenLayers.Control.GeocoderControl =
             var y = ft.geometry.y;
             var zoom = lookup.docs[0].type;
             var z = this.zoomScale[zoom];
+            
+            // Add marker to the map for the found location
+            var wkt = 'POINT('+x+' '+y+')';
+            weergavenaam = lookup.docs[0].weergavenaam;
+            this.mt = 'mt6';
+            currentApi.searchFeaturesLayer.features.push(currentApi.createFeature(wkt, this.mt, 'Adres', weergavenaam));
             this.map.setCenter(new OpenLayers.LonLat(x, y), z);
         }
+        currentApi.searchFeaturesLayer.redraw();
         return false;
     },
     CLASS_NAME: "OpenLayers.Control.GeocoderControl"
