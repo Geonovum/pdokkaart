@@ -3149,13 +3149,14 @@ OpenLayers.Control.GeocoderControl =
         if (typeof api !== 'undefined') {
             currentApi = api;
         }else {
+            // in case of multiple maps on page, prevent zoom to if map is not the clicked map
+            // however, multiple maps with multiple geocoders does not seem to work anyways...
+            if (this.map.div.id !== "map_" + this.api_id){
+                return false;
+            }
             currentApi = window["api_" + this.api_id];
         }
-        // in case of multiple maps on page, prevent zoom to if map is not the clicked map
-        // however, multiple maps with multiple geocoders does not seem to work anyways...
-        if (this.map.div.id !== "map_" + this.api_id){
-            return false;
-        }
+        
 
         currentApi.searchFeaturesLayer.removeAllFeatures();
         var format = new Pdok.Format.PdokLocatieServer();
