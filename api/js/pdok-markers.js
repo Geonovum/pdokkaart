@@ -15,14 +15,6 @@ Pdok.Api.prototype.defaultStyles=[
         // so you only have to define the props that are different from mt0 
         // mt0, pt0, lt0 are defined in pdok-api.js, so defining it here will override that one 
 	{ 
-		id: 'mt0', 
-		name: 'Rijkslogo', 
-		externalGraphic: Pdok.ApiUrl + '/markertypes/rijk.png', 
-		graphicHeight: 32, 
-		graphicWidth: 32, 
-		graphicYOffset: -16 
-	}, 
-	{ 
 		id: 'mt1', 
 		name: 'Informatiebord blauw', 
 		externalGraphic: Pdok.ApiUrl + '/markertypes/emblem-notice.png', 
@@ -313,6 +305,14 @@ Pdok.Api.prototype.defaultStyles=[
         graphicHeight: 32,
         graphicWidth: 32,
         graphicYOffset: -32
+    },
+    {
+        id: 'mt36',
+        name: 'Rijkslogo',
+        externalGraphic: Pdok.ApiUrl + '/markertypes/rijksoverheid.png',
+        graphicHeight: 32,
+        graphicWidth: 32,
+        graphicYOffset: -16
     },
     {
         id: 'pt1', 
