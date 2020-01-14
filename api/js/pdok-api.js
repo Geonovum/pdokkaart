@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.2.2';
+Pdok.API_VERSION_NUMBER = '1.2.3';
 
 
 // CONFIGURATION
@@ -15,7 +15,7 @@ Pdok.API_VERSION_NUMBER = '1.2.2';
 // Using https:// results in cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = window.location.protocol + '//kaart.pdok.nl/api';
+Pdok.ApiUrl = window.location.protocol + '//localhost/pdokkaart/api';
 OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
@@ -208,7 +208,7 @@ Pdok.Api = function(config, callback) {
     this.layersdef = Pdok.layersdef || null;
     
     // an address to search for
-    this.q = Pdok.q;
+	this.q = Pdok.q;
 
     /**
      * The zoom level property = the zoom level to start in (between 0 and 14)
@@ -621,6 +621,34 @@ Pdok.Api.prototype.defaultPdokLayers = {
 
 /**
  * 
+ * Function which first moves and then deletes the temporary markup location used by the url-parameter 'q'
+ * The move is necessary because otherwise the markup is still visible until the user zooms in or out
+ * @returns {void}
+ */
+removeTemporaryMarkup = function(){
+	// Delete from the features
+	for (var j = 0; j< api_vialink.features.length; j++){
+		f = api_vialink.features[j];
+		if (f.attributes["name"] == "TMPPDOKKAARTAPITITEL" && f.attributes["description"] == "TMPPDOKKAARTAPIDESCRIPTION"){
+			//f.geometry.move(-1000000, -1000000);
+			api_vialink.features.pop(j);
+			break;
+		}
+	}
+	// Delete from featurelayer
+	for (var j = 0; j< api_vialink.featuresLayer.features.length; j++){
+		f = api_vialink.featuresLayer.features[j];
+		if (f.attributes["name"] == "TMPPDOKKAARTAPITITEL" && f.attributes["description"] == "TMPPDOKKAARTAPIDESCRIPTION"){
+			//f.geometry.move(-1000000, -1000000);
+			api_vialink.featuresLayer.features.pop(j);
+			break;
+		}
+	}
+
+}
+
+/**
+ * 
  * @param {type} legend a legend config object containing the div to create the legend on
  * @returns {void}
  */
@@ -898,7 +926,7 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // add marker and use markertype if given, otherwise the default marker
     // backward compatibility: mloc is alway point
-    if (this.mloc) {
+    if (typeof this.mloc != "undefined") {
         if(typeof this.mloc === 'string'){
             this.mloc = this.mloc.replace(' ', '').split(',');
         }
@@ -911,6 +939,16 @@ Pdok.Api.prototype.createOlMap = function() {
         }
         this.features.push(this.createFeature(wkt, this.mt, this.titel, this.tekst));
     }
+    if (typeof this.q != "undefined") {
+        var wkt = 'POINT(-10000000 -10000000)';
+        if (!this.mt){
+            this.mt='mt0'; // mt0 is default point symbol
+        }
+        if(!this.features){
+            this.features = [];
+        }
+        this.features.push(this.createFeature(wkt, this.mt, "TMPPDOKKAARTAPITITEL", "TMPPDOKKAARTAPIDESCRIPTION"));
+	}
 
     // selectControl for popups
     if ( (this.hoverPopup) || (this.hoverpopup) ){
@@ -2192,6 +2230,49 @@ Pdok.Api.prototype.createObjectTags = function(){
         return "";
     }
 };
+/**
+ * Create the minimal link string for this instance
+ */
+Pdok.Api.prototype.createMinimalMapLink = function(){
+    var uri = Pdok.createBaseUri();
+    var pathname = window.location.pathname;
+    if (pathname.toLowerCase().search("api.html") > -1){
+        uri += 'api.html';
+    } // little hack to make our own examples work
+    else if (pathname.toLowerCase().search("examples") > -1){
+        uri = uri.replace('examples/','');
+        uri += 'api/api.html';
+    }
+    else {
+        uri += 'api/api.html';
+    }
+    var config = this.getMinimalConfig('vialink');
+    var pdoklayers = [];
+    var i;
+    if(config.baselayers) {
+        for (i = 0; i < config.baselayers.length; ++i) {
+            if(config.baselayers[i].visible){
+                pdoklayers.push(config.baselayers[i].id);
+            }
+        }    
+        delete config.baselayers;
+    }
+    //Get the visible overlays and remove the others
+    if(config.overlays){
+        for (i = 0; i < config.overlays.length; ++i) {
+          if(config.overlays[i].visible){
+            pdoklayers.push(config.overlays[i].id);
+          }
+        }
+        delete config.overlays;
+    }
+    //Concat the layers, assuming the first to be the baselayer and write them to the config object
+    if (pdoklayers.length > 0){
+		config.pdoklayers = pdoklayers.join(',');
+    }
+	return uri + '?'+OpenLayers.Util.getParameterString(config);
+};
+
 
 /**
  * Create the link string for this instance
@@ -2435,6 +2516,43 @@ Pdok.Api.prototype.getConfig = function(uniqueid) {
 };
 
 /**
+ * Api call to get a config object which can be used to start an Api instance in current state
+ * @param {type} uniqueid
+ * @returns {Pdok.Api.prototype.getConfig.config}
+ */
+Pdok.Api.prototype.getMinimalConfig = function(uniqueid) {
+    var config = {};
+    if(this.map){
+        config.zoom = this.map.getZoom();
+        // only add the LayerSwitcher parameter if false (default value is true)
+        if (typeof this.showlayerswitcher !== 'undefined' && this.showlayerswitcher == false){
+            config.showlayerswitcher = this.showlayerswitcher;
+        }
+        if (typeof this.showzoom !== 'undefined' && this.showzoom == false){
+            config.showzoom = this.showzoom;
+        }
+        if (typeof this.navigation !== 'undefined' && this.navigation == false){
+            config.navigation = this.navigation;
+        }
+        if (typeof this.showscaleline !== 'undefined' && this.showscaleline == false){
+            config.showscaleline = this.showscaleline;
+        }
+        if (typeof this.showmouseposition !== 'undefined' && this.showmouseposition == false){
+            config.showmouseposition = this.showmouseposition;
+        }
+        if (typeof this.geocoder !== 'undefined' && this.geocoder == false){
+            config.geocoder = JSON.stringify(this.geocoder);
+        }
+        if (typeof this.legend !== 'undefined' && this.legend == false){
+            config.legend = JSON.stringify(this.legend);
+        }
+        config.loc = this.map.getCenter().toShortString();
+    }
+    return config;
+};
+
+
+/**
  * Get KML from all features
  * @public
  * @returns {String} KML including style information
@@ -2602,24 +2720,44 @@ Pdok.Api.prototype.zoekQ = function(q){
 Pdok.Api.prototype.handleLookupResponseAdres = function(req){
 	var format = new Pdok.Format.PdokLocatieServer();
 	var lookup = format.read(req.responseText);
-	console.log(lookup);
 	if (lookup.docs[0]){
 		var ft = new OpenLayers.Format.WKT().read(lookup.docs[0].centroide_rd)
 		var x = ft.geometry.x;
 		var y = ft.geometry.y;
 		var zoom = lookup.docs[0].type;
 		var z = this.zoomScale[zoom];
-		// Add marker to the map for the found location
-        var wkt = 'POINT('+x+' '+y+')';
-        weergavenaam = lookup.docs[0].weergavenaam
-        if (!this.mt){
-            this.mt='mt0'; // mt0 is default point symbol
-        }
-        if (Pdok.mt){
-            this.mt=Pdok.mt; // use in url given mt symbol
-        }
-		api_vialink.featuresLayer.features.push(api_vialink.createFeature(wkt, this.mt, 'Adres', weergavenaam));
+
+		// Move the temporary location and change the content
+		for (var j = 0; j< api_vialink.features.length; j++){
+			f = api_vialink.features[j];
+			if (f.attributes["name"] == "TMPPDOKKAARTAPITITEL" && f.attributes["description"] == "TMPPDOKKAARTAPIDESCRIPTION"){
+				f.geometry.move(10000000 + x, 10000000 + y);
+				line = "";
+				if (typeof Pdok.q === "string"){
+					f.attributes["name"] = Pdok.q.trim();
+					f.attributes["description"] = "";
+				}
+				else{
+					for (var i = 0; i < Pdok.q.length; i++) {
+						if (i == 0){
+							f.attributes["name"]= Pdok.q[i].trim();
+						}
+						else{
+							var line = line + Pdok.q[i].trim();
+							if (i < (Pdok.q.length -1)){
+								line = line + "<BR>";
+							}
+						}
+					}
+					f.attributes["description"]= line;
+				}
+			}
+		}
 		api_vialink.map.setCenter(new OpenLayers.LonLat(x, y), z);
+	}
+	else{
+		// Delete the temporary location
+		removeTemporaryMarkup();
 	}
 	return false;
 }
@@ -3034,19 +3172,21 @@ OpenLayers.Control.GeocoderControl =
         var responseText = req.responseText;
         if(req.status === 404){
             console.error("De zoekfunctie is niet actief, neem contact op met systeembeheer (status: 404)");
-            return false;
+			return false;
         }
         else if(req.status != 200){
+            // Delete the temporary location
+			removeTemporaryMarkup();
             console.error("De zoekfunctie is niet actief, neem contact op met systeembeheer (status: )"+req.status);
             return false;
         }
 
         var format = new Pdok.Format.PdokLocatieServer();
         var suggest = format.read(req.responseText);
-        //console.log(suggest)
 
         if (suggest.docs.length === 0) {
-            // zero responses
+			removeTemporaryMarkup();			
+			// zero responses
             alert("Geen locaties gevonden ...");
         } else {
             // > 0 Zoom in to the 1st found address
