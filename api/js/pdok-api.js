@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.2.3';
+Pdok.API_VERSION_NUMBER = '1.2.2';
 
 
 // CONFIGURATION
@@ -15,7 +15,7 @@ Pdok.API_VERSION_NUMBER = '1.2.3';
 // Using https:// results in cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = window.location.protocol + '//localhost/pdokkaart/api';
+Pdok.ApiUrl = window.location.protocol + '//kaart.pdok.nl/api';
 OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
@@ -604,11 +604,11 @@ Pdok.Api.prototype.defaultPdokLayers = {
         LUFO: {
                 layertype: 'WMTS',
                 name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
-                url: 'https://geodata1.nationaalgeoregister.nl/luchtfoto/wmts?',
+                url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts?',
                 version: "1.3.0",
-                layer: 'luchtfoto',
+                layer: 'Actueel_ortho25',
                 style: '',
-                matrixSet: 'nltilingschema',
+                matrixSet: 'EPSG:28992',
                 matrixIds : matrixIdsLufo,
                 serverResolutions: [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 6.72, 3.36, 1.68, 0.84, 0.42],
                 visibility: true,
@@ -2546,8 +2546,104 @@ Pdok.Api.prototype.getMinimalConfig = function(uniqueid) {
         if (typeof this.legend !== 'undefined' && this.legend == false){
             config.legend = JSON.stringify(this.legend);
         }
-        config.loc = this.map.getCenter().toShortString();
+		x = Math.round(this.map.getCenter().lon);
+		y = Math.round(this.map.getCenter().lat);
+        config.loc = x + "," + y;
     }
+	var overlays = [];
+	var baselayers = [];
+	var mapLayer;
+	for (layerId in this.map.layers){
+		mapLayer = this.map.layers[layerId];
+		// NOT our this.featuresLayer and this.locationslayer 
+		if (!(mapLayer.name == this.FEATURESLAYER_NAME 
+			|| mapLayer.name == this.LOCATIONSLAYER_NAME
+			|| mapLayer.name.indexOf("OpenLayers.Handler.")>=0)){  // if there is still an editor active, we have such a layer
+			if (typeof mapLayer.pdokid !== 'undefined') {  // only pdok-layers should be added to these lists
+                    if (mapLayer.isBaseLayer) {
+                        baselayers.push({"id": mapLayer.pdokid, visible: mapLayer.visibility});
+                    } else {
+                        overlays.push({"id": mapLayer.pdokid, visible: mapLayer.visibility});
+                    }
+			}
+		}
+	}
+	if (baselayers.length > 0) {
+		config.baselayers = baselayers;
+	}
+	if (overlays.length > 0) {
+		config.overlays = overlays;
+	}
+	// wmsurl AND wmslayers
+	if(this.wmsurl && this.wmsurl.length>0 && this.wmslayers && this.wmslayers.length>0) {
+		config.wmsurl = this.wmsurl;
+		config.wmslayers = this.wmslayers;
+		if (this.wmsinfoformat && this.wmsinfoformat !== 'none'){
+			config.wmsinfoformat = this.wmsinfoformat;
+		}
+	}
+	// wmts
+	if (this.wmtsurl && this.wmtslayer && this.wmtsmatrixset && 
+		this.wmtsurl.length > 0 && this.wmtslayer.length > 0 && this.wmtsmatrixset.length > 0) {
+		config.wmtsurl = this.wmtsurl;
+		config.wmtslayer = this.wmtslayer;
+		config.wmtsmatrixset = this.wmtsmatrixset;
+	}
+
+	var tempLayer = this.featuresLayer.clone();
+	var allFeatures = tempLayer.features;
+	if (this.locationLayer.features.length === 1) {
+		allFeatures.push(this.locationLayer.features[0]);
+	}
+
+	// kmlurl OR txturl OR features
+	// at this moment NOT a combination of these two
+	// all features from KML or TXT are added to 'featureslayer'
+	// so if the user added even more markers/features
+	// we should try to make a diff, to know which features to add in the features-kmlstring-parameter
+	// but if the user has made changes by hand in wizard, it is getting even more comples
+	// so for now: there is either a kmlurl and/or a txturl OR only features as parameter
+	if (allFeatures.length > 0) {
+	//if (this.featuresLayer.features.length>0) {
+		var doFeatures = true;
+		// if features came from a kml/txt-url, do NOT write features yourself, only use kmlurl
+		// NOTE: so at this moment it is NOT possible to use kmlurl PLUS wizard features!!
+		if (this.kmlurl) {
+			config.kmlurl = this.kmlurl;
+			doFeatures = false;
+			// if kmlstyles
+			if (this.kmlstyles) {
+				config.kmlstyles = true;
+			}
+		}
+		if (this.txturl) {
+			config.txturl = this.txturl;
+			doFeatures = false;
+		}
+		if (this.mimg){
+			config.mimg = this.mimg;
+		}
+		if (doFeatures) {
+			// If only one feature is added and this is a point then use the parameter mloc
+			/*if (this.featuresLayer.features.length == 1 && this.featuresLayer.features[0].geometry.CLASS_NAME == "OpenLayers.Geometry.Point"){
+				config.mloc = this.featuresLayer.features[0].geometry.x + "," + this.featuresLayer.features[0].geometry.y;
+				config.titel = this.featuresLayer.features[0].attributes.name;
+				config.tekst =  this.featuresLayer.features[0].attributes.description;
+				config.mt = this.featuresLayer.features[0].attributes.styletype;
+			}*/
+			if (allFeatures.length === 1 && allFeatures[0].geometry.CLASS_NAME === "OpenLayers.Geometry.Point"){
+				config.mloc = Math.round(allFeatures[0].geometry.x) + "," + Math.round(allFeatures[0].geometry.y);
+				config.titel = allFeatures[0].attributes.name;
+				config.tekst =  allFeatures[0].attributes.description;
+				config.mt = allFeatures[0].attributes.styletype;
+			} else {
+				var myKML = this.createKML();
+				if(myKML){
+					config.features = myKML;
+				}
+			}
+		}
+	}
     return config;
 };
 

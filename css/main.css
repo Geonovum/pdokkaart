@@ -168,7 +168,7 @@ li {
     margin-top: 5px;
 }
 
-#apilink1, #kmlservicelink {
+#apilink1, #apilink1_minimal, #kmlservicelink {
     color:#273397;
     text-decoration: underline;
 }

@@ -17,7 +17,7 @@ Pdok.Api.prototype.defaultLayers = {
   AAN: {
     layertype: 'WMTS',
     name: 'AAN - Agrarisch Areaal Nederland (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
     layer: 'aan',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -27,7 +27,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_100M: {
     layertype: 'WMTS',
     name: 'AHN1 - Actueel Hoogtebestand NL 100 meter (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
     layer: 'ahn1_100m',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -37,7 +37,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_25M: {
     layertype: 'WMTS',
     name: 'AHN1 - Actueel Hoogtebestand NL 25 meter (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
     layer: 'ahn1_25m',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -47,7 +47,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_5M: {
     layertype: 'WMTS',
     name: 'AHN1 - Actueel Hoogtebestand NL 5 meter (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
     layer: 'ahn1_5m',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -57,7 +57,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_BlADINDEX: {
     layertype: 'WMS',
     name: 'AHN1 - Actueel Hoogtebestand NL 25 meter - Bladindex (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn1/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/ahn1/wms',
     layers: 'ahn1_bladindex',
     transparent: 'true',
     format: 'image/png',
@@ -68,7 +68,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_PUNTDICHTHEIDGEBIEDEN: {
     layertype: 'WMS',
     name: 'AHN1 - Actueel Hoogtebestand NL 25 meter - Pundichtheidgebieden (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn1/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/ahn1/wms',
     layers: 'puntdichtheidgebieden',
     transparent: 'true',
     format: 'image/png',
@@ -79,7 +79,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_STADSPOLYGONEN: {
     layertype: 'WMS',
     name: 'AHN1 - Actueel Hoogtebestand NL 25 meter - Stadspolygonen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn1/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/ahn1/wms',
     layers: 'stadspolygonen',
     transparent: 'true',
     format: 'image/png',
@@ -90,7 +90,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_VLIEGLIJNEN: {
     layertype: 'WMS',
     name: 'AHN1 - Actueel Hoogtebestand NL 25 meter - Vlieglijnen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ahn1/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/ahn1/wms',
     layers: 'vlieglijnen',
     transparent: 'true',
     format: 'image/png',
@@ -101,7 +101,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN2_5M: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 5 meter (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
     layer: 'ahn2_5m',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -111,7 +111,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN2_05M_INT: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter geinterpoleerd (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
     layer: 'ahn2_05m_int',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -121,7 +121,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN2_05M_NON: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter niet geinterpoleerd (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
     layer: 'ahn2_05m_non',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -131,7 +131,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN2_05M_RUW: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter ruw (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
     layer: 'ahn2_05m_ruw',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -141,7 +141,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG: {
     layertype: 'WMTS',
     name: 'BAG - Basisadministratie Adressen en Gebouwen (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/bag?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/bag?',
     layer: 'bag',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -151,7 +151,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_LIGPLAATS: {
     layertype: 'WMS',
     name: 'BAG - Ligplaats (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bag/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bag/wms',
     layers: 'ligplaats',
     transparent: 'true',
     format: 'image/png',
@@ -162,7 +162,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_PAND: {
     layertype: 'WMS',
     name: 'BAG - Pand (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bag/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bag/wms',
     layers: 'pand',
     transparent: 'true',
     format: 'image/png',
@@ -173,7 +173,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_STANDPLAATS: {
     layertype: 'WMS',
     name: 'BAG - Standplaats (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bag/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bag/wms',
     layers: 'standplaats',
     transparent: 'true',
     format: 'image/png',
@@ -184,7 +184,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_VERBLIJFSOBJECT: {
     layertype: 'WMS',
     name: 'BAG - Verblijfsobject (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bag/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bag/wms',
     layers: 'verblijfsobject',
     transparent: 'true',
     format: 'image/png',
@@ -195,7 +195,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_WOONPLAATS: {
     layertype: 'WMS',
     name: 'BAG - Woonplaats (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bag/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bag/wms',
     layers: 'woonplaats',
     transparent: 'true',
     format: 'image/png',
@@ -206,7 +206,7 @@ Pdok.Api.prototype.defaultLayers = {
   BBG2008: {
     layertype: 'WMS',
     name: 'BBG - Bestand Bodemgebruik 2008 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms',
     layers: 'bbg2008',
     transparent: 'true',
     format: 'image/png',
@@ -217,7 +217,7 @@ Pdok.Api.prototype.defaultLayers = {
   BBG2008_hoofdgroep: {
     layertype: 'WMS',
     name: 'BBG - Bestand Bodemgebruik 2008 Hoofdgroep (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2008/wms',
     layers: 'bbg2008_hoofdgroep',
     transparent: 'true',
     format: 'image/png',
@@ -228,7 +228,7 @@ Pdok.Api.prototype.defaultLayers = {
   BBG2010: {
     layertype: 'WMS',
     name: 'BBG - Bestand Bodemgebruik 2010 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2010/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2010/wms',
     layers: 'bbg2010',
     transparent: 'true',
     format: 'image/png',
@@ -239,7 +239,7 @@ Pdok.Api.prototype.defaultLayers = {
   BBG2010_hoofdgroep: {
     layertype: 'WMS',
     name: 'BBG - Bestand Bodemgebruik 2010 Hoofdgroep (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bestandbodemgebruik2010/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2010/wms',
     layers: 'bbg2010_hoofdgroep',
     transparent: 'true',
     format: 'image/png',
@@ -250,7 +250,7 @@ Pdok.Api.prototype.defaultLayers = {
   BESCHERMDENATUURMONUMENTEN: {
     layertype: 'WMS',
     name: 'Beschermde Natuurmonumenten (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/beschermdenatuurmonumenten/wms',
     layers: 'beschermdenatuurmonumenten',
     transparent: 'true',
     format: 'image/png',
@@ -261,7 +261,7 @@ Pdok.Api.prototype.defaultLayers = {
   BG_PROVINCIEGRENZEN: {
     layertype: 'WMS',
     name: 'Bestuurlijke grenzen - Provinciegrenzen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
     layers: 'provincies',
     transparent: 'true',
     format: 'image/png',
@@ -272,7 +272,7 @@ Pdok.Api.prototype.defaultLayers = {
   BG_GEMEENTEGRENZEN: {
     layertype: 'WMS',
     name: 'Bestuurlijke grenzen - Gemeentegrenzen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
     layers: 'gemeenten',
     transparent: 'true',
     format: 'image/png',
@@ -283,7 +283,7 @@ Pdok.Api.prototype.defaultLayers = {
   BG_GEMEENTEGRENZEN_LABEL: {
     layertype: 'WMS',
     name: 'Bestuurlijke grenzen - Gemeentegrenzen met labels (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=' + Pdok.ApiUrl + '/sld/gemeentegrenzen_label_grijs_gestippeld.sld',
+    url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?sld=' + Pdok.ApiUrl + '/sld/gemeentegrenzen_label_grijs_gestippeld.sld',
     layers: 'gemeenten',
     transparent: 'true',
     format: 'image/png',
@@ -294,7 +294,7 @@ Pdok.Api.prototype.defaultLayers = {
   BG_LANDSGRENS: {
     layertype: 'WMS',
     name: 'Bestuurlijke grenzen - Landsgrens (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
     layers: 'landsgrens',
     transparent: 'true',
     format: 'image/png',
@@ -305,7 +305,7 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_ACHTERGROND_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Achtergrond (TMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tms/',
+    url: 'https://geodata.nationaalgeoregister.nl/tms/',
     layername: 'bgtachtergrond',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -315,7 +315,7 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_LIJNGERICHT_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Lijngericht (TMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tms/',
+    url: 'https://geodata.nationaalgeoregister.nl/tms/',
     layername: 'bgtlijngericht',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -325,7 +325,7 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_OMTREKGERICHT_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Omtrekgericht (TMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tms/',
+    url: 'https://geodata.nationaalgeoregister.nl/tms/',
     layername: 'bgtomtrekgericht',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -335,7 +335,7 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_STANDAARD_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Standaard (TMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tms/',
+    url: 'https://geodata.nationaalgeoregister.nl/tms/',
     layername: 'bgtstandaard',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -345,7 +345,7 @@ Pdok.Api.prototype.defaultLayers = {
   BRP_LIGHT: {
     layertype: 'WMS',
     name: 'BRP-light - Gewaspercelen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/brpgewaspercelen/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/brpgewaspercelen/wms?',
     layers: 'brpgewaspercelen',
     transparent: 'true',
     format: 'image/png',
@@ -356,7 +356,7 @@ Pdok.Api.prototype.defaultLayers = {
   BRT: {
     layertype: 'WMTS',
     name: 'BRT Achtergrondkaart (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
     layer: 'brtachtergrondkaart',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -367,7 +367,7 @@ Pdok.Api.prototype.defaultLayers = {
   BRTTIJDELIJK: {
     layertype: 'WMTS',
     name: 'BRT Achtergrondkaart tijdelijk (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
     layer: 'brtachtergrondkaarttijdelijk',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -378,7 +378,7 @@ Pdok.Api.prototype.defaultLayers = {
   BRTGRIJSTIJDELIJK: {
     layertype: 'WMTS',
     name: 'BRT Achtergrondkaart Grijs tijdelijk (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
     layer: 'brtachtergrondkaartgrijstijdelijk',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -389,7 +389,7 @@ Pdok.Api.prototype.defaultLayers = {
   BRTPASTEL: {
     layertype: 'WMTS',
     name: 'BRT Achtergrondkaart Pastel (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wmts/',
+    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
     layer: 'brtachtergrondkaartpastel',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -400,7 +400,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_KERNEN_NAMEN: {
     layertype: 'WMS',
     name: 'CBS Bevolkingskern namen 2008 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
     layers: 'naamgeving_kernen_40k_plus,naamgeving_kernen_alles',
     transparent: 'true',
     format: 'image/png',
@@ -411,7 +411,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_KERNEN: {
     layertype: 'WMS',
     name: 'CBS Bevolkingskernen 2008 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
     layers: 'cbsbevolkingskernen2008',
     transparent: 'true',
     format: 'image/png',
@@ -422,7 +422,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_KERNEN2011: {
     layertype: 'WMS',
     name: 'CBS Bevolkingskernen 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms',
     layers: 'cbsbevolkingskernen2011',
     transparent: 'true',
     format: 'image/png',
@@ -432,7 +432,7 @@ Pdok.Api.prototype.defaultLayers = {
   },  CBS_GEMEENTEN: {
     layertype: 'WMS',
     name: 'CBS Gemeentegrenzen 2008 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
     layers: 'gemeentegrens_generalisatie_2008',
     transparent: 'true',
     format: 'image/png',
@@ -443,7 +443,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_PROVINCIES_2008: {
     layertype: 'WMS',
     name: 'CBS Provinciegrenzen 2008 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
     layers: 'provgrens_generalisatie_2008',
     transparent: 'true',
     format: 'image/png',
@@ -454,7 +454,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_PROVINCIES_2012: {
     layertype: 'WMS',
     name: 'CBS Provinciegrenzen 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cbsprovincies/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsprovincies/wms',
     layers: 'cbsprovincies2012',
     transparent: 'true',
     format: 'image/png',
@@ -465,7 +465,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_4KANTEN100M_INWONERS2012: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 100m - Inwoners 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
     layers: 'inwoners_2012',
     transparent: 'true',
     format: 'image/png',
@@ -476,7 +476,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_4KANTEN100M_INWONERS2011: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 100m - Inwoners 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
     layers: 'inwoners_2011',
     transparent: 'true',
     format: 'image/png',
@@ -487,7 +487,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_4KANTEN100M_WONINGEN2011: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 100m - Woningen 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
     layers: 'woningen_2011',
     transparent: 'true',
     format: 'image/png',
@@ -498,7 +498,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_4KANTEN100M_TOENAMEINWONERS2000TOT2010: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 100m - Toename inwoners 2000 - 2010 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
     layers: 'toename_inwoners_2000_2010',
     transparent: 'true',
     format: 'image/png',
@@ -509,7 +509,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_4KANTEN500M_INWONERS2012: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 500m - Inwoners 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cbsvierkanten500m/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten500m/wms',
     layers: 'inwoners_2012',
     transparent: 'true',
     format: 'image/png',
@@ -520,7 +520,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_4KANTEN500M_TOENAMEINWONERS2000TOT2010: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 500m - Toename inwoners 2000 - 2010 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cbsvierkanten500m/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten500m/wms',
     layers: 'toename_inwoners_2000_2010',
     transparent: 'true',
     format: 'image/png',
@@ -531,7 +531,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_ELEMENTEN: {
     layertype: 'WMS',
     name: 'Cultuurhistorische objecten - Elementen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cultgis/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cultgis/wms',
     layers: 'elementen',
     transparent: 'true',
     format: 'image/png',
@@ -542,7 +542,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_AANDACHTSGEBIEDEN: {
     layertype: 'WMS',
     name: 'Cultuurhistorische objecten - Aandachtsgebieden (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cultgis/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cultgis/wms',
     layers: 'aandachtsgebied',
     transparent: 'true',
     format: 'image/png',
@@ -553,7 +553,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_DEELLANDSCHAPPEN: {
     layertype: 'WMS',
     name: 'Cultuurhistorische objecten - Deellandschappen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cultgis/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cultgis/wms',
     layers: 'deellandschap',
     transparent: 'true',
     format: 'image/png',
@@ -564,7 +564,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_LANDSCHAPPEN: {
     layertype: 'WMS',
     name: 'Cultuurhistorische objecten - Landschappen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cultgis/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cultgis/wms',
     layers: 'landschap',
     transparent: 'true',
     format: 'image/png',
@@ -575,7 +575,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_REGIOS: {
     layertype: 'WMS',
     name: 'Cultuurhistorische objecten - Regio\'s (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/cultgis/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/cultgis/wms',
     layers: 'regios',
     transparent: 'true',
     format: 'image/png',
@@ -586,7 +586,7 @@ Pdok.Api.prototype.defaultLayers = {
   DTB_PUNTEN: {
     layertype: 'WMS',
     name: 'Digitaal Topografisch Bestand (DTB) - Punten (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/digitaaltopografischbestand/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/digitaaltopografischbestand/wms',
     layers: 'punten',
     transparent: 'true',
     format: 'image/png',
@@ -597,7 +597,7 @@ Pdok.Api.prototype.defaultLayers = {
   DTB_LIJNEN: {
     layertype: 'WMS',
     name: 'Digitaal Topografisch Bestand (DTB) - Lijnen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/digitaaltopografischbestand/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/digitaaltopografischbestand/wms',
     layers: 'lijnen',
     transparent: 'true',
     format: 'image/png',
@@ -608,7 +608,7 @@ Pdok.Api.prototype.defaultLayers = {
   DTB_VLAKKEN: {
     layertype: 'WMS',
     name: 'Digitaal Topografisch Bestand (DTB) - Vlakken (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/digitaaltopografischbestand/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/digitaaltopografischbestand/wms',
     layers: 'vlakken',
     transparent: 'true',
     format: 'image/png',
@@ -619,7 +619,7 @@ Pdok.Api.prototype.defaultLayers = {
   ECOTOPEN_CYCLUS_01: {
     layertype: 'WMS',
     name: 'Ecotopen Cyclus 1 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ecotopen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/ecotopen/wms',
     layers: 'cyclus_een',
     transparent: 'true',
     format: 'image/png',
@@ -630,7 +630,7 @@ Pdok.Api.prototype.defaultLayers = {
   ECOTOPEN_CYCLUS_02: {
     layertype: 'WMS',
     name: 'Ecotopen Cyclus 2 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ecotopen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/ecotopen/wms',
     layers: 'cyclus_twee',
     transparent: 'true',
     format: 'image/png',
@@ -641,7 +641,7 @@ Pdok.Api.prototype.defaultLayers = {
   ECOTOPEN_CYCLUS_03: {
     layertype: 'WMS',
     name: 'Ecotopen Cyclus 3 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/ecotopen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/ecotopen/wms',
     layers: 'cyclus_drie',
     transparent: 'true',
     format: 'image/png',
@@ -652,7 +652,7 @@ Pdok.Api.prototype.defaultLayers = {
   FYSISCH_GEOGRAFISCHE_REGIOS: {
     layertype: 'WMS',
     name: 'Fysisch Geografische Regios (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/fysischgeografischeregios/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/fysischgeografischeregios/wms',
     layers: 'fysischgeografischeregios',
     transparent: 'true',
     format: 'image/png',
@@ -663,7 +663,7 @@ Pdok.Api.prototype.defaultLayers = {
   GELUIDSKAARTEN_ETMAAL: {
     layertype: 'WMS',
     name: 'Geluidskaarten etmaal (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/rwsgeluidskaarten/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rwsgeluidskaarten/wms',
     layers: 'geluidskaartenetmaal',
     transparent: 'true',
     format: 'image/png',
@@ -674,7 +674,7 @@ Pdok.Api.prototype.defaultLayers = {
   GELUIDSKAARTEN_NACHT: {
     layertype: 'WMS',
     name: 'Geluidskaarten nacht (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/rwsgeluidskaarten/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rwsgeluidskaarten/wms',
     layers: 'geluidskaartennacht',
     transparent: 'true',
     format: 'image/png',
@@ -685,7 +685,7 @@ Pdok.Api.prototype.defaultLayers = {
   GELUIDSKAARTEN_ETMAAL_2006: {
     layertype: 'WMS',
     name: 'Geluidskaarten etmaal 2006 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/rwsgeluidskaarten/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rwsgeluidskaarten/wms',
     layers: 'geluidskaartenetmaal2006',
     transparent: 'true',
     format: 'image/png',
@@ -696,7 +696,7 @@ Pdok.Api.prototype.defaultLayers = {
   GELUIDSKAARTEN_NACHT_2006: {
     layertype: 'WMS',
     name: 'Geluidskaarten nacht 2006 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/rwsgeluidskaarten/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rwsgeluidskaarten/wms',
     layers: 'geluidskaartennacht2006',
     transparent: 'true',
     format: 'image/png',
@@ -707,7 +707,7 @@ Pdok.Api.prototype.defaultLayers = {
   INSPIRE_ADRESSEN: {
     layertype: 'WMS',
     name: 'Adressen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/inspireadressen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/inspireadressen/wms',
     layers: 'inspireadressen',
     transparent: 'true',
     format: 'image/png',
@@ -718,7 +718,7 @@ Pdok.Api.prototype.defaultLayers = {
   KNOOPPUNTEN: {
     layertype: 'WMS',
     name: 'Fietsknooppuntnetwerken (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/wms',
     layers: 'netwerken,knooppunten',
     transparent: 'true',
     format: 'image/png',
@@ -729,7 +729,7 @@ Pdok.Api.prototype.defaultLayers = {
   LAWROUTES: {
     layertype: 'WMS',
     name: 'Lange-afstandswandelroutes (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/lawroutes/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/lawroutes/wms',
     layers: 'lawroutes',
     transparent: 'true',
     format: 'image/png',
@@ -740,7 +740,7 @@ Pdok.Api.prototype.defaultLayers = {
   LFROUTES: {
     layertype: 'WMS',
     name: 'Landelijke Fietsroutes (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/lfroutes/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/lfroutes/wms',
     layers: 'lfroutes',
     transparent: 'true',
     format: 'image/png',
@@ -751,11 +751,11 @@ Pdok.Api.prototype.defaultLayers = {
   LUFO: {
     layertype: 'WMTS',
     name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
-    url: 'http://geodata1.nationaalgeoregister.nl/luchtfoto/wmts?',
+    url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts?',
     version: "1.3.0",
-    layer: 'luchtfoto',
+    layer: 'Actueel_ortho25',
     style: '',
-    matrixSet: 'nltilingschema',
+    matrixSet: 'EPSG:28992',
     visibility: true,
     isBaseLayer: true,
     format: 'image/jpeg',
@@ -765,7 +765,7 @@ Pdok.Api.prototype.defaultLayers = {
   MOSSELENOESTERHABITATS: {
     layertype: 'WMS',
     name: 'Mossel en Oester habitats (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/mosselenoesterhabitats/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/mosselenoesterhabitats/wms',
     layers: 'mosselenoesterhabitats',
     transparent: 'true',
     format: 'image/png',
@@ -776,7 +776,7 @@ Pdok.Api.prototype.defaultLayers = {
   MOSSELZAADINVANGINSTALLATIES: {
     layertype: 'WMS',
     name: 'Mosselzaad invanginstallaties (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/mosselzaadinvanginstallaties/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/mosselzaadinvanginstallaties/wms',
     layers: 'mosselzaadinvanginstallaties',
     transparent: 'true',
     format: 'image/png',
@@ -787,7 +787,7 @@ Pdok.Api.prototype.defaultLayers = {
   NATIONALE_PARKEN: {
     layertype: 'WMS',
     name: 'Nationale parken (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nationaleparken/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/nationaleparken/wms',
     layers: 'nationaleparken',
     transparent: 'true',
     format: 'image/png',
@@ -798,7 +798,7 @@ Pdok.Api.prototype.defaultLayers = {
   NATURA2000: {
     layertype: 'WMTS',
     name: 'Natura 2000 (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/natura2000?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/natura2000?',
     layer: 'natura2000',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -808,7 +808,7 @@ Pdok.Api.prototype.defaultLayers = {
   NATURA2000_WMS: {
     layertype: 'WMS',
     name: 'Natura 2000 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/natura2000/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/natura2000/wms?',
     layers: 'natura2000',
     transparent: 'true',
     format: 'image/png',
@@ -819,7 +819,7 @@ Pdok.Api.prototype.defaultLayers = {
   NHI_DM_Links: {
     layertype: 'WMS',
     name: 'Nationaal Hydrologisch Instrumentarium (NHI) - DM Links (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nhi/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/nhi/wms',
     layers: 'dmlinks',
     transparent: 'true',
     format: 'image/png',
@@ -830,7 +830,7 @@ Pdok.Api.prototype.defaultLayers = {
   NHI_DM_NODES: {
     layertype: 'WMS',
     name: 'Nationaal Hydrologisch Instrumentarium (NHI) - DM Nodes (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nhi/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/nhi/wms',
     layers: 'dmnodes',
     transparent: 'true',
     format: 'image/png',
@@ -841,7 +841,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2011: {
     layertype: 'WMTS',
     name: 'NOK2011 - Natuurmeting Op Kaart (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/nok2011',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/nok2011',
     layer: 'nok2011',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -851,7 +851,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2011_BEGRENZING_WMS: {
     layertype: 'WMS',
     name: 'NOK2011 - Begrenzing 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2011/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2011/wms?',
     layers: 'begrenzing',
     transparent: 'true',
     format: 'image/png',
@@ -862,7 +862,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2011_EHS_WMS: {
     layertype: 'WMS',
     name: 'NOK2011 - EHS 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2011/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2011/wms?',
     layers: 'planologischeehs',
     transparent: 'true',
     format: 'image/png',
@@ -873,7 +873,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2011_VERWERVINGINRICHTING_WMS: {
     layertype: 'WMS',
     name: 'NOK2011 - Verwerving inrichting 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2011/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2011/wms?',
     layers: 'verwervinginrichting',
     transparent: 'true',
     format: 'image/png',
@@ -884,7 +884,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2012_BEGRENZING_WMS: {
     layertype: 'WMS',
     name: 'NOK2012 - Begrenzing 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2012/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2012/wms?',
     layers: 'begrenzing',
     transparent: 'true',
     format: 'image/png',
@@ -895,7 +895,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2012_EHS_WMS: {
     layertype: 'WMS',
     name: 'NOK2012 - EHS 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2012/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2012/wms?',
     layers: 'planologischeehs',
     transparent: 'true',
     format: 'image/png',
@@ -906,7 +906,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2012_VERWERVINGINRICHTING_WMS: {
     layertype: 'WMS',
     name: 'NOK2012 - Verwerving inrichting 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2012/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2012/wms?',
     layers: 'verwervinginrichting',
     transparent: 'true',
     format: 'image/png',
@@ -917,7 +917,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2012_BEHEER_WMS: {
     layertype: 'WMS',
     name: 'NOK2012 - Beheer 2012 (WMS)',
-    url: 'http://test.geodata.nationaalgeoregister.nl/nok2012/wms?',
+    url: 'https://test.geodata.nationaalgeoregister.nl/nok2012/wms?',
     layers: 'beheer',
     transparent: 'true',
     format: 'image/png',
@@ -928,7 +928,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2013_BEGRENZING_WMS: {
     layertype: 'WMS',
     name: 'NOK2013 - Begrenzing 2013 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2013/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2013/wms?',
     layers: 'begrenzing',
     transparent: 'true',
     format: 'image/png',
@@ -939,7 +939,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2013_EHS_WMS: {
     layertype: 'WMS',
     name: 'NOK2013 - EHS 2013 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2013/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2013/wms?',
     layers: 'planologischeehs',
     transparent: 'true',
     format: 'image/png',
@@ -950,7 +950,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2013_VERWERVINGINRICHTING_WMS: {
     layertype: 'WMS',
     name: 'NOK2013 - Verwerving inrichting 2013 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2013/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2013/wms?',
     layers: 'verwervinginrichting',
     transparent: 'true',
     format: 'image/png',
@@ -961,7 +961,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2013_BEHEER_WMS: {
     layertype: 'WMS',
     name: 'NOK2013 - Beheer 2013 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2013/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2013/wms?',
     layers: 'beheer',
     transparent: 'true',
     format: 'image/png',
@@ -972,7 +972,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2014_BEGRENZING_WMS: {
     layertype: 'WMS',
     name: 'NOK2014 - Begrenzing 2014 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2014/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2014/wms?',
     layers: 'begrenzing',
     transparent: 'true',
     format: 'image/png',
@@ -983,7 +983,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2014_EHS_WMS: {
     layertype: 'WMS',
     name: 'NOK2014 - EHS 2014 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2014/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2014/wms?',
     layers: 'planologischeehs',
     transparent: 'true',
     format: 'image/png',
@@ -994,7 +994,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2014_VERWERVINGINRICHTING_WMS: {
     layertype: 'WMS',
     name: 'NOK2014 - Verwerving inrichting 2014 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2014/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2014/wms?',
     layers: 'verwervinginrichting',
     transparent: 'true',
     format: 'image/png',
@@ -1005,7 +1005,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2014_BEHEER_WMS: {
     layertype: 'WMS',
     name: 'NOK2014 - Beheer 2014 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nok2014/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/nok2014/wms?',
     layers: 'beheer',
     transparent: 'true',
     format: 'image/png',
@@ -1016,7 +1016,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOORD_KABELS_WMS: {
     layertype: 'WMS',
     name: 'Noordzee Kabels (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/noordzeekabelsenleidingen/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/noordzeekabelsenleidingen/wms?',
     layers: 'kabels',
     transparent: 'true',
     format: 'image/png',
@@ -1027,7 +1027,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOORD_LEID_WMS: {
     layertype: 'WMS',
     name: 'Noordzee Leidingen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/noordzeekabelsenleidingen/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/noordzeekabelsenleidingen/wms?',
     layers: 'leidingen',
     transparent: 'true',
     format: 'image/png',
@@ -1038,7 +1038,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOORD_WIN_WMS: {
     layertype: 'WMS',
     name: 'Noordzee Wingebieden (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/noordzeewingebieden/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/noordzeewingebieden/wms?',
     layers: 'noordzeewingebieden',
     transparent: 'true',
     format: 'image/png',
@@ -1049,7 +1049,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOORD_VAARDRIJVEND_WMS: {
     layertype: 'WMS',
     name: 'Noordzee Vaarwegmarkeringen Drijvend (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/noordzeevaarwegmarkeringenrd/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/noordzeevaarwegmarkeringenrd/wms?',
     layers: 'markdrijvendrd',
     transparent: 'true',
     format: 'image/png',
@@ -1060,7 +1060,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOORD_VAARVAST_WMS: {
     layertype: 'WMS',
     name: 'Noordzee Vaarwegmarkeringen Vast (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/noordzeevaarwegmarkeringenrd/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/noordzeevaarwegmarkeringenrd/wms?',
     layers: 'markvastrd',
     transparent: 'true',
     format: 'image/png',
@@ -1071,7 +1071,7 @@ Pdok.Api.prototype.defaultLayers = {
   NWB_SPOORWEGEN: {
     layertype: 'WMS',
     name: 'NWB Spoorwegen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nwbspoorwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/nwbspoorwegen/wms',
     layers: 'hectopunten,overgangen,oversteken,spoorvakken,treinstations',
     transparent: 'true',
     format: 'image/png',
@@ -1082,7 +1082,7 @@ Pdok.Api.prototype.defaultLayers = {
   NWB_VAARWEGEN: {
     layertype: 'WMS',
     name: 'NWB Vaarwegen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nwbvaarwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/nwbvaarwegen/wms',
     layers: 'vaarwegvakken,kmmarkeringen',
     transparent: 'true',
     format: 'image/png',
@@ -1093,7 +1093,7 @@ Pdok.Api.prototype.defaultLayers = {
   NWB_WEGEN: {
     layertype: 'WMS',
     name: 'NWB Wegen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/nwbwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/nwbwegen/wms',
     layers: 'wegvakken,hectopunten',
     transparent: 'true',
     format: 'image/png',
@@ -1104,7 +1104,7 @@ Pdok.Api.prototype.defaultLayers = {
   OVERHEIDSDIENSTEN: {
     layertype: 'WMS',
     name: 'Administratieve en sociale overheidsdiensten (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/overheidsdiensten/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/overheidsdiensten/wms',
     layers: 'overheidsdiensten',
     transparent: 'true',
     format: 'image/png',
@@ -1115,7 +1115,7 @@ Pdok.Api.prototype.defaultLayers = {
   PUBLIEKRECHTELIJKEBEPERKING: {
     layertype: 'WMS',
     name: 'Publiekrechtelijke Beperking (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/publiekrechtelijkebeperking/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/publiekrechtelijkebeperking/wms',
     layers: 'wetbodembescherming',
     transparent: 'true',
     format: 'image/png',
@@ -1126,7 +1126,7 @@ Pdok.Api.prototype.defaultLayers = {
   RD_INFO_STATIONS: {
     layertype: 'WMS',
     name: 'RD Info Stations (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/rdinfo/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rdinfo/wms',
     layers: 'stations',
     transparent: 'true',
     format: 'image/png',
@@ -1137,7 +1137,7 @@ Pdok.Api.prototype.defaultLayers = {
   RD_INFO_PUNTEN: {
     layertype: 'WMS',
     name: 'RD Info Punten (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/rdinfo/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rdinfo/wms',
     layers: 'punten',
     transparent: 'true',
     format: 'image/png',
@@ -1148,7 +1148,7 @@ Pdok.Api.prototype.defaultLayers = {
   RWSOPPERVLAKTEWATERLICHAMEN_VLAKKEN: {
     layertype: 'WMS',
     name: 'RWS Oppervlaktewaterlichamen - vlakken (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/rwsoppervlaktewaterlichamen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rwsoppervlaktewaterlichamen/wms',
     layers: 'vlakken',
     transparent: 'true',
     format: 'image/png',
@@ -1159,7 +1159,7 @@ Pdok.Api.prototype.defaultLayers = {
   RWSOPPERVLAKTEWATERLICHAMEN_LIJNEN: {
     layertype: 'WMS',
     name: 'RWS Oppervlaktewaterlichamen - lijnen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/rwsoppervlaktewaterlichamen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rwsoppervlaktewaterlichamen/wms',
     layers: 'lijnen',
     transparent: 'true',
     format: 'image/png',
@@ -1170,7 +1170,7 @@ Pdok.Api.prototype.defaultLayers = {
   SCHELPDIERENPERCELEN: {
     layertype: 'WMS',
     name: 'Schelpdieren Percelen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/schelpdierenpercelen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/schelpdierenpercelen/wms',
     layers: 'schelpdierenpercelen',
     transparent: 'true',
     format: 'image/png',
@@ -1181,7 +1181,7 @@ Pdok.Api.prototype.defaultLayers = {
   SCHELPDIERWATER: {
     layertype: 'WMS',
     name: 'Schelpdierwater (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/schelpdierwater/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/schelpdierwater/wms',
     layers: 'schelpdierwater',
     transparent: 'true',
     format: 'image/png',
@@ -1192,7 +1192,7 @@ Pdok.Api.prototype.defaultLayers = {
   STREEKPADEN: {
     layertype: 'WMS',
     name: 'Nationale Streekpaden (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/streekpaden/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/streekpaden/wms',
     layers: 'streekpaden',
     transparent: 'true',
     format: 'image/png',
@@ -1203,7 +1203,7 @@ Pdok.Api.prototype.defaultLayers = {
   SPOORWEGEN_TRACE: {
     layertype: 'WMS',
     name: 'Spoorwegen trace (spoorbaanhartlijn) (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms',
     layers: 'trace',
     transparent: 'true',
     format: 'image/png',
@@ -1214,7 +1214,7 @@ Pdok.Api.prototype.defaultLayers = {
   SPOORWEGEN_KILOMETRERING: {
     layertype: 'WMS',
     name: 'Spoorwegen kilometrering (spoorbaanhartpunt) (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms',
     layers: 'kilometrering',
     transparent: 'true',
     format: 'image/png',
@@ -1225,7 +1225,7 @@ Pdok.Api.prototype.defaultLayers = {
   SPOORWEGEN_SPOORAS: {
     layertype: 'WMS',
     name: 'Spoorwegen spooras (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms',
     layers: 'spooras',
     transparent: 'true',
     format: 'image/png',
@@ -1236,7 +1236,7 @@ Pdok.Api.prototype.defaultLayers = {
   SPOORWEGEN_WISSEL: {
     layertype: 'WMS',
     name: 'Spoorwegen wissel (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms',
     layers: 'wissel',
     transparent: 'true',
     format: 'image/png',
@@ -1247,7 +1247,7 @@ Pdok.Api.prototype.defaultLayers = {
   SPOORWEGEN_KRUISING: {
     layertype: 'WMS',
     name: 'Spoorwegen kruising (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms',
     layers: 'kruising',
     transparent: 'true',
     format: 'image/png',
@@ -1258,7 +1258,7 @@ Pdok.Api.prototype.defaultLayers = {
   SPOORWEGEN_STATION: {
     layertype: 'WMS',
     name: 'Spoorwegen station (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms',
     layers: 'station',
     transparent: 'true',
     format: 'image/png',
@@ -1269,7 +1269,7 @@ Pdok.Api.prototype.defaultLayers = {
   SPOORWEGEN_OVERWEG: {
     layertype: 'WMS',
     name: 'Spoorwegen overweg (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/spoorwegen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms',
     layers: 'overweg',
     transparent: 'true',
     format: 'image/png',
@@ -1280,7 +1280,7 @@ Pdok.Api.prototype.defaultLayers = {
   STORTENLOSWALLEN_VAK: {
     layertype: 'WMS',
     name: 'Sort en Loswallen - vakindeling (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/stortenloswallen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/stortenloswallen/wms',
     layers: 'stortenloswalvakindeling',
     transparent: 'true',
     format: 'image/png',
@@ -1291,7 +1291,7 @@ Pdok.Api.prototype.defaultLayers = {
   STORTENLOSWALLEN: {
     layertype: 'WMS',
     name: 'Sort en Loswallen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/stortenloswallen/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/stortenloswallen/wms',
     layers: 'stortloswal',
     transparent: 'true',
     format: 'image/png',
@@ -1302,7 +1302,7 @@ Pdok.Api.prototype.defaultLayers = {
   TOP10NL: {
     layertype: 'WMTS',
     name: 'TOP10 NL (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/top10nl?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top10nl?',
     layer: 'top10nl',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1313,7 +1313,7 @@ Pdok.Api.prototype.defaultLayers = {
   TOP250RASTER: {
     layertype: 'WMTS',
     name: 'TOP250NL Raster (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50raster?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50raster?',
     layer: 'top250raster',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1324,7 +1324,7 @@ Pdok.Api.prototype.defaultLayers = {
   TOP25RASTER: {
     layertype: 'WMTS',
     name: 'TOP25NL Raster (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/top25raster?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top25raster?',
     layer: 'top25raster',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1335,7 +1335,7 @@ Pdok.Api.prototype.defaultLayers = {
   TOP50RASTER: {
     layertype: 'WMTS',
     name: 'TOP50NL Raster (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50raster?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50raster?',
     layer: 'top50raster',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1346,7 +1346,7 @@ Pdok.Api.prototype.defaultLayers = {
   TOP50VECTOR: {
     layertype: 'WMTS',
     name: 'TOP50NL Vector (WMTS)',
-    url: 'http://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50vector?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50vector?',
     layer: 'top50vector',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1357,7 +1357,7 @@ Pdok.Api.prototype.defaultLayers = {
   VERKEERSSCHEIDINGSSTELSEL_ANKERGEBIEDEN: {
     layertype: 'WMS',
     name: 'Verkeersscheidingsstelsel - Ankergebieden (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
     layers: 'ankergebieden',
     transparent: 'true',
     format: 'image/png',
@@ -1368,7 +1368,7 @@ Pdok.Api.prototype.defaultLayers = {
   VERKEERSSCHEIDINGSSTELSEL_BEGRENZING: {
     layertype: 'WMS',
     name: 'Verkeersscheidingsstelsel - Begrenzing (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
     layers: 'begrenzing',
     transparent: 'true',
     format: 'image/png',
@@ -1379,7 +1379,7 @@ Pdok.Api.prototype.defaultLayers = {
   VERKEERSSCHEIDINGSSTELSEL_SEPERATIEZONES: {
     layertype: 'WMS',
     name: 'Verkeersscheidingsstelsel - Seperatiezones (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
     layers: 'seperatiezones',
     transparent: 'true',
     format: 'image/png',
@@ -1390,7 +1390,7 @@ Pdok.Api.prototype.defaultLayers = {
   VERKEERSSCHEIDINGSSTELSEL_KILOMETRERINGLABELS: {
     layertype: 'WMS',
     name: 'Verkeersscheidingsstelsel - Kilometreringlabels (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
     layers: 'kilometreringlabels',
     transparent: 'true',
     format: 'image/png',
@@ -1401,7 +1401,7 @@ Pdok.Api.prototype.defaultLayers = {
   VERKEERSSCHEIDINGSSTELSEL_VAARGEULENPERTYPEENTITEIT: {
     layertype: 'WMS',
     name: 'Verkeersscheidingsstelsel - Vaargeulen per type entiteit (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/verkeersscheidingsstelsel/wms',
     layers: 'vaargeulenpertypeentiteit',
     transparent: 'true',
     format: 'image/png',
@@ -1412,7 +1412,7 @@ Pdok.Api.prototype.defaultLayers = {
   VIN_BEVAARBAARHEID: {
     layertype: 'WMS',
     name: 'Vaarkenmerken in Nederland (VIN) - Bevaarbaarheid (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/vin/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/vin/wms',
     layers: 'bevaarbaarheid',
     transparent: 'true',
     format: 'image/png',
@@ -1423,7 +1423,7 @@ Pdok.Api.prototype.defaultLayers = {
   WEGGEGEVENS_RIJBANEN: {
     layertype: 'WMS',
     name: 'Weggegevens - aantal rijbanen (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/weggeg/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/weggeg/wms',
     layers: 'weggegaantalrijbanen',
     transparent: 'true',
     format: 'image/png',
@@ -1434,7 +1434,7 @@ Pdok.Api.prototype.defaultLayers = {
   WEGGEGEVENS_MAXSNELHEID: {
     layertype: 'WMS',
     name: 'Weggegevens - maximum snelheid (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/weggeg/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/weggeg/wms',
     layers: 'weggegmaximumsnelheden',
     transparent: 'true',
     format: 'image/png',
@@ -1445,7 +1445,7 @@ Pdok.Api.prototype.defaultLayers = {
   WETLANDS: {
     layertype: 'WMS',
     name: 'Wetlands (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wetlands/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wetlands/wms?',
     layers: 'wetlands',
     transparent: 'true',
     format: 'image/png',
@@ -1456,7 +1456,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSBUURTEN2014: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2014 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
     layers: 'cbs_buurten_2014',
     transparent: 'true',
     format: 'image/png',
@@ -1467,7 +1467,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSWIJKEN2014: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Wijken 2014 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
     layers: 'cbs_wijken_2014',
     transparent: 'true',
     format: 'image/png',
@@ -1478,7 +1478,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSGEMEENTEN2014: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Gemeenten 2014 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2014/wms?',
     layers: 'gemeenten2014',
     transparent: 'true',
     format: 'image/png',
@@ -1489,7 +1489,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSBUURTEN2013: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2013 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
     layers: 'cbs_buurten_2013',
     transparent: 'true',
     format: 'image/png',
@@ -1500,7 +1500,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSWIJKEN2013: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Wijken 2013 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
     layers: 'cbs_wijken_2013',
     transparent: 'true',
     format: 'image/png',
@@ -1511,7 +1511,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSGEMEENTEN2013: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Gemeenten 2013 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2013/wms?',
     layers: 'gemeenten2013',
     transparent: 'true',
     format: 'image/png',
@@ -1522,7 +1522,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSBUURTEN2012: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2012/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2012/wms?',
     layers: 'cbs_buurten_2012',
     transparent: 'true',
     format: 'image/png',
@@ -1533,7 +1533,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSWIJKEN2012: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Wijken 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2012/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2012/wms?',
     layers: 'cbs_wijken_2012',
     transparent: 'true',
     format: 'image/png',
@@ -1544,7 +1544,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSGEMEENTEN2012: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Gemeenten 2012 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2012/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2012/wms?',
     layers: 'gemeenten2012',
     transparent: 'true',
     format: 'image/png',
@@ -1555,7 +1555,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSBUURTEN2011: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2011/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2011/wms?',
     layers: 'cbs_buurten_2011',
     transparent: 'true',
     format: 'image/png',
@@ -1566,7 +1566,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSWIJKEN2011: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Wijken 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2011/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2011/wms?',
     layers: 'cbs_wijken_2011',
     transparent: 'true',
     format: 'image/png',
@@ -1577,7 +1577,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSGEMEENTEN2011: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Gemeenten 2011 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2011/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2011/wms?',
     layers: 'gemeenten2011',
     transparent: 'true',
     format: 'image/png',
@@ -1588,7 +1588,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSBUURTEN2010: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2010 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2010/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2010/wms?',
     layers: 'cbs_buurten_2010',
     transparent: 'true',
     format: 'image/png',
@@ -1599,7 +1599,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSWIJKEN2010: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Wijken 2010 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2010/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2010/wms?',
     layers: 'cbs_wijken_2010',
     transparent: 'true',
     format: 'image/png',
@@ -1610,7 +1610,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSGEMEENTEN2010: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Gemeenten 2010 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2010/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2010/wms?',
     layers: 'gemeenten2010',
     transparent: 'true',
     format: 'image/png',
@@ -1621,7 +1621,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSBUURTEN2009: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2009 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2009/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2009/wms?',
     layers: 'cbs_buurten_2009',
     transparent: 'true',
     format: 'image/png',
@@ -1632,7 +1632,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSWIJKEN2009: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Wijken 2009 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2009/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2009/wms?',
     layers: 'cbs_wijken_2009',
     transparent: 'true',
     format: 'image/png',
@@ -1643,7 +1643,7 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_WIJKENENBUURTEN_CBSGEMEENTEN2009: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Gemeenten 2009 (WMS)',
-    url: 'http://geodata.nationaalgeoregister.nl/wijkenbuurten2009/wms?',
+    url: 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2009/wms?',
     layers: 'gemeenten2009',
     transparent: 'true',
     format: 'image/png',
