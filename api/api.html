@@ -23,8 +23,10 @@
                 config_vialink.mapdiv = 'map_vialink';
             }
             var api_vialink;
+            var pdok_kaart_api;
             Pdok.ready(function() {
                 api_vialink = new Pdok.Api(config_vialink);
+                pdok_kaart_api = api_vialink;
             });
         </script>
         <div id="map_vialink" class="fullscreen olMap"></div>

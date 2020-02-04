@@ -17,7 +17,7 @@ Pdok.Api.prototype.defaultLayers = {
   AAN: {
     layertype: 'WMTS',
     name: 'AAN - Agrarisch Areaal Nederland (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/',
     layer: 'aan',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -27,7 +27,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_100M: {
     layertype: 'WMTS',
     name: 'AHN1 - Actueel Hoogtebestand NL 100 meter (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'ahn1_100m',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -37,7 +37,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_25M: {
     layertype: 'WMTS',
     name: 'AHN1 - Actueel Hoogtebestand NL 25 meter (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'ahn1_25m',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -47,7 +47,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN1_5M: {
     layertype: 'WMTS',
     name: 'AHN1 - Actueel Hoogtebestand NL 5 meter (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn1?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'ahn1_5m',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -101,7 +101,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN2_5M: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 5 meter (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'ahn2_5m',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -111,7 +111,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN2_05M_INT: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter geinterpoleerd (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'ahn2_05m_int',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -121,7 +121,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN2_05M_NON: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter niet geinterpoleerd (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'ahn2_05m_non',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -131,7 +131,7 @@ Pdok.Api.prototype.defaultLayers = {
   AHN2_05M_RUW: {
     layertype: 'WMTS',
     name: 'AHN2 - Actueel Hoogtebestand NL 0.5 meter ruw (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/ahn2?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'ahn2_05m_ruw',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -141,7 +141,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG: {
     layertype: 'WMTS',
     name: 'BAG - Basisadministratie Adressen en Gebouwen (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/bag?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'bag',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -305,8 +305,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_ACHTERGROND_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Achtergrond (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tms/',
-    layername: 'bgtachtergrond',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
+    layername: 'bgtachtergrond/EPSG:28992',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -315,8 +315,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_LIJNGERICHT_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Lijngericht (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tms/',
-    layername: 'bgtlijngericht',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
+    layername: 'bgtlijngericht/EPSG:28992',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -325,8 +325,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_OMTREKGERICHT_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Omtrekgericht (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tms/',
-    layername: 'bgtomtrekgericht',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
+    layername: 'bgtomtrekgericht/EPSG:28992',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -335,13 +335,23 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_STANDAARD_TMS: {
     layertype: 'TMS',
     name: 'Basisregistratie Grootschalige Topografie Standaard (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tms/',
-    layername: 'bgtstandaard',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
+    layername: 'bgtstandaard/EPSG:28992',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
     isBaseLayer: false
-  },   
+  },
+  BGT_PASTEL_TMS: {
+    layertype: 'TMS',
+    name: 'Basisregistratie Grootschalige Topografie Pastel (TMS)',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
+    layername: 'bgtpastel/EPSG:28992',
+    style: null,
+    matrixSet: 'EPSG:28992',
+    visibility: true,
+    isBaseLayer: false
+  }, 
   BRP_LIGHT: {
     layertype: 'WMS',
     name: 'BRP-light - Gewaspercelen (WMS)',
@@ -356,46 +366,24 @@ Pdok.Api.prototype.defaultLayers = {
   BRT: {
     layertype: 'WMTS',
     name: 'BRT Achtergrondkaart (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'brtachtergrondkaart',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
     isBaseLayer: true,
-    attribution: '(c) OSM & Kadaster'
-  },
-  BRTTIJDELIJK: {
-    layertype: 'WMTS',
-    name: 'BRT Achtergrondkaart tijdelijk (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
-    layer: 'brtachtergrondkaarttijdelijk',
-    style: null,
-    matrixSet: 'EPSG:28992',
-    visibility: true,
-    isBaseLayer: true,
-    attribution: '(c) OSM & Kadaster'
-  },
-  BRTGRIJSTIJDELIJK: {
-    layertype: 'WMTS',
-    name: 'BRT Achtergrondkaart Grijs tijdelijk (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
-    layer: 'brtachtergrondkaartgrijstijdelijk',
-    style: null,
-    matrixSet: 'EPSG:28992',
-    visibility: true,
-    isBaseLayer: true,
-    attribution: '(c) OSM & Kadaster'
+    attribution: '&copy; CC BY Kadaster'
   },
   BRTPASTEL: {
     layertype: 'WMTS',
     name: 'BRT Achtergrondkaart Pastel (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/wmts/',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'brtachtergrondkaartpastel',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
     isBaseLayer: true,
-    attribution: '(c) OSM & Kadaster'
+    attribution: '&copy; CC BY Kadaster'
   },
   CBS_KERNEN_NAMEN: {
     layertype: 'WMS',
@@ -429,7 +417,8 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false,
     singleTile: true
-  },  CBS_GEMEENTEN: {
+  },  
+  CBS_GEMEENTEN: {
     layertype: 'WMS',
     name: 'CBS Gemeentegrenzen 2008 (WMS)',
     url: 'https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms',
@@ -462,11 +451,33 @@ Pdok.Api.prototype.defaultLayers = {
     isBaseLayer: false,
     singleTile: true
   },
+  CBS_4KANTEN100M_INWONERS2014: {
+    layertype: 'WMS',
+    name: 'CBS Vierkanten 100m - Inwoners 2014 (WMS)',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100mv2/wms',
+    layers: 'vierkant100m2014',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
+  CBS_4KANTEN100M_INWONERS2013: {
+    layertype: 'WMS',
+    name: 'CBS Vierkanten 100m - Inwoners 2013 (WMS)',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100mv2/wms',
+    layers: 'vierkant100m2013',
+    transparent: 'true',
+    format: 'image/png',
+    visibility: true,
+    isBaseLayer: false,
+    singleTile: true
+  },
   CBS_4KANTEN100M_INWONERS2012: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 100m - Inwoners 2012 (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
-    layers: 'inwoners_2012',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100mv2/wms',
+    layers: 'vierkant100m2012',
     transparent: 'true',
     format: 'image/png',
     visibility: true,
@@ -476,30 +487,30 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_4KANTEN100M_INWONERS2011: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 100m - Inwoners 2011 (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
-    layers: 'inwoners_2011',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100mv2/wms',
+    layers: 'vierkant100m2011',
     transparent: 'true',
     format: 'image/png',
     visibility: true,
     isBaseLayer: false,
     singleTile: true
   },
-  CBS_4KANTEN100M_WONINGEN2011: {
+  CBS_4KANTEN500M_INWONERS2014: {
     layertype: 'WMS',
-    name: 'CBS Vierkanten 100m - Woningen 2011 (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
-    layers: 'woningen_2011',
+    name: 'CBS Vierkanten 500m - Inwoners 2014 (WMS)',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms',
+    layers: 'vierkant500m2014',
     transparent: 'true',
     format: 'image/png',
     visibility: true,
     isBaseLayer: false,
     singleTile: true
   },
-  CBS_4KANTEN100M_TOENAMEINWONERS2000TOT2010: {
+  CBS_4KANTEN500M_INWONERS2013: {
     layertype: 'WMS',
-    name: 'CBS Vierkanten 100m - Toename inwoners 2000 - 2010 (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten100m/wms',
-    layers: 'toename_inwoners_2000_2010',
+    name: 'CBS Vierkanten 500m - Inwoners 2013 (WMS)',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms',
+    layers: 'vierkant500m2013',
     transparent: 'true',
     format: 'image/png',
     visibility: true,
@@ -509,19 +520,19 @@ Pdok.Api.prototype.defaultLayers = {
   CBS_4KANTEN500M_INWONERS2012: {
     layertype: 'WMS',
     name: 'CBS Vierkanten 500m - Inwoners 2012 (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten500m/wms',
-    layers: 'inwoners_2012',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms',
+    layers: 'vierkant500m2012',
     transparent: 'true',
     format: 'image/png',
     visibility: true,
     isBaseLayer: false,
     singleTile: true
   },
-  CBS_4KANTEN500M_TOENAMEINWONERS2000TOT2010: {
+  CBS_4KANTEN500M_INWONERS2011: {
     layertype: 'WMS',
-    name: 'CBS Vierkanten 500m - Toename inwoners 2000 - 2010 (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten500m/wms',
-    layers: 'toename_inwoners_2000_2010',
+    name: 'CBS Vierkanten 500m - Inwoners 2011 (WMS)',
+    url: 'https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms',
+    layers: 'vierkant500m2011',
     transparent: 'true',
     format: 'image/png',
     visibility: true,
@@ -759,7 +770,7 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: true,
     format: 'image/jpeg',
-    attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">(c) CC-BY-NC</a>',
+    attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">&copy; CC-BY-NC</a>',
     zoomOffset: 2
   },
   MOSSELENOESTERHABITATS: {
@@ -798,7 +809,7 @@ Pdok.Api.prototype.defaultLayers = {
   NATURA2000: {
     layertype: 'WMTS',
     name: 'Natura 2000 (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/natura2000?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'natura2000',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -841,7 +852,7 @@ Pdok.Api.prototype.defaultLayers = {
   NOK2011: {
     layertype: 'WMTS',
     name: 'NOK2011 - Natuurmeting Op Kaart (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/nok2011',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'nok2011',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1302,8 +1313,8 @@ Pdok.Api.prototype.defaultLayers = {
   TOP10NL: {
     layertype: 'WMTS',
     name: 'TOP10 NL (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top10nl?',
-    layer: 'top10nl',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'top10nlv2',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -1313,7 +1324,7 @@ Pdok.Api.prototype.defaultLayers = {
   TOP250RASTER: {
     layertype: 'WMTS',
     name: 'TOP250NL Raster (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50raster?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'top250raster',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1324,7 +1335,7 @@ Pdok.Api.prototype.defaultLayers = {
   TOP25RASTER: {
     layertype: 'WMTS',
     name: 'TOP25NL Raster (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top25raster?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'top25raster',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1335,7 +1346,7 @@ Pdok.Api.prototype.defaultLayers = {
   TOP50RASTER: {
     layertype: 'WMTS',
     name: 'TOP50NL Raster (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50raster?',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
     layer: 'top50raster',
     style: null,
     matrixSet: 'EPSG:28992',
@@ -1346,8 +1357,8 @@ Pdok.Api.prototype.defaultLayers = {
   TOP50VECTOR: {
     layertype: 'WMTS',
     name: 'TOP50NL Vector (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top50vector?',
-    layer: 'top50vector',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'top50raster',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,

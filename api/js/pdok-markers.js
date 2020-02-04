@@ -306,6 +306,14 @@ Pdok.Api.prototype.defaultStyles=[
         graphicWidth: 32,
         graphicYOffset: -32
     },
+		{ 
+		id: 'mt36', 
+		name: 'Rijkslogo', 
+		externalGraphic: Pdok.ApiUrl + '/markertypes/rijksoverheid.png', 
+		graphicHeight: 32, 
+		graphicWidth: 32, 
+		graphicYOffset: -16 
+	}, 
     {
         id: 'mt36',
         name: 'Rijkslogo',

@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.2.2';
+Pdok.API_VERSION_NUMBER = '1.2.3';
 
 
 // CONFIGURATION
@@ -15,16 +15,21 @@ Pdok.API_VERSION_NUMBER = '1.2.2';
 // Using https:// results in cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
-Pdok.ApiUrl = window.location.protocol + '//kaart.pdok.nl/api';
-OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // kaart.pdok.nl
+//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
 //Pdok.ApiUrl = "http://demo-geoservices.rijkswaterstaat.nl/pdokkaart/api"; // demo url
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; // Rijkswaterstaat proxy
 
+var protocol = window.location.protocol;
+if (window.location.protocol == 'file:') {
+	protocol = 'https:'
+}
+
 // DEV
-//Pdok.ApiUrl = window.location.protocol + '//pdokserver/pdokkaart/api';
-//OpenLayers.ProxyHost = window.location.protocol + '//pdokserver/proxy?url=';
+Pdok.ApiUrl = protocol + '//kaart.pdok.nl/api';
+//OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy?url="; 
 
 /**
  * @class Pdok.Api
@@ -266,7 +271,6 @@ Pdok.Api = function(config, callback) {
      */
     this.mimg = Pdok.mimg;
 
-
     /**
      * Markertype property. You can set a mt (styletype) for your mloc. Eg 'mt3'
      * @type String
@@ -277,15 +281,13 @@ Pdok.Api = function(config, callback) {
      * If a popup should be used or not. Defaults to true
      * @type boolean
      */
-    this.showPopup = true;
-    this.showpopup = true;
+    this.showPopup = Pdok.showpopup || true;
 
     /**
      * If a popup hover should be used or not Defaults to false
      * @type boolean
      */
     this.hoverPopup = Pdok.hoverPopup || false;
-    this.hoverpopup = Pdok.hoverpopup || false;
 
     /**
      * Reference to popup titel, only used in case of the use of mloc
@@ -430,6 +432,7 @@ Pdok.Api = function(config, callback) {
      * @type URL
      */
     this.kmlurl = Pdok.kmlurl;
+	this.zoomtofeatures = Pdok.zoomtofeatures;
 
     /**
      * Property to determine if the internal styles of a KML file should be used for visualisation. 
@@ -470,6 +473,7 @@ Pdok.Api = function(config, callback) {
 
     // internal name of the features layer
     this.FEATURESLAYER_NAME = "Markers";
+    this.SEARCHFEATURESLAYER_NAME = "Zoek Markers";
     this.LOCATIONSLAYER_NAME = "locationtool";
 
     // this.features can come as KML string from config/params
@@ -481,6 +485,7 @@ Pdok.Api = function(config, callback) {
      * @type OpenLayers.Layer.Vector
      */
     this.featuresLayer = null;
+    this.searchFeaturesLayer = null;
 
     // References to different drawing controls we use for the edit tools
     this.drawFeaturePointControl = null;
@@ -599,7 +604,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
             matrixSet: 'EPSG:28992',
             visibility: true, 
             isBaseLayer: true,
-            attribution: '(c) OSM & Kadaster'
+            attribution: '&copy; CC BY Kadaster'
         },
         LUFO: {
                 layertype: 'WMTS',
@@ -614,7 +619,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
                 visibility: true,
                 isBaseLayer: true,
                 format: 'image/jpeg',
-                attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">(c) CC-BY-NC</a>',
+                attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">&copy; CC-BY-NC</a>',
                 zoomOffset: 2
         }
     };
@@ -871,12 +876,12 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // apply KMLURL if applicable
     if ((this.kmlurl)) {
-        this.addKML(this.kmlurl, this.kmlstyles);
+        this.addKML(this.kmlurl, this.kmlstyles, this.zoomtofeatures);
     }
 
     // apply TXTURL if applicable
     if (this.txturl) {
-        this.addTxt(this.txturl);
+        this.addTxt(this.txturl, this.zoomtofeatures);
     }
 
     // apply BBOX or zoomlevel and location
@@ -894,10 +899,15 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // featuresLayer is used for all features/markers
     this.featuresLayer = new OpenLayers.Layer.Vector(this.FEATURESLAYER_NAME);
+    this.searchFeaturesLayer = new OpenLayers.Layer.Vector(this.SEARCHFEATURESLAYER_NAME);
+    this.searchFeaturesLayer.displayInLayerSwitcher = false;
     // fix for the label ordering in labels+icons
     // http://comments.gmane.org/gmane.comp.gis.openlayers.devel.ol3/4156
     this.featuresLayer.renderer.textRoot = this.featuresLayer.renderer.vectorRoot;
+    this.searchFeaturesLayer.renderer.textRoot = this.searchFeaturesLayer.renderer.vectorRoot;
     olMap.addLayer(this.featuresLayer);
+    olMap.addLayer(this.searchFeaturesLayer);
+
 
     // locationLayer holds features for 'kaarprikker/locationtool'
     this.locationLayer = new OpenLayers.Layer.Vector('locationtool', {
@@ -978,7 +988,9 @@ Pdok.Api.prototype.createOlMap = function() {
             */
         }
     );
-    
+	if (typeof(this.selectControl.handlers) != "undefined") {
+		this.selectControl.handlers.feature.stopDown = false;
+	}
     
     // Add invisible mousePosition control to keep track of mouseposition for making popups appear where mouse has been
     // clicked, instead of at center of feature. Not needed if normal mousePosition control is available.
@@ -987,7 +999,7 @@ Pdok.Api.prototype.createOlMap = function() {
     }
     
     olMap.addControl(this.selectControl);
-    if ( (this.showPopup.toString().toLowerCase() === "false") || (this.showpopup.toString().toLowerCase() === "false") ){
+    if (this.showPopup.toString().toLowerCase() === "false") {
         this.showPopup = false;
     }
     if (this.showPopup) {
@@ -2190,8 +2202,11 @@ Pdok.Api.prototype.addFeaturesFromUrl = function(url, type, zoomToFeatures, pass
  * Shorthand to add KML features via a KML url (always zooming to the extent of the KML)
   * @param {type} url
  */
-Pdok.Api.prototype.addKML = function(url) {
-    this.addFeaturesFromUrl(url, 'KML', true, this);
+Pdok.Api.prototype.addKML = function(url, kmlstyles, zoomtofeatures) {
+	if (zoomtofeatures !== true && zoomtofeatures !== false) {
+		zoomtofeatures = true;
+	}
+    this.addFeaturesFromUrl(url, 'KML', zoomtofeatures, this);
 };
 
 //Wellicht moet dit een andere call worden omdat nu een combinatie van txturl en mloc niet goed gaat
@@ -2199,7 +2214,10 @@ Pdok.Api.prototype.addKML = function(url) {
  * Shorthand to add TXT features via a TXT url (always zooming to the extent of the TXT)
  * @param {string} url
  */
-Pdok.Api.prototype.addTxt = function(url) {
+Pdok.Api.prototype.addTxt = function(url, zoomtofeatures) {
+	if (zoomtofeatures !== true && zoomtofeatures !== false) {
+		zoomtofeatures = true;
+	}
     this.addFeaturesFromUrl(url, 'TXT', true, this);
 };
 
@@ -3164,6 +3182,7 @@ OpenLayers.Control.GeocoderControl =
         this.input_id = this.resultdiv_id + '_input';
         this.geozet_id = this.resultdiv_id + '_geozet';
         this.allowSelection = true;
+        this.api_id = options.div.offsetParent.id.split("_")[1];
 
         // deferred event delegation:
         // http://davidwalsh.name/event-delegate
@@ -3176,7 +3195,7 @@ OpenLayers.Control.GeocoderControl =
                 document.getElementById(me.input_id).value = '';
 
             } else if(target && target.nodeName === "A") {
-                me.resultClick(document.getElementById(target.id).attributes['id'].value);
+                me.resultClick(document.getElementById(target.id).attributes['id'].value, e);
                 return false;
             }
         };
@@ -3332,10 +3351,11 @@ OpenLayers.Control.GeocoderControl =
     showResults: function() {
         document.getElementById(this.resultdiv_id).style.display = 'block';
     },
-    resultClick: function(id) {
+    resultClick: function(id, event) {
         //console.log(id);
         // retrieve the id, and get full info from
         // https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=
+        event.preventDefault();
         lookupUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?';
         OpenLayers.Request.GET({
                 url: lookupUrl,
@@ -3361,6 +3381,21 @@ OpenLayers.Control.GeocoderControl =
 
     },
     handleLookupResponse: function(req){
+        let  currentApi = null;
+        // check for running in map editor or as map
+        if (typeof api !== 'undefined') {
+            currentApi = api;
+        }else {
+            // in case of multiple maps on page, prevent zoom to if map is not the clicked map
+            // however, multiple maps with multiple geocoders does not seem to work anyways...
+            if (this.map.div.id !== "map_" + this.api_id){
+                return false;
+            }
+            currentApi = window["api_" + this.api_id];
+        }
+        
+
+        currentApi.searchFeaturesLayer.removeAllFeatures();
         var format = new Pdok.Format.PdokLocatieServer();
         var lookup = format.read(req.responseText);
         // console.log(lookup);
@@ -3370,9 +3405,15 @@ OpenLayers.Control.GeocoderControl =
             var y = ft.geometry.y;
             var zoom = lookup.docs[0].type;
             var z = this.zoomScale[zoom];
+            
+            // Add marker to the map for the found location
+            var wkt = 'POINT('+x+' '+y+')';
+            weergavenaam = lookup.docs[0].weergavenaam;
+            this.mt = 'mt6';
+            currentApi.searchFeaturesLayer.features.push(currentApi.createFeature(wkt, this.mt, 'Adres', weergavenaam));
             this.map.setCenter(new OpenLayers.LonLat(x, y), z);
-            //OpenLayers.Map.prototype.setCenter(new OpenLayers.LonLat(x, y), z);
         }
+        currentApi.searchFeaturesLayer.redraw();
         return false;
     },
     CLASS_NAME: "OpenLayers.Control.GeocoderControl"

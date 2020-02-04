@@ -19,6 +19,27 @@
         <script type="text/javascript" src="api/js/pdok-api.js"></script>
         <script type="text/javascript" src="api/js/geozetlib.js"></script>
         <script type="text/javascript" src="js/wizard.js"></script>
+		<link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+		<link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="img/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="192x192" href="img/android-chrome-192x192.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+		<link rel="manifest" href="img/manifest.json">
+		<link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#f58520">
+		<meta name="apple-mobile-web-app-title" content="PDOK Kaartwizard">
+		<meta name="application-name" content="PDOK Kaartwizard">
+		<meta name="msapplication-TileColor" content="#f58520">
+		<meta name="msapplication-TileImage" content="img/mstile-144x144.png">
+		<meta name="theme-color" content="#f58520">
+		
         <!--
         NOT including this one, as they are included anyway when there is not a 'markersdef' or 'layersdef'
          query-parameter found. Including this one will (again) override the styles objects
@@ -28,17 +49,14 @@
             if (document.all && !document.querySelector) { // IE7 or lower
                 alert('U gebruikt Internet Explorer 7.\nDeze browser ondersteunt niet alle functionaliteit van de PDOK Wizard.\nWij raden U aan een nieuwere versie van Internet Explorer of een andere browser zoals Google Chrome, Mozilla FireFox of Apple Safari te gebruiken.');
             }
-            Pdok.addcss("../pdokkaart/api/styles/default/style.css");
-            Pdok.addcss("../pdokkaart/api/styles/api.css");
-            Pdok.ApiUrl = '../pdokkaart/api';
-            OpenLayers.ImgPath = '../pdokkaart/api/img/';
+            Pdok.addcss("../api/styles/default/style.css");
+            Pdok.addcss("../api/styles/api.css");
+            Pdok.ApiUrl = '../api';
+            OpenLayers.ImgPath = '../api/img/';
             var config = {
                 "zoom": 3,
                 "loc": "170000, 470000",
                 "baselayers": [{"id": "BRT", "visible": true},
-                    //{"id": "BRTGRIJSTIJDELIJK", "visible": false},
-                    //{"id": "BRTTIJDELIJK", "visible": false},
-                    //{"id": "BRTPASTEL", "visible": false},
                     {"id": "LUFO", "visible": false}
                 ],
                 "showlayerswitcher": true,
@@ -79,13 +97,24 @@
                 setGuiToApiState(api);
             });
         </script>
+		<script>
+			var _prum = [['id', '5a1432ac9c55531b6f8dda08'],
+						 ['mark', 'firstbyte', (new Date()).getTime()]];
+			(function() {
+				var s = document.getElementsByTagName('script')[0]
+				  , p = document.createElement('script');
+				p.async = 'async';
+				p.src = '//rum-static.pingdom.net/prum.min.js';
+				s.parentNode.insertBefore(p, s);
+			})();
+		</script>
     </head>
     <body>
         <div class="container equalize page orange default">
             <div class="header">
                 <span></span>
                 <div class="branding">
-                    <img alt="PDOK" src="img/PDOK-logo.png" />
+                    <img alt="PDOK" src="img/pdok-logo-2018.png" />
                     <h1 class="invisible">PDOK Kaart Wizard</h1>
                 </div>
                 <div class="nav_bar">
@@ -119,7 +148,7 @@
                                 <div class="row">
                                     <p>Pas een bestaande configuratie aan:</p>
                                     URL van geconfigureerde kaart:<br />
-                                    <input type="text" id="pdokkaartUrl" class="autopopulate default" title="bijv: http://kaart.pdok.nl/api/api.html?mloc=150000,450000&mt=mt3&loc=150000,450000&zoom=10&tekst=Locatie:</BR>150000,450000" size="30" /><br />
+                                    <input type="text" id="pdokkaartUrl" class="autopopulate default" title="bijv: https://kaart.pdok.nl/api/api.html?mloc=150000,450000&mt=mt3&loc=150000,450000&zoom=10&tekst=Locatie:</BR>150000,450000" size="30" /><br />
                                     <button id="getpdokkaarturl" class="filterbutton">Haal op</button>
                                     <p>Selecteer een kaartgrootte:</p>
                                     <div class="row">
@@ -208,7 +237,7 @@
                                         <p><strong>Via URL</strong> Kies datatype, en geef de URL waar het bestand met markerdefinities zich bevindt klik dan "Haal op ":</p>
                                         <label><input type="radio" checked="checked" name="urltype" value="kml"/>KML</label>
                                         <label><input type="radio" name="urltype" value="txt"/>TXT</label>
-                                        <input type="text" id="urltext" class="autopopulate default" title="Voer een volledige url in (startend met http://)"/>
+                                        <input type="text" id="urltext" class="autopopulate default" title="Voer een volledige url in (startend met http:// of https://)"/>
                                         <button id="getfeaturesfromurl" class="filterbutton">Haal op</button>
                                         <br />
                                         <p><strong>Via Copy/Paste</strong> Kies datatype, kopieer de markers als tekst in het onderstaande tekstveld en kies voor "Opslaan":</p>
@@ -238,7 +267,7 @@
                                 <h3>Voeg een standaard kaartlaag toe</h3><div id="divpdoklayerselector"> </div>
                                 <button id="addpdoklayerbutton" class="filterbutton" >Voeg toe aan kaart</button><h3>Voeg een WMS kaartlaag toe</h3>
                                 URL van de WMS:<br />
-                                <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
+                                <input type="text" id="wmsUrl" class="autopopulate default" title="bijv: https://geodata.nationaalgeoregister.nl/bevolkingskernen2008/wms" size="30" /><br />
                                 Lagen van de WMS:<br />
                                 <input type="text" id="wmsLayer" class="autopopulate default" title="bijv: provgrens_generalisatie_2008" size="30"/><br/>
                                 Featureinfo-formaat van deze WMS (optioneel)<br />
@@ -250,7 +279,7 @@
                                 <button id="addwmslayerbutton" class="filterbutton" >Voeg toe aan kaart</button>
                                 <h3>Voeg een WMTS kaartlaag toe</h3>
                                 URL van de WMTS:<br />
-                                <input type="text" id="WmtsUrl" class="autopopulate default" title="bijv: http://geodata.nationaalgeoregister.nl/wmts/" size="30" /><br />
+                                <input type="text" id="WmtsUrl" class="autopopulate default" title="bijv: https://geodata.nationaalgeoregister.nl/wmts/" size="30" /><br />
                                 Laagnaam van de WMTS:<br />
                                 <input type="text" id="WmtsLayer" class="autopopulate default" title="bijv: natura2000" size="30" /><br/>
                                 Matrixset van de WMTS:<br />

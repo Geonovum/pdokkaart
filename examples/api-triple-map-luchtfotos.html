@@ -14,13 +14,13 @@
       OpenLayers.ImgPath = "../api/img/";
 
       var configmap1 = {
-          "wmsurl": 'http://geodata1.nationaalgeoregister.nl/luchtfoto/wms?format=image/jpeg',
-          "wmslayers": "luchtfoto",
+          "wmsurl": 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wms?format=image/jpeg',
+          "wmslayers": "Actueel_ortho25",
           "showlayerswitcher": "false"
       };
       var configmap2 = {
-          "tmsurl": 'http://geodata1.nationaalgeoregister.nl/luchtfoto/tms/',
-          "tmslayer": "luchtfoto/EPSG28992",
+          "tmsurl": 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/',
+          "tmslayer": "Actueel_ortho25/EPSG:28992",
           "tmstype": "jpeg",
           "div": "map2",
           "showlayerswitcher": "false"
@@ -56,9 +56,9 @@
 
           var wmts = new OpenLayers.Layer.WMTS({
               name: "Luchtfoto's",
-              url: "http://geodata1.nationaalgeoregister.nl/luchtfoto/wms/",
-              layer: "luchtfoto",
-              matrixSet: "nltilingschema",
+              url: "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/",
+              layer: "Actueel_ortho25",
+              matrixSet: "EPSG:28992",
               matrixIds: matrixIds,
               format: "image/jpeg",
               style: "default",

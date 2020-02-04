@@ -1,5 +1,16 @@
 # Changelog
 
+## 2019-10-25 v1.2.3
+### Toegevoegd
+- ShowPopup configurabel via url parameter
+- Bugs opgelost in de examples
+
+## 2019-10-23 v1.2.2
+### Toegevoegd
+- ZoomToFeatures configurabel gemaakt
+- Adreszoek parameter (q) toegevoegd
+- Rijkslogo marker toegevoegd (mt36)
+
 ## 2015-03-26
 ### Toegevoegd
 - De geocoder is toegevoegd aan het eindresultaat. Dit is met name voor de

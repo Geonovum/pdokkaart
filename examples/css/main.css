@@ -4,7 +4,7 @@
     margin-bottom: 15px;
     margin-left: 24px;
     margin-right: 0;
-    margin-top: 26px;
+    margin-top: 11px;
 }
 .row input {
     width: 20px;
@@ -86,7 +86,7 @@
 }
 
 #pdoksearch {
-    bottom: 16px;
+    /*bottom: 16px;*/
     left: 20%;
     position: absolute;
     z-index:2000;
@@ -168,6 +168,21 @@ li {
     position: absolute;
     left: 350px;
     top: 0px;
+}
+
+#searchthingonthemap {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    left: 45px;
+    padding: 10px;
+    position: absolute;
+    top: 5px;
+    z-index: 2000;
+}
+
+#wizardsearch div {
+    padding: 0 10px;
 }
 
 #geocodeerresult {
