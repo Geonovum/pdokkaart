@@ -527,6 +527,7 @@ function addPdokLayer() {
 function createApiLinksAndCode() {
     var strGeneratedUrlToLongMessage = "";
     var apiLink = api.createMapLink();
+    var apiLinkMinimal = api.createMinimalMapLink();
     if (apiLink.length > 2100) {
         strGeneratedUrlToLongMessage = "De gemaakte URL is langer dan 2000 tekens!\nDe totale lengte is " + apiLink.length + " tekens.\nOmdat hierdoor sommige browsers een foutmelding geven, worden de URL's niet getoond.";
         if (Pdok.ApiKmlService && Pdok.ApiKmlService.length > 0) {
@@ -543,6 +544,7 @@ function createApiLinksAndCode() {
         $("#kml_url_service").hide();
     }
     $("#apilink1").attr('href', apiLink);
+    $("#apilink1_minimal").attr('href', apiLinkMinimal);
     $("#apilink2").val(apiLink);
     $("#apilink3").attr('href', api.createMailLink());
     $("#embedhtmliframe").val(api.createIframeTags());
