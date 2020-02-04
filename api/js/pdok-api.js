@@ -6,7 +6,7 @@ var Pdok = Pdok || {};
 window.Pdok = Pdok;
 
 // current PdokKaartApi version
-Pdok.API_VERSION_NUMBER = '1.2.2';
+Pdok.API_VERSION_NUMBER = '1.2.4';
 
 
 // CONFIGURATION
@@ -277,15 +277,15 @@ Pdok.Api = function(config, callback) {
      * If a popup should be used or not. Defaults to true
      * @type boolean
      */
-    this.showPopup = true;
-    this.showpopup = true;
+    this.showPopup = Pdok.showPopup || true;
 
     /**
      * If a popup hover should be used or not Defaults to false
      * @type boolean
      */
     this.hoverPopup = Pdok.hoverPopup || false;
-    this.hoverpopup = Pdok.hoverpopup || false;
+
+    /**
 
     /**
      * Reference to popup titel, only used in case of the use of mloc
@@ -368,6 +368,12 @@ Pdok.Api = function(config, callback) {
      * @type URL
      */
     this.wmsurl = Pdok.wmsurl;
+    
+    /**
+     * The name to use as the title of a wms layer. Optionally together with a wmslayers parameter
+     * @type String
+     */
+    this.wmsname = Pdok.wmsname;
 
     /**
      * The wms layers parameter, a commaseparated string of layername(s). Always together with a wmsurl parameter
@@ -856,7 +862,7 @@ Pdok.Api.prototype.createOlMap = function() {
 
     // apply WMSURL and WMSLAYERS if applicable
     if (this.wmsurl && this.wmslayers) {
-        this.addWMS(this.wmsurl, this.wmslayers, this.wmsinfoformat);
+        this.addWMS(this.wmsurl, this.wmslayers, this.wmsinfoformat, this.wmsname);
     }
 
     // apply WMTSURL and WMTSLAYER and WMTSMATRIXSET if applicable
@@ -951,7 +957,7 @@ Pdok.Api.prototype.createOlMap = function() {
 	}
 
     // selectControl for popups
-    if ( (this.hoverPopup) || (this.hoverpopup) ){
+    if (this.hoverPopup){
         this.hoverPopup = true;
     }
     this.selectControl = new OpenLayers.Control.SelectFeature(
@@ -987,7 +993,7 @@ Pdok.Api.prototype.createOlMap = function() {
     }
     
     olMap.addControl(this.selectControl);
-    if ( (this.showPopup.toString().toLowerCase() === "false") || (this.showpopup.toString().toLowerCase() === "false") ){
+    if (this.showPopup.toString().toLowerCase() === "false") {
         this.showPopup = false;
     }
     if (this.showPopup) {
@@ -1563,13 +1569,13 @@ Pdok.Api.prototype.createWMTSLayer = function(layerConfigObj) {
  * @param {String} wmslayers a valid layername of the above url service
  * @param {String} wmsinfoformat the format use to retrieve featureinfo
  */
-Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat) {
+Pdok.Api.prototype.addWMS = function(wmsurl, wmslayers, wmsinfoformat,wmsname) {
     this.wmsurl = wmsurl;
     this.wmslayers = wmslayers;
     this.wmsinfoformat = wmsinfoformat;
     var lyrWMS = this.createWMSLayer({
             url: wmsurl,
-            name: wmslayers, // RWS prefers to have layernames as names instead of default 'WMS-layer'
+            name: wmsname || wmslayers, // RWS prefers to have layernames as names instead of default 'WMS-layer'
             layers: wmslayers,
             transparent: true,
             wmsinfoformat: wmsinfoformat
