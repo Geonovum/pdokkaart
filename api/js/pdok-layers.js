@@ -762,7 +762,7 @@ Pdok.Api.prototype.defaultLayers = {
   LUFO: {
     layertype: 'WMTS',
     name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts?',
+    url: 'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0?',
     version: "1.3.0",
     layer: 'Actueel_ortho25',
     style: '',
@@ -770,7 +770,7 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: true,
     format: 'image/jpeg',
-    attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">&copy; CC-BY-NC</a>',
+    attribution: '<a href="https://www.pdok.nl/introductie/-/article/luchtfoto-pdok" target="_blank">&copy; CC-BY-NC</a>',
     zoomOffset: 2
   },
   MOSSELENOESTERHABITATS: {
