@@ -303,54 +303,59 @@ Pdok.Api.prototype.defaultLayers = {
     singleTile: true
   },
   BGT_ACHTERGROND_TMS: {
-    layertype: 'TMS',
-    name: 'Basisregistratie Grootschalige Topografie Achtergrond (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
-    layername: 'bgtachtergrond/EPSG:28992',
+    layertype: 'WMTS',
+    name: 'Basisregistratie Grootschalige Topografie Achtergrond (WMTS)',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtachtergrond',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
-    isBaseLayer: false
+    isBaseLayer: false,
+    attribution: '&copy; CC BY Kadaster'
   }, 
   BGT_LIJNGERICHT_TMS: {
-    layertype: 'TMS',
-    name: 'Basisregistratie Grootschalige Topografie Lijngericht (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
-    layername: 'bgtlijngericht/EPSG:28992',
+    layertype: 'WMTS',
+    name: 'Basisregistratie Grootschalige Topografie Pastel [vervanging lijngericht] (WMTS)',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtpastel',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
-    isBaseLayer: false
+    isBaseLayer: false,
+    attribution: '&copy; CC BY Kadaster'
   },    
   BGT_OMTREKGERICHT_TMS: {
-    layertype: 'TMS',
-    name: 'Basisregistratie Grootschalige Topografie Omtrekgericht (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
-    layername: 'bgtomtrekgericht/EPSG:28992',
+    layertype: 'WMTS',
+    name: 'Basisregistratie Grootschalige Topografie Omtrekgericht (WMTS)',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtomtrekgericht',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
-    isBaseLayer: false
+    isBaseLayer: false,
+    attribution: '&copy; CC BY Kadaster'
   },   
   BGT_STANDAARD_TMS: {
-    layertype: 'TMS',
-    name: 'Basisregistratie Grootschalige Topografie Standaard (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
-    layername: 'bgtstandaard/EPSG:28992',
+    layertype: 'WMTS',
+    name: 'Basisregistratie Grootschalige Topografie Standaard (WMTS)',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtstandaard',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
-    isBaseLayer: false
+    isBaseLayer: false,
+    attribution: '&copy; CC BY Kadaster'
   },
   BGT_PASTEL_TMS: {
-    layertype: 'TMS',
-    name: 'Basisregistratie Grootschalige Topografie Pastel (TMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/',
-    layername: 'bgtpastel/EPSG:28992',
+    layertype: 'WMTS',
+    name: 'Basisregistratie Grootschalige Topografie Pastel (WMTS)',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtpastel',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
-    isBaseLayer: false
+    isBaseLayer: false,
+    attribution: '&copy; CC BY Kadaster'
   }, 
   BRP_LIGHT: {
     layertype: 'WMS',
