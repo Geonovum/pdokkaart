@@ -620,8 +620,8 @@ Pdok.Api.prototype.defaultLayers = {
         BRT: {
             layertype: 'WMTS',
             name: 'BRT Achtergrondkaart (wmts)',
-            url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-            layer: 'brtachtergrondkaart',
+            url: 'https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?',
+            layer: 'standaard',
             style: null,
             matrixSet: 'EPSG:28992',
             visibility: true, 

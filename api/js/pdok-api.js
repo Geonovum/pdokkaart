@@ -598,8 +598,8 @@ Pdok.Api.prototype.defaultPdokLayers = {
         BRT: {
             layertype: 'WMTS',
             name: 'BRT Achtergrondkaart (WMTS)',
-            url: 'https://geodata.nationaalgeoregister.nl/wmts/',
-            layer: 'brtachtergrondkaart',
+            url: 'https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?',
+            layer: 'standaard',
             style: null,
             matrixSet: 'EPSG:28992',
             visibility: true, 
@@ -609,7 +609,7 @@ Pdok.Api.prototype.defaultPdokLayers = {
         LUFO: {
                 layertype: 'WMTS',
                 name: 'PDOK achtergrond luchtfoto\'s (WMTS)',
-                url: 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts?',
+                url: 'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0?',
                 version: "1.3.0",
                 layer: 'Actueel_ortho25',
                 style: '',
@@ -619,9 +619,22 @@ Pdok.Api.prototype.defaultPdokLayers = {
                 visibility: true,
                 isBaseLayer: true,
                 format: 'image/jpeg',
-                attribution: '<a href="https://www.pdok.nl/nl/copyright/luchtfotos/" target="_blank">&copy; CC-BY-NC</a>',
+                attribution: '<a href="https://www.pdok.nl/introductie/-/article/luchtfoto-pdok" target="_blank">&copy; CC-BY-NC</a>',
                 zoomOffset: 2
-        }
+        },
+        OpenTopo_Achtergrondkaart: {
+            layertype: 'WMTS',
+            name: 'Open Topo Achtergrondkaart',
+            url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+            layer: 'opentopoachtergrondkaart',
+            style: null,
+            matrixSet: 'EPSG:28992',
+            transparent: 'true',
+            format: 'image/png',
+            visibility: true,
+            isBaseLayer: true,
+            singleTile: true
+        },
     };
 
 /**
@@ -2240,7 +2253,9 @@ Pdok.Api.prototype.createMapLink = function(){
     } else {
         pdoklayers.push("BRT");
         pdoklayers.push("LUFO");
+        pdoklayers.push("OpenTopo_Achtergrondkaart");
     }
+
     //Get the visible overlays and remove the others
     if(config.overlays){
         for (i = 0; i < config.overlays.length; ++i) {

@@ -71,8 +71,8 @@ Pdok.Api.prototype.defaultLayers = {
     BRT: {
         layertype: 'WMTS',
         name: 'BRT Achtergrondkaart (WMTS)',
-        url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-        layer: 'brtachtergrondkaart',
+        url: 'https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?',
+        layer: 'standaard',
         style: null,
         matrixSet: 'EPSG:28992',
         visibility: true, 
@@ -208,16 +208,6 @@ Pdok.Api.prototype.defaultLayers = {
         visibility: true,
         isBaseLayer: false,
         singleTile: true
-    },
-    TOP10NL: {
-        layertype: 'TMS',
-        name: 'TOP10 NL (TMS)',
-        url: 'http://geodata.nationaalgeoregister.nl/tms/',
-        layername: 'top10nl',
-        type:'png8',
-        visibility: true,
-        isBaseLayer: false,
-        attribution:'(c) Kadaster'
     },
     TOP10NL2: {
         layertype: 'WMTS',
