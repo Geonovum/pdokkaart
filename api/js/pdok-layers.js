@@ -1,15 +1,15 @@
 /**
-   * This is a configuration javascript file to create a layers list for pdok api
-   *
-   * At this moment it can contain 2 layertypes: WMTS (preferred) and WMS
-   *
-   * A layer Object is an Object with properties with OpenLayers-Layer property names
-   * Only 'layertype' and 'name' are unique for the api
-   *
-   * NOTE: because we use OpenLayers properties, the property names are type aware:
-   * eg: for a WMTS the layernames is defined in a 'layer' property
-   * while for a WMS it is called 'layers' (mind the s on the end)
-   */
+ * This is a configuration javascript file to create a layers list for pdok api
+ *
+ * At this moment it can contain 2 layertypes: WMTS (preferred) and WMS
+ *
+ * A layer Object is an Object with properties with OpenLayers-Layer property names
+ * Only 'layertype' and 'name' are unique for the api
+ *
+ * NOTE: because we use OpenLayers properties, the property names are type aware:
+ * eg: for a WMTS the layernames is defined in a 'layer' property
+ * while for a WMS it is called 'layers' (mind the s on the end)
+ */
 
 
 Pdok.Api.prototype.defaultLayers = {
@@ -276,7 +276,7 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false,
     singleTile: true
-  },  
+  },
   BESCHERMDENATUURMONUMENTEN: {
     layertype: 'WMS',
     name: 'Beschermde Natuurmonumenten (WMS)',
@@ -335,8 +335,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_ACHTERGROND_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Achtergrond (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/',
-    layername: 'bgtachtergrond',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtachtergrond',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -345,8 +345,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_LIJNGERICHT_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Lijngericht (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/',
-    layername: 'bgtlijngericht',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtlijngericht',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -355,8 +355,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_OMTREKGERICHT_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Omtrekgericht (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/',
-    layername: 'bgtomtrekgericht',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtomtrekgericht',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -365,8 +365,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_STANDAARD_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Standaard (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/',
-    layername: 'bgtstandaard',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+    layer: 'bgtstandaard',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -375,8 +375,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_PASTEL_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Pastel (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts/',
-    layername: 'bgtpastel',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
+    layer: 'bgtpastel',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -1102,9 +1102,10 @@ Pdok.Api.prototype.defaultLayers = {
     layertype: 'WMTS',
     name: 'Open Topo Achtergrondkaart',
     url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
-    layers: 'opentopoachtergrondkaart',
+    layer: 'opentopoachtergrondkaart',
     transparent: 'true',
     format: 'image/png',
+    matrixSet: 'EPSG:28992',
     visibility: true,
     isBaseLayer: true,
     singleTile: true
@@ -1113,9 +1114,10 @@ Pdok.Api.prototype.defaultLayers = {
     layertype: 'WMTS',
     name: 'Open Topo',
     url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
-    layers: 'opentopo',
+    layer: 'opentopo',
     transparent: 'true',
     format: 'image/png',
+    matrixSet: 'EPSG:28992',
     visibility: true,
     isBaseLayer: false,
     singleTile: true
@@ -1211,7 +1213,7 @@ Pdok.Api.prototype.defaultLayers = {
   Stedelijk_Water_Riolering_Beheergegevens_Put: {
     layertype: 'WMS',
     name: 'Beheergegevens Put',
-    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms/v1_0?',
     layers: 'beheer_put',
     transparent: 'true',
     format: 'image/png',
@@ -1222,7 +1224,7 @@ Pdok.Api.prototype.defaultLayers = {
   Stedelijk_Water_Riolering_Beheergegevens_Leiding: {
     layertype: 'WMS',
     name: 'Beheergegevens Leiding',
-    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms/v1_0?',
     layers: 'beheer_leiding',
     transparent: 'true',
     format: 'image/png',
@@ -1233,7 +1235,7 @@ Pdok.Api.prototype.defaultLayers = {
   Stedelijk_Water_Riolering_Beheer_Gebied: {
     layertype: 'WMS',
     name: 'Beheer gebied',
-    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms/v1_0?',
     layers: 'beheer_leiding',
     transparent: 'true',
     format: 'image/png',
@@ -1244,7 +1246,7 @@ Pdok.Api.prototype.defaultLayers = {
   Stedelijk_Water_Riolering_Beheer_Pomp: {
     layertype: 'WMS',
     name: 'Beheer pomp',
-    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms/v1_0?',
     layers: 'beheer_pomp',
     transparent: 'true',
     format: 'image/png',
@@ -1255,7 +1257,7 @@ Pdok.Api.prototype.defaultLayers = {
   Stedelijk_Water_Riolering_Beheer_Lozing: {
     layertype: 'WMS',
     name: 'Beheer lozing',
-    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms/v1_0?',
     layers: 'beheer_lozing',
     transparent: 'true',
     format: 'image/png',
@@ -1266,7 +1268,7 @@ Pdok.Api.prototype.defaultLayers = {
   Stedelijk_Water_Riolering_Beheer_Bouwwerk: {
     layertype: 'WMS',
     name: 'Beheer bouwwerk',
-    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms',
+    url: 'https://geodata.nationaalgeoregister.nl/rioned/gwsw/wms/v1_0?',
     layers: 'beheer_bouwwerk',
     transparent: 'true',
     format: 'image/png',
@@ -1570,7 +1572,7 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false,
     singleTile: true
-  },  
+  },
   CBS_WIJKENENBUURTEN_CBSBUURTEN2013: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2013 (WMS)',
@@ -1603,7 +1605,7 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false,
     singleTile: true
-  },  
+  },
   CBS_WIJKENENBUURTEN_CBSBUURTEN2012: {
     layertype: 'WMS',
     name: 'CBS Wijken en buurten - Buurten 2012 (WMS)',
