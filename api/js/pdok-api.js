@@ -133,10 +133,6 @@ Pdok.ready = (function (f){
     }
 });
 
-function waitTest(a){
-    console.log(a);
-}
-
 //http://stackoverflow.com/questions/3922139/add-css-to-head-with-javascript
 Pdok.addcss = function(css){
     var fileref=document.createElement("link");
