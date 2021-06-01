@@ -123,10 +123,12 @@ OpenLayers.Lang.setCode('nl');
 Proj4js.defs["EPSG:28992"] = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.040,49.910,465.840,-0.40939,0.35971,-1.86849,4.0772";
 
 Pdok.ready = (function (f){
-    if (/in/.test(document.readyState)) {
-        setTimeout('Pdok.ready('+f+')',9);
+    if(/in/.test(document.readyState)){
+        setTimeout(function() {
+            Pdok.ready(f);
+        }, 9);
     }
-    else {
+    else{
         f()
     }
 });
