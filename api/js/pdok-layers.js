@@ -168,20 +168,10 @@ Pdok.Api.prototype.defaultLayers = {
     visibility: true,
     isBaseLayer: false
   },
-  BAG: {
-    layertype: 'WMTS',
-    name: 'BAG - Basisadministratie Adressen en Gebouwen (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
-    layer: 'bag',
-    style: null,
-    matrixSet: 'EPSG:28992',
-    visibility: true,
-    isBaseLayer: false
-  },
   BAG_LIGPLAATS: {
     layertype: 'WMS',
     name: 'BAG - Ligplaats (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/bag/wms/v1_1',
+    url: 'https://service.pdok.nl/lv/bag/wms/v2_0',
     layers: 'ligplaats',
     transparent: 'true',
     format: 'image/png',
@@ -192,7 +182,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_PAND: {
     layertype: 'WMS',
     name: 'BAG - Pand (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/bag/wms/v1_1',
+    url: 'https://service.pdok.nl/lv/bag/wms/v2_0',
     layers: 'pand',
     transparent: 'true',
     format: 'image/png',
@@ -203,7 +193,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_STANDPLAATS: {
     layertype: 'WMS',
     name: 'BAG - Standplaats (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/bag/wms/v1_1',
+    url: 'https://service.pdok.nl/lv/bag/wms/v2_0',
     layers: 'standplaats',
     transparent: 'true',
     format: 'image/png',
@@ -214,7 +204,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_VERBLIJFSOBJECT: {
     layertype: 'WMS',
     name: 'BAG - Verblijfsobject (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/bag/wms/v1_1',
+    url: 'https://service.pdok.nl/lv/bag/wms/v2_0',
     layers: 'verblijfsobject',
     transparent: 'true',
     format: 'image/png',
@@ -225,7 +215,7 @@ Pdok.Api.prototype.defaultLayers = {
   BAG_WOONPLAATS: {
     layertype: 'WMS',
     name: 'BAG - Woonplaats (WMS)',
-    url: 'https://geodata.nationaalgeoregister.nl/bag/wms/v1_1',
+    url: 'https://service.pdok.nl/lv/bag/wms/v2_0',
     layers: 'woonplaats',
     transparent: 'true',
     format: 'image/png',
