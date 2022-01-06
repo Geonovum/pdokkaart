@@ -325,18 +325,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_ACHTERGROND_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Achtergrond (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
-    layer: 'bgtachtergrond',
-    style: null,
-    matrixSet: 'EPSG:28992',
-    visibility: true,
-    isBaseLayer: false
-  },
-  BGT_LIJNGERICHT_WMTS: {
-    layertype: 'WMTS',
-    name: 'Basisregistratie Grootschalige Topografie Lijngericht (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
-    layer: 'bgtlijngericht',
+    url: 'https://service.pdok.nl/lv/bgt/wmts/v1_0?',
+    layer: 'achtergrondvisualisatie',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -345,8 +335,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_OMTREKGERICHT_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Omtrekgericht (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
-    layer: 'bgtomtrekgericht',
+    url: 'https://service.pdok.nl/lv/bgt/wmts/v1_0?',
+    layer: 'omtrekgerichtevisualisatie',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -355,8 +345,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_STANDAARD_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Standaard (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-    layer: 'bgtstandaard',
+    url: 'https://service.pdok.nl/lv/bgt/wmts/v1_0?',
+    layer: 'standaardvisualisatie',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
@@ -365,8 +355,8 @@ Pdok.Api.prototype.defaultLayers = {
   BGT_PASTEL_WMTS: {
     layertype: 'WMTS',
     name: 'Basisregistratie Grootschalige Topografie Pastel (WMTS)',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?',
-    layer: 'bgtpastel',
+    url: 'https://service.pdok.nl/lv/bgt/wmts/v1_0?',
+    layer: 'pastelvisualisatie',
     style: null,
     matrixSet: 'EPSG:28992',
     visibility: true,
