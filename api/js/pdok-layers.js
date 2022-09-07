@@ -511,7 +511,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS1971: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 1971 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 1971 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m1971",
     transparent: "true",
@@ -522,7 +522,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2000: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2000 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2000 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2000",
     transparent: "true",
@@ -533,7 +533,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2001: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2001 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2001 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2001",
     transparent: "true",
@@ -544,7 +544,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2002: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2002 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2002 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2002",
     transparent: "true",
@@ -555,7 +555,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2003: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2003 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2003 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2003",
     transparent: "true",
@@ -566,7 +566,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2004: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2004 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2004 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2004",
     transparent: "true",
@@ -577,7 +577,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2005: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2005 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2005 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2005",
     transparent: "true",
@@ -588,7 +588,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2006: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2006 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2006 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2006",
     transparent: "true",
@@ -599,7 +599,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2007: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2007 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2007 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2007",
     transparent: "true",
@@ -610,7 +610,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2008: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2008 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2008 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2008",
     transparent: "true",
@@ -621,7 +621,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2009: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2009 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2009 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2009",
     transparent: "true",
@@ -632,7 +632,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2010: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2010 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2010 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2010",
     transparent: "true",
@@ -643,7 +643,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2011: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2011 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2011 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2011",
     transparent: "true",
@@ -654,7 +654,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2012: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2012 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2012 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2012",
     transparent: "true",
@@ -665,7 +665,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2013: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2013 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2013 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2013",
     transparent: "true",
@@ -676,7 +676,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2014: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2014 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2014 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2014",
     transparent: "true",
@@ -687,7 +687,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2015: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2015 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2015 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2015",
     transparent: "true",
@@ -698,7 +698,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2016: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2016 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2016 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2016",
     transparent: "true",
@@ -709,7 +709,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2017: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2017 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2017 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2017",
     transparent: "true",
@@ -720,7 +720,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2018: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2018 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2018 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2018",
     transparent: "true",
@@ -731,7 +731,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2019: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2019 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2019 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2019",
     transparent: "true",
@@ -742,7 +742,7 @@ Pdok.Api.prototype.defaultLayers = {
   },
   CBS_4KANTEN500M_INWONERS2020: {
     layertype: "WMS",
-    name: "CBS Vierkanten 500m - 2020 (WMS)",
+    name: "CBS Vierkantstatistieken 500m - 2020 (WMS)",
     url: "https://geodata.nationaalgeoregister.nl/cbsvierkanten500mv2/wms",
     layers: "vierkant500m2020",
     transparent: "true",
@@ -754,7 +754,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_ELEMENTEN: {
     layertype: "WMS",
     name: "Cultuurhistorische objecten - Elementen (WMS)",
-    url: "https://geodata.nationaalgeoregister.nl/cultgis/wms",
+    url: "https://services.rce.geovoorziening.nl/cultgis/wms",
     layers: "elementen",
     transparent: "true",
     format: "image/png",
@@ -765,7 +765,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_AANDACHTSGEBIEDEN: {
     layertype: "WMS",
     name: "Cultuurhistorische objecten - Aandachtsgebieden (WMS)",
-    url: "https://geodata.nationaalgeoregister.nl/cultgis/wms",
+    url: "https://services.rce.geovoorziening.nl/cultgis/wms",
     layers: "aandachtsgebied",
     transparent: "true",
     format: "image/png",
@@ -776,7 +776,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_DEELLANDSCHAPPEN: {
     layertype: "WMS",
     name: "Cultuurhistorische objecten - Deellandschappen (WMS)",
-    url: "https://geodata.nationaalgeoregister.nl/cultgis/wms",
+    url: "https://services.rce.geovoorziening.nl/cultgis/wms",
     layers: "deellandschap",
     transparent: "true",
     format: "image/png",
@@ -787,7 +787,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_LANDSCHAPPEN: {
     layertype: "WMS",
     name: "Cultuurhistorische objecten - Landschappen (WMS)",
-    url: "https://geodata.nationaalgeoregister.nl/cultgis/wms",
+    url: "https://services.rce.geovoorziening.nl/cultgis/wms",
     layers: "landschap",
     transparent: "true",
     format: "image/png",
@@ -798,7 +798,7 @@ Pdok.Api.prototype.defaultLayers = {
   CULTUURHISTORISCHEOBJECTEN_REGIOS: {
     layertype: "WMS",
     name: "Cultuurhistorische objecten - Regio's (WMS)",
-    url: "https://geodata.nationaalgeoregister.nl/cultgis/wms",
+    url: "https://services.rce.geovoorziening.nl/cultgis/wms",
     layers: "regios",
     transparent: "true",
     format: "image/png",
