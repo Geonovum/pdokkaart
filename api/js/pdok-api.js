@@ -15,7 +15,7 @@ Pdok.API_VERSION_NUMBER = '1.2.3';
 // Using https:// results in cross-origin problems when viewed via http
 
 // PDOK LOKET PRODUKTIE
-//Pdok.ApiUrl = 'http://kaart.pdok.nl/api';
+//Pdok.ApiUrl = 'https://kaart.pdok.nl/api';
 //OpenLayers.ProxyHost = window.location.protocol + "//" + window.location.host + "/proxy.php?url="; // kaart.pdok.nl
 
 // RIJKSWATERSTAAT
@@ -337,10 +337,10 @@ Pdok.Api = function(config, callback) {
      * or an example with images and their dimensions
      * <pre>
      * lat   lon title   description iconSize    iconOffset  icon
-     * 450000 140000  Ministerie ELenI    Economische Zaken Landbouw en Innovatie 32,37   16,-37  http://kaart.pdok.nl/api/markertypes/flag-nl.png
-     * 460000 160000  Kadaster    Kadaster    32,37   -16,-18 http://kaart.pdok.nl/api/markertypes/flag-blue.png
-     * 470000 170000  Rijkswaterstaat Infrastructuur en Milieu    64,72   -32,-36 http://kaart.pdok.nl/api/markertypes/vlc.png
-     * 480000 180000  Ministerie IenM Infrastructuur en Milieu    40,46   -20,-23 http://kaart.pdok.nl/api/markertypes/flag-blue.png
+     * 450000 140000  Ministerie ELenI    Economische Zaken Landbouw en Innovatie 32,37   16,-37  https://kaart.pdok.nl/api/markertypes/flag-nl.png
+     * 460000 160000  Kadaster    Kadaster    32,37   -16,-18 https://kaart.pdok.nl/api/markertypes/flag-blue.png
+     * 470000 170000  Rijkswaterstaat Infrastructuur en Milieu    64,72   -32,-36 https://kaart.pdok.nl/api/markertypes/vlc.png
+     * 480000 180000  Ministerie IenM Infrastructuur en Milieu    40,46   -20,-23 https://kaart.pdok.nl/api/markertypes/flag-blue.png
      * </pre>
      * </p>
      * @see <a href="../../../documentatie/examples/data/test1.txt">test1.txt</a>
