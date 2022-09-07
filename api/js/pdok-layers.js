@@ -163,9 +163,9 @@ Pdok.Api.prototype.defaultLayers = {
   },
   BBG2017: {
     layertype: "WMS",
-    name: "BBG - Bestand Bodemgebruik 2017 (WMS)",
+    name: "Bestand Bodemgebruik 2017 (WMS)",
     url: "https://service.pdok.nl/cbs/bestandbodemgebruik/2017/wms/v1_0",
-    layers: "bestand_bodemgebruik_2017_bodemgebruik",
+    layers: "bestandbodemgebruik_2017_categorie",
     transparent: "true",
     format: "image/png",
     visibility: true,
@@ -174,9 +174,9 @@ Pdok.Api.prototype.defaultLayers = {
   },
   BBG2017_hoofdgroep: {
     layertype: "WMS",
-    name: "BBG - Bestand Bodemgebruik 2017 Hoofdgroep (WMS)",
+    name: "Bestand Bodemgebruik 2017 Hoofdgroep (WMS)",
     url: "https://service.pdok.nl/cbs/bestandbodemgebruik/2017/wms/v1_0",
-    layers: "bestand_bodemgebruik_2017",
+    layers: "bestandbodemgebruik_2017_hoofdgroep",
     transparent: "true",
     format: "image/png",
     visibility: true,
