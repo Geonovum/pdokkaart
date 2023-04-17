@@ -2930,7 +2930,7 @@ OpenLayers.Control.GeocoderControl =
   OpenLayers.Class(OpenLayers.Control, {
 
     // PDOK
-    geocoderUrl: 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?',
+    geocoderUrl: 'https://api.pdok.nl/bzk/locatieserver/search/v3_1/suggest?',
     geocoderParameter: 'q',
 
     zoomScale : {
@@ -3135,9 +3135,9 @@ OpenLayers.Control.GeocoderControl =
     resultClick: function(id, event) {
         //console.log(id);
         // retrieve the id, and get full info from
-        // https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=
+        // https://api.pdok.nl/bzk/locatieserver/search/v3_1/lookup?id=
         event.preventDefault();
-        lookupUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?';
+        lookupUrl = 'https://api.pdok.nl/bzk/locatieserver/search/v3_1/lookup?';
         OpenLayers.Request.GET({
                 url: lookupUrl,
                 params: {id:id},
@@ -3150,8 +3150,8 @@ OpenLayers.Control.GeocoderControl =
     resultClickAdres: function(id) {
         //console.log(id);
         // retrieve the id, and get full info from
-        // https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=
-        lookupUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?';
+        // https://api.pdok.nl/bzk/locatieserver/search/v3_1/lookup?id=
+        lookupUrl = 'https://api.pdok.nl/bzk/locatieserver/search/v3_1/lookup?';
         OpenLayers.Request.GET({
                 url: lookupUrl,
                 params: {id:id},
