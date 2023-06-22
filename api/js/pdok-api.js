@@ -578,7 +578,7 @@ if(OpenLayers.Util.getParameters()['layersdef']){
     Pdok.layersdef = Pdok.ApiUrl + '/js/pdok-layers.js';
 }
 // inject a script include for the layersdef, being either an external or the api included one
-document.write('<script type="text/javascript" src= Pdok.layersdef></script>');
+document.write('<script type="text/javascript" src="'+Pdok.layersdef+'"></script>');
 
 
 /**
