@@ -1,3 +1,9 @@
+# DEPRECATED
+
+[PDOK Kaart](https://kaart.pdok.nl/) is per 02-01-2024 uit productie gehaald.
+
+Zie voor meer informatie en alternatieven het [nieuwsbericht](https://www.pdok.nl/-/pdok-kaart-wordt-kaartapi-nl).
+
 # PDOKKaart
 
 [PDOK Kaart](https://kaart.pdok.nl/) is een app waarmee gebruikers via een grafische interface eenvoudig interactieve kaarten kunnen maken op basis van webservices afkomstig van PDOK en eigen servers. De resulterende kaart is vervolgens makkelijk in een website te embedden.
